@@ -1,235 +1,241 @@
 team,team_net,star,top_need,target,target_team,target_tier,fills_need,target_rpr,displaced,displaced_rpr,quality_gain,fit_gain,usage_penalty,availability_discount,trade_score
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Paul Reed,Detroit Pistons,High-value starter,rim_protection,4.27,Luguentz Dort,2.25,0.22,0.059,0.0,0.0,0.279
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Ajay Mitchell,Oklahoma City Thunder,High-value starter,rim_protection,4.06,Luguentz Dort,2.25,0.209,0.049,0.0,0.0,0.258
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,rim_protection,3.75,Luguentz Dort,2.25,0.167,0.037,0.0,0.0,0.204
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,rim_protection,3.76,Luguentz Dort,2.25,0.154,0.04,0.0,0.0,0.195
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Jakob Poeltl,Toronto Raptors,Rotation / depth,rim_protection,3.71,Luguentz Dort,2.25,0.142,0.042,0.0,0.0,0.184
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,3.43,Luguentz Dort,2.25,0.122,0.05,0.0,0.0,0.172
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Aday Mara,Oklahoma City Thunder,Rotation / depth,rim_protection,3.54,Luguentz Dort,2.25,0.118,0.052,0.0,0.0,0.171
-Atlanta Hawks,-0.2,Dyson Daniels,rim_protection,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,3.37,Luguentz Dort,2.25,0.118,0.043,0.0,0.0,0.161
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,rim_protection,4.27,Baylor Scheierman,2.49,0.193,0.084,0.0,0.0,0.277
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Aday Mara,Oklahoma City Thunder,Rotation / depth,rim_protection,3.54,Baylor Scheierman,2.49,0.096,0.065,0.0,0.0,0.161
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,3.18,Baylor Scheierman,2.49,0.062,0.067,0.0,0.0,0.129
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Kevin Huerter,Detroit Pistons,Rotation / depth,rim_protection,3.11,Baylor Scheierman,2.49,0.067,0.056,0.0,0.0,0.123
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Bilal Coulibaly,Washington Wizards,Rotation / depth,rim_protection,3.16,Baylor Scheierman,2.49,0.069,0.054,0.0,0.0,0.123
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rim_protection,3.05,Baylor Scheierman,2.49,0.054,0.067,0.0,0.0,0.122
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Robert Williams III,Portland Trail Blazers,Undervalued / buy-low,rim_protection,3.79,Baylor Scheierman,2.49,0.088,0.048,0.0,0.014,0.122
-Boston Celtics,7.0,No clear star in this data,perimeter_defense,Tari Eason,Houston Rockets,Rotation / depth,rim_protection,2.95,Baylor Scheierman,2.49,0.048,0.069,0.0,0.0,0.117
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,shooting,3.76,Chaney Johnson,1.23,0.259,0.081,0.0,0.0,0.34
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Pelle Larsson,Miami Heat,Rotation / depth,shooting,3.11,Chaney Johnson,1.23,0.222,0.09,0.0,0.0,0.311
-Brooklyn Nets,-7.3,No clear star in this data,shooting,CJ McCollum,Atlanta Hawks,Rotation / depth,shooting,3.01,Chaney Johnson,1.23,0.195,0.113,0.0,0.0,0.308
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Quentin Grimes,Los Angeles Lakers,Rotation / depth,shooting,2.94,Chaney Johnson,1.23,0.204,0.101,0.0,0.0,0.305
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,3.18,Chaney Johnson,1.23,0.197,0.109,0.0,0.0,0.305
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Rotation / depth,shooting,3.47,Chaney Johnson,1.23,0.206,0.092,0.0,0.0,0.298
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Kevin Huerter,Detroit Pistons,Rotation / depth,shooting,3.11,Chaney Johnson,1.23,0.204,0.089,0.0,0.0,0.294
-Brooklyn Nets,-7.3,No clear star in this data,shooting,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,shooting,3.61,Chaney Johnson,1.23,0.229,0.093,0.0,0.032,0.29
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Ajay Mitchell,Oklahoma City Thunder,High-value starter,playmaking,4.06,Tidjane Salaun,1.45,0.302,0.132,0.0,0.0,0.433
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Paul Reed,Detroit Pistons,High-value starter,playmaking,4.27,Tidjane Salaun,1.45,0.307,0.115,0.0,0.0,0.422
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Dennis Schroder,1.05,0.3,0.054,0.0,0.0,0.354
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Dennis Schroder,1.05,0.277,0.073,0.0,0.0,0.35
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,CJ McCollum,Atlanta Hawks,Rotation / depth,playmaking,3.01,Tidjane Salaun,1.45,0.172,0.151,0.0,0.0,0.323
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Collin Gillespie,Phoenix Suns,Rotation / depth,playmaking,3.18,Tidjane Salaun,1.45,0.175,0.14,0.0,0.0,0.315
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Pelle Larsson,Miami Heat,Rotation / depth,playmaking,3.11,Tidjane Salaun,1.45,0.196,0.114,0.0,0.0,0.31
-Charlotte Hornets,-9.2,No clear star in this data,playmaking,Jake LaRavia,Los Angeles Lakers,Rotation / depth,playmaking,3.37,Tidjane Salaun,1.45,0.202,0.101,0.0,0.0,0.303
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Matas Buzelis,2.47,0.196,0.045,0.0,0.0,0.241
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Matas Buzelis,2.47,0.183,0.046,0.0,0.0,0.229
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Matas Buzelis,2.47,0.142,0.03,0.0,0.0,0.172
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Matas Buzelis,2.47,0.132,0.033,0.0,0.0,0.165
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Matas Buzelis,2.47,0.12,0.034,0.0,0.0,0.154
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Quenton Jackson,Indiana Pacers,Rotation / depth,perimeter_defense,3.47,Matas Buzelis,2.47,0.092,0.044,0.0,0.0,0.136
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Matas Buzelis,2.47,0.099,0.036,0.0,0.0,0.135
-Chicago Bulls,-5.3,Jalen Smith,perimeter_defense,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Matas Buzelis,2.47,0.094,0.039,0.0,0.0,0.133
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Peyton Watson,2.41,0.202,0.051,0.0,0.0,0.253
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Peyton Watson,2.41,0.19,0.053,0.0,0.0,0.243
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Peyton Watson,2.41,0.149,0.046,0.0,0.0,0.195
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Peyton Watson,2.41,0.138,0.051,0.0,0.0,0.189
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Peyton Watson,2.41,0.126,0.044,0.0,0.0,0.17
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Peyton Watson,2.41,0.105,0.048,0.0,0.0,0.154
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Peyton Watson,2.41,0.1,0.047,0.0,0.0,0.148
-Cleveland Cavaliers,1.5,Evan Mobley,perimeter_defense,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,perimeter_defense,3.61,Peyton Watson,2.41,0.115,0.047,0.0,0.016,0.146
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Paul Reed,Detroit Pistons,High-value starter,bench_scoring,4.27,Caleb Martin,2.79,0.161,0.033,0.0,0.0,0.194
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Caleb Martin,2.79,0.147,0.037,0.0,0.0,0.184
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Jakob Poeltl,Toronto Raptors,Rotation / depth,bench_scoring,3.71,Caleb Martin,2.79,0.09,0.023,0.0,0.0,0.113
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Aday Mara,Oklahoma City Thunder,Rotation / depth,bench_scoring,3.54,Caleb Martin,2.79,0.069,0.028,0.0,0.0,0.097
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,bench_scoring,3.43,Caleb Martin,2.79,0.067,0.028,0.0,0.0,0.094
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Robert Williams III,Portland Trail Blazers,Undervalued / buy-low,bench_scoring,3.79,Caleb Martin,2.79,0.068,0.02,0.0,0.009,0.079
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,bench_scoring,3.18,Caleb Martin,2.79,0.035,0.032,0.0,0.0,0.067
-Dallas Mavericks,0.9,Cooper Flagg,shooting,Zach Edey,Memphis Grizzlies,Rotation / depth,bench_scoring,3.22,Caleb Martin,2.79,0.037,0.029,0.0,0.007,0.06
-Denver Nuggets,1.2,Nikola Jokic,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Tyus Jones,1.36,0.312,0.166,0.0,0.0,0.478
-Denver Nuggets,1.2,Nikola Jokic,shooting,Paul Reed,Detroit Pistons,High-value starter,bench_scoring,4.27,Tyus Jones,1.36,0.317,0.139,0.0,0.0,0.457
-Denver Nuggets,1.2,Nikola Jokic,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,shooting,3.76,Marvin Bagley III,1.71,0.21,0.156,0.0,0.0,0.366
-Denver Nuggets,1.2,Nikola Jokic,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,2.95,Marvin Bagley III,1.71,0.124,0.236,0.0,0.0,0.36
-Denver Nuggets,1.2,Nikola Jokic,shooting,CJ McCollum,Atlanta Hawks,Rotation / depth,shooting,3.01,Marvin Bagley III,1.71,0.143,0.213,0.0,0.0,0.356
-Denver Nuggets,1.2,Nikola Jokic,shooting,Quentin Grimes,Los Angeles Lakers,Rotation / depth,shooting,2.94,Marvin Bagley III,1.71,0.147,0.2,0.0,0.0,0.347
-Denver Nuggets,1.2,Nikola Jokic,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,3.18,Marvin Bagley III,1.71,0.148,0.198,0.0,0.0,0.346
-Denver Nuggets,1.2,Nikola Jokic,shooting,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,shooting,3.75,Marvin Bagley III,1.71,0.227,0.119,0.0,0.0,0.346
-Detroit Pistons,4.1,Cade Cunningham,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Ronald Holland II,2.31,0.202,0.031,0.0,0.0,0.233
-Detroit Pistons,4.1,Cade Cunningham,shooting,Robert Williams III,Portland Trail Blazers,Undervalued / buy-low,rebounding,3.79,Duncan Robinson,4.03,-0.016,0.026,0.0,0.001,0.009
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Paul Reed,Detroit Pistons,High-value starter,rebounding,4.27,Will Richard,1.82,0.266,0.042,0.0,0.0,0.308
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Gui Santos,1.59,0.24,0.028,0.0,0.0,0.269
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Gui Santos,1.59,0.222,0.036,0.0,0.0,0.259
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Gui Santos,1.59,0.206,0.033,0.0,0.0,0.239
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Gui Santos,1.59,0.191,0.038,0.0,0.0,0.229
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Pelle Larsson,Miami Heat,Rotation / depth,perimeter_defense,3.11,Gui Santos,1.59,0.179,0.038,0.0,0.0,0.218
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Gui Santos,1.59,0.187,0.028,0.0,0.0,0.215
-Golden State Warriors,0.7,No clear star in this data,bench_scoring,Quenton Jackson,Indiana Pacers,Rotation / depth,perimeter_defense,3.47,Gui Santos,1.59,0.174,0.038,0.0,0.0,0.211
-Houston Rockets,7.8,Alperen Sengun,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Bogdan Bogdanovic,1.07,0.345,0.072,0.0,0.0,0.417
-Houston Rockets,7.8,Alperen Sengun,shooting,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Bogdan Bogdanovic,1.07,0.348,0.068,0.0,0.0,0.416
-Houston Rockets,7.8,Alperen Sengun,shooting,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Bogdan Bogdanovic,1.07,0.298,0.05,0.0,0.0,0.348
-Houston Rockets,7.8,Alperen Sengun,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Bogdan Bogdanovic,1.07,0.275,0.071,0.0,0.0,0.346
-Houston Rockets,7.8,Alperen Sengun,shooting,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Bogdan Bogdanovic,1.07,0.256,0.055,0.0,0.0,0.311
-Houston Rockets,7.8,Alperen Sengun,shooting,CJ McCollum,Atlanta Hawks,Rotation / depth,perimeter_defense,3.01,Bogdan Bogdanovic,1.07,0.213,0.094,0.0,0.0,0.307
-Houston Rockets,7.8,Alperen Sengun,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Bogdan Bogdanovic,1.07,0.244,0.061,0.0,0.0,0.305
-Houston Rockets,7.8,Alperen Sengun,shooting,Pelle Larsson,Miami Heat,Rotation / depth,perimeter_defense,3.11,Bogdan Bogdanovic,1.07,0.24,0.064,0.0,0.0,0.304
-Indiana Pacers,-3.3,No clear star in this data,shooting,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Ivica Zubac,2.86,0.154,0.114,0.0,0.0,0.267
-Indiana Pacers,-3.3,No clear star in this data,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Ivica Zubac,2.86,0.138,0.109,0.0,0.0,0.248
-Indiana Pacers,-3.3,No clear star in this data,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Ivica Zubac,2.86,0.092,0.138,0.0,0.0,0.23
-Indiana Pacers,-3.3,No clear star in this data,shooting,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Ivica Zubac,2.86,0.099,0.096,0.0,0.0,0.195
-Indiana Pacers,-3.3,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,3.18,Ivica Zubac,2.86,0.032,0.148,0.0,0.0,0.18
-Indiana Pacers,-3.3,No clear star in this data,shooting,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Ivica Zubac,2.86,0.054,0.12,0.0,0.0,0.174
-Indiana Pacers,-3.3,No clear star in this data,shooting,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,perimeter_defense,3.61,Ivica Zubac,2.86,0.072,0.116,0.0,0.019,0.17
-Indiana Pacers,-3.3,No clear star in this data,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Ivica Zubac,2.86,0.059,0.101,0.0,0.0,0.161
-LA Clippers,-4.6,No clear star in this data,rebounding,Paul Reed,Detroit Pistons,High-value starter,rebounding,4.27,Darius Garland,2.24,0.221,0.082,0.0,0.0,0.304
-LA Clippers,-4.6,No clear star in this data,rebounding,Ajay Mitchell,Oklahoma City Thunder,High-value starter,rim_protection,4.06,Rui Hachimura,2.11,0.225,0.038,0.0,0.0,0.263
-LA Clippers,-4.6,No clear star in this data,rebounding,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,rebounding,3.75,Darius Garland,2.24,0.169,0.063,0.0,0.0,0.232
-LA Clippers,-4.6,No clear star in this data,rebounding,Jakob Poeltl,Toronto Raptors,Rotation / depth,rebounding,3.71,Darius Garland,2.24,0.143,0.074,0.0,0.0,0.217
-LA Clippers,-4.6,No clear star in this data,rebounding,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,3.43,Darius Garland,2.24,0.124,0.078,0.0,0.0,0.201
-LA Clippers,-4.6,No clear star in this data,rebounding,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,rim_protection,3.76,Rui Hachimura,2.11,0.169,0.031,0.0,0.0,0.2
-LA Clippers,-4.6,No clear star in this data,rebounding,Aday Mara,Oklahoma City Thunder,Rotation / depth,rebounding,3.54,Darius Garland,2.24,0.119,0.075,0.0,0.0,0.194
-LA Clippers,-4.6,No clear star in this data,rebounding,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,3.22,Gradey Dick,1.53,0.167,0.022,0.0,0.0,0.189
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Paul Reed,Detroit Pistons,High-value starter,rebounding,4.27,Collin Sexton,1.28,0.326,0.087,0.0,0.0,0.413
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,rebounding,3.75,Collin Sexton,1.28,0.275,0.061,0.0,0.0,0.336
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Jakob Poeltl,Toronto Raptors,Rotation / depth,rebounding,3.71,Collin Sexton,1.28,0.236,0.073,0.0,0.0,0.309
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,3.43,Collin Sexton,1.28,0.223,0.073,0.0,0.0,0.296
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Aday Mara,Oklahoma City Thunder,Rotation / depth,rebounding,3.54,Collin Sexton,1.28,0.207,0.074,0.0,0.0,0.281
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Quenton Jackson,Indiana Pacers,Rotation / depth,rebounding,3.47,Collin Sexton,1.28,0.202,0.057,0.0,0.0,0.259
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,Bilal Coulibaly,Washington Wizards,Rotation / depth,rebounding,3.16,Collin Sexton,1.28,0.196,0.063,0.0,0.0,0.259
-Los Angeles Lakers,3.9,Luka Doncic,rebounding,John Collins,Detroit Pistons,Rotation / depth,rebounding,2.88,Collin Sexton,1.28,0.175,0.081,0.0,0.0,0.256
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Paul Reed,Detroit Pistons,High-value starter,rim_protection,4.27,Jaylen Wells,2.93,0.146,0.089,0.0,0.0,0.235
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Isaiah Stewart,2.39,0.192,0.041,0.0,0.0,0.234
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,rim_protection,3.75,Jaylen Wells,2.93,0.092,0.08,0.0,0.0,0.171
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,rim_protection,3.76,Jaylen Wells,2.93,0.085,0.083,0.0,0.0,0.168
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Jakob Poeltl,Toronto Raptors,Rotation / depth,rim_protection,3.71,Jaylen Wells,2.93,0.076,0.081,0.0,0.0,0.157
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Quenton Jackson,Indiana Pacers,Rotation / depth,perimeter_defense,3.47,Isaiah Stewart,2.39,0.1,0.044,0.0,0.0,0.143
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,perimeter_defense,3.61,Isaiah Stewart,2.39,0.117,0.041,0.0,0.016,0.143
-Memphis Grizzlies,6.3,Cedric Coward,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,3.43,Jaylen Wells,2.93,0.052,0.089,0.0,0.0,0.141
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Tim Hardaway Jr.,0.55,0.406,0.089,0.0,0.0,0.495
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Paul Reed,Detroit Pistons,High-value starter,bench_scoring,4.27,Tim Hardaway Jr.,0.55,0.405,0.088,0.0,0.0,0.494
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Tari Eason,Houston Rockets,Rotation / depth,bench_scoring,2.95,Tim Hardaway Jr.,0.55,0.25,0.092,0.0,0.0,0.342
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Aday Mara,Oklahoma City Thunder,Rotation / depth,bench_scoring,3.54,Tim Hardaway Jr.,0.55,0.274,0.049,0.0,0.0,0.324
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,bench_scoring,3.18,Tim Hardaway Jr.,0.55,0.238,0.084,0.0,0.0,0.322
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Brayden Burries,Milwaukee Bucks,Rotation / depth,bench_scoring,2.62,Tim Hardaway Jr.,0.55,0.195,0.101,0.0,0.0,0.295
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Peyton Watson,Cleveland Cavaliers,Rotation / depth,bench_scoring,2.41,Tim Hardaway Jr.,0.55,0.214,0.07,0.0,0.0,0.284
-Miami Heat,0.1,Giannis Antetokounmpo,shooting,Kelly Oubre Jr.,Indiana Pacers,Rotation / depth,bench_scoring,2.53,Tim Hardaway Jr.,0.55,0.202,0.075,0.0,0.0,0.277
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Jaime Jaquez Jr.,2.51,0.192,0.049,0.0,0.0,0.241
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Jaime Jaquez Jr.,2.51,0.179,0.053,0.0,0.0,0.232
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Jaime Jaquez Jr.,2.51,0.138,0.048,0.0,0.0,0.186
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Jaime Jaquez Jr.,2.51,0.128,0.055,0.0,0.0,0.183
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Jaime Jaquez Jr.,2.51,0.117,0.046,0.0,0.0,0.163
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Javon Small,Memphis Grizzlies,Rotation / depth,playmaking,3.16,Nate Ament,1.39,0.164,0.024,0.0,0.038,0.15
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Jaime Jaquez Jr.,2.51,0.096,0.051,0.0,0.0,0.147
-Milwaukee Bucks,-9.2,No clear star in this data,perimeter_defense,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Jaime Jaquez Jr.,2.51,0.091,0.052,0.0,0.0,0.142
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Rudy Gobert,3.41,0.093,0.067,0.0,0.0,0.16
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Rudy Gobert,3.41,0.074,0.084,0.0,0.0,0.158
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,shooting,3.76,Rudy Gobert,3.41,0.035,0.075,0.0,0.0,0.11
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,3.22,Joan Beringer,3.03,0.019,0.087,0.0,0.0,0.106
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Rotation / depth,rim_protection,3.54,LaMelo Ball,2.6,0.087,0.015,0.0,0.0,0.102
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,shooting,3.61,Rudy Gobert,3.41,0.019,0.093,0.0,0.011,0.101
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Rudy Gobert,3.41,0.038,0.063,0.0,0.0,0.101
-Minnesota Timberwolves,8.3,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Rotation / depth,shooting,3.47,Rudy Gobert,3.41,0.006,0.088,0.0,0.0,0.093
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Herbert Jones,1.38,0.309,0.065,0.0,0.0,0.374
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Paul Reed,Detroit Pistons,High-value starter,rebounding,4.27,Jordan Poole,3.07,0.131,0.046,0.0,0.0,0.178
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Jakob Poeltl,Toronto Raptors,Rotation / depth,rebounding,3.71,Jordan Poole,3.07,0.063,0.034,0.0,0.0,0.097
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,shooting,3.76,Dejounte Murray,3.72,0.003,0.085,0.0,0.0,0.088
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Aday Mara,Oklahoma City Thunder,Rotation / depth,rebounding,3.54,Jordan Poole,3.07,0.043,0.036,0.0,0.0,0.08
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,3.43,Jordan Poole,3.07,0.038,0.036,0.0,0.0,0.074
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Robert Williams III,Portland Trail Blazers,Undervalued / buy-low,rebounding,3.79,Jordan Poole,3.07,0.049,0.029,0.0,0.008,0.071
-New Orleans Pelicans,-6.1,Zion Williamson,shooting,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,shooting,3.61,Dejounte Murray,3.72,-0.011,0.079,0.0,0.007,0.061
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Landry Shamet,2.01,0.246,0.126,0.0,0.0,0.372
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Landry Shamet,2.01,0.193,0.086,0.0,0.0,0.279
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Landry Shamet,2.01,0.179,0.087,0.0,0.0,0.266
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Landry Shamet,2.01,0.165,0.087,0.0,0.0,0.251
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Landry Shamet,2.01,0.143,0.102,0.0,0.0,0.244
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,3.43,Landry Shamet,2.01,0.147,0.094,0.0,0.0,0.241
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Quenton Jackson,Indiana Pacers,Rotation / depth,perimeter_defense,3.47,Landry Shamet,2.01,0.135,0.096,0.0,0.0,0.23
-New York Knicks,4.5,Karl-Anthony Towns,perimeter_defense,Pelle Larsson,Miami Heat,Rotation / depth,perimeter_defense,3.11,Landry Shamet,2.01,0.13,0.082,0.0,0.0,0.212
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Paul Reed,Detroit Pistons,High-value starter,rebounding,4.27,Bennett Stirtz,1.79,0.27,0.076,0.0,0.0,0.346
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Jakob Poeltl,Toronto Raptors,Rotation / depth,rebounding,3.71,Bennett Stirtz,1.79,0.187,0.06,0.0,0.0,0.247
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,3.43,Bennett Stirtz,1.79,0.17,0.059,0.0,0.0,0.229
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,3.22,Micah Peavy,1.56,0.164,0.061,0.0,0.0,0.226
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,rebounding,3.18,Bennett Stirtz,1.79,0.125,0.069,0.0,0.0,0.194
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Bilal Coulibaly,Washington Wizards,Rotation / depth,rebounding,3.16,Bennett Stirtz,1.79,0.143,0.048,0.0,0.0,0.19
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rebounding,3.05,Bennett Stirtz,1.79,0.124,0.062,0.0,0.0,0.186
-Oklahoma City Thunder,4.4,Shai Gilgeous-Alexander,shooting,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,rebounding,3.14,Bennett Stirtz,1.79,0.131,0.053,0.0,0.0,0.185
-Orlando Magic,-2.8,No clear star in this data,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,3.43,Jamal Cain,0.71,0.282,0.1,0.0,0.0,0.382
-Orlando Magic,-2.8,No clear star in this data,shooting,Kevin Huerter,Detroit Pistons,Rotation / depth,rim_protection,3.11,Jamal Cain,0.71,0.262,0.112,0.0,0.0,0.374
-Orlando Magic,-2.8,No clear star in this data,shooting,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,3.37,Jamal Cain,0.71,0.28,0.077,0.0,0.0,0.358
-Orlando Magic,-2.8,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Rotation / depth,rim_protection,3.54,Jamal Cain,0.71,0.26,0.093,0.0,0.0,0.353
-Orlando Magic,-2.8,No clear star in this data,shooting,Paul Reed,Detroit Pistons,High-value starter,bench_scoring,4.27,Jase Richardson,1.96,0.252,0.093,0.0,0.0,0.344
-Orlando Magic,-2.8,No clear star in this data,shooting,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,rim_protection,3.14,Jamal Cain,0.71,0.237,0.105,0.0,0.0,0.342
-Orlando Magic,-2.8,No clear star in this data,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Jase Richardson,1.96,0.242,0.092,0.0,0.0,0.334
-Orlando Magic,-2.8,No clear star in this data,shooting,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rim_protection,3.05,Jamal Cain,0.71,0.23,0.102,0.0,0.0,0.333
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Paul Reed,Detroit Pistons,High-value starter,rebounding,4.27,Anfernee Simons,2.02,0.245,0.099,0.0,0.0,0.344
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Jakob Poeltl,Toronto Raptors,Rotation / depth,rebounding,3.71,Anfernee Simons,2.02,0.164,0.082,0.0,0.0,0.246
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,rim_protection,3.76,Anfernee Simons,2.02,0.178,0.057,0.0,0.0,0.235
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,3.43,Anfernee Simons,2.02,0.146,0.083,0.0,0.0,0.229
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,3.37,Anfernee Simons,2.02,0.142,0.079,0.0,0.0,0.221
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Aday Mara,Oklahoma City Thunder,Rotation / depth,rim_protection,3.54,Anfernee Simons,2.02,0.14,0.075,0.0,0.0,0.214
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Derik Queen,New Orleans Pelicans,Rotation / depth,rebounding,3.18,Anfernee Simons,2.02,0.105,0.093,0.0,0.0,0.198
-Philadelphia 76ers,1.4,Tyrese Maxey,rebounding,Bilal Coulibaly,Washington Wizards,Rotation / depth,rim_protection,3.16,Anfernee Simons,2.02,0.119,0.076,0.0,0.0,0.195
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,rim_protection,4.27,Luke Kennard,1.9,0.258,0.117,0.0,0.0,0.375
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,perimeter_defense,3.75,Luke Kennard,1.9,0.206,0.09,0.0,0.0,0.296
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.76,Luke Kennard,1.9,0.191,0.086,0.0,0.0,0.277
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Jakob Poeltl,Toronto Raptors,Rotation / depth,perimeter_defense,3.71,Luke Kennard,1.9,0.176,0.093,0.0,0.0,0.269
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,3.43,Luke Kennard,1.9,0.159,0.099,0.0,0.0,0.258
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,3.37,Luke Kennard,1.9,0.155,0.095,0.0,0.0,0.25
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Quenton Jackson,Indiana Pacers,Rotation / depth,perimeter_defense,3.47,Luke Kennard,1.9,0.145,0.086,0.0,0.0,0.231
-Phoenix Suns,-0.4,Miles Bridges,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,3.18,Luke Kennard,1.9,0.116,0.11,0.0,0.0,0.226
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Ivica Zubac,Indiana Pacers,Rotation / depth,rebounding,2.86,Scoot Henderson,-0.22,0.3,0.041,0.0,0.034,0.307
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Zach Edey,Memphis Grizzlies,Rotation / depth,rebounding,3.22,Scoot Henderson,-0.22,0.299,0.026,0.0,0.033,0.293
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Khaman Maluach,Phoenix Suns,Rotation / depth,rebounding,2.84,Scoot Henderson,-0.22,0.237,0.023,0.0,0.026,0.234
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Joan Beringer,Minnesota Timberwolves,Undervalued / buy-low,rebounding,3.03,Scoot Henderson,-0.22,0.229,0.023,0.0,0.025,0.227
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Paul Reed,Detroit Pistons,High-value starter,perimeter_defense,4.27,Damian Lillard,3.19,0.118,0.078,0.0,0.0,0.195
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Charles Bassey,Golden State Warriors,Rotation / depth,rebounding,2.85,Scoot Henderson,-0.22,0.19,0.021,0.0,0.021,0.19
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Trey Lyles,Minnesota Timberwolves,Rotation / depth,rebounding,2.22,Scoot Henderson,-0.22,0.192,0.017,0.0,0.021,0.188
-Portland Trail Blazers,6.1,Donovan Clingan,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,High-value starter,perimeter_defense,4.06,Damian Lillard,3.19,0.1,0.072,0.0,0.0,0.172
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Paul Reed,Detroit Pistons,High-value starter,rim_protection,4.27,De'Andre Hunter,1.67,0.283,0.155,0.0,0.0,0.438
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Ajay Mitchell,Oklahoma City Thunder,High-value starter,rim_protection,4.06,De'Andre Hunter,1.67,0.276,0.147,0.0,0.0,0.423
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,rim_protection,3.75,De'Andre Hunter,1.67,0.232,0.133,0.0,0.0,0.365
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,rim_protection,3.76,De'Andre Hunter,1.67,0.214,0.133,0.0,0.0,0.347
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Jakob Poeltl,Toronto Raptors,Rotation / depth,rim_protection,3.71,De'Andre Hunter,1.67,0.198,0.14,0.0,0.0,0.339
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,3.37,De'Andre Hunter,1.67,0.179,0.145,0.0,0.0,0.324
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,Bilal Coulibaly,Washington Wizards,Rotation / depth,rim_protection,3.16,De'Andre Hunter,1.67,0.155,0.136,0.0,0.0,0.291
-Sacramento Kings,-9.1,Domantas Sabonis,rim_protection,CJ McCollum,Atlanta Hawks,Rotation / depth,rim_protection,3.01,De'Andre Hunter,1.67,0.148,0.141,0.0,0.0,0.289
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Paul Reed,Detroit Pistons,High-value starter,bench_scoring,4.27,Luke Kornet,2.14,0.232,0.099,0.0,0.0,0.331
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Luke Kornet,2.14,0.222,0.106,0.0,0.0,0.327
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,shooting,3.76,Luke Kornet,2.14,0.166,0.112,0.0,0.0,0.278
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,shooting,3.75,Luke Kornet,2.14,0.179,0.082,0.0,0.0,0.261
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,CJ McCollum,Atlanta Hawks,Rotation / depth,shooting,3.01,Luke Kornet,2.14,0.096,0.135,0.0,0.0,0.231
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,3.18,Luke Kornet,2.14,0.105,0.125,0.0,0.0,0.23
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,shooting,3.61,Luke Kornet,2.14,0.142,0.113,0.0,0.025,0.229
-San Antonio Spurs,9.1,Victor Wembanyama,shooting,Quenton Jackson,Indiana Pacers,Rotation / depth,shooting,3.47,Luke Kornet,2.14,0.123,0.102,0.0,0.0,0.225
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Ajay Mitchell,Oklahoma City Thunder,High-value starter,rim_protection,4.06,Jamison Battle,1.59,0.285,0.106,0.0,0.0,0.392
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,rim_protection,3.75,Jamison Battle,1.59,0.24,0.1,0.0,0.0,0.341
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,3.43,Jamison Battle,1.59,0.191,0.114,0.0,0.0,0.305
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Rotation / depth,rim_protection,3.54,Jamison Battle,1.59,0.179,0.119,0.0,0.0,0.298
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,rim_protection,3.76,Jamison Battle,1.59,0.222,0.074,0.0,0.0,0.296
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,3.37,Jamison Battle,1.59,0.187,0.106,0.0,0.0,0.293
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Bilal Coulibaly,Washington Wizards,Rotation / depth,rim_protection,3.16,Jamison Battle,1.59,0.163,0.104,0.0,0.0,0.268
-Toronto Raptors,-0.1,No clear star in this data,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,3.18,Jamison Battle,1.59,0.143,0.123,0.0,0.0,0.266
-Utah Jazz,-3.3,No clear star in this data,shooting,Ajay Mitchell,Oklahoma City Thunder,High-value starter,bench_scoring,4.06,Josh Green,1.3,0.319,0.137,0.0,0.0,0.456
-Utah Jazz,-3.3,No clear star in this data,shooting,Paul Reed,Detroit Pistons,High-value starter,bench_scoring,4.27,Josh Green,1.3,0.324,0.12,0.0,0.0,0.444
-Utah Jazz,-3.3,No clear star in this data,shooting,Pelle Larsson,Miami Heat,Rotation / depth,playmaking,3.11,Josh Green,1.3,0.214,0.153,0.0,0.0,0.366
-Utah Jazz,-3.3,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Rotation / depth,playmaking,3.47,Josh Green,1.3,0.2,0.147,0.0,0.0,0.347
-Utah Jazz,-3.3,No clear star in this data,shooting,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,3.22,Josh Green,1.3,0.19,0.131,0.0,0.0,0.321
-Utah Jazz,-3.3,No clear star in this data,shooting,Naji Marshall,Dallas Mavericks,Rotation / depth,playmaking,2.76,Josh Green,1.3,0.152,0.151,0.0,0.0,0.303
-Utah Jazz,-3.3,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,3.18,Josh Okogie,1.76,0.143,0.16,0.0,0.0,0.303
-Utah Jazz,-3.3,No clear star in this data,shooting,CJ McCollum,Atlanta Hawks,Rotation / depth,shooting,3.01,Josh Okogie,1.76,0.138,0.164,0.0,0.0,0.301
-Washington Wizards,-6.5,Anthony Davis,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,3.18,Deandre Ayton,1.78,0.141,0.245,0.0,0.0,0.387
-Washington Wizards,-6.5,Anthony Davis,shooting,CJ McCollum,Atlanta Hawks,Rotation / depth,shooting,3.01,Deandre Ayton,1.78,0.136,0.245,0.0,0.0,0.381
-Washington Wizards,-6.5,Anthony Davis,shooting,Dean Wade,Philadelphia 76ers,Undervalued / buy-low,shooting,3.75,Deandre Ayton,1.78,0.22,0.153,0.0,0.0,0.373
-Washington Wizards,-6.5,Anthony Davis,shooting,Quentin Grimes,Los Angeles Lakers,Rotation / depth,shooting,2.94,Deandre Ayton,1.78,0.139,0.225,0.0,0.0,0.365
-Washington Wizards,-6.5,Anthony Davis,shooting,Matisse Thybulle,Los Angeles Lakers,Rotation / depth,shooting,3.76,Deandre Ayton,1.78,0.203,0.151,0.0,0.0,0.354
-Washington Wizards,-6.5,Anthony Davis,shooting,Kevin Huerter,Detroit Pistons,Rotation / depth,shooting,3.11,Deandre Ayton,1.78,0.145,0.201,0.0,0.0,0.346
-Washington Wizards,-6.5,Anthony Davis,shooting,Ziaire Williams,Los Angeles Lakers,Undervalued / buy-low,shooting,3.61,Deandre Ayton,1.78,0.177,0.203,0.0,0.038,0.342
-Washington Wizards,-6.5,Anthony Davis,shooting,Aaron Wiggins,Atlanta Hawks,Rotation / depth,shooting,2.63,Deandre Ayton,1.78,0.091,0.244,0.0,0.0,0.335
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.0,Luguentz Dort,-0.82,0.198,0.048,0.0,0.0,0.246
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Luguentz Dort,-0.82,0.146,0.048,0.0,0.0,0.194
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Matisse Thybulle,Los Angeles Lakers,Elite role player,rim_protection,0.67,Luguentz Dort,-0.82,0.153,0.04,0.0,0.0,0.193
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Ajay Mitchell,Oklahoma City Thunder,Elite role player,rim_protection,0.55,Luguentz Dort,-0.82,0.158,0.033,0.0,0.0,0.191
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Dean Wade,Philadelphia 76ers,Rotation / depth,rim_protection,0.42,Luguentz Dort,-0.82,0.137,0.037,0.0,0.0,0.175
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Luguentz Dort,-0.82,0.117,0.048,0.0,0.0,0.165
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,0.44,Luguentz Dort,-0.82,0.114,0.044,0.0,0.0,0.157
+Atlanta Hawks,-0.8,Dyson Daniels,rim_protection,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,0.2,Luguentz Dort,-0.82,0.108,0.043,0.0,0.0,0.151
+Boston Celtics,4.5,No clear star in this data,rim_protection,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.0,Baylor Scheierman,0.07,0.101,0.086,0.0,0.0,0.186
+Boston Celtics,4.5,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Baylor Scheierman,0.07,0.064,0.074,0.0,0.0,0.138
+Boston Celtics,4.5,No clear star in this data,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,rim_protection,1.13,Baylor Scheierman,0.07,0.085,0.058,0.0,0.014,0.128
+Boston Celtics,4.5,No clear star in this data,rim_protection,Ajay Mitchell,Oklahoma City Thunder,Elite role player,rim_protection,0.55,Baylor Scheierman,0.07,0.055,0.07,0.0,0.0,0.124
+Boston Celtics,4.5,No clear star in this data,rim_protection,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,0.22,Jordan Walsh,-0.55,0.077,0.046,0.0,0.0,0.123
+Boston Celtics,4.5,No clear star in this data,rim_protection,Matisse Thybulle,Los Angeles Lakers,Elite role player,rim_protection,0.67,Baylor Scheierman,0.07,0.061,0.056,0.0,0.0,0.118
+Boston Celtics,4.5,No clear star in this data,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,0.44,Baylor Scheierman,0.07,0.033,0.079,0.0,0.0,0.112
+Boston Celtics,4.5,No clear star in this data,rim_protection,Tyrese Proctor,Cleveland Cavaliers,Elite role player,playmaking,0.55,Jordan Walsh,-0.55,0.094,0.028,0.0,0.012,0.109
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Chaney Johnson,-0.79,0.137,0.088,0.0,0.0,0.225
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Chaney Johnson,-0.79,0.15,0.073,0.0,0.0,0.223
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Chaney Johnson,-0.79,0.154,0.093,0.0,0.025,0.222
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Chaney Johnson,-0.79,0.093,0.104,0.0,0.0,0.197
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Dean Wade,Philadelphia 76ers,Rotation / depth,shooting,0.42,Chaney Johnson,-0.79,0.134,0.056,0.0,0.0,0.191
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,shooting,0.11,Chaney Johnson,-0.79,0.082,0.108,0.0,0.0,0.19
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Chaney Johnson,-0.79,0.114,0.095,0.0,0.021,0.188
+Brooklyn Nets,-5.7,Day'Ron Sharpe,shooting,Max Strus,LA Clippers,Rotation / depth,shooting,0.35,Chaney Johnson,-0.79,0.112,0.108,0.0,0.044,0.176
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Dennis Schroder,-2.71,0.347,0.063,0.0,0.0,0.411
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.31,Dennis Schroder,-2.71,0.313,0.049,0.0,0.0,0.362
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,perimeter_defense,0.19,Dennis Schroder,-2.71,0.283,0.052,0.0,0.0,0.335
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Bilal Coulibaly,Washington Wizards,Rotation / depth,perimeter_defense,0.03,Dennis Schroder,-2.71,0.285,0.036,0.0,0.0,0.322
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Sam Hauser,Boston Celtics,Rotation / depth,shooting,0.02,Dennis Schroder,-2.71,0.231,0.051,0.0,0.0,0.282
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.0,Tidjane Salaun,-0.27,0.138,0.119,0.0,0.0,0.257
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Tidjane Salaun,-0.27,0.095,0.138,0.0,0.0,0.233
+Charlotte Hornets,-5.4,No clear star in this data,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.13,Tidjane Salaun,-0.27,0.112,0.119,0.0,0.023,0.208
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Caleb Wilson,-0.88,0.166,0.02,0.0,0.0,0.185
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Norman Powell,-0.53,0.166,0.019,0.0,0.0,0.185
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.69,Caleb Wilson,-0.88,0.145,0.017,0.0,0.0,0.163
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.13,Caleb Wilson,-0.88,0.161,0.016,0.0,0.018,0.159
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,0.77,Norman Powell,-0.53,0.119,0.014,0.0,0.0,0.133
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,0.22,Caleb Wilson,-0.88,0.11,0.023,0.0,0.0,0.133
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Derik Queen,New Orleans Pelicans,Rotation / depth,playmaking,0.44,Caleb Wilson,-0.88,0.12,0.012,0.0,0.0,0.132
+Chicago Bulls,-3.5,Jalen Smith,playmaking,Tyrese Proctor,Cleveland Cavaliers,Elite role player,playmaking,0.55,Caleb Wilson,-0.88,0.122,0.015,0.0,0.014,0.123
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Tyrese Proctor,0.55,0.048,0.036,0.0,0.0,0.085
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.13,Tyrese Proctor,0.55,0.046,0.03,0.0,0.008,0.069
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,perimeter_defense,0.77,Tyrese Proctor,0.55,0.02,0.027,0.0,0.0,0.048
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,Tyrese Proctor,0.55,0.012,0.034,0.0,0.0,0.046
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Tyrese Proctor,0.55,0.013,0.029,0.0,0.0,0.042
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Javon Small,Memphis Grizzlies,Rotation / depth,rebounding,0.36,Meleek Thomas,-0.14,0.047,0.003,0.0,0.01,0.039
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,Elite role player,perimeter_defense,0.55,Tyrese Proctor,0.55,-0.001,0.03,0.0,0.0,0.029
+Cleveland Cavaliers,1.0,Jarrett Allen,perimeter_defense,Jalen Slawson,Indiana Pacers,Rotation / depth,perimeter_defense,0.63,Tyrese Proctor,0.55,0.004,0.026,0.0,0.003,0.027
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Paul Reed,Detroit Pistons,Elite role player,shooting,1.0,Morez Johnson Jr.,-0.89,0.205,0.054,0.0,0.0,0.259
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Morez Johnson Jr.,-0.89,0.16,0.078,0.0,0.0,0.238
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,shooting,0.55,Morez Johnson Jr.,-0.89,0.166,0.066,0.0,0.0,0.232
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Morez Johnson Jr.,-0.89,0.162,0.084,0.0,0.025,0.221
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Morez Johnson Jr.,-0.89,0.146,0.073,0.0,0.0,0.218
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Morez Johnson Jr.,-0.89,0.102,0.098,0.0,0.0,0.2
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Dean Wade,Philadelphia 76ers,Rotation / depth,shooting,0.42,Morez Johnson Jr.,-0.89,0.145,0.054,0.0,0.0,0.199
+Dallas Mavericks,1.0,Cooper Flagg,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Morez Johnson Jr.,-0.89,0.122,0.091,0.0,0.021,0.192
+Denver Nuggets,1.3,Nikola Jokic,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.0,Cameron Johnson,-1.28,0.248,0.06,0.0,0.0,0.308
+Denver Nuggets,1.3,Nikola Jokic,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Cameron Johnson,-1.28,0.188,0.042,0.0,0.0,0.23
+Denver Nuggets,1.3,Nikola Jokic,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Marvin Bagley III,0.21,0.073,0.154,0.0,0.023,0.205
+Denver Nuggets,1.3,Nikola Jokic,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Cameron Johnson,-1.28,0.165,0.04,0.0,0.0,0.204
+Denver Nuggets,1.3,Nikola Jokic,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Marvin Bagley III,0.21,0.047,0.157,0.0,0.0,0.204
+Denver Nuggets,1.3,Nikola Jokic,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Marvin Bagley III,0.21,0.044,0.139,0.0,0.0,0.183
+Denver Nuggets,1.3,Nikola Jokic,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,shooting,0.11,Marvin Bagley III,0.21,-0.01,0.189,0.0,0.0,0.179
+Denver Nuggets,1.3,Nikola Jokic,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Marvin Bagley III,0.21,0.029,0.169,0.0,0.02,0.178
+Detroit Pistons,4.3,Cade Cunningham,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,0.77,Duncan Robinson,0.2,0.053,0.03,0.0,0.0,0.083
+Detroit Pistons,4.3,Cade Cunningham,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,bench_scoring,0.55,Ronald Holland II,0.31,0.028,0.028,0.0,0.0,0.056
+Detroit Pistons,4.3,Cade Cunningham,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,rebounding,0.44,Duncan Robinson,0.2,0.022,0.031,0.0,0.0,0.053
+Detroit Pistons,4.3,Cade Cunningham,shooting,Khaman Maluach,Phoenix Suns,Rotation / depth,rebounding,0.51,Duncan Robinson,0.2,0.024,0.027,0.0,0.005,0.046
+Detroit Pistons,4.3,Cade Cunningham,shooting,Jalen Slawson,Indiana Pacers,Rotation / depth,rebounding,0.63,Duncan Robinson,0.2,0.025,0.022,0.0,0.005,0.042
+Detroit Pistons,4.3,Cade Cunningham,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,0.31,Duncan Robinson,0.2,0.012,0.029,0.0,0.0,0.04
+Detroit Pistons,4.3,Cade Cunningham,shooting,Luke Kornet,San Antonio Spurs,Rotation / depth,rebounding,0.29,Duncan Robinson,0.2,0.005,0.023,0.0,0.003,0.025
+Detroit Pistons,4.3,Cade Cunningham,shooting,Oso Ighodaro,Phoenix Suns,Rotation / depth,rebounding,0.11,Duncan Robinson,0.2,-0.008,0.032,0.0,0.0,0.024
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Georges Niang,-1.21,0.24,0.073,0.0,0.0,0.313
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Georges Niang,-1.21,0.182,0.056,0.0,0.0,0.238
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,Georges Niang,-1.21,0.193,0.045,0.0,0.0,0.237
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,Georges Niang,-1.21,0.181,0.047,0.0,0.0,0.228
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Georges Niang,-1.21,0.176,0.051,0.0,0.0,0.227
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.31,Georges Niang,-1.21,0.158,0.062,0.0,0.0,0.22
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.44,Georges Niang,-1.21,0.149,0.069,0.0,0.0,0.219
+Golden State Warriors,0.8,Stephen Curry,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.13,Georges Niang,-1.21,0.188,0.044,0.0,0.023,0.208
+Houston Rockets,6.4,Alperen Sengun,shooting,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Bogdan Bogdanovic,-0.53,0.167,0.04,0.0,0.0,0.207
+Houston Rockets,6.4,Alperen Sengun,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,perimeter_defense,0.55,Bogdan Bogdanovic,-0.53,0.125,0.037,0.0,0.0,0.162
+Houston Rockets,6.4,Alperen Sengun,shooting,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Bogdan Bogdanovic,-0.53,0.113,0.037,0.0,0.0,0.151
+Houston Rockets,6.4,Alperen Sengun,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,perimeter_defense,0.77,Bogdan Bogdanovic,-0.53,0.12,0.03,0.0,0.0,0.15
+Houston Rockets,6.4,Alperen Sengun,shooting,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,Bogdan Bogdanovic,-0.53,0.106,0.036,0.0,0.0,0.142
+Houston Rockets,6.4,Alperen Sengun,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.44,Bogdan Bogdanovic,-0.53,0.088,0.038,0.0,0.0,0.126
+Houston Rockets,6.4,Alperen Sengun,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.31,Bogdan Bogdanovic,-0.53,0.088,0.039,0.0,0.0,0.126
+Houston Rockets,6.4,Alperen Sengun,shooting,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,0.2,Bogdan Bogdanovic,-0.53,0.078,0.039,0.0,0.0,0.117
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Obi Toppin,-0.29,0.14,0.151,0.0,0.0,0.291
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,Obi Toppin,-0.29,0.098,0.147,0.0,0.0,0.246
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,Elite role player,perimeter_defense,0.55,Obi Toppin,-0.29,0.097,0.13,0.0,0.0,0.227
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.13,Obi Toppin,-0.29,0.114,0.131,0.0,0.024,0.22
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.44,Obi Toppin,-0.29,0.066,0.139,0.0,0.0,0.205
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,Obi Toppin,-0.29,0.079,0.123,0.0,0.0,0.201
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.31,Obi Toppin,-0.29,0.062,0.138,0.0,0.0,0.2
+Indiana Pacers,-3.4,No clear star in this data,perimeter_defense,De'Anthony Melton,Golden State Warriors,Rotation / depth,perimeter_defense,0.11,Obi Toppin,-0.29,0.036,0.161,0.0,0.0,0.197
+LA Clippers,-4.2,No clear star in this data,rebounding,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Darius Garland,-1.95,0.321,0.082,0.0,0.0,0.403
+LA Clippers,-4.2,No clear star in this data,rebounding,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,Darius Garland,-1.95,0.264,0.064,0.0,0.0,0.327
+LA Clippers,-4.2,No clear star in this data,rebounding,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,Darius Garland,-1.95,0.269,0.056,0.0,0.0,0.325
+LA Clippers,-4.2,No clear star in this data,rebounding,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,0.77,Darius Garland,-1.95,0.25,0.069,0.0,0.0,0.319
+LA Clippers,-4.2,No clear star in this data,rebounding,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,0.31,Darius Garland,-1.95,0.234,0.078,0.0,0.0,0.313
+LA Clippers,-4.2,No clear star in this data,rebounding,Derik Queen,New Orleans Pelicans,Rotation / depth,rebounding,0.44,Darius Garland,-1.95,0.217,0.077,0.0,0.0,0.293
+LA Clippers,-4.2,No clear star in this data,rebounding,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,0.2,Darius Garland,-1.95,0.227,0.066,0.0,0.0,0.293
+LA Clippers,-4.2,No clear star in this data,rebounding,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,perimeter_defense,0.19,Darius Garland,-1.95,0.209,0.073,0.0,0.0,0.282
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,0.31,Collin Sexton,-1.09,0.145,0.026,0.0,0.0,0.171
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,rebounding,0.19,Collin Sexton,-1.09,0.125,0.027,0.0,0.0,0.151
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Bilal Coulibaly,Washington Wizards,Rotation / depth,rebounding,0.03,Collin Sexton,-1.09,0.116,0.022,0.0,0.0,0.138
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Khaman Maluach,Phoenix Suns,Rotation / depth,rebounding,0.51,Collin Sexton,-1.09,0.124,0.023,0.0,0.015,0.132
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Ryan Dunn,Phoenix Suns,Rotation / depth,rebounding,0.4,Collin Sexton,-1.09,0.104,0.02,0.0,0.012,0.112
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.0,Matisse Thybulle,0.67,0.035,0.069,0.0,0.0,0.104
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Kel'el Ware,Milwaukee Bucks,Rotation / depth,rebounding,0.05,Collin Sexton,-1.09,0.088,0.024,0.0,0.011,0.101
+Los Angeles Lakers,3.9,Walker Kessler,playmaking,Luke Kornet,San Antonio Spurs,Rotation / depth,rebounding,0.29,Collin Sexton,-1.09,0.085,0.019,0.0,0.01,0.094
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.0,Jaylen Wells,-0.43,0.156,0.097,0.0,0.0,0.252
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Matisse Thybulle,Los Angeles Lakers,Elite role player,rim_protection,0.67,Jaylen Wells,-0.43,0.113,0.088,0.0,0.0,0.201
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Ajay Mitchell,Oklahoma City Thunder,Elite role player,rim_protection,0.55,Jaylen Wells,-0.43,0.113,0.08,0.0,0.0,0.193
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Jaylen Wells,-0.43,0.111,0.08,0.0,0.0,0.191
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Dean Wade,Philadelphia 76ers,Rotation / depth,rim_protection,0.42,Jaylen Wells,-0.43,0.094,0.084,0.0,0.0,0.179
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Jaylen Wells,-0.43,0.077,0.096,0.0,0.0,0.173
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,0.44,Jaylen Wells,-0.43,0.079,0.089,0.0,0.0,0.168
+Memphis Grizzlies,5.5,Cedric Coward,rim_protection,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,0.2,Jaylen Wells,-0.43,0.067,0.092,0.0,0.0,0.159
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,bench_scoring,0.55,Tim Hardaway Jr.,-1.36,0.221,0.063,0.0,0.0,0.284
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Klay Thompson,-0.08,0.118,0.046,0.0,0.0,0.164
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Pelle Larsson,-0.44,0.114,0.05,0.0,0.0,0.164
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Pelle Larsson,-0.44,0.126,0.051,0.0,0.018,0.16
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Pelle Larsson,-0.44,0.084,0.067,0.0,0.015,0.136
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Pelle Larsson,-0.44,0.105,0.031,0.0,0.0,0.135
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,shooting,0.11,Pelle Larsson,-0.44,0.05,0.078,0.0,0.0,0.128
+Miami Heat,0.4,Giannis Antetokounmpo,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Pelle Larsson,-0.44,0.057,0.068,0.0,0.0,0.125
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.0,Jaime Jaquez Jr.,-0.93,0.21,0.042,0.0,0.0,0.253
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Ajay Mitchell,Oklahoma City Thunder,Elite role player,rim_protection,0.55,Jaime Jaquez Jr.,-0.93,0.172,0.044,0.0,0.0,0.215
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Matisse Thybulle,Los Angeles Lakers,Elite role player,rim_protection,0.67,Jaime Jaquez Jr.,-0.93,0.165,0.044,0.0,0.0,0.209
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Jaime Jaquez Jr.,-0.93,0.157,0.037,0.0,0.0,0.194
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Dean Wade,Philadelphia 76ers,Rotation / depth,rim_protection,0.42,Jaime Jaquez Jr.,-0.93,0.15,0.038,0.0,0.0,0.188
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Jaime Jaquez Jr.,-0.93,0.15,0.031,0.0,0.0,0.181
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,rim_protection,1.13,Jaime Jaquez Jr.,-0.93,0.165,0.036,0.0,0.02,0.181
+Milwaukee Bucks,-8.3,No clear star in this data,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Jaime Jaquez Jr.,-0.93,0.129,0.043,0.0,0.0,0.173
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Terrence Shannon Jr.,-0.47,0.16,0.031,0.0,0.0,0.191
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,LaMelo Ball,-0.97,0.16,0.015,0.0,0.0,0.175
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Rudy Gobert,-0.26,0.111,0.08,0.0,0.019,0.172
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Rudy Gobert,-0.26,0.088,0.075,0.0,0.0,0.163
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Rudy Gobert,-0.26,0.096,0.067,0.0,0.0,0.163
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Rudy Gobert,-0.26,0.094,0.068,0.0,0.0,0.162
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Rudy Gobert,-0.26,0.039,0.098,0.0,0.0,0.136
+Minnesota Timberwolves,6.1,No clear star in this data,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Rudy Gobert,-0.26,0.069,0.075,0.0,0.014,0.13
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Dejounte Murray,-0.24,0.093,0.085,0.0,0.0,0.178
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Dejounte Murray,-0.24,0.109,0.072,0.0,0.018,0.163
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Dejounte Murray,-0.24,0.067,0.086,0.0,0.015,0.138
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Dejounte Murray,-0.24,0.036,0.1,0.0,0.0,0.136
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Dejounte Murray,-0.24,0.086,0.047,0.0,0.0,0.132
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Max Strus,LA Clippers,Rotation / depth,shooting,0.35,Dejounte Murray,-0.24,0.058,0.1,0.0,0.032,0.126
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Jordan Poole,0.24,0.083,0.042,0.0,0.0,0.124
+New Orleans Pelicans,-3.9,Zion Williamson,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,shooting,0.11,Dejounte Murray,-0.24,0.032,0.093,0.0,0.0,0.124
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Landry Shamet,-1.25,0.245,0.144,0.0,0.0,0.389
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,Landry Shamet,-1.25,0.197,0.098,0.0,0.0,0.295
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.44,Landry Shamet,-1.25,0.153,0.141,0.0,0.0,0.294
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Landry Shamet,-1.25,0.179,0.112,0.0,0.0,0.292
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,Landry Shamet,-1.25,0.185,0.095,0.0,0.0,0.28
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.31,Landry Shamet,-1.25,0.162,0.106,0.0,0.0,0.268
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Jake LaRavia,Los Angeles Lakers,Rotation / depth,perimeter_defense,0.2,Landry Shamet,-1.25,0.153,0.113,0.0,0.0,0.266
+New York Knicks,3.3,Karl-Anthony Towns,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.13,Landry Shamet,-1.25,0.191,0.103,0.0,0.029,0.265
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Bilal Coulibaly,Washington Wizards,Rotation / depth,rim_protection,0.03,Jared McCain,-1.74,0.184,0.038,0.0,0.0,0.221
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rim_protection,0.09,Jared McCain,-1.74,0.179,0.041,0.0,0.0,0.22
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Oso Ighodaro,Phoenix Suns,Rotation / depth,rim_protection,0.11,Jared McCain,-1.74,0.174,0.032,0.0,0.0,0.206
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Khaman Maluach,Phoenix Suns,Rotation / depth,rim_protection,0.51,Jared McCain,-1.74,0.174,0.021,0.0,0.02,0.176
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Kenrich Williams,-0.05,0.114,0.059,0.0,0.0,0.173
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Luke Kornet,San Antonio Spurs,Rotation / depth,rim_protection,0.29,Jared McCain,-1.74,0.125,0.017,0.0,0.014,0.128
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Craig Porter Jr.,Cleveland Cavaliers,Rotation / depth,rim_protection,0.37,Jared McCain,-1.74,0.103,0.013,0.0,0.012,0.104
+Oklahoma City Thunder,2.9,Isaiah Hartenstein,shooting,Deandre Ayton,Washington Wizards,Rotation / depth,rim_protection,0.14,Jared McCain,-1.74,0.102,0.012,0.0,0.011,0.103
+Orlando Magic,-2.4,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Jamal Cain,-1.4,0.199,0.095,0.0,0.0,0.294
+Orlando Magic,-2.4,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Jamal Cain,-1.4,0.193,0.097,0.0,0.0,0.29
+Orlando Magic,-2.4,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Jase Richardson,-0.76,0.191,0.078,0.0,0.0,0.269
+Orlando Magic,-2.4,No clear star in this data,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Jamal Cain,-1.4,0.177,0.091,0.0,0.0,0.268
+Orlando Magic,-2.4,No clear star in this data,shooting,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,rim_protection,0.19,Jamal Cain,-1.4,0.155,0.098,0.0,0.0,0.253
+Orlando Magic,-2.4,No clear star in this data,shooting,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,0.2,Jamal Cain,-1.4,0.169,0.08,0.0,0.0,0.249
+Orlando Magic,-2.4,No clear star in this data,shooting,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rim_protection,0.09,Jamal Cain,-1.4,0.146,0.094,0.0,0.0,0.24
+Orlando Magic,-2.4,No clear star in this data,shooting,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,0.22,Jamal Cain,-1.4,0.161,0.07,0.0,0.0,0.231
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Anfernee Simons,-0.81,0.197,0.108,0.0,0.0,0.306
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Anfernee Simons,-0.81,0.146,0.092,0.0,0.0,0.238
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Anfernee Simons,-0.81,0.117,0.1,0.0,0.0,0.217
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Derik Queen,New Orleans Pelicans,Rotation / depth,rebounding,0.44,Anfernee Simons,-0.81,0.114,0.102,0.0,0.0,0.216
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,rim_protection,0.19,Anfernee Simons,-0.81,0.098,0.095,0.0,0.0,0.193
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rim_protection,0.09,Anfernee Simons,-0.81,0.088,0.099,0.0,0.0,0.187
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Bilal Coulibaly,Washington Wizards,Rotation / depth,rim_protection,0.03,Anfernee Simons,-0.81,0.088,0.093,0.0,0.0,0.181
+Philadelphia 76ers,1.9,Tyrese Maxey,rebounding,Oso Ighodaro,Phoenix Suns,Rotation / depth,rim_protection,0.11,Anfernee Simons,-0.81,0.087,0.08,0.0,0.0,0.168
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.0,Luke Kennard,-0.3,0.141,0.113,0.0,0.0,0.254
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Ajay Mitchell,Oklahoma City Thunder,Elite role player,perimeter_defense,0.55,Luke Kennard,-0.3,0.097,0.108,0.0,0.0,0.205
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,Luke Kennard,-0.3,0.099,0.088,0.0,0.0,0.187
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Luke Kennard,-0.3,0.098,0.088,0.0,0.0,0.186
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.13,Luke Kennard,-0.3,0.114,0.087,0.0,0.02,0.181
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.44,Luke Kennard,-0.3,0.067,0.109,0.0,0.0,0.175
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,Luke Kennard,-0.3,0.079,0.092,0.0,0.0,0.171
+Phoenix Suns,0.6,Miles Bridges,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.69,Luke Kennard,-0.3,0.091,0.079,0.0,0.0,0.17
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Khaman Maluach,Phoenix Suns,Rotation / depth,rebounding,0.51,Scoot Henderson,-3.13,0.282,0.038,0.0,0.032,0.288
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Sam Hauser,Boston Celtics,Rotation / depth,rebounding,0.02,Scoot Henderson,-3.13,0.267,0.01,0.0,0.0,0.277
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Kel'el Ware,Milwaukee Bucks,Rotation / depth,rebounding,0.05,Scoot Henderson,-3.13,0.247,0.043,0.0,0.029,0.261
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Ryan Dunn,Phoenix Suns,Rotation / depth,rebounding,0.4,Scoot Henderson,-3.13,0.247,0.035,0.0,0.028,0.254
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.0,Toumani Camara,-0.57,0.171,0.059,0.0,0.0,0.229
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Taylor Hendricks,Memphis Grizzlies,Rotation / depth,rebounding,0.52,Scoot Henderson,-3.13,0.212,0.027,0.0,0.024,0.214
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Toumani Camara,-0.57,0.13,0.049,0.0,0.0,0.178
+Portland Trail Blazers,5.0,Donovan Clingan,playmaking,Jabari Walker,Philadelphia 76ers,Rotation / depth,rebounding,0.17,Scoot Henderson,-3.13,0.185,0.013,0.0,0.02,0.178
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.0,De'Andre Hunter,-2.44,0.374,0.178,0.0,0.0,0.552
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Ajay Mitchell,Oklahoma City Thunder,Elite role player,perimeter_defense,0.55,De'Andre Hunter,-2.44,0.346,0.165,0.0,0.0,0.51
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Matisse Thybulle,Los Angeles Lakers,Elite role player,perimeter_defense,0.67,De'Andre Hunter,-2.44,0.319,0.156,0.0,0.0,0.475
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,De'Andre Hunter,-2.44,0.318,0.153,0.0,0.0,0.471
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,De'Andre Hunter,-2.44,0.295,0.152,0.0,0.0,0.446
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Jake LaRavia,Los Angeles Lakers,Rotation / depth,rim_protection,0.2,De'Andre Hunter,-2.44,0.278,0.167,0.0,0.0,0.446
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,0.44,De'Andre Hunter,-2.44,0.26,0.172,0.0,0.0,0.432
+Sacramento Kings,-8.1,Domantas Sabonis,rim_protection,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,rim_protection,0.09,De'Andre Hunter,-2.44,0.248,0.171,0.0,0.0,0.419
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Paul Reed,Detroit Pistons,Elite role player,bench_scoring,1.0,Luke Kornet,0.29,0.077,0.103,0.0,0.0,0.18
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Luke Kornet,0.29,0.068,0.108,0.0,0.018,0.158
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,0.77,Keldon Johnson,-0.38,0.106,0.049,0.0,0.0,0.156
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Matisse Thybulle,Los Angeles Lakers,Elite role player,shooting,0.67,Luke Kornet,0.29,0.04,0.114,0.0,0.0,0.154
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Luke Kornet,0.29,0.038,0.106,0.0,0.0,0.144
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,bench_scoring,0.55,Luke Kornet,0.29,0.03,0.109,0.0,0.0,0.14
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.31,Keldon Johnson,-0.38,0.072,0.058,0.0,0.0,0.13
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Luke Kornet,0.29,0.023,0.118,0.0,0.014,0.127
+Toronto Raptors,-1.8,No clear star in this data,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Jamison Battle,-0.75,0.15,0.068,0.0,0.0,0.219
+Toronto Raptors,-1.8,No clear star in this data,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,playmaking,0.44,Jamison Battle,-0.75,0.108,0.067,0.0,0.0,0.175
+Toronto Raptors,-1.8,No clear star in this data,shooting,Oso Ighodaro,Phoenix Suns,Rotation / depth,playmaking,0.11,Jamison Battle,-0.75,0.082,0.063,0.0,0.0,0.145
+Toronto Raptors,-1.8,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.0,Jamal Shead,0.22,0.084,0.043,0.0,0.0,0.127
+Toronto Raptors,-1.8,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Jakob Poeltl,0.79,0.027,0.092,0.0,0.012,0.107
+Toronto Raptors,-1.8,No clear star in this data,shooting,Craig Porter Jr.,Cleveland Cavaliers,Rotation / depth,playmaking,0.37,Jamison Battle,-0.75,0.055,0.047,0.0,0.01,0.092
+Toronto Raptors,-1.8,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.69,Jakob Poeltl,0.79,-0.009,0.085,0.0,0.0,0.076
+Toronto Raptors,-1.8,No clear star in this data,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Jakob Poeltl,0.79,-0.02,0.103,0.0,0.008,0.074
+Utah Jazz,-3.7,Mo Bamba,shooting,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.0,Josh Green,-1.12,0.23,0.109,0.0,0.0,0.339
+Utah Jazz,-3.7,Mo Bamba,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Josh Green,-1.12,0.193,0.126,0.0,0.0,0.319
+Utah Jazz,-3.7,Mo Bamba,shooting,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.69,Josh Green,-1.12,0.167,0.137,0.0,0.0,0.304
+Utah Jazz,-3.7,Mo Bamba,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,0.77,Josh Green,-1.12,0.173,0.093,0.0,0.0,0.266
+Utah Jazz,-3.7,Mo Bamba,shooting,Jamal Shead,Toronto Raptors,Rotation / depth,playmaking,0.22,Josh Green,-1.12,0.133,0.118,0.0,0.0,0.251
+Utah Jazz,-3.7,Mo Bamba,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,bench_scoring,0.44,Josh Green,-1.12,0.141,0.108,0.0,0.0,0.249
+Utah Jazz,-3.7,Mo Bamba,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Josh Okogie,-0.66,0.143,0.133,0.0,0.028,0.248
+Utah Jazz,-3.7,Mo Bamba,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Josh Okogie,-0.66,0.079,0.157,0.0,0.0,0.236
+Washington Wizards,-4.9,Anthony Davis,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.13,Deandre Ayton,0.14,0.079,0.2,0.0,0.028,0.251
+Washington Wizards,-4.9,Anthony Davis,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.12,Deandre Ayton,0.14,-0.002,0.237,0.0,0.0,0.235
+Washington Wizards,-4.9,Anthony Davis,shooting,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.69,Bilal Coulibaly,0.03,0.061,0.164,0.0,0.0,0.226
+Washington Wizards,-4.9,Anthony Davis,shooting,Tyrese Proctor,Cleveland Cavaliers,Elite role player,shooting,0.55,Deandre Ayton,0.14,0.035,0.208,0.0,0.024,0.218
+Washington Wizards,-4.9,Anthony Davis,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,shooting,0.11,Deandre Ayton,0.14,-0.003,0.22,0.0,0.0,0.217
+Washington Wizards,-4.9,Anthony Davis,shooting,Ajay Mitchell,Oklahoma City Thunder,Elite role player,playmaking,0.55,Bilal Coulibaly,0.03,0.06,0.149,0.0,0.0,0.21
+Washington Wizards,-4.9,Anthony Davis,shooting,Max Strus,LA Clippers,Rotation / depth,shooting,0.35,Deandre Ayton,0.14,0.02,0.235,0.0,0.051,0.204
+Washington Wizards,-4.9,Anthony Davis,shooting,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.0,Bilal Coulibaly,0.03,0.106,0.097,0.0,0.0,0.203

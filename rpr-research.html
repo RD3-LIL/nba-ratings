@@ -111,18 +111,29 @@ mostly prior; pretending otherwise is the main way this project would get
 worse while looking more sophisticated.</p>
 
 <section id="current-rpr"><h2>Where RPR stands now</h2>
-<p>The current formula (RPR v1.1 in this repo, see the note at the bottom):</p>
-<pre>RPR = (ORtg &minus; 100) &times; PossUsed/G / 100
-    + 0.5 &times; (AST &minus; TO)/G
-    + (STL + BLK)/G
-    + 0.25 &times; REB/G</pre>
-<p>ORtg is the fuller Oliver ORtg with assist credit. PossUsed/G is
-possessions used per game. Verified weaknesses: defence is STL+BLK only
-(misses positional defence, rim deterrence, point-of-attack defence);
-playmaking is AST&minus;TO only (misses creation gravity and spacing); no
-opponent adjustment at player level; no on/off; no tracking; no shot
-location; per-game volume leans on minutes (RPR correlates 0.64 with
-minutes share); and about 15-game samples are noisy.</p>
+<p>The current formula (RPR v1.2 in this repo, see the note at the bottom):</p>
+<pre>RPR v1.2 = (ORtg_adj &minus; league ORtg) &times; PossUsed/G / 100
+    + (0.5 &times; (AST36 &minus; TO36) &minus; 0.88) &times; MPG / 36
+    + ((STL36 + BLK36) &minus; 1.98) &times; MPG / 36
+    + (0.25 &times; REB36 &minus; 1.63) &times; MPG / 36</pre>
+<p>ORtg_adj is the <em>simple</em> ORtg (points per 100 possessions
+used, no assist credit), first shrunk toward the league-average
+ORtg (K = 200 possessions used) and then adjusted for the defences
+faced (OppAdj, shrunk toward 0 with K = 500 possessions faced).
+The fuller Oliver ORtg with assist credit is a separate column,
+ORtg_full, shown on the site next to the simple ORtg; it does not
+enter RPR. The counting terms are centered on their
+minutes-weighted league-average per-36 rates (0.88, 1.98, 1.63 on
+the Nov 20 run), so an average player scores about 0 from them.
+PossUsed/G is possessions used per game. Verified weaknesses:
+defence is STL+BLK only (misses positional defence, rim
+deterrence, point-of-attack defence); playmaking is AST&minus;TO
+only (misses creation gravity and spacing); no on/off; no
+tracking; no shot location; per-game volume leans on minutes;
+and about 15-game samples are noisy. Opponent adjustment at
+player level now exists (it did not in v1); the minutes
+correlation is gone as a free-credit problem, because the
+centering removes it.</p>
 <p class="note">Formula changes in the proposals below are labelled
 <strong>PROPOSAL</strong> where a coefficient is a choice, not a fact.
 Coefficients must be calibrated by the validation protocol in the
@@ -175,7 +186,7 @@ season. Manual or OpenRAPM snapshot only.</td></tr>
 </section>
 
 <section id="sources"><h2>What each free source adds</h2>
-<h3>stats.nba.com via <code>nba_api</code> (Python) &mdash; highest leverage</h3>
+<h3>stats.nba.com via <code>nba_api</code> (Python) - highest leverage</h3>
 <p>MIT-licensed Python wrapper around the undocumented JSON endpoints that
 power NBA.com stats, 130+ endpoints, no API key, no signup, $0.
 <code>pip install nba_api</code>. No documented rate limits, which is the
@@ -219,7 +230,7 @@ regression <em>trained to predict RAPM</em>, a linear combination of the
 same box-score inputs RPR already uses. Its proper role is validation
 benchmark, not ingredient.</p>
 
-<h3>Dunks and Threes &mdash; EPM</h3>
+<h3>Dunks and Threes - EPM</h3>
 <p>Per-100-possession impact metric (O-EPM / D-EPM / EPM), updated nightly,
 covering every day since 2001&ndash;02. Two components: a statistical
 plus-minus (SPM) model built on "Estimated Skills", and a RAPM calculation.
@@ -246,7 +257,7 @@ once bootstrap intervals are considered. Note: "DunkAPI" at dunkapi.com
 (500 free credits/month, $19/mo starter) is a <em>different, unrelated</em>
 product; do not confuse the two.</p>
 
-<h3>BBall-Index &mdash; LEBRON</h3>
+<h3>BBall-Index - LEBRON</h3>
 <p><strong>L</strong>uck-adjusted player <strong>E</strong>stimate using a
 <strong>B</strong>ox prior <strong>R</strong>egularized
 <strong>ON</strong>-off. Box-score prior (boxPIPM weights, stabilised by
@@ -265,7 +276,7 @@ that is not freely exportable. Validation: prior-season LEBRON game-margin
 R&sup2; = 0.159 (.142&ndash;.175), team win% r = .770, statistically
 indistinguishable from EPM / BPM / DARKO.</p>
 
-<h3>nbarapm.com &mdash; pure and factor RAPM</h3>
+<h3>nbarapm.com - pure and factor RAPM</h3>
 <p>Free site publishing RAPM (ridge regression of possession outcomes on who
 was on the floor, no box score at all) in rolling windows (2/3/4/5-year,
 time-decay) and a six-factor decomposition:
@@ -961,19 +972,70 @@ examined.</li>
 </ul>
 </section>
 
-<section id="v11"><h2>Where this project is: RPR v1.1 is step 1</h2>
-<p>Step 1 of the sequence above, shrinkage + opponent adjustment, is already
-built in this repo as RPR v1.1. As implemented in
+<section id="v12"><h2>Where this project is: RPR v1.2 is steps 1 and 2 of the fix</h2>
+<p>Step 1 of the sequence above, shrinkage + opponent adjustment, is
+already built in this repo as RPR v1.1. As implemented in
 <code>player_profiles.py</code>: ORtg is shrunk toward the league-average
 ORtg with K = 200 possessions used (split-half calibration on this season
 found the best K = 150 by MSE, with the curve essentially flat from 150 to
 250, so 200 is the midpoint); OppAdj is shrunk toward 0 with K = 500
 possessions faced; TS% and 3P% are also shrunk toward league rates (3P%
-m = 750 attempts). The old value is kept as <code>rpr_v1</code> in the CSVs,
-and <code>RPR_value = RPR v1.1 &times; GP / 82</code> is reported
+m = 750 attempts). The old values are kept as <code>rpr_v1</code>
+and <code>rpr_v1_1</code> in the CSVs,
+and <code>RPR_value = RPR v1.2 &times; GP / 82</code> is reported
 separately. No prior-season ORtg is used: the shrinkage pulls every player
-toward the same league average, rookies and veterans alike. Steps 2 and 3
-(the <code>nba_api</code> pull and the defence prior) are not built yet.</p>
+toward the same league average, rookies and veterans alike.</p>
+<p><strong>RPR v1.2 (Nov 20, 2026) recenters the counting terms.</strong>
+v1.1's flaw: the scoring term was capped by the ORtg gap while
+AST-TO, STL+BLK, and REB were unbounded positives, so only 8 of
+469 players were negative and the median was +2.19. v1.2 centers
+each counting term on its minutes-weighted league-average per-36
+rate (playmaking 0.88, defense 1.98, rebounding 1.63 on the Nov 20
+run; total 4.49 per 36), so an average player scores about 0 from
+those terms. The weights (0.5, 1, 0.25) are unchanged: the fix is
+centering, not re-weighting. The scoring center is the season
+league ORtg on the player scale (100.25), not 100 and not the
+team-scale 111.1; the two scales are never mixed. Position-specific
+centers were tested and rejected: a rebound is worth the same
+whoever gets it, and centering by position erased the real
+difference between a center who rebounds and a guard who does not
+(it dropped Jokic to 8th). Old values are kept as
+<code>rpr_v1</code> and <code>rpr_v1_1</code> in the CSVs and JSON.</p>
+<p>Validation, Nov 20 run (226 games, 469 players with an RPR,
+split-half n = 216):</p>
+<table>
+<thead><tr><th>Check</th><th>v1</th><th>v1.1</th><th>v1.2</th></tr></thead>
+<tbody>
+<tr><td>Split-half r</td><td>0.480</td><td>0.621</td><td>0.542</td></tr>
+<tr><td>Team aggregation r (n = 30)</td><td>0.718</td><td>0.683</td><td>0.747</td></tr>
+<tr><td>Median RPR</td><td>2.05</td><td>2.19</td><td>-0.10</td></tr>
+<tr><td>Share negative</td><td>11.5%</td><td>1.7%</td><td>55.7%</td></tr>
+<tr><td>Range</td><td>-4.00 to 11.80</td><td>-1.02 to 10.81</td><td>-3.18 to 6.98</td></tr>
+</tbody></table>
+<p>v1.2's split-half is below v1.1's because v1.1's stability was
+partly the minutes-driven free credit (RPR correlated 0.64 with
+minutes share); team aggregation is the better check and v1.2
+improves it. Top board stays plausible: Wembanyama 6.98, Giannis
+4.37, Jokic 3.98, Kessler 3.07, Sengun 3.05.</p>
+<p><strong>Team solver, same run.</strong> Margins are capped at 20
+points and home court is estimated from the data (half the mean
+home-minus-away efficiency gap: 0.50 from a 1.01 gap; home teams
+won exactly 113 of 226 games). The solver converged in 73
+iterations. Sensitivity (max / mean rank move vs the chosen
+settings):</p>
+<table>
+<thead><tr><th>Change</th><th>Max rank move</th><th>Mean rank move</th></tr></thead>
+<tbody>
+<tr><td>Margin cap 20 vs no cap</td><td>4</td><td>1.27</td></tr>
+<tr><td>Margin cap 15 vs chosen</td><td>6</td><td>1.87</td></tr>
+<tr><td>Margin cap 25 vs chosen</td><td>4</td><td>1.00</td></tr>
+<tr><td>Home court 0 vs 0.50</td><td>2</td><td>0.47</td></tr>
+<tr><td>Home court 1.5 vs 0.50</td><td>2</td><td>0.93</td></tr>
+<tr><td>Prior weight 100 vs 300</td><td>1</td><td>0.33</td></tr>
+<tr><td>Prior weight 600 vs 300</td><td>0</td><td>0.00</td></tr>
+</tbody></table>
+<p>Steps 2 and 3 above (the <code>nba_api</code> pull and the defence
+prior) are not built yet.</p>
 <p><a href="index.html">&larr; Back to NBA Ratings</a></p>
 </section>
 
