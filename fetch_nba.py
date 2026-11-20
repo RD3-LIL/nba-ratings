@@ -6,7 +6,7 @@ Pulls, from free ESPN public endpoints only, no KenPom data, no paywall:
   - teams list (id, name, abbreviation, slug)
 
 Seasons: only 2026-27 is wired in (SEASONS below):
-  2026-27  2026-10-20 .. 2026-11-20  (to date)
+  2026-27  2026-10-20 .. 2027-04-11  (regular season)
 No 2025-26 or 2024-25 pull: NBA teams change too much year over
 year for a last-season prior to help, so none is fetched.
 
@@ -75,7 +75,10 @@ SUM_BASE = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary
 TEAMS_URL = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams?limit=1000'
 
 SEASONS = {
-    '2026-27': (date(2026, 10, 20), date(2026, 11, 20)),
+    # Regular season runs Oct 20, 2026 to Apr 11, 2027 (last day of
+    # the 2026-27 regular season). The daily updater passes --start
+    # and --end, so this end date only bounds a full-season run.
+    '2026-27': (date(2026, 10, 20), date(2027, 4, 11)),
 }
 SUMMARY_SLEEP = 0.9
 SCOREBOARD_SLEEP = 0.3

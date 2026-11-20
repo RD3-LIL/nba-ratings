@@ -4,11 +4,24 @@ Takes data/players_2026_27_eval.json and produces, per player:
   - Archetype(s), inferred from the box-score profile only, with the
     rule printed next to each archetype so it is checkable.
   - Acquisition tier, from thresholds on RPR, ORtg_full at usage,
-    %Min, per-36 production and defense, never from reputation.
-    A high scorer with low efficiency and high turnovers cannot
-    land in a top tier: Franchise cornerstone requires
-    ORtg_full >= 108, All-Star level >= 104, High-value starter
-    >= 100 (see tier() for the exact rules).
+    MPG, GP and total minutes, never from reputation.
+    Tiers were recalibrated for RPR v1.2's centered scale (Nov 20,
+    2026): v1.2 stars sit about +3 to +7 and the median is about
+    0, so the v1 thresholds (Franchise RPR >= 8) would leave the
+    top tier empty. The new thresholds were set from the v1.2
+    distribution among qualified players (Franchise RPR >= 3.5
+    is about the top 1%, All-Star >= 2.5 about the top 5%) and
+    checked against the famous names, not fitted to them: a
+    player who misses games is tiered on his minutes per game
+    when he plays, not on %Min, because %Min conflates
+    availability with role (a star who missed games looked like
+    a bench player under %Min gates). Players with GP under 8
+    or under 150 total minutes are not tiered at all: they are
+    labelled "Insufficient minutes". The Overvalued guard is
+    checked after that gate, so a low-GP player can never be
+    labelled Overvalued.
+  - Value signals: production per minute, efficiency at high usage,
+    two-way signal, availability, shooting gravity, playmaking.
   - Value signals: production per minute, efficiency at high usage,
     two-way signal, availability, shooting gravity, playmaking.
   - Red flags: high usage low efficiency, turnover prone, foul
@@ -53,8 +66,8 @@ ARCHETYPES = [
      "%Poss >= 26 and PTS per 36 >= 24",
      lambda e: (e["poss_pct"] or 0) >= 26 and e["pts36"] >= 24),
     ("playmaker",
-     "AST per 36 >= 7 and AST/TO >= 1.8",
-     lambda e: e["ast36"] >= 7 and (e["ast_to"] or 0) >= 1.8),
+     "AST per 36 >= 6 and AST/TO >= 2.0",
+     lambda e: e["ast36"] >= 6 and (e["ast_to"] or 0) >= 2.0),
     ("rim protector",
      "BLK per 36 >= 2 and REB per 36 >= 8",
      lambda e: e["blk36"] >= 2 and e["reb36"] >= 8),
@@ -69,8 +82,9 @@ ARCHETYPES = [
      lambda e: e["reb36"] >= 8 and e["stl_blk36"] >= 2
      and e["pts36"] >= 12),
     ("3-and-D",
-     "%Poss < 22 and 3PA per 36 >= 5 and 3P% >= 0.36 and STL+BLK per 36 >= 1.5",
-     lambda e: (e["poss_pct"] or 0) < 22 and e["fg3a36"] >= 5
+     "%Poss < 22 and AST per 36 < 4.5 and 3PA per 36 >= 5 and 3P% >= 0.36 and STL+BLK per 36 >= 1.5",
+     lambda e: (e["poss_pct"] or 0) < 22 and e["ast36"] < 4.5
+     and e["fg3a36"] >= 5
      and (e["fg3_pct"] or 0) >= 0.36 and e["stl_blk36"] >= 1.5),
     ("specialist shooter",
      "%Poss < 22 and 3P% >= 0.40 and 3PA per 36 >= 6",
@@ -83,8 +97,8 @@ ARCHETYPES = [
      "PTS per 36 >= 20 and %Min < 50",
      lambda e: e["pts36"] >= 20 and (e["min_pct"] or 0) < 50),
     ("glue / role player",
-     "%Min >= 50 and RPR 1-3 and STL+BLK per 36 >= 1",
-     lambda e: (e["min_pct"] or 0) >= 50 and 1 <= (e["rpr"] or 0) <= 3
+     "%Min >= 50 and RPR -0.5 to 1 and STL+BLK per 36 >= 1",
+     lambda e: (e["min_pct"] or 0) >= 50 and -0.5 <= (e["rpr"] or 0) <= 1
      and e["stl_blk36"] >= 1),
 ]
 
@@ -122,7 +136,10 @@ def flat(p):
     return {
         "name": p["name"], "team": p["team"], "position": p["position"],
         "athlete_id": p["athlete_id"], "gp": tot["gp"],
+        "min_total": tot["min"],
         "min_pct": r.get("min_pct"), "mpg": pg["min"],
+        "age": p.get("age"), "height_in": p.get("height_in"),
+        "weight_lbs": p.get("weight_lbs"),
         "pts_pg": pg["pts"], "reb_pg": pg["reb"], "ast_pg": pg["ast"],
         "stl_pg": pg["stl"], "blk_pg": pg["blk"], "to_pg": pg["to"],
         "pf_pg": pg["pf"],
@@ -159,42 +176,64 @@ def archetypes(e):
 
 
 def tier(e):
-    """Acquisition tier, thresholds only. Checked in order; the
-    overvalued guard is applied BEFORE the top tiers so a high
-    scorer with low efficiency can never land in one."""
-    rpr = e["rpr"] or -99
+    """Acquisition tier, thresholds only, calibrated for RPR v1.2.
+
+    Checked in order. Two gates come first: a player with GP
+    under 8 or under 150 total minutes is not tiered at all
+    ("Insufficient minutes"), and only then does the Overvalued
+    guard fire, so a small-sample hot or cold stretch can never
+    land a player in Overvalued / avoid. Role is judged by MPG
+    when the player plays, not by %Min: %Min conflates
+    availability with role, so a star who missed games (Curry,
+    34.5% Min at 26.5 MPG) was labelled buy-low under the old
+    %Min gates. Availability is a red flag, not a tier.
+    Thresholds are set from the v1.2 distribution, not fitted
+    to individual names: Franchise RPR >= 3.5 is about the top
+    1% of qualified players, All-Star >= 2.5 about the top 5%.
+    """
+    rpr = e["rpr"]
+    if rpr is None:
+        return ("Insufficient minutes",
+                "no RPR: no possessions used")
     ortg = e["ortg_full"]
     if ortg is None:
         ortg = e["ortg_simple"] or 0
     poss = e["poss_pct"] or 0
-    min_pct = e["min_pct"] or 0
+    mpg = e["mpg"] or 0
     gp = e["gp"]
+    # Gate 1: not enough basketball to tier.
+    if gp < 8 or (e["min_total"] or 0) < 150:
+        return ("Insufficient minutes",
+                "GP < 8 or under 150 total minutes")
     # Overvalued / avoid: clearly inefficient high usage, or heavy
-    # turnovers with no playmaking return. The bar is ORtg_full < 100,
+    # turnovers with no playmaking return. The RPR bar is -1.0,
+    # not 0: in v1.2 about half the league is negative, so RPR < 0
+    # alone is average, not overvalued. The bar is ORtg_full < 100,
     # not < 105: a star at 101-104 on huge usage is having an
     # inefficient stretch, not an empty-calorie season.
-    if (poss >= 25 and ortg < 100) or (poss >= 20 and rpr < 0) \
+    if (poss >= 25 and ortg < 100) or (poss >= 20 and rpr < -1.0) \
             or ((e["to36"] >= 4) and (e["ast_to"] or 0) < 1.2):
         return ("Overvalued / avoid",
-                "high usage with ORtg_full < 100, or RPR < 0 at 20%+ usage, "
-                "or 4+ TO per 36 with AST/TO < 1.2")
-    if rpr >= 8 and ortg >= 108 and min_pct >= 55 and gp >= 10:
+                "high usage with ORtg_full < 100, or RPR < -1.0 at "
+                "20%+ usage, or 4+ TO per 36 with AST/TO < 1.2")
+    if rpr >= 3.5 and ortg >= 108 and mpg >= 25 and gp >= 10:
         return ("Franchise cornerstone",
-                "RPR >= 8, ORtg_full >= 108, %Min >= 55, GP >= 10")
-    if rpr >= 6 and ortg >= 104 and min_pct >= 50:
+                "RPR >= 3.5, ORtg_full >= 108, MPG >= 25, GP >= 10")
+    if rpr >= 2.5 and ortg >= 104 and mpg >= 22:
         return ("All-Star level",
-                "RPR >= 6, ORtg_full >= 104, %Min >= 50")
-    if rpr >= 4 and min_pct >= 50 and ortg >= 100:
+                "RPR >= 2.5, ORtg_full >= 104, MPG >= 22")
+    if rpr >= 1.5 and mpg >= 22 and ortg >= 100:
         return ("High-value starter",
-                "RPR >= 4, %Min >= 50, ORtg_full >= 100")
-    if gp >= 8 and ((rpr >= 4 and min_pct < 50) or
-                    (rpr >= 3 and ortg >= 120 and poss < 22)):
+                "RPR >= 1.5, MPG >= 22, ORtg_full >= 100")
+    if (rpr >= 2.0 and mpg < 25) or \
+            (rpr >= 1.5 and ortg >= 120 and poss < 22):
         return ("Undervalued / buy-low",
-                "GP >= 8 and RPR >= 4 but %Min < 50 (production without "
-                "minutes), or RPR >= 3 with ORtg_full >= 120 at < 22% usage")
-    if 2 <= rpr < 4 and min_pct >= 55:
+                "RPR >= 2.0 but MPG < 25 (production without a "
+                "starter's minutes), or RPR >= 1.5 with "
+                "ORtg_full >= 120 at < 22% usage")
+    if 0.5 <= rpr < 1.5 and mpg >= 20:
         return ("Elite role player",
-                "RPR 2-4, %Min >= 55")
+                "RPR 0.5-1.5, MPG >= 20")
     return ("Rotation / depth",
             "does not meet any tier above")
 
@@ -270,7 +309,8 @@ def build(p):
         "value_signals": value_signals(e),
         "red_flags": red_flags(e),
         "fit_tags": fit_tags(e),
-        "age": None, "height": None, "weight": None,
+        "age": e["age"], "height_in": e["height_in"],
+        "weight_lbs": e["weight_lbs"],
         "contract": None,
         "trend_ppg": e["trend_ppg"],
     }
@@ -305,7 +345,8 @@ def write_csv(board, out_path):
               "archetype", "archetype_tags", "fit_tags", "gp",
               "min_pct", "pts_pg", "reb_pg", "ast_pg", "pts_per36",
               "reb_per36", "ast_per36", "stl_blk_per36", "ortg_full",
-              "poss_pct", "rpr", "value_signals", "red_flags",
+              "poss_pct", "rpr", "age", "height_in", "weight_lbs",
+              "value_signals", "red_flags",
               "trend_ppg"]
     with open(out_path, "w", newline="") as h:
         w = csv.DictWriter(h, fieldnames=fields)
@@ -342,17 +383,26 @@ def main():
            "player_count": len(board),
            "notes": ("GM board v1, box-score only. Tiers and archetypes "
                      "are threshold rules in gm_board.py, never "
-                     "reputation. RPR here is RPR v1.1 (Nov 20, 2026): "
+                     "reputation. RPR here is RPR v1.2 (Nov 20, 2026): "
                      "ORtg shrunk toward the league average (K = 200 "
-                     "possessions used) and opponent-adjusted; the tier "
-                     "thresholds were set on v1's scale and have not "
-                     "been recalibrated for v1.1's compressed scale. "
+                     "possessions used) and opponent-adjusted, with "
+                     "the counting terms centered on the league-"
+                     "average per-36 rates, so an average player "
+                     "scores about 0. The tier thresholds were "
+                     "recalibrated for v1.2's centered scale (see "
+                     "gm_board.py tier()): Franchise RPR >= 3.5, "
+                     "All-Star >= 2.5, High-value starter >= 1.5. "
+                     "Players with GP < 8 or under 150 total minutes "
+                     "are labelled Insufficient minutes and are not "
+                     "tiered; the Overvalued guard fires only after "
+                     "that gate. Age, height (inches) and weight "
+                     "(lbs) come from the ESPN roster pull. "
                      "No contracts or salaries: contracts are not free "
                      "anywhere. No tracking or on/off data."),
            "tiers": ["Franchise cornerstone", "All-Star level",
                      "High-value starter", "Undervalued / buy-low",
                      "Elite role player", "Overvalued / avoid",
-                     "Rotation / depth"],
+                     "Rotation / depth", "Insufficient minutes"],
            "players": board}
     (DATA / "gm_board_2026_27.json").write_text(json.dumps(out))
     write_csv(board, DATA / "gm_board_2026_27.csv")

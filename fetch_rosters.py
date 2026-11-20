@@ -18,11 +18,10 @@ first season shows 0. No draft list is hardcoded and no rookie
 is labelled from memory; the roster payload is the source.
 
 Matching: match players to profiles by athlete_id, never by name
-alone. The box-score data has ESPN's scrambled team assignments
-in places (Giannis on Miami, LeBron on Philadelphia, reported
-as fetched), so a roster's team name must never override the
-team a player actually played for in the box scores; the roster
-file only supplies experience / age / height / weight.
+alone. Players can change teams mid-season, so a roster's team
+name must never override the team a player actually played for
+in the box scores; the roster file only supplies experience /
+age / height / weight.
 
 Checkpointing: raw roster JSON is cached per team under
 data/raw/roster/{team_id}.json and reused on re-run, so a

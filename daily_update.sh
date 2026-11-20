@@ -3,21 +3,26 @@
 #
 # Fetches the last few days of 2026-27 games, rebuilds player
 # profiles, team ratings, the eval layer, the GM board, the team
-# needs / trade fit evaluator, and the site (index.html plus
-# one page per team under teams/), then
+# needs / trade fit evaluator, runs the RPR validator, regenerates
+# the run summary and README numbers, and rebuilds the site
+# (index.html plus one page per team under teams/), then
 # pushes all of those files to GitHub: the rebuilt CSVs and
-# JSONs, the index, and every teams/*.html page. The sync record
-# lists exactly the paths in the manifest, so it never lies
-# about what a push contained.
+# JSONs, the validation and run-summary outputs, the README and
+# the research page, the index, and every teams/*.html page. The
+# sync record lists exactly the paths in the manifest, so it never
+# lies about what a push contained.
 #
 # Why the last 3 days, not just yesterday: a date fetched in
 # the morning is marked done, but games played that evening
 # are not in yet. Each run re-fetches the last 3 days of
-# scoreboards fresh (cached scoreboard files for those dates
-# are deleted first, and the dates are removed from
-# done_dates), so evening games land on the next morning's
-# run. Raw summaries are cached per event and reused, so the
-# re-fetch is cheap.
+# scoreboards AND summaries fresh (cached scoreboard files for
+# those dates are deleted first, the dates are removed from
+# done_dates, and the raw summary files for the window's events
+# are deleted so the box scores are re-pulled, not reused), so
+# evening games and late box-score corrections land on the next
+# morning's run. Rosters are re-fetched weekly (see below).
+# The validator runs after the rebuild and stops the push on a
+# regression; the run summary regenerates the README numbers.
 #
 # Dates are Chicago dates (TZ=America/Chicago). ESPN's
 # scoreboard is keyed by date the same way the original pull
@@ -54,7 +59,12 @@ if [ -f data/games_2026_27.json ]; then
 fi
 
 # Clear the window's cached scoreboards and done_dates so the
-# fetch re-pulls those dates fresh. Summaries stay cached.
+# fetch re-pulls those dates fresh. Also delete the raw summary
+# files for the window's events, so the box scores are re-fetched
+# too (a cached summary would otherwise be reused and a late
+# box-score correction would never land). Parsed files for the
+# window are rewritten by the fetch, since the dates leave
+# done_dates.
 python3 - "$START" "$TODAY" <<'PYEOF'
 import json, sys
 from datetime import date, timedelta
@@ -71,6 +81,20 @@ for ds in days:
     if p.exists():
         p.unlink()
         print(f'  cleared cached scoreboard {ds}')
+# Raw summaries for events in the window (from the games file,
+# which is the pre-fetch snapshot; pre-game events have no
+# summary file and are skipped silently).
+games_path = Path('data/games_2026_27.json')
+n_sum = 0
+if games_path.exists():
+    games = json.loads(games_path.read_text())
+    for g in games:
+        if g["date"] in days:
+            sp = Path(f"data/raw/summary/{g['event_id']}.json")
+            if sp.exists():
+                sp.unlink()
+                n_sum += 1
+print(f'  cleared {n_sum} cached summaries in window')
 state_path = Path('data/fetch_state.json')
 state = json.loads(state_path.read_text())
 sstate = state.get('season_2026-27', {})
@@ -89,6 +113,29 @@ PYEOF
 if [ "$?" -ne 0 ]; then
   echo "failed to clear scoreboards / fetch state, stopping: fetch_state.json may be corrupt, fix it before re-running"
   exit 1
+fi
+
+# Rosters weekly: if the roster file is older than 7 days, clear
+# the raw roster cache and re-pull. A roster change (a debut, a
+# mid-season signing, a corrected experience value) forces a
+# rebuild even with no new games, so the hash is compared below.
+ROSTER_HASH_BEFORE=""
+if [ -f data/rosters_2026_27.json ]; then
+  ROSTER_HASH_BEFORE=$(sha256sum data/rosters_2026_27.json | cut -d' ' -f1)
+fi
+ROSTERS_CHANGED=0
+if [ ! -f data/rosters_2026_27.json ] || [ -n "$(find data/rosters_2026_27.json -mtime +7 -print 2>/dev/null)" ]; then
+  echo "rosters older than 7 days (or missing), re-fetching"
+  rm -f data/raw/roster/*.json
+  python3 fetch_rosters.py || {
+    echo "roster fetch failed, stopping (rosters feed is_rookie/age/height/weight)"
+    exit 1
+  }
+  ROSTER_HASH_AFTER=$(sha256sum data/rosters_2026_27.json | cut -d' ' -f1)
+  if [ "$ROSTER_HASH_AFTER" != "$ROSTER_HASH_BEFORE" ]; then
+    ROSTERS_CHANGED=1
+    echo "rosters changed, rebuild will run even with no new games"
+  fi
 fi
 
 # Fetch failures are logged, not fatal, to fetch_nba.py, so a
@@ -115,8 +162,8 @@ fi
 
 GAMES_AFTER=$(python3 -c "import json; print(len(json.load(open('data/games_2026_27.json'))))")
 echo "games: $GAMES_BEFORE -> $GAMES_AFTER"
-if [ "$GAMES_AFTER" -eq "$GAMES_BEFORE" ]; then
-  echo "no new games, nothing to rebuild or push"
+if [ "$GAMES_AFTER" -eq "$GAMES_BEFORE" ] && [ "$ROSTERS_CHANGED" -eq 0 ]; then
+  echo "no new games and no roster change, nothing to rebuild or push"
   exit 0
 fi
 
@@ -125,6 +172,13 @@ python3 team_ratings.py || exit 1
 python3 player_eval.py || exit 1
 python3 gm_board.py || exit 1
 python3 team_needs.py || exit 1
+# Validator gate: stops the run (and the push) on a regression.
+# validate_rpr_v11.py exits 1 if a gate fails.
+python3 validate_rpr_v11.py || {
+  echo "RPR validation failed, stopping before site build and push"
+  exit 1
+}
+python3 generate_run_summary.py || exit 1
 python3 build_page.py || exit 1
 
 if [ "$NO_PUSH" -eq 1 ]; then
@@ -132,13 +186,15 @@ if [ "$NO_PUSH" -eq 1 ]; then
   exit 0
 fi
 
-# The manifest is the rebuilt CSVs and JSONs, the index, and
-# every team page build_page.py just wrote. nullglob so an
-# (impossible after a successful build) empty teams/ dir would
-# expand to nothing instead of a literal "teams/*.html".
+# The manifest is the rebuilt CSVs and JSONs, the run summary and
+# validation outputs, the README and research page (both are
+# regenerated from the run), the index, and every team page
+# build_page.py just wrote. nullglob so an (impossible after a
+# successful build) empty teams/ dir would expand to nothing
+# instead of a literal "teams/*.html".
 shopt -s nullglob
 TEAM_PAGES=(teams/*.html)
-printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json index.html "${TEAM_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
+printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html index.html "${TEAM_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
 
 # Sync-base check: the branch head must match the last sync
 # record entry, or someone else pushed since our last run.

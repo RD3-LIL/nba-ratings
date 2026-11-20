@@ -24,8 +24,9 @@ and adds per player:
     split OREB/DREB, PF per 36.
   - Volume vs efficiency quadrant (%Poss vs ORtg_full) and the RPR
     component breakdown (scoring, playmaking, defense, rebounding
-    terms, which sum to RPR v1.1; the scoring term uses ORtg_adj)
-    so each RPR can be explained.
+    terms, which sum to RPR v1.2; the scoring term uses ORtg_adj
+    and the counting terms are centered on the league per-36
+    rates, see player_profiles.py) so each RPR can be explained.
   - Per-36 for all counting stats.
   - Consistency from game logs (never invented): std dev of points
     per game, games with 20+ / 30+ points.
@@ -329,19 +330,34 @@ def evaluate(profiles, game_map):
         gp = tot["gp"]
         poss_used = tot["fga"] + 0.44 * tot["fta"] + tot["to"]
         poss_pg = poss_used / gp if gp else 0.0
-        # RPR component breakdown (sums to RPR v1.1). The scoring
-        # term uses ORtg_adj (shrunk, opponent-adjusted), not the
-        # raw simplified ORtg, so the four terms sum to ratings.rpr
-        # (v1.1), not to rpr_v1. Falls back to ortg_simple only
-        # for profiles written before v1.1 existed.
-        ortg_adj = ratings.get("ortg_adj")
-        scoring = (((ortg_adj if ortg_adj is not None else ortg_simple)
-                    - 100) * poss_pg / 100
-                   if (ortg_adj is not None or ortg_simple is not None)
-                   else None)
-        playmaking = 0.5 * (pg["ast"] - pg["to"])
-        defense = pg["stl"] + pg["blk"]
-        rebounding = 0.25 * pg["reb"]
+        # RPR component breakdown (sums to RPR v1.2). The centered
+        # components are stored on the base profile by
+        # player_profiles.py (ratings.rpr_components_v12); fall
+        # back to recomputing them from the stored centers so an
+        # older profile file still yields a correct breakdown.
+        # The scoring term uses ORtg_adj (shrunk, opponent-
+        # adjusted), not the raw simplified ORtg.
+        _comp = ratings.get("rpr_components_v12")
+        if _comp is not None:
+            scoring = _comp.get("scoring")
+            playmaking = _comp.get("playmaking")
+            defense = _comp.get("defense")
+            rebounding = _comp.get("rebounding")
+        else:
+            _centers = ratings.get("rpr_centers_per36") or {}
+            _scale = (pg["min"] / 36.0) if pg["min"] else 0.0
+            ortg_adj = ratings.get("ortg_adj")
+            _league_ortg = ratings.get("league_ortg", 100.25)
+            scoring = (((ortg_adj if ortg_adj is not None else ortg_simple)
+                        - _league_ortg) * poss_pg / 100
+                       if (ortg_adj is not None or ortg_simple is not None)
+                       else None)
+            playmaking = (0.5 * (p36["ast"] - p36["to"])
+                          - _centers.get("play_per36", 0.0)) * _scale
+            defense = ((p36["stl"] + p36["blk"])
+                       - _centers.get("defense_per36", 0.0)) * _scale
+            rebounding = (0.25 * p36["reb"]
+                          - _centers.get("rebounding_per36", 0.0)) * _scale
         # Shooting points breakdown
         pts_2s = 2 * (tot["fgm"] - tot["fg3m"])
         pts_3s = 3 * tot["fg3m"]
@@ -429,7 +445,7 @@ def write_csv(profiles, out_path):
     fields = ["athlete_id", "name", "team", "position", "gp", "min_pct",
               "mpg", "pts_pg", "reb_pg", "ast_pg", "stl_blk_pg",
               "ortg_simple", "ortg_full", "ortg_diff", "poss_pct", "rpr",
-              "rpr_v1", "rpr_value",
+              "rpr_v1", "rpr_v1_1", "rpr_value",
               "is_rookie", "experience_years",
               "rpr_scoring", "rpr_playmaking", "rpr_defense",
               "rpr_rebounding", "quadrant", "ts_pct", "efg_pct",
@@ -460,6 +476,7 @@ def write_csv(profiles, out_path):
                 "ortg_diff": f(ev["ortg_diff"]),
                 "poss_pct": f(r.get("poss_pct")), "rpr": f(r.get("rpr")),
                 "rpr_v1": f(r.get("rpr_v1")),
+                "rpr_v1_1": f(r.get("rpr_v1_1")),
                 "rpr_value": f(r.get("rpr_value")),
                 "is_rookie": 1 if p.get("is_rookie") else 0,
                 "experience_years": (
@@ -521,12 +538,16 @@ def main():
                          "box-score only; no play-by-play, no opponent "
                          "adjustment on ortg_full itself. "
                          "ortg_simple is the base simplified ORtg. "
-                         "ratings.rpr is RPR v1.1 (ORtg shrunk toward "
-                         "the league average, K = 200 possessions used, "
-                         "and opponent-adjusted; old value kept as "
-                         "rpr_v1, value delivered as rpr_value = RPR "
-                         "v1.1 * GP / 82). The RPR component breakdown "
-                         "sums to RPR v1.1. "
+                         "ratings.rpr is RPR v1.2 (Nov 20, 2026): "
+                         "ORtg shrunk toward the league average "
+                         "(K = 200 possessions used) and opponent-"
+                         "adjusted, with the counting terms centered "
+                         "on the league-average per-36 rates, so an "
+                         "average player scores about 0; the old "
+                         "values are kept as rpr_v1 and rpr_v1_1, "
+                         "value delivered as rpr_value = RPR "
+                         "v1.2 * GP / 82). The RPR component breakdown "
+                         "sums to RPR v1.2. "
                          "Trending window is the last 7 days of games "
                          "in the data."),
                "players": ev_profiles}

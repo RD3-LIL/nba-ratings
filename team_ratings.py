@@ -62,14 +62,28 @@ components, so prior_weight 0 is not recommended on sparse data.
 
 Home court
 ----------
-home_court is a documented parameter, default 0.0 (off). It is
-not estimated from the data here. If you enable it, a value
-around 1.0 to 2.0 points per 100 possessions per side is the
-usual range in the literature, meaning a home team is expected
-to score about h more and allow about h less, per 100. The
-default is 0.0 because the early-season data cannot identify it
-and a hidden nonzero value would silently tilt every rating.
-Pass it explicitly if you want it on.
+home_court is estimated from the data in main(), not asserted: it is
+half the mean gap between home and away efficiency (home teams score
+about h more and allow about h less per 100 possessions, so the home
+minus away efficiency gap is about 2h). On the Nov 20 run the gap is
+1.01 points per 100, so h is 0.50. Home teams won exactly 113 of 226
+games (50.0%), so the win share says nothing and the efficiency gap
+is the estimate. Sensitivity, Nov 20 run: home court 0 vs 0.50 moves
+ranks by at most 2 places (mean 0.47); home court 1.5 moves them by
+at most 2 (mean 0.93). Pass --home-court explicitly to override the
+estimate, including 0.0 to turn it off.
+
+Margin cap
+----------
+main() caps final margins at 20 points before solving (see
+cap_game_margins): a blowout carries less information about the
+true quality gap than the score suggests, benches clear and teams
+stop trying. Sensitivity, Nov 20 run: cap 20 vs no cap moves ranks
+by at most 4 places (mean 1.27); cap 15 moves them by at most 6
+(mean 1.87); cap 25 by at most 4 (mean 1.00). Cap 20 is the middle
+of that flat range, chosen for robustness, not fitted to the table.
+Prior weight sensitivity is smaller: prior 100 vs 300 moves ranks
+by at most 1 (mean 0.33), prior 600 the same.
 
 What v2 fixes vs v1, and what it does not fix
 ---------------------------------------------
@@ -101,9 +115,32 @@ GAMES = HERE / "data" / "games_2026_27.json"
 
 DEFAULT_PRIOR_WEIGHT = 300.0  # possessions, about 3 games at ~102 poss/game (NBA)
 DEFAULT_DAMPING = 0.5
-DEFAULT_HOME_COURT = 0.0
+DEFAULT_HOME_COURT = None  # None: estimate from the games in main()
+DEFAULT_MARGIN_CAP = 20.0  # points; cap_game_margins, see module docstring
 DEFAULT_MAX_ITER = 500
 DEFAULT_TOL = 1e-6
+
+
+def estimate_home_court(games):
+    """Home-court parameter h from the games themselves.
+
+    h is half the mean home minus away efficiency gap (points per
+    100 possessions): a home team scores about h more and allows
+    about h less, so the gap between the two efficiencies is about
+    2h. Returns 0.0 when there are no usable games. This is an
+    estimate with a standard error of roughly 0.5 on 226 games,
+    not a fact; main() prints it and the sensitivity is in the
+    module docstring.
+    """
+    diffs = []
+    for g in games:
+        poss = (possessions(g["home_stats"]) + possessions(g["away_stats"])) / 2
+        if poss <= 0:
+            continue
+        diffs.append(100 * (g["home_score"] - g["away_score"]) / poss)
+    if not diffs:
+        return 0.0
+    return sum(diffs) / (2 * len(diffs))
 
 
 def possessions(stats):
@@ -363,6 +400,7 @@ def solve(games, prior=None, prior_weight=DEFAULT_PRIOR_WEIGHT,
     info = {"iterations": iterations, "converged": converged,
             "max_change": max_change, "prior_weight": prior_weight,
             "home_court": home_court, "damping": damping,
+            "margin_cap": margin_cap,
             "league_o": league_o, "league_t": league_t,
             "n_games": len(games) - skipped_zero_poss - skipped_non_d1,
             "n_teams": len(teams),
@@ -376,18 +414,39 @@ def solve(games, prior=None, prior_weight=DEFAULT_PRIOR_WEIGHT,
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     home_court = DEFAULT_HOME_COURT
+    margin_cap = DEFAULT_MARGIN_CAP
     filt = None
     i = 0
     while i < len(argv):
         if argv[i] == "--home-court" and i + 1 < len(argv):
             home_court = float(argv[i + 1])
             i += 2
+        elif argv[i] == "--margin-cap" and i + 1 < len(argv):
+            margin_cap = float(argv[i + 1])
+            i += 2
+        elif argv[i] == "--no-margin-cap":
+            margin_cap = None
+            i += 1
         else:
             filt = argv[i]
             i += 1
     games = load_games()
+    if home_court is None:
+        home_court = estimate_home_court(games)
+        print(f"home court estimated from the data: {home_court:.2f} "
+              f"points per 100 possessions")
     teams, league_o, league_t, info = solve(
-        games, home_court=home_court, return_info=True)
+        games, home_court=home_court, margin_cap=margin_cap,
+        return_info=True)
+    if not info["converged"]:
+        # Never write a file from a solve that did not converge:
+        # an unconverged rating is not a rating, and the next step
+        # in the pipeline would silently build on it.
+        print(f"ERROR: solver did not converge in {info['iterations']} "
+              f"iterations (max change {info['max_change']:.2g}); "
+              f"data/teams_2026_27.json NOT written",
+              file=sys.stderr)
+        return 1
     out = {"season": "2026-27", "league_o": league_o, "league_t": league_t,
            "info": info,
            "teams": {name: {**t, "opponents": sorted(set(t["opponents"]))}
@@ -398,7 +457,8 @@ def main(argv=None):
     print(f"{info['n_games']} games, {info['n_teams']} teams, "
           f"league avg OffEff {league_o:.1f}, tempo {league_t:.1f}")
     print(f"solver v2: damped Gauss-Seidel, prior_weight "
-          f"{info['prior_weight']:.0f} poss, home_court {home_court}, "
+          f"{info['prior_weight']:.0f} poss, home_court {home_court:.2f} "
+          f"(estimated from the data), margin cap {margin_cap}, "
           f"damping {info['damping']}, {info['iterations']} iterations, "
           f"converged={info['converged']}")
     print("Early season only, ~15 games per team, league-average prior, "
@@ -411,7 +471,8 @@ def main(argv=None):
               f"{t['adj_d']:>6.1f} {t['net']:>6.1f} {t['adj_t']:>5.1f}")
     if not filt:
         print("\nWrote data/teams_2026_27.json")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

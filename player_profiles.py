@@ -61,40 +61,55 @@ Ratings (added Nov 10, 2026, KenPom-style, from the same box scores):
           + 0.5 * (AST - TO) per game
           + (STL + BLK) per game
           + 0.25 * REB per game
-      Rough scale: a star is about +6 to +10, an average rotation
+      Rough scale in v1: a star is about +6 to +10, an average rotation
       player about +1 to +3, below average about 0 or negative.
+      (v1.2 recenters that scale, see below.)
       None when ORtg is None (no possessions used).
 
-  RPR v1.1 (Nov 20, 2026; research report sections 2.0, 2.1, 2.6):
-  the same formula, but ORtg is first shrunk toward the
-  league-average ORtg and adjusted for the defences faced.
-  ORtg_shrunk = (PossUsed * ORtg + K * league ORtg) / (PossUsed + K),
-  K = 200 possessions used. Split-half calibration on this season
-  (216 players, first half of games predicting second half) gave
-  best K = 150 by MSE (207.5 vs 295.8 unshrunk) with the curve
-  essentially flat from 150 to 250, so 200 is the midpoint,
-  chosen for robustness, not fitted to the leaderboard. The
-  prior is the league-average simple ORtg computed from this
-  season's data (100.25 on the Nov 20 run); there is no prior
-  season in this project, so rookies and veterans alike shrink
-  to the same league average, and that is stated, not hidden.
-  OppAdj = possessions-weighted mean of (opponent AdjD - league
-  average AdjD) over the games the player played, where a
-  player's possessions faced in a game = game possessions *
-  (player minutes / team minutes in that game), and AdjD comes
-  from the same damped Gauss-Seidel solve team_ratings.py runs
-  (prior weight 300 possessions, home court 0). OppAdj is itself
-  shrunk toward 0 with K = 500 possessions faced:
-  OppAdj = OppAdj_raw * poss_faced / (poss_faced + 500).
-  ORtg_adj = ORtg_shrunk - OppAdj (scoring against defences
-  better than league average, AdjD below average, is credited
-  up). RPR v1.1 uses ORtg_adj; the old value is kept in parallel
-  as rpr_v1, and ratings.rpr IS v1.1. RPR_value = RPR v1.1 * GP / 82
-  is reported separately ("how much value delivered so far") and
-  is never baked into the rating. TS% and 3P% are also shrunk
+  RPR v1.2 (Nov 20, 2026; audit fix): the same formula, but the
+  counting terms are now centered on the league average, so an
+  average player scores about 0 instead of about +2.4. In v1.1
+  the scoring term was centered (ORtg minus 100, league ORtg
+  100.25) but the counting terms were not: 0.5*(AST-TO), STL+BLK
+  and 0.25*REB per game are almost always positive, so only 8
+  of 469 players had a negative RPR and the median was 2.2.
+  A player was credited about 4.49 per 36 minutes just for
+  playing at league-average counting rates. v1.2 removes that
+  free credit. Each counting term is a per-36 rate minus the
+  league-average per-36 rate for that term, scaled by the
+  player's minutes per game over 36, so a player at league
+  rates contributes 0 from that term at any minutes load, and
+  a player above league rates contributes in proportion to how
+  much he plays:
+    scoring    = (ORtg_adj - league ORtg) * poss used per game / 100
+    playmaking = (0.5*(AST36 - TO36) - play_center) * MPG / 36
+    defense    = ((STL36 + BLK36) - defense_center) * MPG / 36
+    rebounding = (0.25*REB36 - rebounding_center) * MPG / 36
+  The centers are minutes-weighted league per-36 rates from
+  this season's own profiles (on the Nov 20 run: play 0.88,
+  defense 1.98, rebounding 1.63 per 36, total 4.49). They are
+  league-wide, not position-specific, by design: a rebound or a
+  block is worth the same whoever gets it, and position
+  centering would erase the real difference between a center
+  who rebounds and a guard who does not. The scoring center is
+  the season league ORtg, not 100, so the two scales are never
+  mixed: player ORtg lives on the player-possession scale
+  (league 100.25), team efficiency lives on the team scale
+  (league 111.08), and v1.2 only ever subtracts a player-scale
+  average from a player-scale ORtg. Rough scale in v1.2: a star
+  is about +3 to +7, an average rotation player about 0, below
+  average negative; median -0.09, 257 of 469 negative on the
+  Nov 20 run. The old values are kept in parallel as rpr_v1
+  and rpr_v1_1, and ratings.rpr IS v1.2. RPR_value = RPR v1.2
+  * GP / 82 is reported separately ("how much value delivered
+  so far") and is never baked into the rating. TS% and 3P% are also shrunk
   toward league rates for display (TS% m = 170 scoring attempts,
-  3P% m = 750 attempts): ts_pct_shrunk, fg3_pct_shrunk. No
-  black-box metric (EPM, LEBRON, BPM, tracking) enters v1.1.
+  3P% m = 750 attempts): ts_pct_shrunk, fg3_pct_shrunk. The 3P%
+  shrinkage is very strong early in the season (a player on
+  about 80 attempts is shown about 90% league average), so the
+  site shows the raw 3P% next to the shrunk one wherever it
+  shows either. No
+  black-box metric (EPM, LEBRON, BPM, tracking) enters v1.2.
 
 DNP handling: a player with didNotPlay true, or with an empty stats
 array, does not count as a game played and contributes nothing.
@@ -231,6 +246,38 @@ def compute_rpr(ortg, poss_used_per_game, per_game):
             + 0.5 * (per_game["ast"] - per_game["to"])
             + (per_game["stl"] + per_game["blk"])
             + 0.25 * per_game["reb"])
+
+
+def compute_rpr_v12(ortg_adj, league_ortg, poss_used_per_game,
+                    per_36, mpg, centers):
+    """RPR v1.2: the v1.1 formula with the counting terms centered.
+
+    Scoring is centered on the season league ORtg (player scale,
+    not 100 and not the team-scale 111.08). Each counting term
+    is a per-36 rate minus the league-average per-36 rate for
+    that term, scaled by MPG / 36, so a league-average player
+    contributes about 0 from every term at any minutes load.
+    centers is {"play_per36", "defense_per36",
+    "rebounding_per36"} (minutes-weighted league per-36 rates).
+    Returns (rpr, components dict) or (None, None) when ORtg is
+    None. The weights (0.5, 1, 0.25) are unchanged from v1: the
+    fix is centering, not re-weighting, so no weight was fitted
+    to make the leaderboard look right.
+    """
+    if ortg_adj is None:
+        return None, None
+    scale = mpg / 36.0 if mpg else 0.0
+    components = {
+        "scoring": ((ortg_adj - league_ortg) * poss_used_per_game
+                    / 100.0),
+        "playmaking": (0.5 * (per_36["ast"] - per_36["to"])
+                       - centers["play_per36"]) * scale,
+        "defense": ((per_36["stl"] + per_36["blk"])
+                    - centers["defense_per36"]) * scale,
+        "rebounding": (0.25 * per_36["reb"]
+                       - centers["rebounding_per36"]) * scale,
+    }
+    return sum(components.values()), components
 
 
 def _game_possessions(game):
@@ -551,12 +598,27 @@ def aggregate_players(data_dir=DATA, season_filter=None):
             "ppa": (tot_pts / tot_tsa if tot_tsa else 1.0),
             "fg3_pct": (tot_fg3m / tot_fg3a if tot_fg3a else 0.35),
         }
+    # RPR v1.2 league centers: minutes-weighted league per-36
+    # rates per season, from the profiles themselves. A center is
+    # the per-36 rate of a league-average minute played, so a
+    # player at league rates contributes 0 from that term.
+    league_centers = {}
+    for season, profiles in profiles_by_season.items():
+        tot_min = sum(p["totals"]["min"] for p in profiles)
+        def _mw(field):
+            return (sum(p["per_36"][field] * p["totals"]["min"]
+                        for p in profiles) / tot_min) if tot_min else 0.0
+        league_centers[season] = {
+            "play_per36": 0.5 * (_mw("ast") - _mw("to")),
+            "defense_per36": _mw("stl") + _mw("blk"),
+            "rebounding_per36": 0.25 * _mw("reb"),
+        }
     # Opponent AdjD from the same solve team_ratings.py runs
-    # (damped Gauss-Seidel, prior weight 300 possessions, home
-    # court 0). If the solve cannot run, OppAdj falls back to 0
-    # and v1.1 is just the shrunk RPR; that fallback is logged
-    # in the report, never silent in the output (opp_adj = 0.0
-    # with poss_faced > 0 would be the tell).
+    # (damped Gauss-Seidel, prior weight 300 possessions, margin
+    # cap 20, home court estimated from the data). If the solve
+    # cannot run or does not converge, stop: a silent OppAdj = 0
+    # fallback would ship a rating that claims an opponent
+    # adjustment it never computed.
     adj_d_by_team = {}
     league_adj_d = None
     try:
@@ -567,16 +629,23 @@ def aggregate_players(data_dir=DATA, season_filter=None):
                   if not (g.get("home_score") == 0
                           and g.get("away_score") == 0)
                   and not g.get("stats_missing")]
-        _teams, _league_o, _league_t = _tr.solve(_games)
+        _hc = _tr.estimate_home_court(_games)
+        _teams, _league_o, _league_t, _info = _tr.solve(
+            _games, margin_cap=_tr.DEFAULT_MARGIN_CAP,
+            home_court=_hc, return_info=True)
+        if not _info.get("converged"):
+            raise RuntimeError(
+                f"team_ratings solve did not converge "
+                f"({_info.get('iterations')} iterations)")
         adj_d_by_team = {n: t["adj_d"] for n, t in _teams.items()}
         if adj_d_by_team:
             league_adj_d = (sum(adj_d_by_team.values())
                             / len(adj_d_by_team))
-    except Exception as exc:  # noqa: BLE001 - OppAdj fallback, see above
-        print(f"RPR v1.1: team_ratings solve unavailable ({exc}), "
-              f"opponent adjustment set to 0")
-        adj_d_by_team = {}
-        league_adj_d = None
+    except Exception as exc:  # noqa: BLE001 - fail loudly, see above
+        raise SystemExit(
+            f"RPR: team_ratings solve unavailable ({exc}); "
+            f"opponent adjustment cannot be computed, stopping "
+            f"instead of shipping OppAdj = 0")
 
     roster_map = load_roster_map(data_dir)
     for season, profiles in profiles_by_season.items():
@@ -633,6 +702,16 @@ def aggregate_players(data_dir=DATA, season_filter=None):
             rpr_v1 = compute_rpr(ortg, poss_used_pg, profile["per_game"])
             rpr_v11 = compute_rpr(ortg_adj, poss_used_pg,
                                   profile["per_game"])
+            # RPR v1.2: same scoring input (ORtg_adj), counting
+            # terms centered on the league per-36 centers, so an
+            # average player scores about 0. ratings.rpr IS v1.2.
+            _centers = league_centers.get(
+                season, {"play_per36": 0.0, "defense_per36": 0.0,
+                         "rebounding_per36": 0.0})
+            rpr_v12, rpr_comp_v12 = compute_rpr_v12(
+                ortg_adj, prior["ortg"], poss_used_pg,
+                profile["per_36"], profile["per_game"]["min"],
+                _centers)
             # Shrunk shooting percentages for display (TS% shrunk
             # in points-per-scoring-attempt space, m = 170
             # attempts; 3P% m = 750 attempts, report section 2.0).
@@ -654,13 +733,19 @@ def aggregate_players(data_dir=DATA, season_filter=None):
                 "poss_pct": compute_usage(totals, team),
                 "min_pct": (100 * totals["min"] / (team_games * 48)
                             if team_games else None),
-                # ratings.rpr IS RPR v1.1; rpr_v1 is the old value
-                # kept in parallel so regressions are visible.
-                "rpr": rpr_v11,
+                # ratings.rpr IS RPR v1.2; rpr_v1 and rpr_v1_1 are
+                # the old values kept in parallel so regressions
+                # are visible.
+                "rpr": rpr_v12,
+                "rpr_v12": rpr_v12,
                 "rpr_v1": rpr_v1,
                 "rpr_v11": rpr_v11,
-                "rpr_value": (rpr_v11 * totals["gp"] / 82
-                              if rpr_v11 is not None else None),
+                "rpr_v1_1": rpr_v11,
+                "rpr_components_v12": rpr_comp_v12,
+                "league_ortg": prior["ortg"],
+                "rpr_centers_per36": _centers,
+                "rpr_value": (rpr_v12 * totals["gp"] / 82
+                              if rpr_v12 is not None else None),
             }
 
     for season in profiles_by_season:
@@ -691,15 +776,18 @@ def write_players_json(season, profiles, games_included, out_path):
             "zero. DNP players are excluded. ratings.ortg is a "
             "simplified ORtg (points per 100 possessions used, no "
             "assist credit), an approximation of KenPom's full Dean "
-            "Oliver formula. ratings.rpr IS RPR v1.1 (Nov 20, 2026): "
+            "Oliver formula. ratings.rpr IS RPR v1.2 (Nov 20, 2026): "
             "ORtg shrunk toward the league-average ORtg (K = 200 "
             "possessions used; prior is this season's league average, "
             "no prior season exists in this project) and adjusted "
             "for the defences faced (OppAdj, shrunk toward 0 with "
             "K = 500 possessions faced; see player_profiles.py "
-            "docstring). ratings.rpr_v1 is the old unshrunk, "
-            "unadjusted RPR, kept in parallel. ratings.rpr_value "
-            "= RPR v1.1 * GP / 82 (value delivered so far, "
+            "docstring), with the counting terms centered on the "
+            "league-average per-36 rates (rpr_centers_per36), so "
+            "an average player scores about 0. ratings.rpr_v1 and "
+            "ratings.rpr_v1_1 are the old uncentered values, kept "
+            "in parallel. ratings.rpr_value "
+            "= RPR v1.2 * GP / 82 (value delivered so far, "
             "separate from the per-game rating). shooting.ts_pct_shrunk "
             "and fg3_pct_shrunk are shrunk toward league rates "
             "(m = 170 / 750 attempts). RPR is our own single-number "
@@ -727,7 +815,8 @@ def write_players_csv(season, profiles, out_path):
               "ast_pg", "pts_per36", "fg_pct", "fg3_pct", "ft_pct", "efg_pct",
               "ts_pct", "ts_pct_shrunk", "fg3_pct_shrunk",
               "ortg", "ortg_shrunk", "ortg_adj", "opp_adj",
-              "poss_pct", "min_pct", "rpr", "rpr_v1", "rpr_value",
+              "poss_pct", "min_pct", "rpr", "rpr_v1", "rpr_v1_1",
+              "rpr_v12", "rpr_value",
               "experience_years", "is_rookie", "age", "height_in",
               "weight_lbs"]
     with open(out_path, "w", newline="") as handle:
@@ -808,6 +897,14 @@ def write_players_csv(season, profiles, out_path):
                 "rpr_v1": (round(profile["ratings"]["rpr_v1"], 2)
                            if profile["ratings"]["rpr_v1"] is not None
                            else ""),
+                "rpr_v1_1": (
+                    round(profile["ratings"]["rpr_v1_1"], 2)
+                    if profile["ratings"].get("rpr_v1_1") is not None
+                    else ""),
+                "rpr_v12": (
+                    round(profile["ratings"]["rpr_v12"], 2)
+                    if profile["ratings"].get("rpr_v12") is not None
+                    else ""),
                 "rpr_value": (
                     round(profile["ratings"]["rpr_value"], 2)
                     if profile["ratings"]["rpr_value"] is not None
@@ -893,8 +990,9 @@ def print_profile(profile):
     print(f'    ORtg {"%.1f" % ortg if ortg is not None else "-"} (approx) '
           f'%Poss {"%.1f%%" % poss if poss is not None else "-"} '
           f'%Min {"%.1f%%" % min_pct if min_pct is not None else "-"} '
-          f'RPR v1.1 {"%.2f" % rpr if rpr is not None else "-"} '
-          f'(v1 {"%.2f" % r.get("rpr_v1") if r.get("rpr_v1") is not None else "-"})')
+          f'RPR v1.2 {"%.2f" % rpr if rpr is not None else "-"} '
+          f'(v1.1 {"%.2f" % r.get("rpr_v1_1") if r.get("rpr_v1_1") is not None else "-"}, '
+          f'v1 {"%.2f" % r.get("rpr_v1") if r.get("rpr_v1") is not None else "-"})')
 
 
 def main(argv=None):

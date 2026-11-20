@@ -17,7 +17,7 @@ box, and East/West conference tabs. Clicking a team row expands
 that team's game log and roster for the season; clicking a team
 name opens that team's own page (teams/<slug>.html) with its
 ratings, game log, and roster. A player leaders section lists the
-top 5 by PTS, REB, AST, ORtg, and RPR (min 2 games, 40% of team
+top 5 by PTS, REB, AST, ORtg (full), and RPR (min 2 games, 40% of team
 minutes), plus a sortable top-100 players table by RPR with a
 Rookies-only toggle. A Rookies section lists the top 10 rookies
 by RPR (same 40% floor) plus notable rookies below the floor,
@@ -33,8 +33,13 @@ Where the columns come from:
   (played, boxscore present). W+L equals GP for every team.
 - AdjO/AdjD/Net/AdjT: team_ratings.py solver output in
   data/teams_2026_27.json (damped Gauss-Seidel, league-average
-  prior, home court off). No last-season prior: Ron decided NBA
-  teams change too much year over year for one to help.
+  prior, margin cap 20, home court estimated from the data).
+  No last-season prior: Ron decided NBA teams change too much
+  year over year for one to help.
+- ORtg (full): the Oliver ORtg with assist credit from
+  data/players_2026_27_eval.csv, falling back to the shrunk
+  simple ORtg when it is missing. The simple ORtg (no assist
+  credit) is shown in the detail rows, never as the main column.
 - Metric ranks: competition ranks (1, 2, 2, 4) per metric,
   computed here from the solver output, same as RonPom.
 
@@ -238,6 +243,40 @@ def rosters():
     return out
 
 
+def load_player_detail():
+    """Player detail for expandable rows, keyed by name|team.
+
+    Merges the eval CSV (ORtg_full, TS%, RPR components, trend)
+    with the base CSV (shrunk/adjusted ORtg, OppAdj). Every value
+    is a display string or None; the JS renders it, it never
+    recomputes a rating. GP and the shrinkage applied (ORtg
+    simple -> shrunk -> adjusted) are in here so a reader can see
+    how much of a player's number is shrinkage.
+    """
+    detail = {}
+    base = {(r["athlete_id"], r["team"]): r
+            for r in read_csv(DATA / "players_2026_27.csv")}
+    for r in read_csv(DATA / "players_2026_27_eval.csv"):
+        b = base.get((r["athlete_id"], r["team"]), {})
+        detail[f"{r['name']}|{r['team']}"] = {
+            "name": r["name"], "team": r["team"],
+            "position": r.get("position", ""),
+            "rpr": r["rpr"], "rpr_v1_1": r.get("rpr_v1_1", ""),
+            "scoring": r["rpr_scoring"], "playmaking": r["rpr_playmaking"],
+            "defense": r["rpr_defense"], "rebounding": r["rpr_rebounding"],
+            "ortg_full": r["ortg_full"], "ortg_simple": r["ortg_simple"],
+            "ortg_shrunk": b.get("ortg_shrunk", ""),
+            "ortg_adj": b.get("ortg_adj", ""),
+            "opp_adj": b.get("opp_adj", ""),
+            "ts_pct": r["ts_pct"], "fg3_pct": r["fg3_pct"],
+            "fg3_pct_shrunk": b.get("fg3_pct_shrunk", ""),
+            "gp": r["gp"], "min_pct": r["min_pct"], "mpg": r["mpg"],
+            "poss_pct": r["poss_pct"], "trend_ppg": r["trend_ppg"],
+            "last7_gp": r["last7_gp"],
+        }
+    return detail
+
+
 def team_table(rows, log_idx):
     ranks = metric_ranks(rows)
     RANKS.update(ranks)
@@ -250,7 +289,7 @@ def team_table(rows, log_idx):
     out = ["\n".join(tabs),
            "<input class=\"filter\" type=\"search\" "
            "placeholder=\"Filter teams...\" data-table=\"teams-2026_27\">"]
-    out.append("<table class=\"ratings\" id=\"teams-2026_27\">"
+    out.append("<div class=\"table-scroll\"><table class=\"ratings\" id=\"teams-2026_27\">"
                "<thead><tr>"
                "<th data-t=\"num\">Rk</th>"
                "<th data-t=\"text\">Team</th>"
@@ -277,7 +316,7 @@ def team_table(rows, log_idx):
             f"<td class=\"net\" data-v=\"{r['net']}\">{r['net']}</td>"
             f"{_metric_cell(r['adj_t'], r['adj_t'], ranks['adj_t'].get(r['team']))}"
             "</tr>")
-    out.append("</tbody></table>")
+    out.append("</tbody></table></div>")
     out.append(
         f"<p class=\"note\">Full table above ({len(rows)} teams). "
         "Download the team ratings: "
@@ -288,30 +327,42 @@ def team_table(rows, log_idx):
 
 
 def _leader_table(title, players, key, extra_key, extra_label):
-    """One top-5 leader table. key/extra_key are player CSV fields."""
+    """One top-5 leader table. key/extra_key are player CSV fields.
+
+    Four columns only: player, team, the metric, and one extra
+    (RPR, %Poss, or ORtg). The old fifth PPG column duplicated
+    the metric column on the PTS table and added nothing.
+    """
     top = sorted(players, key=lambda p: float(p[key] or 0),
                  reverse=True)[:5]
     out = [f"<div><h3>{title}</h3><table><thead><tr>"
            f"<th>Player</th><th>Team</th><th>{title.split(' by ')[-1]}</th>"
-           f"<th>{extra_label}</th><th>PPG</th></tr></thead><tbody>"]
+           f"<th>{extra_label}</th></tr></thead><tbody>"]
     for p in top:
         out.append(f"<tr><td>{html.escape(p['name'])}</td>"
                    f"<td>{html.escape(p['team'])}</td>"
                    f"<td>{p[key]}</td><td>{p[extra_key]}</td>"
-                   f"<td>{p['pts_pg']}</td></tr>")
+                   f"</tr>")
     out.append("</tbody></table></div>")
     return "\n".join(out)
 
 
 def player_leaders(players, min_games=2):
-    """Top 5 by PTS, REB, AST, ORtg, and RPR.
+    """Top 5 by PTS, REB, AST, ORtg (full), and RPR.
 
     Same floor as RonPom's 2026-27 leaders: min 2 games and 40%
     of team minutes, so a two-minute cameo cannot top the list.
+    The ORtg leader table uses ORtg_full (Oliver, with assist
+    credit), not the raw simplified ORtg: the old table crowned
+    a low-usage shooter on a raw 135.7. Players without an
+    ORtg_full fall back to their shrunk simple ORtg.
     """
     qualified = [p for p in players
                  if int(p["gp"]) >= min_games and p["rpr"]
                  and p["min_pct"] and float(p["min_pct"]) >= 40]
+    for p in qualified:
+        p["ortg_full"] = p.get("ortg_full") or p.get("ortg_shrunk") \
+            or p.get("ortg")
     out = ["<div class=\"leaders\">"]
     out.append(_leader_table("Top players by PTS", qualified,
                              "pts_pg", "rpr", "RPR"))
@@ -320,14 +371,14 @@ def player_leaders(players, min_games=2):
     out.append(_leader_table("Top players by AST", qualified,
                              "ast_pg", "rpr", "RPR"))
     out.append(_leader_table("Top players by ORtg", qualified,
-                             "ortg", "poss_pct", "%Poss"))
+                             "ortg_full", "poss_pct", "%Poss"))
     out.append(_leader_table("Top players by RPR", qualified,
-                             "rpr", "ortg", "ORtg"))
+                             "rpr", "ortg_full", "ORtg (full)"))
     out.append("</div>")
     out.append(
         f"<p class=\"note\">Min {min_games} games and 40% of team minutes. "
-        "ORtg is approximate (no assist credit); read it with %Poss. "
-        "Full profiles in "
+        "ORtg here is ORtg (full), the Oliver rating with assist credit; "
+        "read it with %Poss. Full profiles in "
         "<a href=\"data/players_2026_27.csv\">players_2026_27.csv</a>.</p>")
     return "\n".join(out)
 
@@ -344,23 +395,30 @@ def top_players_section(players):
                  and p["min_pct"] and float(p["min_pct"]) >= 40]
     top = sorted(qualified, key=lambda p: float(p["rpr"]),
                  reverse=True)[:100]
+    for p in top:
+        p["ortg_full"] = p.get("ortg_full") or p.get("ortg_shrunk") \
+            or p.get("ortg")
 
     def num(v, disp):
         return (f"<td data-v=\"{v}\">{disp}</td>" if v not in (None, "")
-                else "<td data-v=\"0\">&mdash;</td>")
+                else "<td data-v=\"0\">-</td>")
 
     out = ["<section id=\"top-players\"><h2>Top players</h2>",
            "<p>Top 100 players of 2026-27 by RPR. Minimum 2 games "
            "and 40% of team minutes, same as the leader tables. "
-           "Click a column header to sort; the filter box searches "
+           "Click a column header to sort (the rank renumbers to "
+           "the sorted order); the filter box searches "
            "player names. Click a team name to open that team's "
-           "own page. The Rookies only button filters this table "
+           "own page, or click a player row to see that player's "
+           "RPR components, ORtg (full) vs simple, shooting, and "
+           "trend. The Rookies only button filters this table "
            "to first-year players (experience.years == 0).</p>",
            "<input class=\"filter\" type=\"search\" "
            "placeholder=\"Filter players...\" data-table=\"top-players\"> "
            "<button class=\"conf-tab rookie-toggle\" "
            "data-table=\"top-players\">Rookies only</button>",
-           "<table class=\"ratings\" id=\"top-players\">"
+           "<div class=\"table-scroll\">"
+           "<table class=\"ratings\" id=\"top-players\" data-renumber=\"1\">"
            "<thead><tr>"
            "<th data-t=\"num\">Rk</th>"
            "<th data-t=\"text\">Player</th>"
@@ -368,7 +426,7 @@ def top_players_section(players):
            "<th data-t=\"text\">Pos</th>"
            "<th data-t=\"num\">GP</th>"
            "<th data-t=\"num\">PPG</th>"
-           "<th data-t=\"num\">ORtg</th>"
+           "<th data-t=\"num\">ORtg (full)</th>"
            "<th data-t=\"num\">%Poss</th>"
            "<th data-t=\"num\">%Min</th>"
            "<th data-t=\"num\">RPR</th>"
@@ -377,7 +435,8 @@ def top_players_section(players):
         pos = p["position"] if p["position"] not in ("", "NA") else ""
         rookie = 1 if p.get("is_rookie") == "1" else 0
         out.append(
-            f"<tr data-rookie=\"{rookie}\">"
+            f"<tr class=\"player\" data-rookie=\"{rookie}\" "
+            f"data-pid=\"{html.escape(p['name'])}|{html.escape(p['team'])}\">"
             f"<td data-v=\"{rank}\">{rank}</td>"
             f"<td data-v=\"{html.escape(p['name'].lower())}\">"
             f"{html.escape(p['name'])}</td>"
@@ -385,19 +444,21 @@ def top_players_section(players):
             f"<a href=\"teams/{team_slug(p['team'])}.html\">"
             f"{html.escape(p['team'])}</a></td>"
             f"<td data-v=\"{html.escape(pos.lower())}\">"
-            f"{html.escape(pos) if pos else '&mdash;'}</td>"
+            f"{html.escape(pos) if pos else '-'}</td>"
             f"<td data-v=\"{p['gp']}\">{p['gp']}</td>"
             f"{num(p['pts_pg'], p['pts_pg'])}"
-            f"{num(p['ortg'], p['ortg'])}"
+            f"{num(p['ortg_full'], p['ortg_full'])}"
             f"{num(p['poss_pct'], p['poss_pct'])}"
             f"{num(p['min_pct'], p['min_pct'])}"
             f"{num(p['rpr'], p['rpr'])}"
             f"</tr>")
-    out.append("</tbody></table>")
+    out.append("</tbody></table></div>")
     out.append(
-        "<p class=\"note\">ORtg is approximate (no assist credit); "
-        "read it with %Poss. RPR is our own single-number rating, "
-        "not KenPom's proprietary kPOY. Full profiles in "
+        "<p class=\"note\">ORtg (full) is the Oliver rating with assist "
+        "credit; the simple ORtg (no assist credit) is in the detail "
+        "row and the CSVs. Read ORtg with %Poss. RPR is v1.2, our own "
+        "single-number rating, not KenPom's proprietary kPOY. Full "
+        "profiles in "
         "<a href=\"data/players_2026_27.csv\">players_2026_27.csv</a>."
         "</p></section>")
     return "\n".join(out)
@@ -405,11 +466,16 @@ def top_players_section(players):
 
 def _rookie_table(table_id, title, players):
     """A sortable RPR table for a rookie list (same columns as top 100)."""
+    for p in players:
+        p["ortg_full"] = p.get("ortg_full") or p.get("ortg_shrunk") \
+            or p.get("ortg")
+
     def num(v, disp):
         return (f"<td data-v=\"{v}\">{disp}</td>" if v not in (None, "")
-                else "<td data-v=\"0\">&mdash;</td>")
+                else "<td data-v=\"0\">-</td>")
     out = [f"<h3>{title}</h3>",
-           "<table class=\"ratings\" id=\"" + table_id + "\">"
+           "<div class=\"table-scroll\">"
+           "<table class=\"ratings\" id=\"" + table_id + "\" data-renumber=\"1\">"
            "<thead><tr>"
            "<th data-t=\"num\">Rk</th>"
            "<th data-t=\"text\">Player</th>"
@@ -417,7 +483,7 @@ def _rookie_table(table_id, title, players):
            "<th data-t=\"text\">Pos</th>"
            "<th data-t=\"num\">GP</th>"
            "<th data-t=\"num\">PPG</th>"
-           "<th data-t=\"num\">ORtg</th>"
+           "<th data-t=\"num\">ORtg (full)</th>"
            "<th data-t=\"num\">%Poss</th>"
            "<th data-t=\"num\">%Min</th>"
            "<th data-t=\"num\">RPR</th>"
@@ -425,7 +491,8 @@ def _rookie_table(table_id, title, players):
     for rank, p in enumerate(players, 1):
         pos = p["position"] if p["position"] not in ("", "NA") else ""
         out.append(
-            f"<tr>"
+            f"<tr class=\"player\" "
+            f"data-pid=\"{html.escape(p['name'])}|{html.escape(p['team'])}\">"
             f"<td data-v=\"{rank}\">{rank}</td>"
             f"<td data-v=\"{html.escape(p['name'].lower())}\">"
             f"{html.escape(p['name'])}</td>"
@@ -433,15 +500,15 @@ def _rookie_table(table_id, title, players):
             f"<a href=\"teams/{team_slug(p['team'])}.html\">"
             f"{html.escape(p['team'])}</a></td>"
             f"<td data-v=\"{html.escape(pos.lower())}\">"
-            f"{html.escape(pos) if pos else '&mdash;'}</td>"
+            f"{html.escape(pos) if pos else '-'}</td>"
             f"<td data-v=\"{p['gp']}\">{p['gp']}</td>"
             f"{num(p['pts_pg'], p['pts_pg'])}"
-            f"{num(p['ortg'], p['ortg'])}"
+            f"{num(p['ortg_full'], p['ortg_full'])}"
             f"{num(p['poss_pct'], p['poss_pct'])}"
             f"{num(p['min_pct'], p['min_pct'])}"
             f"{num(p['rpr'], p['rpr'])}"
             f"</tr>")
-    out.append("</tbody></table>")
+    out.append("</tbody></table></div>")
     return "\n".join(out)
 
 
@@ -512,12 +579,17 @@ def gm_board_section():
         tiers.setdefault(row["tier"], []).append(row)
     tier_order = ["Franchise cornerstone", "All-Star level",
                   "High-value starter", "Undervalued / buy-low",
-                  "Elite role player", "Overvalued / avoid"]
+                  "Elite role player", "Overvalued / avoid",
+                  "Rotation / depth", "Insufficient minutes"]
     out = ["<section id=\"gm-board\"><h2>GM acquisition board</h2>",
-           "<p>Tiers are set by thresholds on RPR, efficiency at "
-           "usage, defense, and availability, not by reputation. "
-           "No contracts or salaries. Age, height, and weight "
-           "come from the roster pull and are in the CSVs. "
+           "<p>Tiers are set by thresholds on RPR v1.2, efficiency at "
+           "usage, and minutes per game when the player plays, not "
+           "by reputation and not by %Min (a star who missed games "
+           "looks like a bench player on %Min). Players with under "
+           "8 games or under 150 total minutes are not tiered: they "
+           "sit in Insufficient minutes. No contracts or salaries. "
+           "Age, height (inches), and weight (lbs) come from the "
+           "roster pull and are in the CSVs. "
            "Full board in "
            "<a href=\"data/gm_board_2026_27.csv\">gm_board_2026_27.csv</a>."
            "</p>"]
@@ -563,6 +635,9 @@ def team_needs_section():
     _common = ", ".join(
         f"{n} ({c})" for n, c in Counter(
             s["name"] for s in _all_top).most_common(4))
+    _scores = [s["trade_score"] for s in _all_top]
+    _score_max = max(_scores) if _scores else 0.0
+    _score_min = min(_scores) if _scores else 0.0
     out = ["<section id=\"team-needs\"><h2>Team needs and trade fit</h2>",
            "<p>Each team's strengths and weaknesses, its star, and the "
            "realistic players who would fill its biggest holes. "
@@ -573,6 +648,13 @@ def team_needs_section():
            "night player on their own team. No contracts or salaries "
            "exist in the data, so none are used. This is a box-score "
            "fit, a prior for lineup data, not a lineup prediction. "
+           "TradeScore is QualityGain plus FitGain minus the "
+           "availability discount, on this run from "
+           f"{_score_min:.2f} to {_score_max:.2f}, mostly FitGain; "
+           "it is a fit ranking, "
+           "not a prediction and not a pick. Each team page also "
+           "lists less-common alternatives: its best targets who do "
+           "not top many other teams' lists. "
            "Full per-team lists in "
            "<a href=\"data/team_needs_2026_27.csv\">"
            "team_needs_2026_27.csv</a>.</p>",
@@ -585,6 +667,7 @@ def team_needs_section():
            f"the same list. There is no asking-price or salary data "
            f"to differentiate them.</p>",
            f"<p class=\"warn\">{html.escape(DISCLAIMER)}</p>",
+           "<div class=\"table-scroll\">"
            "<table class=\"ratings\"><thead><tr>"
            "<th data-t=\"text\">Team</th>"
            "<th data-t=\"text\">Star</th>"
@@ -596,11 +679,11 @@ def team_needs_section():
                        reverse=True):
         prof = teams[team]
         _star = prof["star"] or {}
-        # A star under RPR 5.0 is a role player on a rebuilding
+        # A star under RPR 1.5 is a role player on a rebuilding
         # team, not a star. Fall back to the RPR check for a team_needs
         # file built before is_clear_star existed.
         _clear = _star.get("is_clear_star",
-                           (_star.get("rpr") or 0) >= 5.0)
+                           (_star.get("rpr") or 0) >= 1.5)
         star = _star.get("name", "") if _clear else "No clear star"
         need = prof["ranked_needs"][0] if prof["ranked_needs"] else ""
         top = (prof["targets"]["top_overall"][0]
@@ -614,7 +697,7 @@ def team_needs_section():
                       f"F {top['fit_gain']:+.3f})")
             score = f"{top['trade_score']:.3f}"
         else:
-            target, score = "&mdash;", "&mdash;"
+            target, score = "-", "-"
         out.append(
             f"<tr><td data-v=\"{html.escape(team.lower())}\">"
             f"<a href=\"teams/{team_slug(team)}.html\">"
@@ -626,13 +709,13 @@ def team_needs_section():
             f"<td data-v=\"{html.escape(top['name'].lower()) if top else ''}\">"
             f"{target}</td>"
             f"<td data-v=\"{score}\">{score}</td></tr>")
-    out.append("</tbody></table>")
+    out.append("</tbody></table></div>")
     unfilled = [(t, k, v) for t, p in teams.items()
                 for k, v in p["targets"].get("unfilled_needs", {}).items()]
     if unfilled:
         out.append("<h3>No realistic target for a need</h3>")
         for team, need, reason in unfilled:
-            out.append(f"<p><strong>{html.escape(team)}</strong> &mdash; "
+            out.append(f"<p><strong>{html.escape(team)}</strong> - "
                        f"{html.escape(need)}: {html.escape(reason)}</p>")
     out.append("</section>")
     return "\n".join(out)
@@ -644,22 +727,25 @@ def _rank_str(team, key):
     return f" (#{r})" if r is not None else ""
 
 
-def _roster_table(roster):
+def _roster_table(roster, team=""):
     """Roster HTML table, shared by team pages and (via JS) the
     inline detail panels' data. Columns: Player, Pos, GP, PPG,
-    ORtg, %Poss, %Min, RPR, Tier."""
+    ORtg, %Poss, %Min, RPR, Tier. Rows carry data-pid so the
+    team page script can expand a player's detail row."""
     parts = ['<table class="roster"><thead><tr><th>Player</th>'
              "<th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th>"
              "<th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th>"
              "</tr></thead><tbody>"]
     for p in roster:
-        pos = p[1] if p[1] not in ("", "NA", None) else "\u2014"
+        pos = p[1] if p[1] not in ("", "NA", None) else "-"
         cells = [html.escape(p[0]), pos, str(p[2])]
         for v in p[3:8]:
-            cells.append("\u2014" if v is None else f"{v:.1f}")
-        cells.append(html.escape(p[8]) if p[8] else "\u2014")
-        parts.append("<tr>" + "".join(
-            f"<td>{c}</td>" for c in cells) + "</tr>")
+            cells.append("-" if v is None else f"{v:.1f}")
+        cells.append(html.escape(p[8]) if p[8] else "-")
+        pid = (f"{html.escape(p[0])}|{html.escape(team)}"
+               if team else "")
+        parts.append(f"<tr class=\"player\" data-pid=\"{pid}\">"
+                     + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
     parts.append("</tbody></table>")
     return "\n".join(parts)
 
@@ -678,31 +764,44 @@ SKILL_LABELS = [
     ("playmaking", "Playmaking", "AST per 36"),
     ("rebounding", "Rebounding", "REB per 36"),
     ("rim_protection", "Rim protection", "BLK per 36"),
-    ("perimeter_defense", "Perimeter defence", "STL per 36"),
+    ("perimeter_defense", "Perimeter defence",
+     "STL per 36 plus half-weight BLK per 36"),
     ("bench_scoring", "Bench scoring",
      "PTS per 36, players under 60% of team minutes"),
 ]
 SKILL_TARGET_PCT = 60
 
 
-def skill_chart_html(skills):
+def skill_chart_html(skills, raw=None):
     """Rotation skill profile chart: horizontal percentile bars.
 
     skills is the team's dict from team_needs (team["skills"]).
-    Returns "" when the data is missing, so a team page never
-    breaks on a missing team_needs run.
+    raw is team["skill_raw"]: the minutes-weighted per-36 rate
+    behind each percentile, shown in the row title and listed
+    under the chart, so a percentile is never presented without
+    the rate it came from. Returns "" when the data is missing,
+    so a team page never breaks on a missing team_needs run.
     """
     if not skills:
         return ""
     rows = []
+    raw_lines = []
     for key, label, definition in SKILL_LABELS:
         value = skills.get(key)
         if value is None:
             continue
         pct = int(round(value))
         cls = "above" if pct >= SKILL_TARGET_PCT else "below"
+        raw_v = (raw or {}).get(key)
+        title = definition
+        if raw_v is not None:
+            title = f"{definition}; raw rate {raw_v:.2f} per 36"
+            _suf = ("th" if 11 <= pct % 100 <= 13 else
+                    {1: "st", 2: "nd", 3: "rd"}.get(pct % 10, "th"))
+            raw_lines.append(f"{label}: {raw_v:.2f} per 36 "
+                             f"({pct}{_suf} percentile)")
         rows.append(
-            f'<div class="skill-row" title="{html.escape(definition)}">'
+            f'<div class="skill-row" title="{html.escape(title)}">'
             f'<span class="skill-label">{html.escape(label)}</span>'
             f'<span class="skill-track"><span class="skill-fill {cls}" '
             f'style="width:{pct}%"></span>'
@@ -712,22 +811,31 @@ def skill_chart_html(skills):
         return ""
     defs = "; ".join(f"{label}: {definition}"
                      for _, label, definition in SKILL_LABELS)
+    raw_note = ""
+    if raw_lines:
+        raw_note = ('<p class="note">Raw rates behind the bars: '
+                    + html.escape("; ".join(raw_lines)) + ".</p>")
     return (
         '<h4>Rotation skill profile (percentile, minutes-weighted)</h4>'
         '<p class="note">Top 9 players by minutes. Each skill is '
         'percentile-ranked against every player in the league with '
-        '150+ minutes, then minutes-weighted. The grey line is the '
+        '150+ minutes (bench scoring is ranked bench-only, and the '
+        'team bench skill is bench-only), then minutes-weighted. '
+        'The grey line is the '
         '60th percentile target: orange bars below it are the holes. '
         f'{html.escape(defs)}.</p>'
-        '<div class="skill-chart">' + "".join(rows) + '</div>')
+        '<div class="skill-chart">' + "".join(rows) + '</div>'
+        + raw_note)
 
 
 def team_page_html(team, row, slug_by_team):
     """One team's full page, as an HTML string."""
     conf = row["conf"]
+    _through, _n_games = DATA_THROUGH
     parts = [f"<h1>{html.escape(team)}</h1>",
              f"<p class=\"subtitle\">"
              f"{html.escape(conf)}ern Conference"
+             f" &middot; Data through {_through} ({_n_games} games)"
              f" &middot; <a href=\"../index.html\">&larr; NBA "
              f"Ratings</a></p>",
              f"<p class=\"warn\">{html.escape(DISCLAIMER)}</p>"]
@@ -742,20 +850,23 @@ def team_page_html(team, row, slug_by_team):
     if needs:
         star = needs["star"] or {}
         _clear = star.get("is_clear_star",
-                          (star.get("rpr") or 0) >= 5.0)
+                          (star.get("rpr") or 0) >= 1.5)
         star_label = (star.get("name", "") if _clear
                       else "No clear star in this data")
+        _star_rpr = star.get("rpr")
+        _star_rpr_s = f"{_star_rpr:.2f}" if _star_rpr is not None else "-"
         parts.append("<h3>Team needs</h3>")
         parts.append(
             f"<p>Star: {html.escape(star_label)} "
-            f"(RPR {star.get('rpr')}) &middot; Top needs: "
+            f"(RPR {_star_rpr_s}) &middot; Top needs: "
             f"{', '.join(html.escape(n) for n in needs['ranked_needs'][:3])}</p>")
         parts.append(
             f"<p>Strengths: "
             f"{html.escape('; '.join(needs['strengths'])) or 'none flagged'}"
             f"<br>Weaknesses: "
             f"{html.escape('; '.join(needs['weaknesses'])) or 'none flagged'}</p>")
-        parts.append(skill_chart_html(needs.get("skills") or {}))
+        parts.append(skill_chart_html(needs.get("skills") or {},
+                                      needs.get("skill_raw") or {}))
         top = needs["targets"]["top_overall"][:3]
         if top:
             parts.append("<p>Top realistic targets: " + "; ".join(
@@ -763,6 +874,20 @@ def team_page_html(team, row, slug_by_team):
                 f"({html.escape(s['team'])}, {html.escape(s['tier'])}, "
                 f"fills {html.escape(s['fills_need'])}, "
                 f"TradeScore {s['trade_score']:.3f})" for s in top) + "</p>")
+        distinct = [s for s in needs["targets"].get("top_distinct", [])
+                    if s["name"] not in {t["name"] for t in top}]
+        if distinct:
+            parts.append("<p>Less-common alternatives (best targets "
+                         "who do not top many other teams' lists): "
+                         + "; ".join(
+                             f"{html.escape(s['name'])} "
+                             f"({html.escape(s['team'])}, "
+                             f"TradeScore {s['trade_score']:.3f})"
+                             for s in distinct) + "</p>")
+        elif needs["targets"].get("top_distinct"):
+            parts.append("<p>The top targets above are already "
+                         "less-common fits: they do not top many other "
+                         "teams' lists.</p>")
         for need, reason in needs["targets"].get(
                 "unfilled_needs", {}).items():
             parts.append(f"<p>{html.escape(need)}: "
@@ -792,14 +917,22 @@ def team_page_html(team, row, slug_by_team):
     roster = ROSTERS["2026-27"].get(team)
     parts.append("<h3>Roster</h3>")
     if roster:
-        parts.append(_roster_table(roster))
-        parts.append('<p class="note">Sorted by minutes. ORtg is '
-                     "approximate (no assist credit); RPR is v1.1, our own "
-                     "rating, not KenPom\u2019s kPOY. Tier is the GM "
+        parts.append(_roster_table(roster, team))
+        parts.append('<p class="note">Sorted by minutes. Click a player '
+                     "row to see that player's RPR components, ORtg "
+                     "(full) vs simple, and shooting. ORtg in the table "
+                     "is the simple approximation (no assist credit); "
+                     "RPR is v1.2, our own "
+                     "rating, not KenPom's kPOY. Tier is the GM "
                      "board tier for that player.</p>")
     else:
         parts.append("<p>No roster data for this season.</p>")
     body = "\n".join(parts)
+    # Player detail for this team's roster rows, embedded so the
+    # page works with no network and no other file.
+    _detail = {k: v for k, v in PLAYER_DETAIL.items()
+               if k.endswith(f"|{team}")}
+    _detail_json = json.dumps(_detail, separators=(",", ":"))
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -812,8 +945,11 @@ def team_page_html(team, row, slug_by_team):
 {body}
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
-<a href="{REPO}">RD3-LIL/nba-ratings on GitHub</a>. Built {{BUILT}}.</p>
+<a href="{REPO}">RD3-LIL/nba-ratings on GitHub</a>. Data through {{THROUGH}}.
+Built {{BUILT}}.</p>
 </footer>
+<script>var PLAYER_DETAIL = {_detail_json};</script>
+<script>{{TEAM_JS}}</script>
 </body>
 </html>
 """
@@ -842,6 +978,9 @@ def build_team_pages(rows_by_team, slug_by_team):
     for team in sorted(rows_by_team):
         text = team_page_html(team, rows_by_team[team], slug_by_team)
         text = text.replace("{CSS}", CSS).replace("{BUILT}", BUILT)
+        text = text.replace("{THROUGH}",
+                            f"{DATA_THROUGH[0]} ({DATA_THROUGH[1]} games)")
+        text = text.replace("{TEAM_JS}", TEAM_JS)
         path = teams_dir / f"{slug_by_team[team]}.html"
         path.write_text(text)
         written.add(path.name)
@@ -880,6 +1019,14 @@ table.ratings thead th.sorted-desc::after { content: " \\25BC"; }
 table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
 table.ratings tbody tr.team { cursor: pointer; }
 table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings tbody tr.player { cursor: pointer; }
+table.ratings tbody tr.player:hover td { background: #eef4ff; }
+table.roster tbody tr.player { cursor: pointer; }
+table.roster tbody tr.player:hover td { background: #eef4ff; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.player-detail { font-size: 14px; line-height: 1.6; }
+.player-detail .pd-comp { font-variant-numeric: tabular-nums; }
+.player-detail .pd-note { color: #656d76; font-size: 13px; }
 table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
 table.ratings td.net { font-weight: 700; }
 table.ratings td .sub-rank { display: block; font-size: 10px;
@@ -939,7 +1086,63 @@ function esc(s) {
     .replace(/>/g, "&gt;");
 }
 function fmt1(v) {
-  return (v === null || v === undefined) ? "\\u2014" : v.toFixed(1);
+  // Values arrive as numbers (roster rows) or strings (PLAYER_DETAIL
+  // is built from CSVs); coerce so a string never throws on toFixed.
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(1);
+}
+function fmt2(v) {
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(2);
+}
+function fmtPct(v) {
+  // Fractions in the CSVs (0.61) rendered as percentages (61.0%).
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : (n * 100).toFixed(1) + "%";
+}
+function openPlayerDetail(row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  var table = row.closest("table");
+  if (table) closeDetails(table);
+  var pid = row.dataset.pid || "";
+  var d = (typeof PLAYER_DETAIL !== "undefined") ? PLAYER_DETAIL[pid] : null;
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = row.cells.length;
+  if (!d) {
+    td.textContent = "No detail available for this player.";
+  } else {
+    // PLAYER_DETAIL values are flat CSV strings, not nested
+    // components: scoring/playmaking/defense/rebounding sit on d.
+    var html = '<div class="player-detail"><strong>' + esc(d.name) + '</strong>'
+      + " (" + esc(d.team) + ", " + esc(d.position || "-") + ") - "
+      + d.gp + " GP, " + d.mpg + " MPG, " + d.min_pct + "% of team minutes"
+      + '<br><span class="pd-comp">RPR v1.2 ' + fmt2(d.rpr)
+      + " = scoring " + fmt2(d.scoring) + " + playmaking " + fmt2(d.playmaking)
+      + " + defense " + fmt2(d.defense) + " + rebounding "
+      + fmt2(d.rebounding) + "</span>"
+      + "<br>ORtg (full, with assist credit) " + fmt1(d.ortg_full)
+      + " - simple ORtg " + fmt1(d.ortg_simple)
+      + " (shrunk " + fmt1(d.ortg_shrunk) + ", opponent adj "
+      + fmt2(d.opp_adj) + ") - TS% " + fmtPct(d.ts_pct)
+      + "<br>3P% raw " + fmtPct(d.fg3_pct) + " - shrunk "
+      + fmtPct(d.fg3_pct_shrunk) + " (shrunk toward league average "
+      + "with m = 750 attempts; small samples shrink hard)"
+      + "<br>Usage " + fmt1(d.poss_pct) + "% of team possessions"
+      + (d.trend_ppg ? " - trend " + fmt1(d.trend_ppg) + " PPG vs season"
+         : "")
+      + '<br><span class="pd-note">RPR v1.1 was ' + fmt2(d.rpr_v1_1)
+      + "; v1.2 recenters the counting terms on league averages, "
+      + "so an average player scores about 0.</span></div>";
+    td.innerHTML = html;
+  }
+  tr.appendChild(td);
+  row.after(tr);
 }
 function closeDetails(table) {
   table.querySelectorAll("tbody tr.detail").forEach(function (d) {
@@ -971,7 +1174,7 @@ function openDetail(table, row) {
   var teams = entry.teams;
   var c = row.cells;
   var html = '<div class="detail-box"><strong>' + esc(c[1].textContent)
-    + '</strong> &mdash; AdjO ' + c[4].dataset.v + ' (#' + c[4].dataset.r + ') &middot; AdjD '
+    + '</strong> - AdjO ' + c[4].dataset.v + ' (#' + c[4].dataset.r + ') &middot; AdjD '
     + c[5].dataset.v + ' (#' + c[5].dataset.r + ') &middot; Net ' + c[6].dataset.v
     + ' &middot; AdjT ' + c[7].dataset.v + ' (#' + c[7].dataset.r + ') &middot; '
     + c[3].textContent + '</div>'
@@ -992,16 +1195,18 @@ function openDetail(table, row) {
       + "<th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th>"
       + "<th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>";
     roster.forEach(function (p) {
-      html += "<tr><td>" + esc(p[0]) + "</td><td>"
-        + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "\\u2014")
+      var pid = esc(p[0]) + "|" + esc(c[1].textContent);
+      html += '<tr class="player" data-pid="' + pid + '"><td>' + esc(p[0]) + "</td><td>"
+        + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "-")
         + "</td><td>" + p[2] + "</td><td>" + fmt1(p[3]) + "</td><td>"
         + fmt1(p[4]) + "</td><td>" + fmt1(p[5]) + "</td><td>"
         + fmt1(p[6]) + "</td><td>" + fmt1(p[7]) + "</td><td>"
-        + (p[8] ? esc(p[8]) : "\\u2014") + "</td></tr>";
+        + (p[8] ? esc(p[8]) : "-") + "</td></tr>";
     });
     html += "</tbody></table>"
-      + '<p class="note">Sorted by minutes. ORtg is approximate '
-      + "(no assist credit); RPR is our own rating, not KenPom\\u2019s "
+      + '<p class="note">Sorted by minutes. Click a player row for '
+      + "detail. ORtg is approximate "
+      + "(no assist credit); RPR is v1.2, our own rating, not KenPom's "
       + "kPOY. Tier is the GM board tier for that player.</p>";
   }
   var tr = document.createElement("tr");
@@ -1032,6 +1237,12 @@ document.querySelectorAll("table.ratings").forEach(function (table) {
       });
       var body = table.querySelector("tbody");
       rows.forEach(function (r) { body.appendChild(r); });
+      if (table.dataset.renumber) {
+        rows.forEach(function (r, idx) {
+          r.cells[0].dataset.v = String(idx + 1);
+          r.cells[0].textContent = String(idx + 1);
+        });
+      }
     });
   });
   table.querySelectorAll("tbody tr.team").forEach(function (row) {
@@ -1074,19 +1285,63 @@ document.querySelectorAll(".conftabs").forEach(function (bar) {
     applyFilter(table);
   });
 });
+// Click a player row (top 100, rookies, team roster, or a roster
+// inside an expanded team panel) to expand that player's detail.
+// Delegated so rows added later by openDetail are covered too.
+document.addEventListener("click", function (e) {
+  var row = e.target.closest("tr.player");
+  if (!row) return;
+  if (e.target.closest("a")) return;
+  openPlayerDetail(row);
+});
 """
+
+# Team pages run the same script: they have no ratings tables, so
+# the table handlers are no-ops and only the player-row handler
+# and openPlayerDetail do anything.
+TEAM_JS = JS
 
 RANKS = {}
 LOGS = {}
 ROSTERS = {}
 LOG_IDX = {}
 NEEDS = {}
+PLAYER_DETAIL = {}
 BUILT = datetime.now(ZoneInfo("America/Chicago")).strftime("%B %-d, %Y")
+DATA_THROUGH = ("unknown", 0)
+
+
+def data_through():
+    """(display date, n_games) from the games file, never hardcoded.
+
+    The data-through date is the last played date in
+    data/games_2026_27.json, so the header always says what the
+    ratings actually cover, even when a run lands a day late.
+    """
+    games = json.loads((DATA / "games_2026_27.json").read_text())
+    played = [g for g in games
+              if not (g["home_score"] == 0 and g["away_score"] == 0)
+              and not g.get("stats_missing")]
+    last = max(g["date"] for g in played) if played else None
+    disp = datetime.strptime(last, "%Y%m%d").strftime("%B %-d, %Y") \
+        if last else "unknown"
+    return disp, len(played)
 
 
 def main():
+    global DATA_THROUGH
+    DATA_THROUGH = data_through()
     rows, league_o, league_t, info = load_teams()
     players = read_csv(DATA / "players_2026_27.csv")
+    # ORtg_full lives in the eval CSV, not the base player CSV:
+    # merge it in so the top-100 and rookie tables can show it.
+    _eval_by_id = {(r["athlete_id"], r["team"]): r
+                   for r in read_csv(DATA / "players_2026_27_eval.csv")}
+    for p in players:
+        _ev = _eval_by_id.get((p["athlete_id"], p["team"]), {})
+        p["ortg_full"] = (_ev.get("ortg_full") or p.get("ortg_shrunk")
+                          or p.get("ortg"))
+    PLAYER_DETAIL.update(load_player_detail())
     log_names, log_entries = game_logs()
     LOGS["2026-27"] = {"teams": log_names, "logs": log_entries}
     ROSTERS["2026-27"] = rosters()
@@ -1107,7 +1362,9 @@ def main():
     needs_html = team_needs_section()
     logs_json = json.dumps(LOGS, separators=(",", ":"))
     rosters_json = json.dumps(ROSTERS, separators=(",", ":"))
+    detail_json = json.dumps(PLAYER_DETAIL, separators=(",", ":"))
     built = BUILT
+    through, n_games_data = DATA_THROUGH
 
     page = f"""<!DOCTYPE html>
 <html lang="en">
@@ -1119,11 +1376,12 @@ def main():
 </head>
 <body>
 <h1>NBA Ratings</h1>
-<p class="subtitle">NBA ratings in the style of RonPom (College Ratings),
+<p class="subtitle">Data through {through} ({n_games_data} games). NBA
+ratings in the style of RonPom (College Ratings),
 built from free ESPN data. Adjusted offense and defense per 100
 possessions, solved properly (damped Gauss-Seidel), league-average
 prior. Same ORtg, %Poss, and RPR formulas as RonPom, adapted to
-48-minute games; RPR is v1.1 (shrunk, opponent-adjusted, see
+48-minute games; RPR is v1.2 (recentered, see
 How to read this).</p>
 
 <nav class="topnav">
@@ -1181,16 +1439,26 @@ the record in the games these ratings are built from, so W+L equals
 GP.</p>
 <p><strong>ORtg</strong> (players) is a simplified approximation:
 points per 100 possessions used, with no assist credit, so it
-underrates playmakers. Read it with %Poss. <strong>RPR v1.1</strong>
+underrates playmakers. Read it with %Poss. The tables show
+<strong>ORtg (full)</strong>, the Oliver version with assist credit,
+falling back to shrunk simple ORtg where the full version is not
+available. <strong>RPR v1.2</strong>
 is our own single-number player rating, not KenPom's proprietary
-kPOY: the same formula as before, but the ORtg that enters it is
-first shrunk toward the league-average ORtg (K = 200 possessions
+kPOY: the ORtg that enters it is first shrunk toward the league-average ORtg (K = 200 possessions
 used) and adjusted for the defences the player faced (OppAdj,
-shrunk toward 0 with K = 500 possessions faced). The old value is
-kept as rpr_v1 in the CSVs. RPR_value = RPR v1.1 * GP / 82 is how
+shrunk toward 0 with K = 500 possessions faced). On top of that,
+v1.2 recenters the counting terms (playmaking, defense,
+rebounding) on their league-average per-36 rates, so an average
+player scores about 0 from those terms and the median RPR is
+near 0, instead of every player getting free credit just for
+playing. The old values are kept as rpr_v1 and rpr_v1_1 in the
+CSVs. RPR_value = RPR v1.2 * GP / 82 is how
 much value a player has delivered so far; it is not part of the
 rating. Leaderboards only include players with at least 40% of their
-team's minutes, so a two-minute cameo cannot top the list.</p>
+team's minutes, so a two-minute cameo cannot top the list.
+Click a player row to expand that player's detail: RPR
+components, ORtg (full) vs simple, TS%, GP, and the 3P%
+shrinkage applied.</p>
 <p><strong>Rookies</strong>: a rookie is a player in his first NBA
 season, from the ESPN roster entry (experience.years == 0).
 The Rookies section ranks them by RPR with the same 40% minutes
@@ -1203,16 +1471,18 @@ fields.</p>
 order is still noisy. League-average prior only, no last-season
 prior, so the shrinkage pulls every player toward the same league
 average, rookies and veterans alike. Box-score only: no tracking,
-no on/off. RPR v1.1 adjusts ORtg for opponent defence; ORtg_full
+no on/off. RPR v1.2 adjusts ORtg for opponent defence; ORtg_full
 does not. No contracts or salaries. {DISCLAIMER} Full
 method in the README.</p></section>
 
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
-<a href="{REPO}">RD3-LIL/nba-ratings on GitHub</a>. Built {built}.</p>
+<a href="{REPO}">RD3-LIL/nba-ratings on GitHub</a>. Data through {through}
+({n_games_data} games). Built {built}.</p>
 </footer>
 <script>var GAME_LOGS = {logs_json};</script>
 <script>var ROSTERS = {rosters_json};</script>
+<script>var PLAYER_DETAIL = {detail_json};</script>
 <script>{JS}</script>
 </body>
 </html>

@@ -36,8 +36,8 @@ lineup-balance / archetype-interaction work):
    the top 3 RPR players on his own team is excluded even if
    his tier slips through (early-season noise can put a big
    name in a lower tier: in this run LeBron James lands in
-   Rotation / depth on ORtg_full 97.5, and James Harden in
-   Elite role player). Franchise cornerstone and All-Star
+   Elite role player on ORtg_full 97.5, and James Harden in
+   Rotation / depth on RPR -0.16). Franchise cornerstone and All-Star
    level players are never suggested, and neither are
    Overvalued / avoid players. On top of the tier rule, a
    target must look like a role player on his own team, not a
@@ -56,11 +56,13 @@ lineup-balance / archetype-interaction work):
 
    Star clarity: the star is the highest-RPR qualifying player,
    but on a rebuilding team that can be a role player (e.g.
-   Tyler Herro, RPR 2.58, as Milwaukee's highest-RPR qualifier
+   Myles Turner, RPR 0.28, as Milwaukee's highest-RPR qualifier
    after Milwaukee traded Giannis to Miami). A team whose star's
-   RPR is under 5.0 is labelled "No clear star in this data" in
+   RPR is under 1.5 is labelled "No clear star in this data" in
    the output and on the site; the star's numbers are still used
    for the need weights, but no player is presented as the star.
+   (1.5 is about the 85th percentile among qualified players on
+   the Nov 20 run; see STAR_RPR_MIN.)
    Teams reflect the 2026-27 rosters after a busy 2026 offseason:
    Giannis to Miami, LeBron to Philadelphia, Kessler to the
    Lakers, and Davis to Washington, among others.
@@ -74,14 +76,18 @@ not fitted; v2 should fit them against post-trade Adj Net):
     playmaking        = assists per 36
     rebounding        = rebounds per 36
     rim_protection    = blocks per 36
-    perimeter_defense = steals per 36 (weak proxy: steals reward
-                        gambling and miss positional defence;
-                        flagged as such, not hidden)
+    perimeter_defense = steals per 36 plus half-weight blocks
+                        per 36 (weak proxy: steals reward gambling
+                        and miss positional defence; flagged as
+                        such, not hidden)
     bench_scoring     = points per 36, for players with %Min < 60
                         (team profile: minutes-weighted pts/36 of
-                        the bench; a starter-heavy team scores low)
+                        the bench only, percentile-ranked bench-
+                        only; a starter-heavy team scores low)
   Team skill S_k = minutes-weighted mean of player percentiles
-  over the top 9 players by minutes on the team.
+  over the top 9 players by minutes on the team, except bench
+  scoring, which is the minutes-weighted mean over the bench
+  players in the top 9.
   Need_k = max(0, 60 - S_k). Target level 60th percentile.
   w_k = base weight x star factor, normalised to sum 1.
     base: shooting .25, playmaking .20, rebounding .15,
@@ -97,28 +103,22 @@ not fitted; v2 should fit them against post-trade Adj Net):
     FitGain = sum_k w_k * (Need_k / 60)
               * sqrt(max(dS_k, 0) / 10), capped per skill at 2
     QualityGain = (RPR_target - RPR_out) * (MPG_target / 240)
-    UsagePenalty = 0.02 * max(0, usage_star + usage_target - 65)
     AvailabilityDiscount = 0.10 * (QualityGain + FitGain)
       if GP < 10, plus another 0.10 if %Min < 40
-    TradeScore = QualityGain + FitGain - UsagePenalty
-                 - AvailabilityDiscount
+    TradeScore = QualityGain + FitGain - AvailabilityDiscount
+    (The usage penalty that used to sit in TradeScore was
+    removed in v1.1: it was 0.0 for every target on the Nov 20
+    run, so it was decoration, not a cost. See score_target.)
 
-  The per-skill FitGain cap (2.0) and the usage penalty (0.02)
-  are tiebreakers and safety rails, not calibrated drivers,
-  and are documented as such. On this run the largest
-  per-skill FitGain contribution is about 0.16 and the
-  theoretical maximum is about 0.4 (weight <= ~0.35, Need/60
-  <= 1, sqrt term <= ~1.12), so the 2.0 cap never binds on
-  real data; it exists so a data error cannot blow up FitGain.
-  The usage penalty is likewise small by construction: the
-  target-usage gate caps targets under 26% usage and the
-  highest star usage in this run is 40.7%, so the largest
-  possible excess over the 65 budget is about 1.6 points and
-  the largest possible penalty about 0.03, against TradeScores
-  of roughly 0.3-0.6. It only separates near-tied targets; a
-  real redundancy cost would need a fitted coefficient, which
-  is v2 work (see README). Neither number is presented as a
-  measured effect.
+  The per-skill FitGain cap (2.0) is a tiebreaker and safety
+  rail, not a calibrated driver, and is documented as such. On
+  this run the largest per-skill FitGain contribution is about
+  0.16 and the theoretical maximum is about 0.4 (weight
+  <= ~0.35, Need/60 <= 1, sqrt term <= ~1.12), so the 2.0 cap
+  never binds on real data; it exists so a data error cannot
+  blow up FitGain. A real redundancy cost would need a fitted
+  coefficient, which is v2 work (see README). Neither number
+  is presented as a measured effect.
 
 Limits, stated plainly: no contracts or salaries exist in the
 inputs, so none are used and none are invented; a target's
@@ -162,12 +162,14 @@ MAX_RPR_JUMP = 5.0         # bigger upgrade is a roster overhaul, not a
                            # slight value add. Set at 5, not 3: with the
                            # displaced player picked as the weakest
                            # rotation player at the skill, a good role
-                           # player (RPR ~5) replacing a weak spot
-                           # (RPR ~1) jumps ~4 and is exactly the
-                           # intended suggestion. Stars are kept out
-                           # by the tier / top-3 / minutes / usage /
-                           # scoring gates above, not by this cap.
-USAGE_BUDGET = 65.0        # star usage + target usage above this: penalty
+                           # player (RPR ~2 in v1.2) replacing a weak
+                           # spot (RPR ~-1) jumps ~3 and is exactly
+                           # the intended suggestion. Stars are kept
+                           # out by the tier / top-3 / minutes / usage
+                           # / scoring gates above, not by this cap.
+USAGE_BUDGET = 65.0         # retired in v1.1: the usage penalty it
+                           # fed never bound (see score_target), so
+                           # the penalty was removed, not retuned.
 MAX_MIN_PCT_TARGET = 55.0  # target must not be a full-time starter
 MAX_MPG_TARGET = 30.0      # ... nor log 30+ minutes a night when he plays
                            # (catches a core piece who missed games and
@@ -176,10 +178,14 @@ MAX_MPG_TARGET = 30.0      # ... nor log 30+ minutes a night when he plays
 MAX_USAGE_TARGET = 26.0    # ... nor a featured offensive option
 MAX_PTS_TARGET = 20.0      # ... nor a 20-point scorer, on his own team
 TOP_N_OWN_TEAM = 3         # ... nor top-3 RPR on his own team
-STAR_RPR_MIN = 5.0         # a "star" under RPR 5.0 is a role player
+STAR_RPR_MIN = 1.5         # a "star" under RPR 1.5 is a role player
                            # on a rebuilding team that traded its
                            # star away, not a star: the team is
-                           # labelled "No clear star in this data"
+                           # labelled "No clear star in this data".
+                           # 1.5 is about the 85th percentile among
+                           # qualified players on the Nov 20 run and
+                           # sits in a natural gap in the team-top
+                           # distribution (1.25 to 1.63).
 
 # Tiers that would typically be available in a trade. Franchise
 # cornerstone and All-Star level are never suggested; Overvalued /
@@ -196,6 +202,11 @@ SKILLS = list(BASE_WEIGHTS)
 # How each skill is measured per player (per-36 rates from eval).
 # bench_scoring uses pts/36 but only counts for players with
 # %Min < 60; a starter's scoring does not fill a bench need.
+# perimeter_defense is STL per 36 plus half-weight BLK per 36:
+# steals are the only perimeter signal in a box score, and the
+# half-weight blocks credit help defence without duplicating
+# rim protection in full. It is still a weak proxy, flagged as
+# such, not hidden.
 def skill_rates(ev_player):
     ev = ev_player["eval"]
     p36 = ev["per36"]
@@ -207,7 +218,7 @@ def skill_rates(ev_player):
         "playmaking": p36["ast"],
         "rebounding": p36["reb"],
         "rim_protection": p36["blk"],
-        "perimeter_defense": p36["stl"],
+        "perimeter_defense": p36["stl"] + 0.5 * p36["blk"],
         "bench_scoring": p36["pts"] if min_pct < 60 else 0.0,
     }
 
@@ -369,22 +380,36 @@ def build_profiles(teams_doc, players, tier_by_id, games):
             pct = r if high_good else 100.0 - r
             ff_pct.setdefault(team, {})[key] = round(pct, 1)
     # Player skill percentiles, league-wide, minutes-gated.
+    # bench_scoring is percentile-ranked bench-only: ranking bench
+    # scorers against starters (whose bench rate is 0 by
+    # construction) would put every bench player near the top and
+    # make every team's bench skill look low. Starters keep a
+    # bench percentile against the bench distribution (about 0),
+    # but it is never used for a team skill or a target's bench
+    # fit: those use bench players only.
     gated = [p for p in players if p["totals"]["min"] >= MIN_MINUTES_PCT]
+    bench_gated = [p for p in gated
+                   if ((p.get("ratings") or {}).get("min_pct") or 0) < 60]
     rates = {k: [skill_rates(p)[k] for p in gated] for k in SKILLS}
+    rates["bench_scoring"] = [skill_rates(p)["bench_scoring"]
+                              for p in bench_gated]
     pct_by_player = {}
     for k in SKILLS:
+        pool = bench_gated if k == "bench_scoring" else gated
         ranks = percentile_ranks(rates[k])
-        for p, r in zip(gated, ranks.values()):
+        for p, r in zip(pool, ranks.values()):
             pct_by_player.setdefault((p["athlete_id"], p["team"]), {})[k] = r
     # Ungated players get a percentile from the same scale anyway
     # (their rate placed against the gated distribution).
     for p in players:
         key = (p["athlete_id"], p["team"])
-        if key in pct_by_player:
+        if key in pct_by_player and "bench_scoring" in pct_by_player[key]:
             continue
         sr = skill_rates(p)
-        d = {}
+        d = pct_by_player.setdefault(key, {})
         for k in SKILLS:
+            if k in d:
+                continue
             vals = rates[k]
             below = sum(1 for x in vals if x < sr[k])
             equal = sum(1 for x in vals if x == sr[k])
@@ -402,19 +427,45 @@ def build_profiles(teams_doc, players, tier_by_id, games):
         rotation = roster[:ROTATION_N]
         rot_min = sum(p["totals"]["min"] for p in rotation) or 1
         skills = {}
+        skill_raw = {}
         for k in SKILLS:
+            if k == "bench_scoring":
+                # Bench skill only: minutes-weighted mean over the
+                # bench players in the rotation, not over starters
+                # scored 0. A team with no bench player in its top
+                # 9 gets a neutral 50, not a fake hole.
+                bench_rot = [p for p in rotation
+                             if ((p.get("ratings") or {}).get("min_pct")
+                                 or 0) < 60]
+                bench_min = sum(p["totals"]["min"] for p in bench_rot)
+                if bench_rot and bench_min:
+                    skills[k] = round(sum(
+                        p["totals"]["min"] / bench_min
+                        * pct_by_player[(p["athlete_id"], p["team"])][k]
+                        for p in bench_rot), 1)
+                    skill_raw[k] = round(sum(
+                        p["totals"]["min"] / bench_min
+                        * skill_rates(p)[k] for p in bench_rot), 2)
+                else:
+                    skills[k] = 50.0
+                    skill_raw[k] = None
+                continue
             skills[k] = round(sum(
                 p["totals"]["min"] / rot_min
                 * pct_by_player[(p["athlete_id"], p["team"])][k]
                 for p in rotation), 1)
+            skill_raw[k] = round(sum(
+                p["totals"]["min"] / rot_min
+                * skill_rates(p)[k] for p in rotation), 2)
         # Star: highest RPR on the team with at least 8 games and
-        # at least 40% of team minutes, the same floor as the
-        # leaderboards. Without the minutes floor a bench player
-        # on a hot per-game stretch (e.g. Mo Bamba, Utah) reads
-        # as the star.
+        # at least 20 minutes per game when he plays. MPG, not
+        # %Min, is the role test: %Min conflates availability
+        # with role, so a star who missed games (Curry, 34.5%
+        # Min at 26.5 MPG) read as a bench player under the old
+        # %Min floor and his team read as starless.
         cands = [p for p in roster
                  if p["totals"]["gp"] >= MIN_GP_TARGET
-                 and ((p.get("ratings") or {}).get("min_pct") or 0) >= 40]
+                 and p["per_game"]["min"] >= 20]
         star = max(cands, key=lambda p: (p.get("ratings") or {}).get("rpr")
                    if (p.get("ratings") or {}).get("rpr") is not None
                    else -99) if cands else (roster[0] if roster else None)
@@ -514,6 +565,7 @@ def build_profiles(teams_doc, players, tier_by_id, games):
                                        "opp_ft_rate")},
             "four_factor_pct": ff_pct.get(team, {}),
             "skills": skills,
+            "skill_raw": skill_raw,
             "star": ({"name": star["name"], "rpr": star_rpr,
                       "is_clear_star": (star_rpr is not None
                                         and star_rpr >= STAR_RPR_MIN),
@@ -528,7 +580,8 @@ def build_profiles(teams_doc, players, tier_by_id, games):
             "ranked_needs": ranked_needs,
             "strengths": strengths,
             "weaknesses": weaknesses,
-            "rotation": [{"name": p["name"],
+            "rotation": [{"athlete_id": p["athlete_id"],
+                          "name": p["name"],
                           "min": p["totals"]["min"],
                           "rpr": (p.get("ratings") or {}).get("rpr"),
                           "tier": tier_by_id.get((p["athlete_id"], p["team"]))}
@@ -541,7 +594,7 @@ def build_profiles(teams_doc, players, tier_by_id, games):
 def star_display_name(profile):
     """Label for a team's star in output.
 
-    A star under RPR 5.0 is a role player on a rebuilding team
+    A star under RPR 1.5 is a role player on a rebuilding team
     that traded its star away, not a star, so the team is labelled
     "No clear star in this data" instead of naming him."""
     star = profile.get("star") or {}
@@ -577,7 +630,13 @@ def score_target(target, target_pct, target_tier, team, profile,
     if target["totals"]["gp"] < MIN_GP_TARGET:
         return None
     t_rpr = (target.get("ratings") or {}).get("rpr")
-    if t_rpr is None or t_rpr < 0.5:
+    # Target must be at least a league-average player by RPR.
+    # In v1.2 the center is 0, so the floor is 0.0, not the 0.5
+    # that was set on the v1.1 scale (where 0.5 was below
+    # average): with 0.5 on the v1.2 scale only 10 players in
+    # the league were eligible targets at all, and the same 10
+    # topped every team's list. At 0.0 the eligible pool is 43.
+    if t_rpr is None or t_rpr < 0.0:
         return None
     # A player who is one of the top 3 RPR players on his own team
     # is that team's star or co-star: not typically available.
@@ -626,7 +685,11 @@ def score_target(target, target_pct, target_tier, team, profile,
     rot_players = []
     for r in rotation:
         p = next((x for x in players_by_team.get(team, [])
-                  if x["name"] == r["name"]), None)
+                  if x["athlete_id"] == r.get("athlete_id")), None)
+        if p is None:
+            # Rotation entries written before athlete_id existed.
+            p = next((x for x in players_by_team.get(team, [])
+                      if x["name"] == r["name"]), None)
         if p is None or p["name"] in top2_names:
             continue
         rot_players.append(p)
@@ -666,13 +729,23 @@ def score_target(target, target_pct, target_tier, team, profile,
     if fit_gain <= 0:
         return None
     quality_gain = (t_rpr - d_rpr) * (target_mpg / 240.0)
-    usage_penalty = 0.02 * max(0.0, star_usage + target_usage - USAGE_BUDGET)
+    # Usage penalty: removed in v1.1. It never bound on real data
+    # (0.0 for every target on the Nov 20 run: the target-usage
+    # gate caps targets under 26% and the highest star usage was
+    # 40.7%, so the largest possible penalty was about 0.03
+    # against TradeScores of roughly 0.3-0.5, and it was 0.0 in
+    # practice). A penalty that never binds is decoration, so it
+    # is gone; usage_penalty is kept at 0.0 in the output for
+    # backward compatibility. If a real redundancy cost is ever
+    # fitted against post-trade Adj Net, it can come back with a
+    # fitted coefficient.
+    usage_penalty = 0.0
     avail = 0.0
     if target["totals"]["gp"] < 10:
         avail += 0.10 * (quality_gain + fit_gain)
     if ((target.get("ratings") or {}).get("min_pct") or 0) < 40:
         avail += 0.10 * (quality_gain + fit_gain)
-    trade_score = quality_gain + fit_gain - usage_penalty - avail
+    trade_score = quality_gain + fit_gain - avail
     if trade_score <= 0:
         return None
     return {
@@ -775,7 +848,25 @@ def build_targets(profiles, players, tier_by_id, pct_by_player):
                 unfilled[need] = ("No realistic target fills this need. "
                                   f"Best at the skill league-wide: {reasons}.")
         out[team] = {"top_overall": scored[:8], "by_need": by_need,
-                     "unfilled_needs": unfilled}
+                     "unfilled_needs": unfilled, "_scored": scored}
+    # Top distinct targets: the same best role players top many
+    # teams' lists (Paul Reed topped 26 on the Nov 20 run), so
+    # each team also gets its best targets who do NOT top many
+    # other teams' lists. This does not cap repetition or hide
+    # the best fit: top_overall is unchanged and still shown
+    # first. It is a second list for readers who want a target
+    # that is not on every other team's list.
+    _top_counts = defaultdict(int)
+    for team in out:
+        if out[team]["top_overall"]:
+            _top_counts[out[team]["top_overall"][0]["name"]] += 1
+    for team in out:
+        distinct = [s for s in
+                    sorted(out[team].get("_scored", []),
+                           key=lambda s: s["trade_score"], reverse=True)
+                    if _top_counts.get(s["name"], 0) <= 2][:3]
+        out[team]["top_distinct"] = distinct
+        out[team].pop("_scored", None)
     return out
 
 
@@ -797,14 +888,23 @@ def main(argv=None):
         "season": SEASON,
         "games_included": teams_doc.get("info", {}).get("n_games"),
         "player_count": len(players),
-        "method": ("Team needs v1, box-score only. Four Factors "
+        "method": ("Team needs v1.1, box-score only. Four Factors "
                    "(Oliver) + minutes-weighted rotation skill "
                    "profile, star-anchored need weights, concave "
                    "FitGain, QualityGain vs the displaced player. "
-                   "RPR here is RPR v1.1 (Nov 20, 2026): ORtg "
+                   "RPR here is RPR v1.2 (Nov 20, 2026): ORtg "
                    "shrunk toward the league average (K = 200 "
-                   "possessions used) and opponent-adjusted; "
-                   "rpr_v1 is the old value. "
+                   "possessions used) and opponent-adjusted, with "
+                   "the counting terms centered on the league-"
+                   "average per-36 rates; "
+                   "rpr_v1 and rpr_v1_1 are the old values. "
+                   "Bench scoring is percentile-ranked bench-only "
+                   "and the team bench skill is bench-only; "
+                   "perimeter defence is STL plus half-weight BLK "
+                   "per 36. The usage penalty was removed in v1.1 "
+                   "(it never bound). Each team also gets a "
+                   "top_distinct list: its best targets who do not "
+                   "top many other teams' lists. "
                    "Availability filter: only Rotation / depth, "
                    "Elite role player, Undervalued / buy-low and "
                    "High-value starter tiers; top-3 RPR players on "
@@ -812,7 +912,7 @@ def main(argv=None):
                    "under 30 MPG, under 26% usage, under 20 PPG; "
                    "RPR jump over the displaced player capped at 5.0. "
                    "Teams whose highest-RPR qualifying player is under "
-                   "RPR 5.0 are labelled no clear star in this data. "
+                   "RPR 1.5 are labelled no clear star in this data. "
                    "No contracts "
                    "or salaries: none exist in the inputs and none "
                    "are invented. No lineup/tracking data: this is "
