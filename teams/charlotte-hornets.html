@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charlotte Hornets | NBA Ratings</title>
+<style>
+body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; color: #1f2328;
+  line-height: 1.5; }
+h1 { font-size: 2em; margin-bottom: 0; }
+h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 40px; }
+h3 { margin-top: 28px; }
+.subtitle { color: #656d76; margin-top: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #f6f8fa; }
+nav.topnav { position: sticky; top: 0; z-index: 20; background: #fff;
+  border-bottom: 1px solid #d0d7de; padding: 8px 0; display: flex;
+  gap: 4px; flex-wrap: wrap; }
+nav.topnav a { padding: 4px 10px; border-radius: 6px; color: #0969da;
+  text-decoration: none; font-weight: 600; font-size: 14px; }
+nav.topnav a:hover { background: #eaeef2; }
+section, div[id] { scroll-margin-top: 54px; }
+table.ratings { font-size: 13px; }
+table.ratings th, table.ratings td { padding: 3px 8px; }
+table.ratings thead th { position: sticky; top: 40px; cursor: pointer;
+  user-select: none; }
+table.ratings thead th:hover { background: #eaeef2; }
+table.ratings thead th.sorted-asc::after { content: " \25B2"; }
+table.ratings thead th.sorted-desc::after { content: " \25BC"; }
+table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
+table.ratings tbody tr.team { cursor: pointer; }
+table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
+table.ratings td.net { font-weight: 700; }
+table.ratings td .sub-rank { display: block; font-size: 10px;
+  line-height: 1.1; color: #656d76; font-weight: 400; }
+tr.detail td { background: #fff; padding: 10px 14px; cursor: default; }
+.detail-box { margin-bottom: 8px; }
+table.gamelog { font-size: 13px; width: auto; margin: 0; }
+table.gamelog th, table.gamelog td { padding: 2px 10px; }
+table.gamelog td:nth-child(n+3) { text-align: right; }
+.detail-box h4 { margin: 14px 0 4px; }
+table.roster { font-size: 13px; width: auto; margin: 0; }
+table.roster th, table.roster td { padding: 2px 10px; }
+table.roster td:nth-child(n+3) { text-align: right; }
+a.team-link, a.team-page-link { color: #0969da; text-decoration: none; }
+a.team-link:hover, a.team-page-link:hover { text-decoration: underline; }
+.conftabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 4px; }
+button.conf-tab { padding: 3px 9px; font-size: 12px;
+  border: 1px solid #d0d7de; border-radius: 999px; background: #fff;
+  cursor: pointer; }
+button.conf-tab.active { background: #1f2328; color: #fff;
+  border-color: #1f2328; }
+input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
+  border: 1px solid #d0d7de; border-radius: 6px; margin: 4px 0; }
+.leaders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.leaders table { font-size: 15px; }
+.leaders td:nth-child(n+3) { text-align: right; }
+@media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
+.note { color: #656d76; font-size: 14px; }
+.warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
+  border-radius: 6px; }
+footer { margin-top: 48px; color: #656d76; font-size: 14px;
+  border-top: 1px solid #d0d7de; padding-top: 16px; }
+</style>
+</head>
+<body>
+<h1>Charlotte Hornets</h1>
+<p class="subtitle">Eastern Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p>Net rank #29 &middot; AdjO 101.8 (#30) &middot; AdjD 111.0 (#17) &middot; Net -9.2 &middot; AdjT 99.0 (#29) &middot; 4-10</p>
+<h3>Team needs</h3>
+<p>Star: Moussa Diabate (RPR 4.729166666666667) &middot; Top needs: playmaking, perimeter_defense, shooting</p>
+<p>Strengths: offensive rebounding (OREB%) (95th pct); defensive rebounding (DREB%) (98th pct)<br>Weaknesses: offense (AdjO 101.8, 2nd pct); shooting (eFG%) (2nd pct); ball security (TOV%) (2nd pct); getting to the line (FT rate) (5th pct); opponent shooting (opp eFG%) (18th pct)</p>
+<p>Top realistic targets: Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills playmaking, TradeScore 0.427); Ausar Thompson (Detroit Pistons, Rotation / depth, fills playmaking, TradeScore 0.424); Paul Reed (Detroit Pistons, High-value starter, fills playmaking, TradeScore 0.398)</p>
+<h3>Game log</h3>
+<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
+<tr><td>10/21</td><td><a href="brooklyn-nets.html">Brooklyn Nets</a></td><td>A</td><td>W</td><td>110-103</td></tr>
+<tr><td>10/23</td><td><a href="atlanta-hawks.html">Atlanta Hawks</a></td><td>H</td><td>L</td><td>81-128</td></tr>
+<tr><td>10/24</td><td><a href="miami-heat.html">Miami Heat</a></td><td>H</td><td>W</td><td>115-110</td></tr>
+<tr><td>10/26</td><td><a href="washington-wizards.html">Washington Wizards</a></td><td>H</td><td>W</td><td>110-103</td></tr>
+<tr><td>10/28</td><td><a href="detroit-pistons.html">Detroit Pistons</a></td><td>A</td><td>L</td><td>89-97</td></tr>
+<tr><td>10/30</td><td><a href="washington-wizards.html">Washington Wizards</a></td><td>A</td><td>L</td><td>79-95</td></tr>
+<tr><td>10/31</td><td><a href="philadelphia-76ers.html">Philadelphia 76ers</a></td><td>H</td><td>L</td><td>104-109</td></tr>
+<tr><td>11/02</td><td><a href="detroit-pistons.html">Detroit Pistons</a></td><td>H</td><td>L</td><td>91-124</td></tr>
+<tr><td>11/04</td><td><a href="brooklyn-nets.html">Brooklyn Nets</a></td><td>A</td><td>L</td><td>104-114</td></tr>
+<tr><td>11/06</td><td><a href="boston-celtics.html">Boston Celtics</a></td><td>H</td><td>L</td><td>80-119</td></tr>
+<tr><td>11/09</td><td><a href="cleveland-cavaliers.html">Cleveland Cavaliers</a></td><td>H</td><td>W</td><td>124-112</td></tr>
+<tr><td>11/12</td><td><a href="phoenix-suns.html">Phoenix Suns</a></td><td>A</td><td>L</td><td>96-101</td></tr>
+<tr><td>11/15</td><td><a href="la-clippers.html">LA Clippers</a></td><td>A</td><td>L</td><td>105-113</td></tr>
+<tr><td>11/17</td><td><a href="los-angeles-lakers.html">Los Angeles Lakers</a></td><td>A</td><td>L</td><td>114-118</td></tr>
+</tbody></table>
+<h3>Roster</h3>
+<table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
+<tr><td>Naz Reid</td><td>C</td><td>14</td><td>17.6</td><td>86.4</td><td>28.2</td><td>63.7</td><td>0.7</td><td>Overvalued / avoid</td></tr>
+<tr><td>Sion James</td><td>G</td><td>14</td><td>5.6</td><td>71.4</td><td>12.2</td><td>56.4</td><td>0.4</td><td>Rotation / depth</td></tr>
+<tr><td>Brandon Miller</td><td>F</td><td>12</td><td>19.9</td><td>84.6</td><td>32.6</td><td>54.5</td><td>-0.8</td><td>Overvalued / avoid</td></tr>
+<tr><td>Moussa Diabate</td><td>F</td><td>12</td><td>8.7</td><td>99.0</td><td>12.5</td><td>52.8</td><td>4.7</td><td>High-value starter</td></tr>
+<tr><td>Grayson Allen</td><td>G</td><td>13</td><td>14.9</td><td>109.6</td><td>21.2</td><td>52.5</td><td>3.6</td><td>Rotation / depth</td></tr>
+<tr><td>Royce O&#x27;Neale</td><td>F</td><td>14</td><td>5.7</td><td>99.4</td><td>11.9</td><td>42.6</td><td>1.6</td><td>Rotation / depth</td></tr>
+<tr><td>Dennis Schroder</td><td>G</td><td>9</td><td>10.2</td><td>72.1</td><td>19.9</td><td>40.2</td><td>-1.3</td><td>Rotation / depth</td></tr>
+<tr><td>Ryan Kalkbrenner</td><td>C</td><td>14</td><td>4.7</td><td>108.6</td><td>10.1</td><td>37.9</td><td>3.5</td><td>Undervalued / buy-low</td></tr>
+<tr><td>Tidjane Salaun</td><td>F</td><td>13</td><td>5.5</td><td>113.2</td><td>14.9</td><td>26.5</td><td>1.9</td><td>Rotation / depth</td></tr>
+<tr><td>Christian Anderson</td><td>G</td><td>13</td><td>5.2</td><td>72.2</td><td>22.9</td><td>25.9</td><td>-0.8</td><td>Overvalued / avoid</td></tr>
+<tr><td>Coby White</td><td>G</td><td>7</td><td>12.7</td><td>81.2</td><td>34.0</td><td>20.2</td><td>-1.6</td><td>Overvalued / avoid</td></tr>
+<tr><td>Grant Williams</td><td>F</td><td>3</td><td>11.3</td><td>112.1</td><td>19.4</td><td>9.8</td><td>2.7</td><td>Rotation / depth</td></tr>
+<tr><td>Liam McNeeley</td><td>G</td><td>8</td><td>2.9</td><td>69.5</td><td>21.8</td><td>9.5</td><td>-0.8</td><td>Overvalued / avoid</td></tr>
+<tr><td>Hannes Steinbach</td><td>F</td><td>5</td><td>2.8</td><td>68.5</td><td>13.7</td><td>9.4</td><td>0.2</td><td>Rotation / depth</td></tr>
+<tr><td>PJ Hall</td><td>C</td><td>2</td><td>0.0</td><td>0.0</td><td>10.6</td><td>1.8</td><td>0.0</td><td>Rotation / depth</td></tr>
+<tr><td>Kon Knueppel</td><td>G</td><td>1</td><td>3.0</td><td>69.4</td><td>30.4</td><td>0.9</td><td>-2.3</td><td>Overvalued / avoid</td></tr>
+</tbody></table>
+<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<footer>
+<p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+</footer>
+</body>
+</html>

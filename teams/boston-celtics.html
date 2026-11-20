@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boston Celtics | NBA Ratings</title>
+<style>
+body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; color: #1f2328;
+  line-height: 1.5; }
+h1 { font-size: 2em; margin-bottom: 0; }
+h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 40px; }
+h3 { margin-top: 28px; }
+.subtitle { color: #656d76; margin-top: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #f6f8fa; }
+nav.topnav { position: sticky; top: 0; z-index: 20; background: #fff;
+  border-bottom: 1px solid #d0d7de; padding: 8px 0; display: flex;
+  gap: 4px; flex-wrap: wrap; }
+nav.topnav a { padding: 4px 10px; border-radius: 6px; color: #0969da;
+  text-decoration: none; font-weight: 600; font-size: 14px; }
+nav.topnav a:hover { background: #eaeef2; }
+section, div[id] { scroll-margin-top: 54px; }
+table.ratings { font-size: 13px; }
+table.ratings th, table.ratings td { padding: 3px 8px; }
+table.ratings thead th { position: sticky; top: 40px; cursor: pointer;
+  user-select: none; }
+table.ratings thead th:hover { background: #eaeef2; }
+table.ratings thead th.sorted-asc::after { content: " \25B2"; }
+table.ratings thead th.sorted-desc::after { content: " \25BC"; }
+table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
+table.ratings tbody tr.team { cursor: pointer; }
+table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
+table.ratings td.net { font-weight: 700; }
+table.ratings td .sub-rank { display: block; font-size: 10px;
+  line-height: 1.1; color: #656d76; font-weight: 400; }
+tr.detail td { background: #fff; padding: 10px 14px; cursor: default; }
+.detail-box { margin-bottom: 8px; }
+table.gamelog { font-size: 13px; width: auto; margin: 0; }
+table.gamelog th, table.gamelog td { padding: 2px 10px; }
+table.gamelog td:nth-child(n+3) { text-align: right; }
+.detail-box h4 { margin: 14px 0 4px; }
+table.roster { font-size: 13px; width: auto; margin: 0; }
+table.roster th, table.roster td { padding: 2px 10px; }
+table.roster td:nth-child(n+3) { text-align: right; }
+a.team-link, a.team-page-link { color: #0969da; text-decoration: none; }
+a.team-link:hover, a.team-page-link:hover { text-decoration: underline; }
+.conftabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 4px; }
+button.conf-tab { padding: 3px 9px; font-size: 12px;
+  border: 1px solid #d0d7de; border-radius: 999px; background: #fff;
+  cursor: pointer; }
+button.conf-tab.active { background: #1f2328; color: #fff;
+  border-color: #1f2328; }
+input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
+  border: 1px solid #d0d7de; border-radius: 6px; margin: 4px 0; }
+.leaders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.leaders table { font-size: 15px; }
+.leaders td:nth-child(n+3) { text-align: right; }
+@media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
+.note { color: #656d76; font-size: 14px; }
+.warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
+  border-radius: 6px; }
+footer { margin-top: 48px; color: #656d76; font-size: 14px;
+  border-top: 1px solid #d0d7de; padding-top: 16px; }
+</style>
+</head>
+<body>
+<h1>Boston Celtics</h1>
+<p class="subtitle">Eastern Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p>Net rank #4 &middot; AdjO 113.4 (#8) &middot; AdjD 106.4 (#4) &middot; Net 7.0 &middot; AdjT 99.5 (#27) &middot; 11-4</p>
+<h3>Team needs</h3>
+<p>Star: Paul George (RPR 5.151538461538461) &middot; Top needs: rim_protection, bench_scoring, rebounding</p>
+<p>Strengths: offense (AdjO 113.4, 75th pct); defense (AdjD 106.4, 85th pct); shooting (eFG%) (68th pct); offensive rebounding (OREB%) (88th pct); opponent shooting (opp eFG%) (92nd pct); forcing turnovers (opp TOV%) (85th pct)<br>Weaknesses: getting to the line (FT rate) (18th pct); defensive rebounding (DREB%) (32nd pct)</p>
+<p>Top realistic targets: Paul Reed (Detroit Pistons, High-value starter, fills rim_protection, TradeScore 0.298); Ausar Thompson (Detroit Pistons, Rotation / depth, fills rim_protection, TradeScore 0.298); Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills rim_protection, TradeScore 0.294)</p>
+<h3>Game log</h3>
+<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
+<tr><td>10/20</td><td><a href="detroit-pistons.html">Detroit Pistons</a></td><td>A</td><td>L</td><td>113-121</td></tr>
+<tr><td>10/23</td><td><a href="new-york-knicks.html">New York Knicks</a></td><td>H</td><td>W</td><td>107-103</td></tr>
+<tr><td>10/26</td><td><a href="chicago-bulls.html">Chicago Bulls</a></td><td>H</td><td>W</td><td>134-99</td></tr>
+<tr><td>10/27</td><td><a href="brooklyn-nets.html">Brooklyn Nets</a></td><td>H</td><td>W</td><td>125-124</td></tr>
+<tr><td>10/30</td><td><a href="chicago-bulls.html">Chicago Bulls</a></td><td>H</td><td>W</td><td>125-111</td></tr>
+<tr><td>11/01</td><td><a href="orlando-magic.html">Orlando Magic</a></td><td>A</td><td>W</td><td>108-97</td></tr>
+<tr><td>11/02</td><td><a href="houston-rockets.html">Houston Rockets</a></td><td>A</td><td>L</td><td>93-109</td></tr>
+<tr><td>11/04</td><td><a href="milwaukee-bucks.html">Milwaukee Bucks</a></td><td>H</td><td>W</td><td>109-102</td></tr>
+<tr><td>11/06</td><td><a href="charlotte-hornets.html">Charlotte Hornets</a></td><td>A</td><td>W</td><td>119-80</td></tr>
+<tr><td>11/08</td><td><a href="milwaukee-bucks.html">Milwaukee Bucks</a></td><td>A</td><td>W</td><td>117-97</td></tr>
+<tr><td>11/10</td><td><a href="philadelphia-76ers.html">Philadelphia 76ers</a></td><td>A</td><td>W</td><td>123-101</td></tr>
+<tr><td>11/11</td><td><a href="toronto-raptors.html">Toronto Raptors</a></td><td>A</td><td>W</td><td>98-93</td></tr>
+<tr><td>11/15</td><td><a href="dallas-mavericks.html">Dallas Mavericks</a></td><td>H</td><td>W</td><td>131-94</td></tr>
+<tr><td>11/16</td><td><a href="orlando-magic.html">Orlando Magic</a></td><td>H</td><td>L</td><td>105-115</td></tr>
+<tr><td>11/18</td><td><a href="denver-nuggets.html">Denver Nuggets</a></td><td>A</td><td>L</td><td>101-105</td></tr>
+</tbody></table>
+<h3>Roster</h3>
+<table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
+<tr><td>Jayson Tatum</td><td>F</td><td>14</td><td>26.4</td><td>100.0</td><td>33.1</td><td>66.2</td><td>4.9</td><td>High-value starter</td></tr>
+<tr><td>Derrick White</td><td>G</td><td>15</td><td>12.7</td><td>93.1</td><td>19.5</td><td>62.2</td><td>3.2</td><td>Elite role player</td></tr>
+<tr><td>Payton Pritchard</td><td>G</td><td>15</td><td>13.7</td><td>102.5</td><td>21.1</td><td>56.7</td><td>3.0</td><td>Elite role player</td></tr>
+<tr><td>Paul George</td><td>F</td><td>13</td><td>19.9</td><td>103.9</td><td>27.7</td><td>53.5</td><td>5.2</td><td>High-value starter</td></tr>
+<tr><td>Neemias Queta</td><td>C</td><td>14</td><td>9.6</td><td>106.5</td><td>17.4</td><td>43.3</td><td>4.2</td><td>Undervalued / buy-low</td></tr>
+<tr><td>Sam Hauser</td><td>F</td><td>15</td><td>8.4</td><td>135.7</td><td>13.0</td><td>42.4</td><td>4.1</td><td>Undervalued / buy-low</td></tr>
+<tr><td>Baylor Scheierman</td><td>G</td><td>15</td><td>5.7</td><td>103.0</td><td>12.2</td><td>40.3</td><td>2.6</td><td>Rotation / depth</td></tr>
+<tr><td>Mitchell Robinson</td><td>C</td><td>14</td><td>5.1</td><td>100.4</td><td>12.5</td><td>34.0</td><td>2.8</td><td>Rotation / depth</td></tr>
+<tr><td>Jordan Walsh</td><td>G</td><td>15</td><td>4.7</td><td>91.4</td><td>14.2</td><td>32.6</td><td>1.1</td><td>Rotation / depth</td></tr>
+<tr><td>Hugo Gonzalez</td><td>G</td><td>15</td><td>3.9</td><td>86.0</td><td>15.2</td><td>26.8</td><td>0.7</td><td>Rotation / depth</td></tr>
+<tr><td>Luka Garza</td><td>C</td><td>15</td><td>5.5</td><td>98.7</td><td>19.0</td><td>26.0</td><td>2.0</td><td>Rotation / depth</td></tr>
+<tr><td>Ron Harper Jr.</td><td>G</td><td>7</td><td>2.6</td><td>81.8</td><td>20.1</td><td>6.5</td><td>-0.4</td><td>Overvalued / avoid</td></tr>
+<tr><td>Chris Cenac Jr.</td><td>F</td><td>6</td><td>4.0</td><td>115.6</td><td>19.8</td><td>6.2</td><td>1.0</td><td>Rotation / depth</td></tr>
+<tr><td>Mike Conley</td><td>G</td><td>4</td><td>3.0</td><td>150.0</td><td>10.7</td><td>4.4</td><td>1.9</td><td>Rotation / depth</td></tr>
+<tr><td>Devin Carter</td><td>G</td><td>1</td><td>0.0</td><td>0.0</td><td>14.3</td><td>1.7</td><td>-4.0</td><td>Overvalued / avoid</td></tr>
+<tr><td>Dillon Mitchell</td><td>F</td><td>1</td><td>0.0</td><td>—</td><td>—</td><td>0.3</td><td>—</td><td>Rotation / depth</td></tr>
+</tbody></table>
+<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<footer>
+<p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+</footer>
+</body>
+</html>

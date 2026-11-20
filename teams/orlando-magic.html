@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orlando Magic | NBA Ratings</title>
+<style>
+body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; color: #1f2328;
+  line-height: 1.5; }
+h1 { font-size: 2em; margin-bottom: 0; }
+h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 40px; }
+h3 { margin-top: 28px; }
+.subtitle { color: #656d76; margin-top: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #f6f8fa; }
+nav.topnav { position: sticky; top: 0; z-index: 20; background: #fff;
+  border-bottom: 1px solid #d0d7de; padding: 8px 0; display: flex;
+  gap: 4px; flex-wrap: wrap; }
+nav.topnav a { padding: 4px 10px; border-radius: 6px; color: #0969da;
+  text-decoration: none; font-weight: 600; font-size: 14px; }
+nav.topnav a:hover { background: #eaeef2; }
+section, div[id] { scroll-margin-top: 54px; }
+table.ratings { font-size: 13px; }
+table.ratings th, table.ratings td { padding: 3px 8px; }
+table.ratings thead th { position: sticky; top: 40px; cursor: pointer;
+  user-select: none; }
+table.ratings thead th:hover { background: #eaeef2; }
+table.ratings thead th.sorted-asc::after { content: " \25B2"; }
+table.ratings thead th.sorted-desc::after { content: " \25BC"; }
+table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
+table.ratings tbody tr.team { cursor: pointer; }
+table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
+table.ratings td.net { font-weight: 700; }
+table.ratings td .sub-rank { display: block; font-size: 10px;
+  line-height: 1.1; color: #656d76; font-weight: 400; }
+tr.detail td { background: #fff; padding: 10px 14px; cursor: default; }
+.detail-box { margin-bottom: 8px; }
+table.gamelog { font-size: 13px; width: auto; margin: 0; }
+table.gamelog th, table.gamelog td { padding: 2px 10px; }
+table.gamelog td:nth-child(n+3) { text-align: right; }
+.detail-box h4 { margin: 14px 0 4px; }
+table.roster { font-size: 13px; width: auto; margin: 0; }
+table.roster th, table.roster td { padding: 2px 10px; }
+table.roster td:nth-child(n+3) { text-align: right; }
+a.team-link, a.team-page-link { color: #0969da; text-decoration: none; }
+a.team-link:hover, a.team-page-link:hover { text-decoration: underline; }
+.conftabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 4px; }
+button.conf-tab { padding: 3px 9px; font-size: 12px;
+  border: 1px solid #d0d7de; border-radius: 999px; background: #fff;
+  cursor: pointer; }
+button.conf-tab.active { background: #1f2328; color: #fff;
+  border-color: #1f2328; }
+input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
+  border: 1px solid #d0d7de; border-radius: 6px; margin: 4px 0; }
+.leaders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.leaders table { font-size: 15px; }
+.leaders td:nth-child(n+3) { text-align: right; }
+@media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
+.note { color: #656d76; font-size: 14px; }
+.warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
+  border-radius: 6px; }
+footer { margin-top: 48px; color: #656d76; font-size: 14px;
+  border-top: 1px solid #d0d7de; padding-top: 16px; }
+</style>
+</head>
+<body>
+<h1>Orlando Magic</h1>
+<p class="subtitle">Eastern Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p>Net rank #20 &middot; AdjO 109.6 (#21) &middot; AdjD 112.4 (#20) &middot; Net -2.8 &middot; AdjT 101.5 (#23) &middot; 6-8</p>
+<h3>Team needs</h3>
+<p>Star: Wendell Carter Jr. (RPR 5.562142857142857) &middot; Top needs: shooting, playmaking, perimeter_defense</p>
+<p>Strengths: defensive rebounding (DREB%) (88th pct)<br>Weaknesses: offense (AdjO 109.6, 28th pct); defense (AdjD 112.4, 35th pct); ball security (TOV%) (35th pct); offensive rebounding (OREB%) (32nd pct); getting to the line (FT rate) (32nd pct); opponent FT rate (35th pct)</p>
+<p>Top realistic targets: Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills playmaking, TradeScore 0.626); Ausar Thompson (Detroit Pistons, Rotation / depth, fills playmaking, TradeScore 0.626); CJ McCollum (Atlanta Hawks, Rotation / depth, fills playmaking, TradeScore 0.446)</p>
+<h3>Game log</h3>
+<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
+<tr><td>10/21</td><td><a href="atlanta-hawks.html">Atlanta Hawks</a></td><td>H</td><td>L</td><td>125-132</td></tr>
+<tr><td>10/23</td><td><a href="minnesota-timberwolves.html">Minnesota Timberwolves</a></td><td>H</td><td>L</td><td>93-115</td></tr>
+<tr><td>10/25</td><td><a href="new-york-knicks.html">New York Knicks</a></td><td>A</td><td>W</td><td>111-102</td></tr>
+<tr><td>10/28</td><td><a href="toronto-raptors.html">Toronto Raptors</a></td><td>A</td><td>L</td><td>99-129</td></tr>
+<tr><td>10/30</td><td><a href="toronto-raptors.html">Toronto Raptors</a></td><td>A</td><td>W</td><td>121-114</td></tr>
+<tr><td>11/01</td><td><a href="boston-celtics.html">Boston Celtics</a></td><td>H</td><td>L</td><td>97-108</td></tr>
+<tr><td>11/02</td><td><a href="washington-wizards.html">Washington Wizards</a></td><td>H</td><td>L</td><td>94-103</td></tr>
+<tr><td>11/05</td><td><a href="phoenix-suns.html">Phoenix Suns</a></td><td>A</td><td>L</td><td>104-117</td></tr>
+<tr><td>11/07</td><td><a href="golden-state-warriors.html">Golden State Warriors</a></td><td>A</td><td>L</td><td>119-126</td></tr>
+<tr><td>11/10</td><td><a href="sacramento-kings.html">Sacramento Kings</a></td><td>A</td><td>W</td><td>107-100</td></tr>
+<tr><td>11/11</td><td><a href="utah-jazz.html">Utah Jazz</a></td><td>A</td><td>W</td><td>123-108</td></tr>
+<tr><td>11/13</td><td><a href="milwaukee-bucks.html">Milwaukee Bucks</a></td><td>H</td><td>W</td><td>107-99</td></tr>
+<tr><td>11/16</td><td><a href="boston-celtics.html">Boston Celtics</a></td><td>A</td><td>W</td><td>115-105</td></tr>
+<tr><td>11/18</td><td><a href="philadelphia-76ers.html">Philadelphia 76ers</a></td><td>H</td><td>L</td><td>116-121</td></tr>
+</tbody></table>
+<h3>Roster</h3>
+<table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
+<tr><td>Franz Wagner</td><td>F</td><td>14</td><td>24.4</td><td>94.2</td><td>30.5</td><td>76.6</td><td>4.0</td><td>Overvalued / avoid</td></tr>
+<tr><td>Desmond Bane</td><td>G</td><td>13</td><td>18.5</td><td>106.1</td><td>21.5</td><td>68.2</td><td>3.8</td><td>Elite role player</td></tr>
+<tr><td>Wendell Carter Jr.</td><td>C</td><td>14</td><td>13.4</td><td>116.2</td><td>15.5</td><td>67.3</td><td>5.6</td><td>High-value starter</td></tr>
+<tr><td>Tristan da Silva</td><td>F</td><td>12</td><td>14.4</td><td>110.6</td><td>18.7</td><td>54.0</td><td>3.3</td><td>Rotation / depth</td></tr>
+<tr><td>Anthony Black</td><td>G</td><td>11</td><td>16.6</td><td>95.2</td><td>23.1</td><td>53.6</td><td>4.3</td><td>High-value starter</td></tr>
+<tr><td>Jase Richardson</td><td>G</td><td>11</td><td>5.9</td><td>71.8</td><td>16.5</td><td>35.4</td><td>0.3</td><td>Rotation / depth</td></tr>
+<tr><td>Jamal Cain</td><td>F</td><td>13</td><td>5.5</td><td>90.0</td><td>15.9</td><td>32.4</td><td>0.2</td><td>Rotation / depth</td></tr>
+<tr><td>Jalen Suggs</td><td>G</td><td>6</td><td>9.5</td><td>76.6</td><td>18.3</td><td>26.3</td><td>1.4</td><td>Rotation / depth</td></tr>
+<tr><td>Goga Bitadze</td><td>C</td><td>12</td><td>5.2</td><td>126.2</td><td>13.8</td><td>22.9</td><td>3.2</td><td>Undervalued / buy-low</td></tr>
+<tr><td>Jevon Carter</td><td>G</td><td>10</td><td>4.5</td><td>88.2</td><td>15.0</td><td>22.0</td><td>1.1</td><td>Rotation / depth</td></tr>
+<tr><td>Nikola Vucevic</td><td>C</td><td>12</td><td>2.7</td><td>77.4</td><td>15.0</td><td>17.9</td><td>0.7</td><td>Rotation / depth</td></tr>
+<tr><td>Alex Morales</td><td>G</td><td>8</td><td>2.1</td><td>90.0</td><td>8.0</td><td>15.2</td><td>0.9</td><td>Rotation / depth</td></tr>
+<tr><td>Paolo Banchero</td><td>F</td><td>2</td><td>24.5</td><td>123.1</td><td>25.8</td><td>10.0</td><td>9.0</td><td>Rotation / depth</td></tr>
+<tr><td>Colin Castleton</td><td>C</td><td>4</td><td>2.2</td><td>114.2</td><td>24.4</td><td>2.1</td><td>0.9</td><td>Rotation / depth</td></tr>
+</tbody></table>
+<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<footer>
+<p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+</footer>
+</body>
+</html>

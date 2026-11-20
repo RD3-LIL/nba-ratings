@@ -29,11 +29,15 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
 - `team_ratings.py` - AdjO / AdjD / Net / AdjT solver (damped Gauss-Seidel).
 - `player_eval.py` - deeper evaluation layer (see below).
 - `gm_board.py` - GM acquisition board (see below).
+- `team_needs.py` - team needs and realistic trade-fit evaluator (see below).
+- `build_page.py` - builds `index.html` plus `teams/` (one page per team).
+- `daily_update.sh` - daily updater (fetch last 3 days, rebuild, push with approval tap). No cron set up yet.
 - `data/games_2026_27.json` - 226 parsed games.
 - `data/players_2026_27.json` / `.csv` - base player profiles.
 - `data/teams_2026_27.json` - team ratings.
 - `data/players_2026_27_eval.json` / `.csv` - eval layer.
 - `data/gm_board_2026_27.json` / `.csv` - GM board.
+- `data/team_needs_2026_27.json` / `.csv` - team needs and trade targets.
 - `data/raw/scoreboard/2026-27/` and `data/raw/summary/` - raw ESPN JSON.
 
 ## Base ratings (same formulas as RonPom)
@@ -178,6 +182,95 @@ Limits: box-score only, no tracking, no on/off, no opponent
 adjustment at player level, early season (about 15 games per team).
 Tiers are a starting point for a target list, not a trade machine.
 
+## Team Needs and Trade Fit (team_needs.py)
+
+For each of the 30 teams: strengths and weaknesses, the star, ranked
+needs, and the *realistic* players who would fill them. Method follows
+`research_notes/nba-team-needs-trade-fit-20261120-1902/report.md`
+(Dean Oliver's Four Factors, Nylon Calculus lineup-balance work).
+
+- **Diagnose in percentiles, never raw totals.** AdjO/AdjD plus the
+  Four Factors on both ends (eFG%, TOV%, OREB%, FT rate, and the
+  defensive mirrors: opp eFG%, opp TOV%, DREB%, opp FT rate), plus a
+  minutes-weighted skill profile from the top 9 rotation players:
+  shooting (made 3s per 36), playmaking (AST per 36), rebounding
+  (REB per 36), rim protection (BLK per 36), perimeter defense
+  (STL per 36, a weak proxy: steals reward gambling and miss
+  positional defense, flagged as such), bench scoring (PTS per 36
+  for players under 60% Min). Strength is 65th percentile or better,
+  weakness 35th or worse.
+- **Needs are star-anchored.** The star is the highest-RPR player
+  with at least 8 games and 40% of team minutes. Need = max(0, 60 -
+  team skill percentile), weighted by base weights (shooting .25,
+  playmaking .20, rebounding .15, rim protection .15, perimeter
+  defense .15, bench scoring .10) times a star factor: 1.5 if the
+  star is weak at that skill (35th pct or worse), 1.25 if below
+  average, 0.5 if the star already supplies it (75th pct or better).
+  A team whose point guard already facilitates gains little from
+  another facilitator; a team whose star cannot defend needs a POA
+  defender. Bench scoring is not a star skill (a starter's rate is
+  0 by construction), so it never counts as a star gap.
+- **A trade is scored as three numbers, not one.** The displaced
+  player is the worst rotation player at the target's best skill,
+  excluding the top 2 RPR players on the team (you do not bench the
+  star or co-star for a role player); a bench scorer displaces a
+  bench player, not a starter. QualityGain = (RPR target - RPR
+  displaced) x (target MPG / 240). FitGain = sum over skills of
+  weight x (Need / 60) x sqrt(max(dSkill, 0) / 10), where dSkill is
+  the minutes-weighted percentile change: concave, so the first
+  rebounder or playmaker counts far more than the second.
+  TradeScore = QualityGain + FitGain - usage penalty - availability
+  discount. Usage penalty is 0.02 per point of (star usage + target
+  usage) over 65. Availability discount is 10% of (QualityGain +
+  FitGain) if GP under 10, plus 10% if %Min under 40.
+- **Realism / availability filter: no stars, ever.** Targets must be
+  Rotation / depth, Elite role player, Undervalued / buy-low, or
+  High-value starter; never Franchise cornerstone, All-Star level,
+  or Overvalued / avoid. They must not be top-3 RPR on their own
+  team, must play under 55% of team minutes and under 30 MPG, under
+  26% usage, and under 20 PPG on their own team. Tier alone does not
+  prove this: early-season noise puts big names in lower tiers (in
+  this run LeBron James lands in Rotation / depth on ORtg_full 97.5
+  and James Harden in Elite role player), so the minutes / usage /
+  scoring gates do the work. A target must fill a real need
+  (FitGain > 0) and the RPR jump over the displaced player is capped
+  at 5.0. This run: 240 top targets across 30 teams, 8 per team, and
+  no suggested target is a Franchise cornerstone or All-Star player.
+  The two needs with no realistic target (Dallas and Cleveland rim
+  protection) are reported as such, with the reason: the best
+  shot-blockers are Franchise/All-Star tier or top-3 on their teams.
+  "Realistic" is a data-only proxy for availability, never a claim
+  a player is actually available.
+
+Usage:
+
+```bash
+python3 team_needs.py                              # all 30 teams
+python3 team_needs.py --team "Los Angeles Lakers"  # one team
+python3 team_needs.py --need playmaking            # top 10 for a need, league-wide
+python3 team_needs.py --team "LA Clippers" --need playmaking
+```
+
+This run, spot checks: Lakers top need is rebounding (41st pct
+rotation skill), star Luka Doncic with no star gaps, top targets
+Ausar Thompson, Paul Reed, and Aday Mara, all rebounding role
+players displacing Collin Sexton (RPR 0.85). Spurs top need is
+shooting, top targets Ziaire Williams, Klay Thompson, and Quentin
+Grimes. A playmaking-needy team gets backup-PG types (Ajay Mitchell,
+Nolan Traore, Quenton Jackson), not a star PG.
+
+Limits: no contracts or salaries exist in the inputs, so none are
+used and none are invented; whether a target's salary fits is
+unknown. No lineup, on/off, tracking, or shot-location data in v1,
+so this is a box-score fit, a prior that lineup data should update,
+not a lineup prediction. Early season, about 15 games per team, so
+percentiles are noisy and 3P% is the noisiest stat. Regular-season,
+average-opponent only. Weights and the concave shape are hand-set
+v1 choices, not fitted; v2 should fit them against post-trade Adj
+Net. The ESPN team assignments in this run have known quirks (for
+example Giannis is listed on Miami and LeBron on Philadelphia);
+profiles are reported as fetched, not corrected.
+
 ## Known gaps (not invented)
 
 - Age, height, weight: not fetched in v1. ESPN roster data has them,
@@ -188,7 +281,59 @@ Tiers are a starting point for a target list, not a trade machine.
   salary-cap work needs a contract source added first.
 - No tracking or on/off data in v1.
 
+## Site (build_page.py, RonPom-style)
+
+`python3 build_page.py` writes `index.html` at the repo root plus
+one page per team under `teams/` (30 pages), from the ratings
+files above. No network, stdlib only.
+
+- **Team ratings table**: all 30 teams, rank / team / conf / W-L /
+  AdjO / AdjD / Net / AdjT. The small number under each AdjO, AdjD,
+  and AdjT value is that team's rank in the metric (1 is best;
+  AdjD rank 1 is the best defense). Net rank is the Rk column.
+  Click a column header to sort, use the filter box to search team
+  names, and use the East / West tabs to filter by conference.
+  Conf is East or West from a fixed map of the standard NBA
+  alignment (ESPN's NBA teams endpoint carries no conference
+  field). W-L is the record in the games the ratings are built
+  from, so W+L equals GP.
+- **Click a team row** to expand its game log and roster inline;
+  **click a team name** to open that team's own page
+  (`teams/<slug>.html`) with its ratings, game log, and roster.
+  Rosters are sorted by minutes and carry each player's GM board
+  tier. Game logs list date, opponent, venue (H/A/N), result, and
+  score, in date order.
+- **Player leaders**: top 5 by PTS, REB, AST, ORtg, and RPR.
+  Same floor as RonPom's 2026-27 leaders: min 2 games and 40% of
+  team minutes.
+- **Top players**: top 100 by RPR, sortable and filterable, team
+  names link to team pages.
+- **GM board**: acquisition tiers, same as `gm_board.py`.
+- **Team needs**: one row per team with its star, top need, and top
+  realistic target with QualityGain / FitGain / TradeScore, plus the
+  needs with no realistic target and why. Team pages carry the same
+  block (strengths, weaknesses, top 3 needs, top 3 targets).
+
 ## How to re-run daily
+
+```bash
+cd ~/workspace/nba-ratings
+./daily_update.sh            # fetch last 3 days, rebuild everything, push (waits for approval tap)
+./daily_update.sh --no-push  # rebuild locally only, no push
+DAILY_UPDATE_PUSH=0 ./daily_update.sh
+```
+
+`daily_update.sh` mirrors RonPom's daily updater: it re-fetches
+the last 3 days of scoreboards fresh (raw summaries stay cached),
+exits without doing anything if no new games arrived, otherwise
+rebuilds player profiles, team ratings, eval, GM board, and the
+site, then prepares a GitHub push manifest (the rebuilt CSVs and
+JSONs, `index.html`, and all 30 team pages) and pushes it, waiting
+for Ron's approval tap. A sync-base check stops the push if the
+branch head moved since the last sync. No cron is set up yet; the
+script is the 6:00 AM Chicago pattern, ready to schedule.
+
+Manual rebuild (same steps the script runs):
 
 ```bash
 cd ~/workspace/nba-ratings
@@ -197,7 +342,13 @@ python3 player_profiles.py
 python3 team_ratings.py
 python3 player_eval.py
 python3 gm_board.py
+python3 team_needs.py
+python3 build_page.py
 ```
+
+Note: `daily_update.sh` does not run `team_needs.py` yet; add it to
+the rebuild chain in that script (between `gm_board.py` and
+`build_page.py`) before scheduling the daily run.
 
 ## v2 ideas (not built)
 
@@ -208,4 +359,10 @@ python3 gm_board.py
   for the ESPN fetch. The ESPN pipeline stays the reproducible base.
 - Last-season prior for team ratings (like RonPom's noshrink prior).
 - ESPN roster pull for age / height / weight.
-- Team-need fit against a specific roster (v1 fit tags are generic).
+- Team needs v2: lineup net ratings and RAPM / EPM / LEBRON as the
+  quality input instead of RPR, shot-location data, tracking for real
+  gravity and rim deterrence, and learned archetype-interaction
+  coefficients instead of the hand-set need weights and usage
+  penalty. Back-test TradeScore against actual post-trade Adj Net
+  changes; if it does not beat RPR difference alone, the fit term
+  is decoration and should say so.
