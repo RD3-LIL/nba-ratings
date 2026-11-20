@@ -60,6 +60,19 @@ input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
 .leaders td:nth-child(n+3) { text-align: right; }
 @media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
 .note { color: #656d76; font-size: 14px; }
+.skill-chart { max-width: 640px; margin: 8px 0 4px; }
+.skill-row { display: grid; grid-template-columns: 150px 1fr 36px;
+  align-items: center; gap: 10px; margin: 8px 0; }
+.skill-label { font-size: 15px; }
+.skill-track { position: relative; display: block; height: 16px;
+  background: #eaeef2; border-radius: 999px; overflow: visible; }
+.skill-fill { display: block; height: 100%; border-radius: 999px; }
+.skill-fill.below { background: #f59e0b; }
+.skill-fill.above { background: #38bdf8; }
+.skill-target { position: absolute; left: 60%; top: -3px; bottom: -3px;
+  width: 2px; background: #656d76; }
+.skill-value { text-align: right; font-variant-numeric: tabular-nums;
+  font-weight: 600; }
 .warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
   border-radius: 6px; }
 footer { margin-top: 48px; color: #656d76; font-size: 14px;
@@ -69,12 +82,13 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 <body>
 <h1>Milwaukee Bucks</h1>
 <p class="subtitle">Eastern Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
-<p class="warn">Team assignments are as reported by ESPN&#x27;s box scores and include known errors, e.g. Giannis Antetokounmpo is listed on Miami and LeBron James on Philadelphia. Reported as fetched, not corrected.</p>
+<p class="warn">Teams reflect the 2026-27 rosters after a busy 2026 offseason: Giannis Antetokounmpo to Miami, LeBron James to Philadelphia, Walker Kessler to the Lakers, and Anthony Davis to Washington, among others.</p>
 <p>Net rank #30 &middot; AdjO 106.8 (#27) &middot; AdjD 116.0 (#28) &middot; Net -9.2 &middot; AdjT 102.6 (#9) &middot; 1-15</p>
 <h3>Team needs</h3>
-<p>Star: No clear star in this data (RPR 2.581333333333335) &middot; Top needs: rim_protection, perimeter_defense, playmaking</p>
+<p>Star: No clear star in this data (RPR 3.626905579984243) &middot; Top needs: perimeter_defense, rim_protection, shooting</p>
 <p>Strengths: bench_scoring (74th pct, rotation skill)<br>Weaknesses: offense (AdjO 106.8, 8th pct); defense (AdjD 116.0, 8th pct); shooting (eFG%) (5th pct); ball security (TOV%) (15th pct); getting to the line (FT rate) (22nd pct); opponent shooting (opp eFG%) (32nd pct); forcing turnovers (opp TOV%) (15th pct); defensive rebounding (DREB%) (8th pct); opponent FT rate (28th pct)</p>
-<p>Top realistic targets: Ausar Thompson (Detroit Pistons, Rotation / depth, fills rim_protection, TradeScore 0.319); Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills rim_protection, TradeScore 0.317); Paul Reed (Detroit Pistons, High-value starter, fills rim_protection, TradeScore 0.312)</p>
+<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes, then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:55%"></span><span class="skill-target"></span></span><span class="skill-value">55</span></div><div class="skill-row" title="AST per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:55%"></span><span class="skill-target"></span></span><span class="skill-value">55</span></div><div class="skill-row" title="REB per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill above" style="width:62%"></span><span class="skill-target"></span></span><span class="skill-value">62</span></div><div class="skill-row" title="BLK per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:39%"></span><span class="skill-target"></span></span><span class="skill-value">39</span></div><div class="skill-row" title="STL per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:50%"></span><span class="skill-target"></span></span><span class="skill-value">50</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill above" style="width:74%"></span><span class="skill-target"></span></span><span class="skill-value">74</span></div></div>
+<p>Top realistic targets: Paul Reed (Detroit Pistons, High-value starter, fills perimeter_defense, TradeScore 0.241); Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills perimeter_defense, TradeScore 0.232); Dean Wade (Philadelphia 76ers, Undervalued / buy-low, fills perimeter_defense, TradeScore 0.186)</p>
 <h3>Game log</h3>
 <table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
 <tr><td>10/21</td><td><a href="washington-wizards.html">Washington Wizards</a></td><td>A</td><td>L</td><td>116-128</td></tr>
@@ -96,24 +110,24 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </tbody></table>
 <h3>Roster</h3>
 <table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
-<tr><td>Tyler Herro</td><td>G</td><td>15</td><td>19.4</td><td>97.6</td><td>27.5</td><td>58.7</td><td>2.6</td><td>Overvalued / avoid</td></tr>
+<tr><td>Tyler Herro</td><td>G</td><td>15</td><td>19.4</td><td>97.6</td><td>27.5</td><td>58.7</td><td>2.8</td><td>Overvalued / avoid</td></tr>
 <tr><td>Jaime Jaquez Jr.</td><td>F</td><td>16</td><td>15.0</td><td>99.6</td><td>22.9</td><td>56.8</td><td>2.5</td><td>Elite role player</td></tr>
-<tr><td>Kyle Kuzma</td><td>F</td><td>15</td><td>12.3</td><td>95.4</td><td>19.7</td><td>53.0</td><td>2.4</td><td>Rotation / depth</td></tr>
-<tr><td>Myles Turner</td><td>C</td><td>14</td><td>7.1</td><td>74.0</td><td>15.0</td><td>48.6</td><td>2.1</td><td>Rotation / depth</td></tr>
-<tr><td>Brayden Burries</td><td>G</td><td>16</td><td>10.4</td><td>96.3</td><td>19.9</td><td>46.9</td><td>2.4</td><td>Rotation / depth</td></tr>
-<tr><td>Ryan Rollins</td><td>G</td><td>14</td><td>10.9</td><td>81.5</td><td>23.4</td><td>43.1</td><td>0.9</td><td>Rotation / depth</td></tr>
-<tr><td>Kel&#x27;el Ware</td><td>C</td><td>16</td><td>8.9</td><td>87.3</td><td>22.7</td><td>38.8</td><td>1.7</td><td>Rotation / depth</td></tr>
-<tr><td>Kasparas Jakucionis</td><td>G</td><td>15</td><td>9.5</td><td>104.0</td><td>19.7</td><td>37.4</td><td>2.8</td><td>Rotation / depth</td></tr>
+<tr><td>Kyle Kuzma</td><td>F</td><td>15</td><td>12.3</td><td>95.4</td><td>19.7</td><td>53.0</td><td>2.7</td><td>Rotation / depth</td></tr>
+<tr><td>Myles Turner</td><td>C</td><td>14</td><td>7.1</td><td>74.0</td><td>15.0</td><td>48.6</td><td>3.6</td><td>Rotation / depth</td></tr>
+<tr><td>Brayden Burries</td><td>G</td><td>16</td><td>10.4</td><td>96.3</td><td>19.9</td><td>46.9</td><td>2.6</td><td>Rotation / depth</td></tr>
+<tr><td>Ryan Rollins</td><td>G</td><td>14</td><td>10.9</td><td>81.5</td><td>23.4</td><td>43.1</td><td>2.2</td><td>Rotation / depth</td></tr>
+<tr><td>Kel&#x27;el Ware</td><td>C</td><td>16</td><td>8.9</td><td>87.3</td><td>22.7</td><td>38.8</td><td>2.4</td><td>Rotation / depth</td></tr>
+<tr><td>Kasparas Jakucionis</td><td>G</td><td>15</td><td>9.5</td><td>104.0</td><td>19.7</td><td>37.4</td><td>2.6</td><td>Rotation / depth</td></tr>
 <tr><td>Nate Ament</td><td>F</td><td>14</td><td>8.1</td><td>101.3</td><td>17.6</td><td>34.2</td><td>1.4</td><td>Rotation / depth</td></tr>
-<tr><td>AJ Green</td><td>G</td><td>15</td><td>5.9</td><td>112.4</td><td>13.4</td><td>31.9</td><td>1.6</td><td>Rotation / depth</td></tr>
+<tr><td>AJ Green</td><td>G</td><td>15</td><td>5.9</td><td>112.4</td><td>13.4</td><td>31.9</td><td>1.2</td><td>Rotation / depth</td></tr>
 <tr><td>Ousmane Dieng</td><td>F</td><td>10</td><td>3.9</td><td>100.9</td><td>13.0</td><td>16.0</td><td>0.9</td><td>Rotation / depth</td></tr>
-<tr><td>Jericho Sims</td><td>C</td><td>11</td><td>1.1</td><td>63.6</td><td>7.0</td><td>14.6</td><td>-0.0</td><td>Rotation / depth</td></tr>
-<tr><td>Gary Trent Jr.</td><td>G</td><td>8</td><td>4.6</td><td>86.8</td><td>19.2</td><td>12.0</td><td>0.4</td><td>Rotation / depth</td></tr>
-<tr><td>Pete Nance</td><td>F</td><td>2</td><td>5.0</td><td>91.9</td><td>14.1</td><td>4.2</td><td>1.6</td><td>Rotation / depth</td></tr>
-<tr><td>Caris LeVert</td><td>G</td><td>2</td><td>5.5</td><td>123.9</td><td>19.4</td><td>2.5</td><td>2.8</td><td>Rotation / depth</td></tr>
-<tr><td>Bogoljub Markovic</td><td>F</td><td>3</td><td>0.7</td><td>200.0</td><td>3.2</td><td>1.7</td><td>0.8</td><td>Rotation / depth</td></tr>
+<tr><td>Jericho Sims</td><td>C</td><td>11</td><td>1.1</td><td>63.6</td><td>7.0</td><td>14.6</td><td>0.6</td><td>Rotation / depth</td></tr>
+<tr><td>Gary Trent Jr.</td><td>G</td><td>8</td><td>4.6</td><td>86.8</td><td>19.2</td><td>12.0</td><td>0.9</td><td>Rotation / depth</td></tr>
+<tr><td>Pete Nance</td><td>F</td><td>2</td><td>5.0</td><td>91.9</td><td>14.1</td><td>4.2</td><td>2.0</td><td>Rotation / depth</td></tr>
+<tr><td>Caris LeVert</td><td>G</td><td>2</td><td>5.5</td><td>123.9</td><td>19.4</td><td>2.5</td><td>1.8</td><td>Rotation / depth</td></tr>
+<tr><td>Bogoljub Markovic</td><td>F</td><td>3</td><td>0.7</td><td>200.0</td><td>3.2</td><td>1.7</td><td>0.4</td><td>Rotation / depth</td></tr>
 </tbody></table>
-<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is v1.1, our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
 <a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
