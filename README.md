@@ -25,6 +25,8 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
 ## Files
 
 - `fetch_nba.py` - pulls scoreboards and full raw summaries, parses games.
+- `fetch_rosters.py` - pulls all 30 team rosters once per season
+  (see Rookies below) and writes `data/rosters_2026_27.json`.
 - `player_profiles.py` - aggregates box scores into per-player profiles.
 - `team_ratings.py` - AdjO / AdjD / Net / AdjT solver (damped Gauss-Seidel).
 - `player_eval.py` - deeper evaluation layer (see below).
@@ -38,7 +40,9 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
 - `data/players_2026_27_eval.json` / `.csv` - eval layer.
 - `data/gm_board_2026_27.json` / `.csv` - GM board.
 - `data/team_needs_2026_27.json` / `.csv` - team needs and trade targets.
+- `data/rosters_2026_27.json` - roster pull: 528 athletes, 75 rookies.
 - `data/raw/scoreboard/2026-27/` and `data/raw/summary/` - raw ESPN JSON.
+- `data/raw/roster/` - cached raw roster JSON, one file per team.
 
 ## Base ratings (same formulas as RonPom)
 
@@ -236,11 +240,39 @@ needs, and the *realistic* players who would fill them. Method follows
   (FitGain > 0) and the RPR jump over the displaced player is capped
   at 5.0. This run: 240 top targets across 30 teams, 8 per team, and
   no suggested target is a Franchise cornerstone or All-Star player.
-  The two needs with no realistic target (Dallas and Cleveland rim
-  protection) are reported as such, with the reason: the best
-  shot-blockers are Franchise/All-Star tier or top-3 on their teams.
+  The one need with no realistic target (Detroit rebounding) is
+  reported as such, with the reason: the best rebounders
+  league-wide either fill another need better (Andre Drummond,
+  Oscar Tshiebwe) or are Overvalued / avoid (Tarris Reed Jr.).
   "Realistic" is a data-only proxy for availability, never a claim
   a player is actually available.
+- **Star clarity and scrambled teams.** Team assignments are as
+  reported by ESPN's box scores and include known errors
+  (Giannis listed on Miami, LeBron on Philadelphia); profiles
+  are reported as fetched, not corrected, and the site says so
+  on the index and every team page. A team whose highest-RPR
+  qualifying player is under RPR 5.0 is labelled "No clear star
+  in this data" instead of naming a role player as the star
+  (six teams in this run: Golden State, Milwaukee, Brooklyn,
+  Charlotte, Toronto, Utah).
+- **Calibration honesty.** The per-skill FitGain cap (2.0) and
+  the usage penalty (0.02 per point over a 65 budget) are
+  tiebreakers and safety rails, not fitted effects. On this run
+  the largest per-skill FitGain contribution is 0.164 and the
+  theoretical maximum is about 0.4, so the cap never binds on
+  real data; the largest possible usage penalty is about 0.03
+  (highest star usage 40.7% plus the under-26% target gate).
+  They only separate near-tied targets. v2 should fit both
+  against post-trade Adj Net.
+- **The lists barely differentiate.** Only 37 distinct players
+  fill the 240 top-overall slots; Ausar Thompson appears on 26
+  teams' lists, Ziaire Williams on 25, Paul Reed on 24, Ajay
+  Mitchell on 23. That is expected, the best available role
+  players are the best fit for every needy team, but the
+  per-team lists read as nearly the same list. There is no
+  asking-price or salary data to differentiate them; a cap on
+  how many teams one player can top was considered and rejected
+  because it would hide the true best fit for the later teams.
 
 Usage:
 
@@ -253,11 +285,11 @@ python3 team_needs.py --team "LA Clippers" --need playmaking
 
 This run, spot checks: Lakers top need is rebounding (41st pct
 rotation skill), star Luka Doncic with no star gaps, top targets
-Ausar Thompson, Paul Reed, and Aday Mara, all rebounding role
+Ausar Thompson, Paul Reed, and Dean Wade, all rebounding role
 players displacing Collin Sexton (RPR 0.85). Spurs top need is
-shooting, top targets Ziaire Williams, Klay Thompson, and Quentin
-Grimes. A playmaking-needy team gets backup-PG types (Ajay Mitchell,
-Nolan Traore, Quenton Jackson), not a star PG.
+shooting, top targets Ziaire Williams, Ajay Mitchell, and Paul
+Reed. A playmaking-needy team gets Ajay Mitchell (Oklahoma City
+Thunder) as its top playmaking target, not a star PG.
 
 Limits: no contracts or salaries exist in the inputs, so none are
 used and none are invented; whether a target's salary fits is
@@ -271,11 +303,53 @@ Net. The ESPN team assignments in this run have known quirks (for
 example Giannis is listed on Miami and LeBron on Philadelphia);
 profiles are reported as fetched, not corrected.
 
+## Rookies (fetch_rosters.py)
+
+A rookie is a player in his first NBA season. The rule is exact
+and comes from the ESPN roster endpoint, not from memory:
+`is_rookie` is True exactly when the roster entry shows
+`experience.years == 0`. `fetch_rosters.py` pulls all 30 rosters
+(528 athletes, cached per team under `data/raw/roster/`) and
+writes `data/rosters_2026_27.json`. `player_profiles.py` merges
+it by athlete_id, never by name alone, adding `is_rookie`,
+`experience_years`, `age`, `height_in`, and `weight_lbs` to the
+base profiles and CSV; `player_eval.py` carries `is_rookie` and
+`experience_years` into the eval CSV and JSON.
+
+Verified against the live pull: the rule returns the 2026 draft
+class (AJ Dybantsa, Cameron Boozer, Darryn Peterson, Nate Ament,
+Koa Peat, Labaron Philon Jr., Darius Acuff Jr., Mikel Brown Jr.,
+Aday Mara, Thomas Sorber, Yaxel Lendeborg, and the rest), 75
+rookies on rosters, 58 of whom have played (57 distinct athletes:
+Carson Cooper has one profile per team after changing teams, and
+17 roster rookies have not played yet). The 2025 draft class are
+second-year players in 2026-27, not rookies: Cooper Flagg and
+Cedric Coward both show `experience.years == 2`. No veteran with
+5+ years is in the rookie list.
+
+Current best rookie by RPR (Nov 20, 2026, min 2 games and 40%
+of team minutes, same floor as every leaderboard): Aday Mara
+(Oklahoma City Thunder), RPR 3.72, 9.2 PPG in 15 games. Next are
+Yaxel Lendeborg (3.48), Cameron Boozer (3.45), and Meleek Thomas
+(3.44). The raw RPR leader among rookies is Norchad Omier
+(3.92), but on only 5 games at 9.2% of minutes, so he sits in
+the below-floor list, labelled as a small sample, not at the top
+of the ranking. The site has a Rookies section (top 10 by RPR
+plus notable below-floor rookies) and a Rookies only toggle on
+the top-100 players table.
+
+Ambiguous cases, handled conservatively: Johni Broome's ESPN
+roster entry carries no experience value, so he is not labelled
+a rookie (only an explicit 0 counts). Three players in the box
+scores are on no current roster (Tristan Enaruna, Dalen Terry,
+Lawson Lovering) and likewise have no experience or bio fields.
+One rookie's roster team differs from his box-score team (Carson
+Cooper: roster says Lakers, box scores say Memphis, where he
+played); the roster never overrides the box-score team. Rosters
+are fetched once per season, not by the daily update.
+
 ## Known gaps (not invented)
 
-- Age, height, weight: not fetched in v1. ESPN roster data has them,
-  but no roster pull was run for this build, so the fields are blank
-  in the GM board rather than guessed.
 - Contracts and salaries: there is no free source. Spotrac and
   similar are paywalled and are not scraped. Any trade-value or
   salary-cap work needs a contract source added first.
@@ -307,7 +381,11 @@ files above. No network, stdlib only.
   Same floor as RonPom's 2026-27 leaders: min 2 games and 40% of
   team minutes.
 - **Top players**: top 100 by RPR, sortable and filterable, team
-  names link to team pages.
+  names link to team pages. A Rookies only button filters the
+  table to first-year players.
+- **Rookies**: top 10 rookies by RPR (same min 2 games and 40%
+  minutes floor), plus notable rookies below the floor, labelled
+  as small samples. Best rookie so far: Aday Mara, RPR 3.72.
 - **GM board**: acquisition tiers, same as `gm_board.py`.
 - **Team needs**: one row per team with its star, top need, and top
   realistic target with QualityGain / FitGain / TradeScore, plus the
@@ -338,6 +416,7 @@ Manual rebuild (same steps the script runs):
 ```bash
 cd ~/workspace/nba-ratings
 python3 fetch_nba.py --season 2026-27   # resumes per date; edit SEASONS in fetch_nba.py to extend the end date
+python3 fetch_rosters.py                # once per season, not daily
 python3 player_profiles.py
 python3 team_ratings.py
 python3 player_eval.py
@@ -346,9 +425,10 @@ python3 team_needs.py
 python3 build_page.py
 ```
 
-Note: `daily_update.sh` does not run `team_needs.py` yet; add it to
-the rebuild chain in that script (between `gm_board.py` and
-`build_page.py`) before scheduling the daily run.
+`daily_update.sh` runs the same chain except the roster pull
+(rosters change slowly, so they are fetched once per season).
+Its push manifest includes the rebuilt CSVs and JSONs,
+`index.html`, and all 30 team pages.
 
 ## v2 ideas (not built)
 
@@ -358,7 +438,6 @@ the rebuild chain in that script (between `gm_board.py` and
   some cloud IPs, so it would be a second source, not a replacement
   for the ESPN fetch. The ESPN pipeline stays the reproducible base.
 - Last-season prior for team ratings (like RonPom's noshrink prior).
-- ESPN roster pull for age / height / weight.
 - Team needs v2: lineup net ratings and RAPM / EPM / LEBRON as the
   quality input instead of RPR, shot-location data, tracking for real
   gravity and rim deterrence, and learned archetype-interaction

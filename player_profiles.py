@@ -9,10 +9,13 @@ What each raw summary carries, per team in boxscore.players:
   this order: MIN, PTS, FG, 3PT, FT, REB, AST, TO, STL, BLK, OREB,
   DREB, PF. FG / 3PT / FT are "made-attempted" strings.
 
-What it does NOT carry: height, weight, class year. Those come from
-the roster pull (fetch_rosters.py), which has not run yet. They are
-not invented here; profiles simply have no height/weight/class
-until rosters land.
+What it does NOT carry: height, weight, experience. Those come
+from the roster pull (fetch_rosters.py). When
+data/rosters_2026_27.json exists, each profile gets
+experience_years, is_rookie (experience.years == 0, first NBA
+season), age, height_in, and weight_lbs from it, matched by
+athlete_id, never by name alone. Until rosters land, those
+fields are None / False and are not invented.
 
 Season assignment comes from the parsed games on disk, never from
 the raw header date (the header date is UTC and can be a day off):
@@ -186,6 +189,27 @@ def compute_rpr(ortg, poss_used_per_game, per_game):
             + 0.5 * (per_game["ast"] - per_game["to"])
             + (per_game["stl"] + per_game["blk"])
             + 0.25 * per_game["reb"])
+
+
+def load_roster_map(data_dir=DATA):
+    """athlete_id -> roster record, or {} if rosters not pulled yet.
+
+    Matched by athlete_id only: the box-score team assignments
+    have ESPN's scrambled teams in places, so a roster's team
+    name must never override the team a player played for.
+    A player on no current roster (waived, etc.) gets no record
+    and keeps experience_years None / is_rookie False.
+    """
+    path = Path(data_dir) / "rosters_2026_27.json"
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text())
+    except ValueError:
+        return {}
+    return {str(r["athlete_id"]): r
+            for r in payload.get("roster", []) or []
+            if r.get("athlete_id")}
 
 
 def load_game_map(data_dir=DATA):
@@ -381,9 +405,9 @@ def aggregate_players(data_dir=DATA, season_filter=None):
     # turnovers come from the parsed games (deduplicated by event in
     # game_map); minutes come from the player totals themselves.
     # %Min is minutes played over minutes available to one roster
-    # spot, games * 40. That is the KenPom-style definition: a
-    # starter playing 30 minutes a game shows about 75%. It is
-    # slightly high in overtime games, where a spot really has 45
+    # spot, games * 48. NBA games are 48 minutes, not 40: a
+    # starter playing 30 minutes a game shows about 62%. It is
+    # slightly high in overtime games, where a spot really has 53
     # minutes available, but that is under a point across a season.
     team_totals = {}
     for game in game_map.values():
@@ -410,12 +434,23 @@ def aggregate_players(data_dir=DATA, season_filter=None):
             team_totals.setdefault(key, {"fga": 0, "fta": 0, "to": 0,
                                          "min": 0, "games": 0})
             team_totals[key]["min"] += profile["totals"]["min"]
+    roster_map = load_roster_map(data_dir)
     for season, profiles in profiles_by_season.items():
         for profile in profiles:
             totals = profile["totals"]
             team = team_totals.get((season, profile["team"]),
                                    {"fga": 0, "fta": 0, "to": 0, "min": 0,
                                     "games": 0})
+            rec = roster_map.get(profile["athlete_id"], {})
+            profile["experience_years"] = rec.get("experience_years")
+            # Only an explicit 0 counts as a rookie. A missing
+            # experience value (e.g. Johni Broome, whose ESPN
+            # roster entry carries no experience) is not a
+            # rookie by default; it is unknown, shown as False.
+            profile["is_rookie"] = rec.get("is_rookie") is True
+            profile["age"] = rec.get("age")
+            profile["height_in"] = rec.get("height_in")
+            profile["weight_lbs"] = rec.get("weight_lbs")
             ortg = compute_ortg(totals)
             poss_used_pg = (possessions_used(totals) / totals["gp"]
                             if totals["gp"] else 0.0)
@@ -448,8 +483,12 @@ def write_players_json(season, profiles, games_included, out_path):
         "notes": (
             "Totals and derived stats from ESPN raw box scores on disk. "
             "NBA 2026-27, 48-minute games, %Min over games x 48. "
-            "No height, weight, or class year: rosters have not been "
-            "pulled yet. Percentages are null when the denominator is "
+            "experience_years / is_rookie / age / height_in / "
+            "weight_lbs come from data/rosters_2026_27.json when it "
+            "exists (is_rookie means experience.years == 0, first "
+            "NBA season); they are None / False when rosters have "
+            "not been pulled or the player is on no current roster. "
+            "Percentages are null when the denominator is "
             "zero. DNP players are excluded. ratings.ortg is a "
             "simplified ORtg (points per 100 possessions used, no "
             "assist credit), an approximation of KenPom's full Dean "
@@ -476,7 +515,9 @@ def write_players_csv(season, profiles, out_path):
               "fg3m", "fg3a", "ftm", "fta", "reb", "oreb", "dreb",
               "ast", "to", "stl", "blk", "pf", "pts_pg", "reb_pg",
               "ast_pg", "pts_per36", "fg_pct", "fg3_pct", "ft_pct", "efg_pct",
-              "ts_pct", "ortg", "poss_pct", "min_pct", "rpr"]
+              "ts_pct", "ortg", "poss_pct", "min_pct", "rpr",
+              "experience_years", "is_rookie", "age", "height_in",
+              "weight_lbs"]
     with open(out_path, "w", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
@@ -534,6 +575,14 @@ def write_players_csv(season, profiles, out_path):
                             else ""),
                 "rpr": (round(profile["ratings"]["rpr"], 2)
                         if profile["ratings"]["rpr"] is not None else ""),
+                "experience_years": (
+                    profile.get("experience_years")
+                    if profile.get("experience_years") is not None
+                    else ""),
+                "is_rookie": 1 if profile.get("is_rookie") else 0,
+                "age": profile.get("age") or "",
+                "height_in": profile.get("height_in") or "",
+                "weight_lbs": profile.get("weight_lbs") or "",
             }
             writer.writerow(row)
     return out_path

@@ -18,8 +18,12 @@ that team's game log and roster for the season; clicking a team
 name opens that team's own page (teams/<slug>.html) with its
 ratings, game log, and roster. A player leaders section lists the
 top 5 by PTS, REB, AST, ORtg, and RPR (min 2 games, 40% of team
-minutes), plus a sortable top-100 players table by RPR. A GM board
-section lists the acquisition tiers.
+minutes), plus a sortable top-100 players table by RPR with a
+Rookies-only toggle. A Rookies section lists the top 10 rookies
+by RPR (same 40% floor) plus notable rookies below the floor,
+labelled as such. A GM board section lists the acquisition tiers.
+A rookie is a player whose ESPN roster entry shows
+experience.years == 0 (first NBA season).
 
 Where the columns come from:
 - Conf: East/West from the static CONFERENCE map below (standard
@@ -43,6 +47,7 @@ import html
 import json
 import re
 import unicodedata
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -51,6 +56,16 @@ HERE = Path(__file__).parent
 DATA = HERE / "data"
 SEASON = "2026-27"
 REPO = "https://github.com/RD3-LIL/nba-ratings"
+
+# ESPN's box scores scramble some team assignments in this run
+# (Giannis Antetokounmpo is listed on Miami, LeBron James on
+# Philadelphia). Everything on the site is reported as fetched,
+# not corrected, and the disclaimer below says so on the index
+# and on every team page.
+DISCLAIMER = ("Team assignments are as reported by ESPN's box "
+              "scores and include known errors, e.g. Giannis "
+              "Antetokounmpo is listed on Miami and LeBron James "
+              "on Philadelphia. Reported as fetched, not corrected.")
 
 # Standard NBA alignment. ESPN's NBA teams endpoint has no
 # conference field, so this is a fixed map, checked at build
@@ -202,7 +217,11 @@ def rosters():
     """
     players = read_csv(DATA / "players_2026_27.csv")
     gm = read_csv(DATA / "gm_board_2026_27.csv")
-    tier_by_id = {r["athlete_id"]: r["tier"] for r in gm}
+    # Tier keyed by (athlete_id, team): a player who changed teams
+    # has one profile per team with a different tier (Carson Cooper:
+    # Rotation / depth on the Lakers, Overvalued / avoid on Memphis).
+    # Keying by athlete_id alone lets one profile overwrite the other.
+    tier_by_id = {(r["athlete_id"], r["team"]): r["tier"] for r in gm}
     by_team = {}
     for p in players:
         by_team.setdefault(p["team"], []).append(p)
@@ -216,7 +235,7 @@ def rosters():
             float(p["poss_pct"]) if p["poss_pct"] else None,
             float(p["min_pct"]) if p["min_pct"] else None,
             float(p["rpr"]) if p["rpr"] else None,
-            tier_by_id.get(p["athlete_id"], ""),
+            tier_by_id.get((p["athlete_id"], p["team"]), ""),
         ] for p in lst]
     return out
 
@@ -254,7 +273,7 @@ def team_table(rows, log_idx):
             f"href=\"teams/{team_slug(r['team'])}.html\">"
             f"{html.escape(r['team'])}</a></td>"
             f"<td data-v=\"{r['conf'].lower()}\">{r['conf']}</td>"
-            f"<td data-v=\"{r['w'] * 100 - r['l']}\">{r['w']}-{r['l']}</td>"
+            f"<td data-v=\"{r['w'] / (r['w'] + r['l']) if r['w'] + r['l'] else 0:.4f}\">{r['w']}-{r['l']}</td>"
             f"{_metric_cell(r['adj_o'], r['adj_o'], ranks['adj_o'].get(r['team']))}"
             f"{_metric_cell(r['adj_d'], r['adj_d'], ranks['adj_d'].get(r['team']))}"
             f"<td class=\"net\" data-v=\"{r['net']}\">{r['net']}</td>"
@@ -337,9 +356,12 @@ def top_players_section(players):
            "and 40% of team minutes, same as the leader tables. "
            "Click a column header to sort; the filter box searches "
            "player names. Click a team name to open that team's "
-           "own page.</p>",
+           "own page. The Rookies only button filters this table "
+           "to first-year players (experience.years == 0).</p>",
            "<input class=\"filter\" type=\"search\" "
-           "placeholder=\"Filter players...\" data-table=\"top-players\">",
+           "placeholder=\"Filter players...\" data-table=\"top-players\"> "
+           "<button class=\"conf-tab rookie-toggle\" "
+           "data-table=\"top-players\">Rookies only</button>",
            "<table class=\"ratings\" id=\"top-players\">"
            "<thead><tr>"
            "<th data-t=\"num\">Rk</th>"
@@ -355,8 +377,9 @@ def top_players_section(players):
            "</tr></thead><tbody>"]
     for rank, p in enumerate(top, 1):
         pos = p["position"] if p["position"] not in ("", "NA") else ""
+        rookie = 1 if p.get("is_rookie") == "1" else 0
         out.append(
-            f"<tr>"
+            f"<tr data-rookie=\"{rookie}\">"
             f"<td data-v=\"{rank}\">{rank}</td>"
             f"<td data-v=\"{html.escape(p['name'].lower())}\">"
             f"{html.escape(p['name'])}</td>"
@@ -382,6 +405,107 @@ def top_players_section(players):
     return "\n".join(out)
 
 
+def _rookie_table(table_id, title, players):
+    """A sortable RPR table for a rookie list (same columns as top 100)."""
+    def num(v, disp):
+        return (f"<td data-v=\"{v}\">{disp}</td>" if v not in (None, "")
+                else "<td data-v=\"0\">&mdash;</td>")
+    out = [f"<h3>{title}</h3>",
+           "<table class=\"ratings\" id=\"" + table_id + "\">"
+           "<thead><tr>"
+           "<th data-t=\"num\">Rk</th>"
+           "<th data-t=\"text\">Player</th>"
+           "<th data-t=\"text\">Team</th>"
+           "<th data-t=\"text\">Pos</th>"
+           "<th data-t=\"num\">GP</th>"
+           "<th data-t=\"num\">PPG</th>"
+           "<th data-t=\"num\">ORtg</th>"
+           "<th data-t=\"num\">%Poss</th>"
+           "<th data-t=\"num\">%Min</th>"
+           "<th data-t=\"num\">RPR</th>"
+           "</tr></thead><tbody>"]
+    for rank, p in enumerate(players, 1):
+        pos = p["position"] if p["position"] not in ("", "NA") else ""
+        out.append(
+            f"<tr>"
+            f"<td data-v=\"{rank}\">{rank}</td>"
+            f"<td data-v=\"{html.escape(p['name'].lower())}\">"
+            f"{html.escape(p['name'])}</td>"
+            f"<td data-v=\"{html.escape(p['team'].lower())}\">"
+            f"<a href=\"teams/{team_slug(p['team'])}.html\">"
+            f"{html.escape(p['team'])}</a></td>"
+            f"<td data-v=\"{html.escape(pos.lower())}\">"
+            f"{html.escape(pos) if pos else '&mdash;'}</td>"
+            f"<td data-v=\"{p['gp']}\">{p['gp']}</td>"
+            f"{num(p['pts_pg'], p['pts_pg'])}"
+            f"{num(p['ortg'], p['ortg'])}"
+            f"{num(p['poss_pct'], p['poss_pct'])}"
+            f"{num(p['min_pct'], p['min_pct'])}"
+            f"{num(p['rpr'], p['rpr'])}"
+            f"</tr>")
+    out.append("</tbody></table>")
+    return "\n".join(out)
+
+
+def rookies_section(players):
+    """Rookies-only view: top 10 rookies by RPR, plus below-floor ones.
+
+    A rookie is experience.years == 0 on the ESPN roster (first
+    NBA season), matched by athlete_id. The top 10 uses the same
+    floor as every other leaderboard (min 2 games, 40% of team
+    minutes). Rookies below the floor are shown separately and
+    labelled, because the raw RPR leader among rookies is often
+    a small-sample cameo: a player on 5 games at 9% of minutes
+    is not the best rookie, he is the noisiest one.
+    """
+    rookies = [p for p in players if p.get("is_rookie") == "1"]
+    distinct = {p["athlete_id"] for p in rookies}
+    qualified = [p for p in rookies
+                 if int(p["gp"]) >= 2 and p["rpr"]
+                 and p["min_pct"] and float(p["min_pct"]) >= 40]
+    qualified.sort(key=lambda p: float(p["rpr"]), reverse=True)
+    top = qualified[:10]
+    below = [p for p in rookies
+             if int(p["gp"]) >= 2 and p["rpr"]
+             and p["min_pct"] and float(p["min_pct"]) < 40]
+    below.sort(key=lambda p: float(p["rpr"]), reverse=True)
+    below = below[:8]
+    best = top[0] if top else None
+    out = ["<section id=\"rookies\"><h2>Rookies</h2>"]
+    if best:
+        out.append(
+            f"<p><strong>Best rookie by RPR: "
+            f"{html.escape(best['name'])} "
+            f"({html.escape(best['team'])}, RPR {best['rpr']}, "
+            f"{best['pts_pg']} PPG in {best['gp']} games).</strong> "
+            f"{len(rookies)} rookie profiles have played this season "
+            f"({len(distinct)} distinct rookies; Carson Cooper has "
+            f"one profile per team after changing teams). "
+            f"Rookies are first-year players: their ESPN roster "
+            f"entry shows experience.years == 0. The 2025 draft "
+            f"class (Cooper Flagg, Cedric Coward) are second-year "
+            f"players in 2026-27 and are not rookies here.</p>")
+    out.append(_rookie_table("rookies-top10",
+                             "Top 10 rookies by RPR", top))
+    out.append(
+        "<p class=\"note\">Same floor as the other leaderboards: "
+        "min 2 games and 40% of team minutes. Click a column "
+        "header to sort; click a team name for that team's page.</p>")
+    if below:
+        out.append(_rookie_table(
+            "rookies-below-floor",
+            "Below the minutes floor (notable rookies, small samples)",
+            below))
+        out.append(
+            "<p class=\"note\">These rookies are below the 40% "
+            "minutes floor, so they do not qualify for the top 10 "
+            "above. Their RPRs are noisier: few games and few "
+            "minutes move the number a lot. Read them as names to "
+            "watch, not as a ranking.</p>")
+    out.append("</section>")
+    return "\n".join(out)
+
+
 def gm_board_section():
     """GM acquisition board tiers, from data/gm_board_2026_27.csv."""
     gm = read_csv(DATA / "gm_board_2026_27.csv")
@@ -394,7 +518,8 @@ def gm_board_section():
     out = ["<section id=\"gm-board\"><h2>GM acquisition board</h2>",
            "<p>Tiers are set by thresholds on RPR, efficiency at "
            "usage, defense, and availability, not by reputation. "
-           "No contracts, salaries, age, or height/weight in v1. "
+           "No contracts or salaries. Age, height, and weight "
+           "come from the roster pull and are in the CSVs. "
            "Full board in "
            "<a href=\"data/gm_board_2026_27.csv\">gm_board_2026_27.csv</a>."
            "</p>"]
@@ -429,6 +554,17 @@ def team_needs_section():
                 "</code> to build this section.</p></section>")
     doc = json.loads(path.read_text())
     teams = doc["teams"]
+    # Diversity disclosure (issue 9): the same best available role
+    # players top many teams' lists. Say so, with the numbers, so
+    # it does not look like a bug. A cap on how many teams one
+    # player can top was considered and rejected: it would hide
+    # the true best fit for the later teams and break the ranking.
+    _all_top = [s for p in teams.values()
+                for s in p["targets"]["top_overall"]]
+    _distinct = {s["name"] for s in _all_top}
+    _common = ", ".join(
+        f"{n} ({c})" for n, c in Counter(
+            s["name"] for s in _all_top).most_common(4))
     out = ["<section id=\"team-needs\"><h2>Team needs and trade fit</h2>",
            "<p>Each team's strengths and weaknesses, its star, and the "
            "realistic players who would fill its biggest holes. "
@@ -442,6 +578,15 @@ def team_needs_section():
            "Full per-team lists in "
            "<a href=\"data/team_needs_2026_27.csv\">"
            "team_needs_2026_27.csv</a>.</p>",
+           f"<p class=\"note\">Only {len(_distinct)} distinct players "
+           f"fill the {len(_all_top)} top-overall slots across the 30 "
+           f"teams: the same best available role players top many "
+           f"teams' lists (most often {_common}). That is expected, "
+           f"the best available role players are the best fit for "
+           f"every needy team, but it means the lists read as nearly "
+           f"the same list. There is no asking-price or salary data "
+           f"to differentiate them.</p>",
+           f"<p class=\"warn\">{html.escape(DISCLAIMER)}</p>",
            "<table class=\"ratings\"><thead><tr>"
            "<th data-t=\"text\">Team</th>"
            "<th data-t=\"text\">Star</th>"
@@ -452,7 +597,13 @@ def team_needs_section():
     for team in sorted(teams, key=lambda t: teams[t]["net"],
                        reverse=True):
         prof = teams[team]
-        star = (prof["star"] or {}).get("name", "")
+        _star = prof["star"] or {}
+        # A star under RPR 5.0 is a role player on scrambled data,
+        # not a star. Fall back to the RPR check for a team_needs
+        # file built before is_clear_star existed.
+        _clear = _star.get("is_clear_star",
+                           (_star.get("rpr") or 0) >= 5.0)
+        star = _star.get("name", "") if _clear else "No clear star"
         need = prof["ranked_needs"][0] if prof["ranked_needs"] else ""
         top = (prof["targets"]["top_overall"][0]
                if prof["targets"]["top_overall"] else None)
@@ -522,7 +673,8 @@ def team_page_html(team, row, slug_by_team):
              f"<p class=\"subtitle\">"
              f"{html.escape(conf)}ern Conference"
              f" &middot; <a href=\"../index.html\">&larr; NBA "
-             f"Ratings</a></p>"]
+             f"Ratings</a></p>",
+             f"<p class=\"warn\">{html.escape(DISCLAIMER)}</p>"]
     parts.append(
         f"<p>Net rank #{row['rank']} &middot; AdjO {row['adj_o']}"
         f"{_rank_str(team, 'adj_o')} "
@@ -533,9 +685,13 @@ def team_page_html(team, row, slug_by_team):
     needs = NEEDS.get(team)
     if needs:
         star = needs["star"] or {}
+        _clear = star.get("is_clear_star",
+                          (star.get("rpr") or 0) >= 5.0)
+        star_label = (star.get("name", "") if _clear
+                      else "No clear star in this data")
         parts.append("<h3>Team needs</h3>")
         parts.append(
-            f"<p>Star: {html.escape(star.get('name', ''))} "
+            f"<p>Star: {html.escape(star_label)} "
             f"(RPR {star.get('rpr')}) &middot; Top needs: "
             f"{', '.join(html.escape(n) for n in needs['ranked_needs'][:3])}</p>")
         parts.append(
@@ -707,7 +863,7 @@ JS = """
 // embedded in the page by the builder). Plain script, no
 // network, no dependencies. Numeric columns sort on the
 // data-v value; team and conference sort as text; W-L sorts on
-// wins first (data-v is wins*100 - losses).
+// win percentage (data-v is wins / (wins + losses)).
 function esc(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
@@ -723,10 +879,12 @@ function closeDetails(table) {
 function applyFilter(table) {
   var q = table._q || "";
   var conf = table._conf || "";
+  var rk = table._rookiesOnly || false;
   table.querySelectorAll("tbody tr:not(.detail)").forEach(function (r) {
     var team = r.cells[1].textContent.toLowerCase();
     var ok = (q === "" || team.indexOf(q) !== -1)
-      && (conf === "" || r.dataset.conf === conf);
+      && (conf === "" || r.dataset.conf === conf)
+      && (!rk || r.dataset.rookie === "1");
     r.style.display = ok ? "" : "none";
   });
 }
@@ -823,6 +981,15 @@ document.querySelectorAll("input.filter").forEach(function (input) {
     applyFilter(table);
   });
 });
+document.querySelectorAll("button.rookie-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var table = document.getElementById(btn.dataset.table);
+    closeDetails(table);
+    table._rookiesOnly = !table._rookiesOnly;
+    btn.classList.toggle("active", table._rookiesOnly);
+    applyFilter(table);
+  });
+});
 document.querySelectorAll(".conftabs").forEach(function (bar) {
   bar.addEventListener("click", function (e) {
     var btn = e.target.closest("button.conf-tab");
@@ -862,6 +1029,7 @@ def main():
     table_html = team_table(rows, log_idx)
     leaders_html = player_leaders(players)
     top_html = top_players_section(players)
+    rookies_html = rookies_section(players)
     gm_html = gm_board_section()
     needs_path = DATA / "team_needs_2026_27.json"
     if needs_path.exists():
@@ -891,6 +1059,7 @@ prior. Same ORtg, %Poss, and RPR formulas as RonPom, adapted to
 <a href="#team-ratings">Team ratings</a>
 <a href="#players">Player leaders</a>
 <a href="#top-players">Top players</a>
+<a href="#rookies">Rookies</a>
 <a href="#gm-board">GM board</a>
 <a href="#team-needs">Team needs</a>
 <a href="#how-to-read">How to read this</a>
@@ -901,6 +1070,7 @@ prior. Same ORtg, %Poss, and RPR formulas as RonPom, adapted to
 The ratings use a league-average prior (no last-season prior: NBA
 teams change too much year over year for one to help), so the top of
 the table is still mostly noise, not a real ranking.</p>
+<p class="warn">{DISCLAIMER}</p>
 <p>{len(rows)} teams rated, {len(players)} players, {n_games} games.
 Click a column header to sort. Click a team name for that team's own
 page, or a team row to see its game log and roster here.</p>
@@ -913,14 +1083,16 @@ page, or a team row to see its game log and roster here.</p>
 
 {top_html}
 
+{rookies_html}
+
 {gm_html}
 
 {needs_html}
 
 <section id="how-to-read"><h2>How to read this</h2>
 <p><strong>Getting around</strong>: the bar at the top jumps to the
-team ratings, the player leaders, the top 100 players, or the GM
-board. East / West tabs above the team table filter to one
+team ratings, the player leaders, the top 100 players, the
+rookies, or the GM board. East / West tabs above the team table filter to one
 conference; the filter box searches team names. Click a team name
 anywhere to open that team's own page, with its ratings, game log,
 and roster. Click a team row to see its game log and roster for the
@@ -939,11 +1111,19 @@ underrates playmakers. Read it with %Poss. <strong>RPR</strong> is
 our own single-number player rating, not KenPom's proprietary
 kPOY. Leaderboards only include players with at least 40% of their
 team's minutes, so a two-minute cameo cannot top the list.</p>
+<p><strong>Rookies</strong>: a rookie is a player in his first NBA
+season, from the ESPN roster entry (experience.years == 0).
+The Rookies section ranks them by RPR with the same 40% minutes
+floor, and lists notable below-floor rookies separately. The
+Rookies only button on the top-100 table filters it to rookies.
+Age, height, and weight in the CSVs also come from the roster
+pull; a player on no current roster has no experience or bio
+fields.</p>
 <p><strong>Honest limits</strong>: about 15 games per team, so the
 order is still noisy. League-average prior only, no last-season
 prior. Box-score only: no tracking, no on/off, no opponent
-adjustment at player level. No contracts, salaries, age, or
-height/weight. Full method in the README.</p></section>
+adjustment at player level. No contracts or salaries. {DISCLAIMER} Full
+method in the README.</p></section>
 
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:

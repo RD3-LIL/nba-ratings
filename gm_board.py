@@ -6,7 +6,9 @@ Takes data/players_2026_27_eval.json and produces, per player:
   - Acquisition tier, from thresholds on RPR, ORtg_full at usage,
     %Min, per-36 production and defense, never from reputation.
     A high scorer with low efficiency and high turnovers cannot
-    land in a top tier: the top tiers require ORtg_full >= 110.
+    land in a top tier: Franchise cornerstone requires
+    ORtg_full >= 108, All-Star level >= 104, High-value starter
+    >= 100 (see tier() for the exact rules).
   - Value signals: production per minute, efficiency at high usage,
     two-way signal, availability, shooting gravity, playmaking.
   - Red flags: high usage low efficiency, turnover prone, foul
@@ -16,9 +18,9 @@ Takes data/players_2026_27_eval.json and produces, per player:
     rim protection, rebounding, perimeter defense, bench scoring.
   - filter_by_need(need, top_n): top fits for one need.
 
-What is NOT here, by design: no contracts, salaries, age, height,
-weight or trade value. ESPN roster data (age/height/weight) was
-not fetched for v1, so those fields are blank; contracts are not
+What is NOT here, by design: no contracts, salaries or trade
+value. Age/height/weight now come from the ESPN roster pull
+(fetch_rosters.py, see README "Rookies"); contracts are not
 free anywhere (Spotrac etc. are paywalled) and are NOT scraped.
 See README "Known gaps".
 

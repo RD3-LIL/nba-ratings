@@ -1,5 +1,5 @@
 """
-KenPom-like ratings, solver v2: a proper linear-system solve.
+KenPom-like NBA team ratings, solver v2: a proper linear-system solve.
 
 Model
 -----
@@ -24,14 +24,14 @@ where L_t is league average tempo (possessions per game).
 Solve method
 ------------
 Gauss-Seidel sweeps with damping, not a direct matrix inverse
-and not the one-pass additive adjustment in ratings.py (v1).
-Each sweep updates each team's AdjO, AdjD, and AdjT in place
-from its opponents' current values, then damps the move:
+and not a one-pass additive adjustment. Each sweep updates each
+team's AdjO, AdjD, and AdjT in place from its opponents'
+current values, then damps the move:
 
     new = (1 - omega) * old + omega * target
 
 with omega = damping (default 0.5). Damping is what keeps the
-sweeps stable on 1-2 game samples: without it, a blowout can
+sweeps stable on small samples: without it, a blowout can
 whipsaw a team's rating from one sweep to the next.
 
 Each target is a possession-weighted average of the game-implied
@@ -40,27 +40,25 @@ values, shrunk toward a prior:
     target_Oi = (sum_p p * (y_ij - AdjD_j + L - h*s_ij)
                  + w * prior_Oi) / (sum_p p + w)
 
-where w is prior_weight, in possessions. A team with 2 games
-has about 140 possessions of data, so the default w = 300
-means the prior carries about two thirds of the weight early
-in the season and fades as games accumulate (30 games is about
-2100 possessions, so the prior is then about 12 percent of the
-weight). That is the point of a prior: early-season ratings
-should mostly say "we do not know yet", and the data should
-take over as the season goes on.
+where w is prior_weight, in possessions. An NBA game runs about
+102 possessions, so a team with 2 games has about 204
+possessions of data and the default w = 300 means the prior
+carries about 60 percent of the weight early in the season and
+fades as games accumulate (30 games is about 3060 possessions,
+so the prior is then about 9 percent of the weight). That is the
+point of a prior: early-season ratings should mostly say "we do
+not know yet", and the data should take over as the season goes on.
 
-The prior defaults to the league average for every team. Pass a
-prior dict (see prior.py) to use last season's ratings instead.
-Without any prior anchor the system is not identified: adding a
-constant c to every AdjO and subtracting c from every AdjD
-leaves every prediction unchanged, and on this sparse early
-season data the game graph is disconnected (57 games, 84 teams,
-so several components have no path between them). The prior is
-what anchors each component. If prior_weight is 0, the solver
-instead recenters mean AdjO and mean AdjD to L after each sweep,
-which fixes the shift but does nothing for disconnected
-components, so prior_weight 0 is not recommended on sparse data
-and is only kept for full-season tests.
+The prior defaults to the league average for every team. There
+is no last-season prior in this project: NBA teams change too
+much year over year for one to help, so no prior season is
+fetched (see fetch_nba.py). Without any prior anchor the system
+is not identified: adding a constant c to every AdjO and
+subtracting c from every AdjD leaves every prediction unchanged.
+The prior is what anchors the solve. If prior_weight is 0, the
+solver instead recenters mean AdjO and mean AdjD to L after each
+sweep, which fixes the shift but does nothing for disconnected
+components, so prior_weight 0 is not recommended on sparse data.
 
 Home court
 ----------
@@ -69,46 +67,30 @@ not estimated from the data here. If you enable it, a value
 around 1.0 to 2.0 points per 100 possessions per side is the
 usual range in the literature, meaning a home team is expected
 to score about h more and allow about h less, per 100. The
-default is 0.0 because the prototype data cannot identify it
-(1-2 games per team, almost every team at home in its first
-games) and a hidden nonzero value would silently tilt every
-rating. Pass it explicitly if you want it on.
+default is 0.0 because the early-season data cannot identify it
+and a hidden nonzero value would silently tilt every rating.
+Pass it explicitly if you want it on.
 
 What v2 fixes vs v1, and what it does not fix
 ---------------------------------------------
-v1 (ratings.py, one pass) treats each opponent's RAW efficiency
-as truth. That breaks two ways on 1-2 games: a team that beats
-a 1-game opponent by 40 gets its whole blowout discounted,
+A one-pass adjustment treats each opponent's RAW efficiency as
+truth. That breaks two ways on 1-2 games: a team that beats a
+1-game opponent by 40 gets its whole blowout discounted,
 because that opponent's raw defense looks terrible; and a team
 that loses to a 1-game opponent gets boosted to the top of the
-table, because that opponent's raw offense looks great. On this
-prototype, v1 ranks Chattanooga 1st (Net +25.9) even though it
-lost its only game, and ties 17 teams at exactly Net 0. v2
-solves the coupled system with a prior, so Chattanooga falls
-to about league average and the Net 0 ties disappear.
+table, because that opponent's raw offense looks great. The
+v2 solve couples the system with a prior, so those artifacts
+disappear.
 
 v2 does NOT fix small samples. Two blowouts against weak teams
-still look great, just shrunk toward the prior. Illinois is
-rank 1 in v2 on this prototype, which says more about the
-opponents (Fairleigh Dickinson, Penn) and the league-average
-prior than about Illinois. A real preseason prior (prior.py)
-would anchor Illinois to last season instead of to the league
-average, and would pull that rank down.
-
-One more small-sample quirk, found while testing: a prior on a
-single team in a tiny component does not simply pull that team
-toward the prior. Giving Illinois a prior of Net +8.5 raises
-its solved Net from +20.9 to +26.9, because the prior also
-moves its opponents (FDU and Penn AdjD fall), which feeds back
-into Illinois AdjO. That is component feedback on 3 games, not
-a solver bug, and it disappears on a connected full season,
-where a true prior improves recovery (see test_solver.py).
+still look great, just shrunk toward the prior. Early-season
+rank 1 says more about the blowouts and the league-average
+prior than about the team.
 
 Usage:
-    python3 solver.py
-    python3 solver.py Illinois
-    python3 solver.py --home-court 1.5
+    python3 team_ratings.py
 """
+
 
 import json, sys
 from pathlib import Path
@@ -116,15 +98,8 @@ from pathlib import Path
 HERE = Path(__file__).parent
 GAMES = HERE / "data" / "games_2026_27.json"
 
-NON_D1 = {
-    "Framingham State Rams", "Regent Regent Royals", "Virginia Lynchburg Dragons",
-    "Concordia Chicago Cougars", "Erskine Flying Fleet", "Christendom Crusaders",
-    "Central College Dutch", "Blue Mountain Christian Toppers", "Webster Gorloks",
-    "Bob Jones Bruins", "Champion Christian Tigers", "Saint Mary of the Woods Pomeroys",
-    "West Coast Baptist Eagles", "Grace University Lancers", "Salish Kootenai Bison",
-}
 
-DEFAULT_PRIOR_WEIGHT = 300.0  # possessions, about 4.3 games at 70 poss/game
+DEFAULT_PRIOR_WEIGHT = 300.0  # possessions, about 3 games at ~102 poss/game (NBA)
 DEFAULT_DAMPING = 0.5
 DEFAULT_HOME_COURT = 0.0
 DEFAULT_MAX_ITER = 500
@@ -156,11 +131,11 @@ def load_games():
 
 
 def _normalize_prior_entry(entry):
-    """Accept a prior entry in any of the shapes prior.py produces.
+    """Accept a prior entry in any of the accepted shapes.
 
     Returns (prior_o, prior_d, prior_t, prior_weight_or_None) with
     missing values as None. Accepts snake_case (prior_o, adj_o),
-    the ratings.py keys (adj_o, adj_d, adj_t), and the CamelCase
+    the plain keys (adj_o, adj_d, adj_t), and the CamelCase
     keys (AdjO, AdjD, AdjT).
     """
     if not isinstance(entry, dict):
@@ -251,7 +226,7 @@ def solve(games, prior=None, prior_weight=DEFAULT_PRIOR_WEIGHT,
     if margin_cap is not None:
         games = cap_game_margins(games, margin_cap)
 
-    # Per-team raw totals, same definitions as ratings.py.
+    # Per-team raw totals.
     teams = {}
     off_obs = {}    # team -> [(opp, eff, poss, home_sign)]
     def_obs = {}    # team -> [(opp, eff, poss, home_sign_of_opp)]
@@ -260,7 +235,8 @@ def solve(games, prior=None, prior_weight=DEFAULT_PRIOR_WEIGHT,
     skipped_non_d1 = 0
     for g in games:
         if not is_d1_game(g):
-            # KenPom rates D1 teams only; non-D1 games are excluded.
+            # No filtering for the NBA; is_d1_game always returns
+            # True, so this never triggers. Kept for parity.
             skipped_non_d1 += 1
             continue
         poss = (possessions(g["home_stats"]) + possessions(g["away_stats"])) / 2

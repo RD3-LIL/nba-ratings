@@ -7,8 +7,10 @@ and adds per player:
   - ORtg_full: Dean Oliver / Basketball-Reference style offensive rating
     in points form (see _oliver_ortg): points produced = PTS minus
     the FG credit transferred to passers (qAST) plus assist credit
-    (2 x BR ASTPart) plus OREB credit, over possessions used minus
-    OREBs extended. Kept alongside the simplified ORtg
+    (2 x BR ASTPart) plus OREB credit, over possessions used, the
+    same denominator as the simplified ORtg (an OREB is credited
+    in points only, not also subtracted from possessions, which
+    would double-count it). Kept alongside the simplified ORtg
     (100*PTS/poss used, no assist credit) so the difference is
     visible. What is STILL missing vs a true Oliver ORtg: no
     play-by-play, no opponent adjustment, team factors are season
@@ -344,6 +346,12 @@ def evaluate(profiles, game_map):
         last7_ppg = (sum(x["pts"] for x in last7) / len(last7)
                      if last7 else None)
         ev = dict(p)
+        # Rookie status comes from the roster pull (player_profiles
+        # attached it by athlete_id): is_rookie means
+        # experience.years == 0, first NBA season. Unknown
+        # experience (player on no current roster) is not a rookie.
+        ev["is_rookie"] = p.get("is_rookie") is True
+        ev["experience_years"] = p.get("experience_years")
         ev["eval"] = {
             "ortg_full": ortg_full,
             "ortg_simple": ortg_simple,
@@ -413,6 +421,7 @@ def write_csv(profiles, out_path):
     fields = ["athlete_id", "name", "team", "position", "gp", "min_pct",
               "mpg", "pts_pg", "reb_pg", "ast_pg", "stl_blk_pg",
               "ortg_simple", "ortg_full", "ortg_diff", "poss_pct", "rpr",
+              "is_rookie", "experience_years",
               "rpr_scoring", "rpr_playmaking", "rpr_defense",
               "rpr_rebounding", "quadrant", "ts_pct", "efg_pct",
               "fg3_pct", "pts_2s_share", "pts_3s_share", "pts_ft_share",
@@ -441,6 +450,10 @@ def write_csv(profiles, out_path):
                 "ortg_full": f(ev["ortg_full"]),
                 "ortg_diff": f(ev["ortg_diff"]),
                 "poss_pct": f(r.get("poss_pct")), "rpr": f(r.get("rpr")),
+                "is_rookie": 1 if p.get("is_rookie") else 0,
+                "experience_years": (
+                    p.get("experience_years")
+                    if p.get("experience_years") is not None else ""),
                 "rpr_scoring": f(ev["rpr_components"]["scoring"]),
                 "rpr_playmaking": f(ev["rpr_components"]["playmaking"]),
                 "rpr_defense": f(ev["rpr_components"]["defense"]),

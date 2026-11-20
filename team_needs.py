@@ -45,13 +45,25 @@ lineup-balance / archetype-interaction work):
    starter), under 26% usage, and under 20 points per game.
    A target must also fill a real need (FitGain > 0) and the
    upgrade over the displaced player must be modest
-   (RPR_target - RPR_displaced <= 3.0): a huge jump implies a
-   star-for-star swap, which is not a realistic suggestion.
+   (RPR_target - RPR_displaced <= 5.0, MAX_RPR_JUMP below): a
+   huge jump implies a star-for-star swap, which is not a
+   realistic suggestion.
    Example: a team needing playmaking gets a backup PG with
    high assists per 36, not a star PG. These are data-only
    proxies for availability; without contracts or salaries
    they cannot prove a player is gettable, so the output says
    "realistic" and never "available".
+
+   Star clarity: the star is the highest-RPR qualifying player,
+   but on scrambled ESPN data that can be a role player (e.g.
+   Tyler Herro, RPR 2.58, as Milwaukee's highest-RPR qualifier).
+   A team whose star's RPR is under 5.0 is labelled "No clear
+   star in this data" in the output and on the site; the star's
+   numbers are still used for the need weights, but no player
+   is presented as the star. Team assignments themselves are
+   as reported by ESPN's box scores and include known errors
+   (Giannis listed on Miami, LeBron on Philadelphia); profiles
+   are reported as fetched, not corrected.
 
 Formulas (all weights are hand-set v1 choices, documented here,
 not fitted; v2 should fit them against post-trade Adj Net):
@@ -90,6 +102,23 @@ not fitted; v2 should fit them against post-trade Adj Net):
       if GP < 10, plus another 0.10 if %Min < 40
     TradeScore = QualityGain + FitGain - UsagePenalty
                  - AvailabilityDiscount
+
+  The per-skill FitGain cap (2.0) and the usage penalty (0.02)
+  are tiebreakers and safety rails, not calibrated drivers,
+  and are documented as such. On this run the largest
+  per-skill FitGain contribution is about 0.16 and the
+  theoretical maximum is about 0.4 (weight <= ~0.35, Need/60
+  <= 1, sqrt term <= ~1.12), so the 2.0 cap never binds on
+  real data; it exists so a data error cannot blow up FitGain.
+  The usage penalty is likewise small by construction: the
+  target-usage gate caps targets under 26% usage and the
+  highest star usage in this run is 40.7%, so the largest
+  possible excess over the 65 budget is about 1.6 points and
+  the largest possible penalty about 0.03, against TradeScores
+  of roughly 0.3-0.6. It only separates near-tied targets; a
+  real redundancy cost would need a fitted coefficient, which
+  is v2 work (see README). Neither number is presented as a
+  measured effect.
 
 Limits, stated plainly: no contracts or salaries exist in the
 inputs, so none are used and none are invented; a target's
@@ -147,6 +176,9 @@ MAX_MPG_TARGET = 30.0      # ... nor log 30+ minutes a night when he plays
 MAX_USAGE_TARGET = 26.0    # ... nor a featured offensive option
 MAX_PTS_TARGET = 20.0      # ... nor a 20-point scorer, on his own team
 TOP_N_OWN_TEAM = 3         # ... nor top-3 RPR on his own team
+STAR_RPR_MIN = 5.0         # a "star" under RPR 5.0 is a role player
+                           # on scrambled data, not a star: the team
+                           # is labelled "No clear star in this data"
 
 # Tiers that would typically be available in a trade. Franchise
 # cornerstone and All-Star level are never suggested; Overvalued /
@@ -229,7 +261,7 @@ def four_factors(games):
                 "freeThrowsMade-freeThrowsAttempted", "0-0"))
             oreb = _int(all_stats.get("offensiveRebounds", 0))
             dreb = _int(all_stats.get("defensiveRebounds", 0))
-            tov = _int(all_stats.get("turnovers", 0))
+            tov = _int(all_stats.get("totalTurnovers", all_stats.get("turnovers", 0)))  # totalTurnovers, not player turnovers: team turnovers count in possessions, matching the solver/fetcher/player_profiles
             o_oreb = _int(opp_all.get("offensiveRebounds", 0))
             o_dreb = _int(opp_all.get("defensiveRebounds", 0))
             a = agg[team]
@@ -280,7 +312,7 @@ def four_factors(games):
             _ftm, fta = _split_made_att(all_stats.get(
                 "freeThrowsMade-freeThrowsAttempted", "0-0"))
             oreb = _int(all_stats.get("offensiveRebounds", 0))
-            tov = _int(all_stats.get("turnovers", 0))
+            tov = _int(all_stats.get("totalTurnovers", all_stats.get("turnovers", 0)))  # totalTurnovers, not player turnovers: team turnovers count in possessions, matching the solver/fetcher/player_profiles
             o = opp[team]
             o["fgm"] += fgm
             o["fga"] += fga
@@ -308,7 +340,13 @@ def load_inputs():
     eval_doc = json.loads((DATA / "players_2026_27_eval.json").read_text())
     board_doc = json.loads((DATA / "gm_board_2026_27.json").read_text())
     games = json.loads((DATA / "games_2026_27.json").read_text())
-    tier_by_id = {b["athlete_id"]: b["tier"] for b in board_doc["players"]}
+    # Tier keyed by (athlete_id, team): a player who changed teams
+    # mid-season has one profile per team with a different tier
+    # (Carson Cooper: Rotation / depth on the Lakers, Overvalued /
+    # avoid on Memphis). Keying by athlete_id alone lets one
+    # profile overwrite the other.
+    tier_by_id = {(b["athlete_id"], b["team"]): b["tier"]
+                  for b in board_doc["players"]}
     return teams_doc, eval_doc["players"], tier_by_id, games
 
 
@@ -476,6 +514,8 @@ def build_profiles(teams_doc, players, tier_by_id, games):
             "four_factor_pct": ff_pct.get(team, {}),
             "skills": skills,
             "star": ({"name": star["name"], "rpr": star_rpr,
+                      "is_clear_star": (star_rpr is not None
+                                        and star_rpr >= STAR_RPR_MIN),
                       "poss_pct": (round(star_usage, 1)
                                    if star_usage is not None else None),
                       "skill_pct": {k: round(v, 1)
@@ -490,11 +530,23 @@ def build_profiles(teams_doc, players, tier_by_id, games):
             "rotation": [{"name": p["name"],
                           "min": p["totals"]["min"],
                           "rpr": (p.get("ratings") or {}).get("rpr"),
-                          "tier": tier_by_id.get(p["athlete_id"])}
+                          "tier": tier_by_id.get((p["athlete_id"], p["team"]))}
                          for p in rotation],
         }
     return profiles, pct_by_player
 
+
+
+def star_display_name(profile):
+    """Label for a team's star in output.
+
+    A star under RPR 5.0 is a role player on scrambled data, not
+    a star, so the team is labelled "No clear star in this data"
+    instead of naming him."""
+    star = profile.get("star") or {}
+    if star.get("is_clear_star"):
+        return star.get("name", "")
+    return "No clear star in this data"
 
 
 def _ord(v):
@@ -687,7 +739,7 @@ def build_targets(profiles, players, tier_by_id, pct_by_player):
             if target["team"] == team:
                 continue
             t_pct = pct_by_player[(target["athlete_id"], target["team"])]
-            tier = tier_by_id.get(target["athlete_id"], "Rotation / depth")
+            tier = tier_by_id.get((target["athlete_id"], target["team"]), "Rotation / depth")
             s = score_target(target, t_pct, tier, team, profile,
                              pct_by_player, players_by_team)
             if s is not None:
@@ -717,7 +769,7 @@ def build_targets(profiles, players, tier_by_id, pct_by_player):
                     reverse=True)[:3]
                 reasons = "; ".join(
                     f"{p['name']} ({p['team']}): "
-                    f"{blocking_reason(p, tier_by_id.get(p['athlete_id'], 'Rotation / depth'), players_by_team)}"
+                    f"{blocking_reason(p, tier_by_id.get((p['athlete_id'], p['team']), 'Rotation / depth'), players_by_team)}"
                     for p in best)
                 unfilled[need] = ("No realistic target fills this need. "
                                   f"Best at the skill league-wide: {reasons}.")
@@ -754,6 +806,8 @@ def main(argv=None):
                    "their own team excluded; target under 55% Min, "
                    "under 30 MPG, under 26% usage, under 20 PPG; "
                    "RPR jump over the displaced player capped at 5.0. "
+                   "Teams whose highest-RPR qualifying player is under "
+                   "RPR 5.0 are labelled no clear star in this data. "
                    "No contracts "
                    "or salaries: none exist in the inputs and none "
                    "are invented. No lineup/tracking data: this is "
@@ -780,7 +834,7 @@ def main(argv=None):
             for s in targets[team]["top_overall"]:
                 w.writerow({
                     "team": team, "team_net": prof["net"],
-                    "star": (prof["star"] or {}).get("name"),
+                    "star": star_display_name(prof),
                     "top_need": prof["ranked_needs"][0],
                     "target": s["name"], "target_team": s["team"],
                     "target_tier": s["tier"], "fills_need": s["fills_need"],
@@ -804,7 +858,7 @@ def main(argv=None):
         prof = profiles[team]
         print(f"\n{team} (Net {prof['net']}, AdjO {prof['adj_o']}, "
               f"AdjD {prof['adj_d']})")
-        print(f"Star: {(prof['star'] or {}).get('name')} "
+        print(f"Star: {star_display_name(prof)} "
               f"(RPR {(prof['star'] or {}).get('rpr')}, "
               f"gaps: {', '.join((prof['star'] or {}).get('gaps') or []) or 'none'})")
         print(f"Strengths: {'; '.join(prof['strengths']) or 'none flagged'}")
@@ -849,7 +903,7 @@ def main(argv=None):
         prof = profiles[team]
         top = targets[team]["top_overall"][0] if targets[team]["top_overall"] else None
         print(f"{team}: top need {prof['ranked_needs'][0]}, "
-              f"star {(prof['star'] or {}).get('name')}, "
+              f"star {star_display_name(prof)}, "
               f"top target "
               f"{top['name'] + ' (' + top['team'] + ')' if top else 'none'}")
     return 0

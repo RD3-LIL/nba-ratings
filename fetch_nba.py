@@ -1,14 +1,14 @@
 """Full data grab for NBA ratings (data step only). Adapted from RonPom fetch_full.py.
 
 Pulls, from free ESPN public endpoints only, no KenPom data, no paywall:
-  - scoreboard (groups=50, the Division I group) for every date
+  - scoreboard for every date
   - FULL raw summary JSON per completed game
   - teams list (id, name, abbreviation, slug)
 
-Seasons (default order: smallest first, so the pipeline validates fast):
-  2026-27  2026-11-02 .. 2026-11-09  (to date)
-  2025-26  2025-11-03 .. 2026-04-06  (full)
-  2024-25  2024-11-04 .. 2025-04-07  (full, for prior + backtest)
+Seasons: only 2026-27 is wired in (SEASONS below):
+  2026-27  2026-10-20 .. 2026-11-20  (to date)
+No 2025-26 or 2024-25 pull: NBA teams change too much year over
+year for a last-season prior to help, so none is fetched.
 
 NBA note: no groups=50, no conferenceId / D1 filtering. All 30
 NBA teams are included. The scoreboard returns the full slate
@@ -35,7 +35,8 @@ backoff 2s, 5s, 10s, 30s.
 
 Parsed game record (per game):
   date, event_id, season, home, away, home_id, away_id,
-  home_conf_id, away_conf_id (conferenceId from scoreboard, None for non-D1),
+  home_conf_id, away_conf_id (conferenceId from scoreboard,
+  unused for NBA: all 30 teams are included),
   home_score, away_score, neutral_site, conference_game,
   overtime (linescores > 2 periods), venue, status,
   home_stats / away_stats: FULL team stat dict (name -> displayValue)
@@ -45,9 +46,9 @@ Parsed game record (per game):
   odds (raw, if present, usually empty).
 
 Usage:
-  python3 fetch_full.py                  # all seasons, in order above
-  python3 fetch_full.py --season 2026-27 # one season
-  python3 fetch_full.py --season 2026-27 --start 20261102 --end 20261102  # one date (test)
+  python3 fetch_nba.py                  # 2026-27, Oct 20 to Nov 20
+  python3 fetch_nba.py --season 2026-27 # one season (only one exists)
+  python3 fetch_nba.py --season 2026-27 --start 20261102 --end 20261102  # one date (test)
   python3 fetch_full.py --teams-only      # just the teams list
 """
 import argparse
@@ -237,8 +238,21 @@ def fetch_season(season, start, end):
                     'score': c.get('score'),
                     'linescores': c.get('linescores', []),
                 }
-            home = info.get('home') or info[list(info)[0]]
-            away = info.get('away') or info[list(info)[1]]
+            # homeAway is the only thing that says which side is
+            # home. If it is missing, do not guess from dict order:
+            # that could assign both sides to the same team, swap
+            # them, or (one-key dict) raise IndexError and crash
+            # the whole run. Log and skip the game instead.
+            if 'home' not in info or 'away' not in info:
+                log_failure(eid, season, ds,
+                            f"missing homeAway in scoreboard "
+                            f"competitors: {sorted(info)}")
+                failed += 1
+                print(f'  {ds} {eid} HOME/AWAY UNKNOWN: '
+                      f'{sorted(info)} (game skipped)', flush=True)
+                continue
+            home = info['home']
+            away = info['away']
             sum_path = RAW_SUM / f'{eid}.json'
             summary = None
             if sum_path.exists():
@@ -300,8 +314,8 @@ def fetch_season(season, start, end):
                 'status': stype.get('description'),
                 'home_stats': hs, 'away_stats': aws,
                 # ESPN sometimes has a final score but an empty boxscore
-                # (e.g. 401921153, Warren Wilson at NC A&T, Nov 3 2026:
-                # both teams' statistics arrays are empty). Keep the
+                # (a completed game whose boxscore statistics arrays
+                # are empty). Keep the
                 # game and its score, flag it, never feed it to a
                 # ratings solve (possessions would be 0).
                 'stats_missing': (not hs['all']) or (not aws['all']),

@@ -81,11 +81,37 @@ state['season_2026-27'] = sstate
 state_path.write_text(json.dumps(state, indent=2))
 print(f'  removed {len(removed)} dates from done_dates: {removed}')
 PYEOF
+# The heredoc terminator above must stand alone on its line, so
+# the guard is a $? check, not "PYEOF || ...". A corrupt
+# fetch_state.json used to make this step raise and the script
+# carry on, skipping already-done dates and exiting 0 with
+# "no new games" while updating nothing.
+if [ "$?" -ne 0 ]; then
+  echo "failed to clear scoreboards / fetch state, stopping: fetch_state.json may be corrupt, fix it before re-running"
+  exit 1
+fi
+
+# Fetch failures are logged, not fatal, to fetch_nba.py, so a
+# partial fetch would otherwise rebuild and push a partial day.
+# Record the failure count before the fetch and stop if it grew.
+FAILURES_BEFORE=0
+if [ -f data/fetch_failures.jsonl ]; then
+  FAILURES_BEFORE=$(wc -l < data/fetch_failures.jsonl)
+fi
 
 python3 fetch_nba.py --season 2026-27 --start "$START" --end "$TODAY" || {
   echo "fetch failed, stopping (state is checkpointed, retry tomorrow)"
   exit 1
 }
+
+FAILURES_AFTER=0
+if [ -f data/fetch_failures.jsonl ]; then
+  FAILURES_AFTER=$(wc -l < data/fetch_failures.jsonl)
+fi
+if [ "$FAILURES_AFTER" -gt "$FAILURES_BEFORE" ]; then
+  echo "fetch had $((FAILURES_AFTER - FAILURES_BEFORE)) new failure(s) (see data/fetch_failures.jsonl), stopping before rebuild"
+  exit 1
+fi
 
 GAMES_AFTER=$(python3 -c "import json; print(len(json.load(open('data/games_2026_27.json'))))")
 echo "games: $GAMES_BEFORE -> $GAMES_AFTER"
@@ -112,7 +138,7 @@ fi
 # expand to nothing instead of a literal "teams/*.html".
 shopt -s nullglob
 TEAM_PAGES=(teams/*.html)
-printf '%s\0' data/players_2026_27.csv data/players_2026_27_eval.csv data/gm_board_2026_27.csv data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json index.html "${TEAM_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
+printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json index.html "${TEAM_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
 
 # Sync-base check: the branch head must match the last sync
 # record entry, or someone else pushed since our last run.
