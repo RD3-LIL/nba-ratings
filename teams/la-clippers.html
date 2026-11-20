@@ -32,6 +32,14 @@ table.ratings thead th.sorted-desc::after { content: " \25BC"; }
 table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
 table.ratings tbody tr.team { cursor: pointer; }
 table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings tbody tr.player { cursor: pointer; }
+table.ratings tbody tr.player:hover td { background: #eef4ff; }
+table.roster tbody tr.player { cursor: pointer; }
+table.roster tbody tr.player:hover td { background: #eef4ff; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.player-detail { font-size: 14px; line-height: 1.6; }
+.player-detail .pd-comp { font-variant-numeric: tabular-nums; }
+.player-detail .pd-note { color: #656d76; font-size: 13px; }
 table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
 table.ratings td.net { font-weight: 700; }
 table.ratings td .sub-rank { display: block; font-size: 10px;
@@ -81,14 +89,15 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </head>
 <body>
 <h1>LA Clippers</h1>
-<p class="subtitle">Western Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p class="subtitle">Western Conference &middot; Data through November 19, 2026 (226 games) &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
 <p class="warn">Teams reflect the 2026-27 rosters after a busy 2026 offseason: Giannis Antetokounmpo to Miami, LeBron James to Philadelphia, Walker Kessler to the Lakers, and Anthony Davis to Washington, among others.</p>
-<p>Net rank #23 &middot; AdjO 109.9 (#19) &middot; AdjD 114.4 (#24) &middot; Net -4.6 &middot; AdjT 102.6 (#9) &middot; 4-10</p>
+<p>Net rank #25 &middot; AdjO 110.1 (#18) &middot; AdjD 114.3 (#24) &middot; Net -4.2 &middot; AdjT 102.6 (#9) &middot; 4-10</p>
 <h3>Team needs</h3>
-<p>Star: No clear star in this data (RPR 4.4196607512582435) &middot; Top needs: rebounding, rim_protection, shooting</p>
-<p>Strengths: shooting (eFG%) (75th pct); forcing turnovers (opp TOV%) (72nd pct)<br>Weaknesses: offense (AdjO 109.9, 35th pct); defense (AdjD 114.4, 22nd pct); ball security (TOV%) (5th pct); offensive rebounding (OREB%) (12th pct); opponent shooting (opp eFG%) (5th pct)</p>
-<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes, then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:55%"></span><span class="skill-target"></span></span><span class="skill-value">55</span></div><div class="skill-row" title="AST per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="REB per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:45%"></span><span class="skill-target"></span></span><span class="skill-value">45</span></div><div class="skill-row" title="BLK per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:46%"></span><span class="skill-target"></span></span><span class="skill-value">46</span></div><div class="skill-row" title="STL per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:56%"></span><span class="skill-target"></span></span><span class="skill-value">56</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:56%"></span><span class="skill-target"></span></span><span class="skill-value">56</span></div></div>
-<p>Top realistic targets: Paul Reed (Detroit Pistons, High-value starter, fills rebounding, TradeScore 0.304); Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills rim_protection, TradeScore 0.263); Dean Wade (Philadelphia 76ers, Undervalued / buy-low, fills rebounding, TradeScore 0.232)</p>
+<p>Star: No clear star in this data (RPR 1.25) &middot; Top needs: rebounding, playmaking, perimeter_defense</p>
+<p>Strengths: shooting (eFG%) (75th pct); forcing turnovers (opp TOV%) (72nd pct)<br>Weaknesses: defense (AdjD 114.3, 22nd pct); ball security (TOV%) (5th pct); offensive rebounding (OREB%) (12th pct); opponent shooting (opp eFG%) (5th pct)</p>
+<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes (bench scoring is ranked bench-only, and the team bench skill is bench-only), then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36 plus half-weight BLK per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36; raw rate 2.12 per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:55%"></span><span class="skill-target"></span></span><span class="skill-value">55</span></div><div class="skill-row" title="AST per 36; raw rate 3.93 per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="REB per 36; raw rate 5.70 per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:45%"></span><span class="skill-target"></span></span><span class="skill-value">45</span></div><div class="skill-row" title="BLK per 36; raw rate 0.69 per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:46%"></span><span class="skill-target"></span></span><span class="skill-value">46</span></div><div class="skill-row" title="STL per 36 plus half-weight BLK per 36; raw rate 1.74 per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes; raw rate 15.74 per 36"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:54%"></span><span class="skill-target"></span></span><span class="skill-value">54</span></div></div><p class="note">Raw rates behind the bars: Shooting: 2.12 per 36 (55th percentile); Playmaking: 3.93 per 36 (51st percentile); Rebounding: 5.70 per 36 (45th percentile); Rim protection: 0.69 per 36 (46th percentile); Perimeter defence: 1.74 per 36 (51st percentile); Bench scoring: 15.74 per 36 (54th percentile).</p>
+<p>Top realistic targets: Paul Reed (Detroit Pistons, Elite role player, fills rebounding, TradeScore 0.403); Dean Wade (Philadelphia 76ers, Rotation / depth, fills perimeter_defense, TradeScore 0.327); Matisse Thybulle (Los Angeles Lakers, Elite role player, fills perimeter_defense, TradeScore 0.325)</p>
+<p>Less-common alternatives (best targets who do not top many other teams' lists): Aday Mara (Oklahoma City Thunder, TradeScore 0.319)</p>
 <h3>Game log</h3>
 <table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
 <tr><td>10/21</td><td><a href="sacramento-kings.html">Sacramento Kings</a></td><td>H</td><td>W</td><td>121-96</td></tr>
@@ -108,27 +117,250 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </tbody></table>
 <h3>Roster</h3>
 <table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
-<tr><td>Darius Garland</td><td>G</td><td>14</td><td>21.3</td><td>96.0</td><td>28.9</td><td>69.0</td><td>2.2</td><td>Overvalued / avoid</td></tr>
-<tr><td>Derrick Jones Jr.</td><td>F</td><td>13</td><td>10.8</td><td>115.7</td><td>14.0</td><td>55.5</td><td>3.7</td><td>Elite role player</td></tr>
-<tr><td>Kris Dunn</td><td>G</td><td>14</td><td>7.3</td><td>92.9</td><td>12.8</td><td>55.2</td><td>4.4</td><td>High-value starter</td></tr>
-<tr><td>Rui Hachimura</td><td>F</td><td>12</td><td>13.6</td><td>91.8</td><td>21.9</td><td>51.9</td><td>2.1</td><td>Rotation / depth</td></tr>
-<tr><td>Brook Lopez</td><td>C</td><td>14</td><td>15.4</td><td>118.5</td><td>22.7</td><td>51.2</td><td>4.3</td><td>High-value starter</td></tr>
-<tr><td>Keaton Wagler</td><td>G</td><td>14</td><td>12.1</td><td>95.9</td><td>24.4</td><td>46.6</td><td>2.1</td><td>Rotation / depth</td></tr>
-<tr><td>Kobe Sanders</td><td>G</td><td>14</td><td>7.9</td><td>92.5</td><td>16.5</td><td>46.1</td><td>2.0</td><td>Rotation / depth</td></tr>
-<tr><td>Isaiah Jackson</td><td>F</td><td>13</td><td>8.1</td><td>100.2</td><td>18.5</td><td>36.5</td><td>3.9</td><td>Rotation / depth</td></tr>
-<tr><td>Gradey Dick</td><td>G</td><td>14</td><td>7.1</td><td>112.3</td><td>17.2</td><td>33.2</td><td>1.5</td><td>Rotation / depth</td></tr>
-<tr><td>Max Strus</td><td>G</td><td>8</td><td>9.6</td><td>98.8</td><td>17.9</td><td>28.0</td><td>3.3</td><td>Rotation / depth</td></tr>
-<tr><td>Baba Miller</td><td>F</td><td>12</td><td>3.8</td><td>104.5</td><td>18.4</td><td>15.3</td><td>1.5</td><td>Rotation / depth</td></tr>
-<tr><td>Cam Christie</td><td>G</td><td>7</td><td>1.4</td><td>55.9</td><td>22.7</td><td>5.1</td><td>-0.0</td><td>Overvalued / avoid</td></tr>
-<tr><td>Jalen Pickett</td><td>G</td><td>6</td><td>1.7</td><td>111.1</td><td>14.4</td><td>4.0</td><td>0.8</td><td>Rotation / depth</td></tr>
-<tr><td>Nick Martinelli</td><td>F</td><td>6</td><td>2.8</td><td>126.5</td><td>23.2</td><td>3.7</td><td>0.4</td><td>Rotation / depth</td></tr>
-<tr><td>Yanic Konan Niederhauser</td><td>C</td><td>1</td><td>2.0</td><td>33.3</td><td>23.5</td><td>1.6</td><td>0.7</td><td>Overvalued / avoid</td></tr>
-<tr><td>Blake Wesley</td><td>G</td><td>2</td><td>1.0</td><td>41.0</td><td>23.4</td><td>1.3</td><td>0.5</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Darius Garland|LA Clippers"><td>Darius Garland</td><td>G</td><td>14</td><td>21.3</td><td>96.0</td><td>28.9</td><td>69.0</td><td>-1.9</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Derrick Jones Jr.|LA Clippers"><td>Derrick Jones Jr.</td><td>F</td><td>13</td><td>10.8</td><td>115.7</td><td>14.0</td><td>55.5</td><td>0.1</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Kris Dunn|LA Clippers"><td>Kris Dunn</td><td>G</td><td>14</td><td>7.3</td><td>92.9</td><td>12.8</td><td>55.2</td><td>1.1</td><td>Elite role player</td></tr>
+<tr class="player" data-pid="Rui Hachimura|LA Clippers"><td>Rui Hachimura</td><td>F</td><td>12</td><td>13.6</td><td>91.8</td><td>21.9</td><td>51.9</td><td>-1.6</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Brook Lopez|LA Clippers"><td>Brook Lopez</td><td>C</td><td>14</td><td>15.4</td><td>118.5</td><td>22.7</td><td>51.2</td><td>1.2</td><td>Elite role player</td></tr>
+<tr class="player" data-pid="Keaton Wagler|LA Clippers"><td>Keaton Wagler</td><td>G</td><td>14</td><td>12.1</td><td>95.9</td><td>24.4</td><td>46.6</td><td>-0.7</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Kobe Sanders|LA Clippers"><td>Kobe Sanders</td><td>G</td><td>14</td><td>7.9</td><td>92.5</td><td>16.5</td><td>46.1</td><td>-0.8</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Isaiah Jackson|LA Clippers"><td>Isaiah Jackson</td><td>F</td><td>13</td><td>8.1</td><td>100.2</td><td>18.5</td><td>36.5</td><td>1.5</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Gradey Dick|LA Clippers"><td>Gradey Dick</td><td>G</td><td>14</td><td>7.1</td><td>112.3</td><td>17.2</td><td>33.2</td><td>-0.5</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Max Strus|LA Clippers"><td>Max Strus</td><td>G</td><td>8</td><td>9.6</td><td>98.8</td><td>17.9</td><td>28.0</td><td>0.3</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Baba Miller|LA Clippers"><td>Baba Miller</td><td>F</td><td>12</td><td>3.8</td><td>104.5</td><td>18.4</td><td>15.3</td><td>0.4</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Cam Christie|LA Clippers"><td>Cam Christie</td><td>G</td><td>7</td><td>1.4</td><td>55.9</td><td>22.7</td><td>5.1</td><td>-0.6</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Jalen Pickett|LA Clippers"><td>Jalen Pickett</td><td>G</td><td>6</td><td>1.7</td><td>111.1</td><td>14.4</td><td>4.0</td><td>0.3</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Nick Martinelli|LA Clippers"><td>Nick Martinelli</td><td>F</td><td>6</td><td>2.8</td><td>126.5</td><td>23.2</td><td>3.7</td><td>-0.1</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Yanic Konan Niederhauser|LA Clippers"><td>Yanic Konan Niederhauser</td><td>C</td><td>1</td><td>2.0</td><td>33.3</td><td>23.5</td><td>1.6</td><td>-0.7</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Blake Wesley|LA Clippers"><td>Blake Wesley</td><td>G</td><td>2</td><td>1.0</td><td>41.0</td><td>23.4</td><td>1.3</td><td>-0.1</td><td>Insufficient minutes</td></tr>
 </tbody></table>
-<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is v1.1, our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<p class="note">Sorted by minutes. Click a player row to see that player's RPR components, ORtg (full) vs simple, and shooting. ORtg in the table is the simple approximation (no assist credit); RPR is v1.2, our own rating, not KenPom's kPOY. Tier is the GM board tier for that player.</p>
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
-<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Data through November 19, 2026 (226 games).
+Built November 20, 2026.</p>
 </footer>
+<script>var PLAYER_DETAIL = {"Darius Garland|LA Clippers":{"name":"Darius Garland","team":"LA Clippers","position":"G","rpr":"-1.95","rpr_v1_1":"2.23","scoring":"-0.52","playmaking":"0.41","defense":"-0.89","rebounding":"-0.95","ortg_full":"97.57","ortg_simple":"96.02","ortg_shrunk":"97.7","ortg_adj":"97.9","opp_adj":"-0.24","ts_pct":"0.6","fg3_pct":"0.36","fg3_pct_shrunk":"0.354","gp":"14","min_pct":"69.05","mpg":"33.14","poss_pct":"28.85","trend_ppg":"2.21","last7_gp":"4"},"Brook Lopez|LA Clippers":{"name":"Brook Lopez","team":"LA Clippers","position":"C","rpr":"1.25","rpr_v1_1":"4.34","scoring":"1.15","playmaking":"-0.17","defense":"0.08","rebounding":"0.19","ortg_full":"114.57","ortg_simple":"118.52","ortg_shrunk":"108.9","ortg_adj":"109.1","opp_adj":"-0.16","ts_pct":"0.65","fg3_pct":"0.45","fg3_pct_shrunk":"0.361","gp":"14","min_pct":"51.19","mpg":"24.57","poss_pct":"22.75","trend_ppg":"4.39","last7_gp":"4"},"Keaton Wagler|LA Clippers":{"name":"Keaton Wagler","team":"LA Clippers","position":"G","rpr":"-0.74","rpr_v1_1":"2.08","scoring":"-0.24","playmaking":"-0.05","defense":"-0.3","rebounding":"-0.15","ortg_full":"99.97","ortg_simple":"95.92","ortg_shrunk":"98.2","ortg_adj":"98.4","opp_adj":"-0.16","ts_pct":"0.57","fg3_pct":"0.36","fg3_pct_shrunk":"0.354","gp":"14","min_pct":"46.58","mpg":"22.36","poss_pct":"24.43","trend_ppg":"-0.14","last7_gp":"4"},"Rui Hachimura|LA Clippers":{"name":"Rui Hachimura","team":"LA Clippers","position":"F","rpr":"-1.55","rpr_v1_1":"2.11","scoring":"-0.55","playmaking":"-0.75","defense":"-0.43","rebounding":"0.18","ortg_full":"90.01","ortg_simple":"91.82","ortg_shrunk":"96.3","ortg_adj":"96.5","opp_adj":"-0.21","ts_pct":"0.52","fg3_pct":"0.38","fg3_pct_shrunk":"0.356","gp":"12","min_pct":"51.93","mpg":"29.08","poss_pct":"21.94","trend_ppg":"-1.58","last7_gp":"4"},"Derrick Jones Jr.|LA Clippers":{"name":"Derrick Jones Jr.","team":"LA Clippers","position":"F","rpr":"0.06","rpr_v1_1":"3.66","scoring":"0.56","playmaking":"-0.7","defense":"0.42","rebounding":"-0.22","ortg_full":"112.21","ortg_simple":"115.7","ortg_shrunk":"106.1","ortg_adj":"106.3","opp_adj":"-0.18","ts_pct":"0.67","fg3_pct":"0.5","fg3_pct_shrunk":"0.363","gp":"13","min_pct":"55.51","mpg":"28.69","poss_pct":"13.99","trend_ppg":"-0.77","last7_gp":"4"},"Kobe Sanders|LA Clippers":{"name":"Kobe Sanders","team":"LA Clippers","position":"G","rpr":"-0.76","rpr_v1_1":"2.02","scoring":"-0.24","playmaking":"0.03","defense":"-0.22","rebounding":"-0.34","ortg_full":"97.75","ortg_simple":"92.5","ortg_shrunk":"97.4","ortg_adj":"97.5","opp_adj":"-0.12","ts_pct":"0.56","fg3_pct":"0.33","fg3_pct_shrunk":"0.353","gp":"14","min_pct":"46.13","mpg":"22.14","poss_pct":"16.55","trend_ppg":"-4.86","last7_gp":"4"},"Isaiah Jackson|LA Clippers":{"name":"Isaiah Jackson","team":"LA Clippers","position":"F","rpr":"1.49","rpr_v1_1":"3.86","scoring":"0.02","playmaking":"-0.23","defense":"1.27","rebounding":"0.44","ortg_full":"107.15","ortg_simple":"100.19","ortg_shrunk":"100.2","ortg_adj":"100.4","opp_adj":"-0.21","ts_pct":"0.61","fg3_pct":"0.4","fg3_pct_shrunk":"0.354","gp":"13","min_pct":"36.46","mpg":"18.85","poss_pct":"18.45","trend_ppg":"-0.08","last7_gp":"4"},"Kris Dunn|LA Clippers":{"name":"Kris Dunn","team":"LA Clippers","position":"G","rpr":"1.1","rpr_v1_1":"4.42","scoring":"-0.19","playmaking":"0.57","defense":"0.97","rebounding":"-0.25","ortg_full":"103.56","ortg_simple":"92.9","ortg_shrunk":"97.6","ortg_adj":"97.8","opp_adj":"-0.17","ts_pct":"0.59","fg3_pct":"0.38","fg3_pct_shrunk":"0.355","gp":"14","min_pct":"55.21","mpg":"26.5","poss_pct":"12.77","trend_ppg":"-3.04","last7_gp":"4"},"Gradey Dick|LA Clippers":{"name":"Gradey Dick","team":"LA Clippers","position":"G","rpr":"-0.47","rpr_v1_1":"1.53","scoring":"0.24","playmaking":"-0.42","defense":"-0.23","rebounding":"-0.06","ortg_full":"111.48","ortg_simple":"112.31","ortg_shrunk":"104.0","ortg_adj":"104.1","opp_adj":"-0.1","ts_pct":"0.63","fg3_pct":"0.5","fg3_pct_shrunk":"0.358","gp":"14","min_pct":"33.18","mpg":"15.93","poss_pct":"17.22","trend_ppg":"-0.39","last7_gp":"4"},"Max Strus|LA Clippers":{"name":"Max Strus","team":"LA Clippers","position":"G","rpr":"0.35","rpr_v1_1":"3.3","scoring":"-0.03","playmaking":"0.74","defense":"-0.17","rebounding":"-0.19","ortg_full":"108.32","ortg_simple":"98.77","ortg_shrunk":"99.8","ortg_adj":"99.9","opp_adj":"-0.08","ts_pct":"0.54","fg3_pct":"0.37","fg3_pct_shrunk":"0.355","gp":"8","min_pct":"27.98","mpg":"23.5","poss_pct":"17.89","trend_ppg":"-0.12","last7_gp":"4"},"Baba Miller|LA Clippers":{"name":"Baba Miller","team":"LA Clippers","position":"F","rpr":"0.41","rpr_v1_1":"1.49","scoring":"0.02","playmaking":"-0.25","defense":"0.53","rebounding":"0.11","ortg_full":"110.57","ortg_simple":"104.45","ortg_shrunk":"101.0","ortg_adj":"100.9","opp_adj":"0.09","ts_pct":"0.68","fg3_pct":"0.38","fg3_pct_shrunk":"0.354","gp":"12","min_pct":"15.33","mpg":"8.58","poss_pct":"18.44","trend_ppg":"-2.17","last7_gp":"3"},"Nick Martinelli|LA Clippers":{"name":"Nick Martinelli","team":"LA Clippers","position":"F","rpr":"-0.15","rpr_v1_1":"0.38","scoring":"0.04","playmaking":"-0.1","defense":"-0.23","rebounding":"0.14","ortg_full":"135.25","ortg_simple":"126.49","ortg_shrunk":"101.9","ortg_adj":"101.9","opp_adj":"-0.02","ts_pct":"0.74","fg3_pct":"0.67","fg3_pct_shrunk":"0.355","gp":"6","min_pct":"3.72","mpg":"4.17","poss_pct":"23.19","trend_ppg":"-2.83","last7_gp":"1"},"Cam Christie|LA Clippers":{"name":"Cam Christie","team":"LA Clippers","position":"G","rpr":"-0.63","rpr_v1_1":"-0.01","scoring":"-0.09","playmaking":"-0.26","defense":"-0.12","rebounding":"-0.15","ortg_full":"58.73","ortg_simple":"55.93","ortg_shrunk":"96.6","ortg_adj":"96.6","opp_adj":"-0.02","ts_pct":"0.34","fg3_pct":"0.29","fg3_pct_shrunk":"0.353","gp":"7","min_pct":"5.06","mpg":"4.86","poss_pct":"22.68","trend_ppg":"0.07","last7_gp":"2"},"Jalen Pickett|LA Clippers":{"name":"Jalen Pickett","team":"LA Clippers","position":"G","rpr":"0.28","rpr_v1_1":"0.84","scoring":"0.01","playmaking":"0.22","defense":"0.09","rebounding":"-0.04","ortg_full":"125.41","ortg_simple":"111.11","ortg_shrunk":"100.7","ortg_adj":"100.7","opp_adj":"0.02","ts_pct":"0.62","fg3_pct":"0.67","fg3_pct_shrunk":"0.355","gp":"6","min_pct":"4.02","mpg":"4.5","poss_pct":"14.38","trend_ppg":"-1.67","last7_gp":"1"},"Yanic Konan Niederhauser|LA Clippers":{"name":"Yanic Konan Niederhauser","team":"LA Clippers","position":"C","rpr":"-0.74","rpr_v1_1":"0.65","scoring":"-0.11","playmaking":"-1.27","defense":"0.39","rebounding":"0.25","ortg_full":"37.6","ortg_simple":"33.33","ortg_shrunk":"98.3","ortg_adj":"98.3","opp_adj":"-0.04","ts_pct":"0.25","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"1","min_pct":"1.64","mpg":"11.0","poss_pct":"23.53","trend_ppg":"0.0","last7_gp":"1"},"Blake Wesley|LA Clippers":{"name":"Blake Wesley","team":"LA Clippers","position":"G","rpr":"-0.09","rpr_v1_1":"0.47","scoring":"-0.03","playmaking":"-0.11","defense":"-0.25","rebounding":"0.3","ortg_full":"51.61","ortg_simple":"40.98","ortg_shrunk":"98.8","ortg_adj":"98.9","opp_adj":"-0.03","ts_pct":"0.2","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"2","min_pct":"1.34","mpg":"4.5","poss_pct":"23.39","trend_ppg":"","last7_gp":"0"}};</script>
+<script>
+// Ratings tables: click-to-sort, text filter, conference tabs,
+// and click a team row to expand its game log (GAME_LOGS is
+// embedded in the page by the builder). Plain script, no
+// network, no dependencies. Numeric columns sort on the
+// data-v value; team and conference sort as text; W-L sorts on
+// win percentage (data-v is wins / (wins + losses)).
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function fmt1(v) {
+  // Values arrive as numbers (roster rows) or strings (PLAYER_DETAIL
+  // is built from CSVs); coerce so a string never throws on toFixed.
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(1);
+}
+function fmt2(v) {
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(2);
+}
+function fmtPct(v) {
+  // Fractions in the CSVs (0.61) rendered as percentages (61.0%).
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : (n * 100).toFixed(1) + "%";
+}
+function openPlayerDetail(row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  var table = row.closest("table");
+  if (table) closeDetails(table);
+  var pid = row.dataset.pid || "";
+  var d = (typeof PLAYER_DETAIL !== "undefined") ? PLAYER_DETAIL[pid] : null;
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = row.cells.length;
+  if (!d) {
+    td.textContent = "No detail available for this player.";
+  } else {
+    // PLAYER_DETAIL values are flat CSV strings, not nested
+    // components: scoring/playmaking/defense/rebounding sit on d.
+    var html = '<div class="player-detail"><strong>' + esc(d.name) + '</strong>'
+      + " (" + esc(d.team) + ", " + esc(d.position || "-") + ") - "
+      + d.gp + " GP, " + d.mpg + " MPG, " + d.min_pct + "% of team minutes"
+      + '<br><span class="pd-comp">RPR v1.2 ' + fmt2(d.rpr)
+      + " = scoring " + fmt2(d.scoring) + " + playmaking " + fmt2(d.playmaking)
+      + " + defense " + fmt2(d.defense) + " + rebounding "
+      + fmt2(d.rebounding) + "</span>"
+      + "<br>ORtg (full, with assist credit) " + fmt1(d.ortg_full)
+      + " - simple ORtg " + fmt1(d.ortg_simple)
+      + " (shrunk " + fmt1(d.ortg_shrunk) + ", opponent adj "
+      + fmt2(d.opp_adj) + ") - TS% " + fmtPct(d.ts_pct)
+      + "<br>3P% raw " + fmtPct(d.fg3_pct) + " - shrunk "
+      + fmtPct(d.fg3_pct_shrunk) + " (shrunk toward league average "
+      + "with m = 750 attempts; small samples shrink hard)"
+      + "<br>Usage " + fmt1(d.poss_pct) + "% of team possessions"
+      + (d.trend_ppg ? " - trend " + fmt1(d.trend_ppg) + " PPG vs season"
+         : "")
+      + '<br><span class="pd-note">RPR v1.1 was ' + fmt2(d.rpr_v1_1)
+      + "; v1.2 recenters the counting terms on league averages, "
+      + "so an average player scores about 0.</span></div>";
+    td.innerHTML = html;
+  }
+  tr.appendChild(td);
+  row.after(tr);
+}
+function closeDetails(table) {
+  table.querySelectorAll("tbody tr.detail").forEach(function (d) {
+    d.remove();
+  });
+}
+function applyFilter(table) {
+  var q = table._q || "";
+  var conf = table._conf || "";
+  var rk = table._rookiesOnly || false;
+  table.querySelectorAll("tbody tr:not(.detail)").forEach(function (r) {
+    var team = r.cells[1].textContent.toLowerCase();
+    var ok = (q === "" || team.indexOf(q) !== -1)
+      && (conf === "" || r.dataset.conf === conf)
+      && (!rk || r.dataset.rookie === "1");
+    r.style.display = ok ? "" : "none";
+  });
+}
+function openDetail(table, row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  closeDetails(table);
+  var entry = GAME_LOGS["2026-27"];
+  if (!entry || row.dataset.tidx === "") return;
+  var games = entry.logs[row.dataset.tidx] || [];
+  var teams = entry.teams;
+  var c = row.cells;
+  var html = '<div class="detail-box"><strong>' + esc(c[1].textContent)
+    + '</strong> - AdjO ' + c[4].dataset.v + ' (#' + c[4].dataset.r + ') &middot; AdjD '
+    + c[5].dataset.v + ' (#' + c[5].dataset.r + ') &middot; Net ' + c[6].dataset.v
+    + ' &middot; AdjT ' + c[7].dataset.v + ' (#' + c[7].dataset.r + ') &middot; '
+    + c[3].textContent + '</div>'
+    + '<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th>'
+    + '<th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>';
+  games.forEach(function (g) {
+    var f = g[3], a = g[4];
+    html += "<tr><td>" + g[0].slice(4, 6) + "/" + g[0].slice(6, 8)
+      + "</td><td>" + esc(teams[g[1]]) + "</td><td>" + g[2]
+      + "</td><td>" + (f > a ? "W" : "L") + "</td><td>"
+      + f + "-" + a + "</td></tr>";
+  });
+  html += "</tbody></table>";
+  var roster = (ROSTERS["2026-27"] || {})[c[1].textContent];
+  if (roster && roster.length) {
+    html += "<h4>Roster</h4>"
+      + '<table class="roster"><thead><tr><th>Player</th><th>Pos</th>'
+      + "<th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th>"
+      + "<th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>";
+    roster.forEach(function (p) {
+      var pid = esc(p[0]) + "|" + esc(c[1].textContent);
+      html += '<tr class="player" data-pid="' + pid + '"><td>' + esc(p[0]) + "</td><td>"
+        + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "-")
+        + "</td><td>" + p[2] + "</td><td>" + fmt1(p[3]) + "</td><td>"
+        + fmt1(p[4]) + "</td><td>" + fmt1(p[5]) + "</td><td>"
+        + fmt1(p[6]) + "</td><td>" + fmt1(p[7]) + "</td><td>"
+        + (p[8] ? esc(p[8]) : "-") + "</td></tr>";
+    });
+    html += "</tbody></table>"
+      + '<p class="note">Sorted by minutes. Click a player row for '
+      + "detail. ORtg is approximate "
+      + "(no assist credit); RPR is v1.2, our own rating, not KenPom's "
+      + "kPOY. Tier is the GM board tier for that player.</p>";
+  }
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = 8;
+  td.innerHTML = html;
+  tr.appendChild(td);
+  row.after(tr);
+}
+document.querySelectorAll("table.ratings").forEach(function (table) {
+  var headers = table.querySelectorAll("thead th");
+  headers.forEach(function (th, i) {
+    th.addEventListener("click", function () {
+      closeDetails(table);
+      var asc = !th.classList.contains("sorted-asc");
+      headers.forEach(function (h) {
+        h.classList.remove("sorted-asc", "sorted-desc");
+      });
+      th.classList.add(asc ? "sorted-asc" : "sorted-desc");
+      var rows = Array.from(table.querySelectorAll("tbody tr:not(.detail)"));
+      var numeric = th.dataset.t === "num" || th.dataset.t === "wl";
+      rows.sort(function (a, b) {
+        var va = a.cells[i].dataset.v, vb = b.cells[i].dataset.v;
+        var cmp = numeric ? (parseFloat(va) - parseFloat(vb))
+          : (va < vb ? -1 : va > vb ? 1 : 0);
+        return asc ? cmp : -cmp;
+      });
+      var body = table.querySelector("tbody");
+      rows.forEach(function (r) { body.appendChild(r); });
+      if (table.dataset.renumber) {
+        rows.forEach(function (r, idx) {
+          r.cells[0].dataset.v = String(idx + 1);
+          r.cells[0].textContent = String(idx + 1);
+        });
+      }
+    });
+  });
+  table.querySelectorAll("tbody tr.team").forEach(function (row) {
+    row.addEventListener("click", function (e) {
+      // The team name is a link to the team page; let it go
+      // there instead of toggling the detail panel.
+      if (e.target.closest("a")) return;
+      openDetail(table, row);
+    });
+  });
+});
+document.querySelectorAll("input.filter").forEach(function (input) {
+  input.addEventListener("input", function () {
+    var table = document.getElementById(input.dataset.table);
+    closeDetails(table);
+    table._q = input.value.trim().toLowerCase();
+    applyFilter(table);
+  });
+});
+document.querySelectorAll("button.rookie-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var table = document.getElementById(btn.dataset.table);
+    closeDetails(table);
+    table._rookiesOnly = !table._rookiesOnly;
+    btn.classList.toggle("active", table._rookiesOnly);
+    applyFilter(table);
+  });
+});
+document.querySelectorAll(".conftabs").forEach(function (bar) {
+  bar.addEventListener("click", function (e) {
+    var btn = e.target.closest("button.conf-tab");
+    if (!btn) return;
+    bar.querySelectorAll("button").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+    var table = document.getElementById(bar.dataset.table);
+    closeDetails(table);
+    table._conf = btn.dataset.conf;
+    applyFilter(table);
+  });
+});
+// Click a player row (top 100, rookies, team roster, or a roster
+// inside an expanded team panel) to expand that player's detail.
+// Delegated so rows added later by openDetail are covered too.
+document.addEventListener("click", function (e) {
+  var row = e.target.closest("tr.player");
+  if (!row) return;
+  if (e.target.closest("a")) return;
+  openPlayerDetail(row);
+});
+</script>
 </body>
 </html>

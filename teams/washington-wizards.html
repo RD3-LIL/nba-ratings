@@ -32,6 +32,14 @@ table.ratings thead th.sorted-desc::after { content: " \25BC"; }
 table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
 table.ratings tbody tr.team { cursor: pointer; }
 table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings tbody tr.player { cursor: pointer; }
+table.ratings tbody tr.player:hover td { background: #eef4ff; }
+table.roster tbody tr.player { cursor: pointer; }
+table.roster tbody tr.player:hover td { background: #eef4ff; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.player-detail { font-size: 14px; line-height: 1.6; }
+.player-detail .pd-comp { font-variant-numeric: tabular-nums; }
+.player-detail .pd-note { color: #656d76; font-size: 13px; }
 table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
 table.ratings td.net { font-weight: 700; }
 table.ratings td .sub-rank { display: block; font-size: 10px;
@@ -81,14 +89,15 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </head>
 <body>
 <h1>Washington Wizards</h1>
-<p class="subtitle">Eastern Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p class="subtitle">Eastern Conference &middot; Data through November 19, 2026 (226 games) &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
 <p class="warn">Teams reflect the 2026-27 rosters after a busy 2026 offseason: Giannis Antetokounmpo to Miami, LeBron James to Philadelphia, Walker Kessler to the Lakers, and Anthony Davis to Washington, among others.</p>
-<p>Net rank #26 &middot; AdjO 108.8 (#24) &middot; AdjD 115.2 (#25) &middot; Net -6.5 &middot; AdjT 102.4 (#15) &middot; 5-11</p>
+<p>Net rank #26 &middot; AdjO 109.6 (#22) &middot; AdjD 114.4 (#26) &middot; Net -4.9 &middot; AdjT 102.4 (#15) &middot; 5-11</p>
 <h3>Team needs</h3>
-<p>Star: Anthony Davis (RPR 6.223994705931692) &middot; Top needs: shooting, playmaking, bench_scoring</p>
-<p>Strengths: getting to the line (FT rate) (75th pct); opponent FT rate (92nd pct)<br>Weaknesses: offense (AdjO 108.8, 22nd pct); defense (AdjD 115.2, 18th pct); shooting (eFG%) (8th pct); offensive rebounding (OREB%) (18th pct); forcing turnovers (opp TOV%) (5th pct); defensive rebounding (DREB%) (5th pct); bench_scoring (35th pct, rotation skill)</p>
-<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes, then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:38%"></span><span class="skill-target"></span></span><span class="skill-value">38</span></div><div class="skill-row" title="AST per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:42%"></span><span class="skill-target"></span></span><span class="skill-value">42</span></div><div class="skill-row" title="REB per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:47%"></span><span class="skill-target"></span></span><span class="skill-value">47</span></div><div class="skill-row" title="BLK per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:56%"></span><span class="skill-target"></span></span><span class="skill-value">56</span></div><div class="skill-row" title="STL per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:46%"></span><span class="skill-target"></span></span><span class="skill-value">46</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:35%"></span><span class="skill-target"></span></span><span class="skill-value">35</span></div></div>
-<p>Top realistic targets: Collin Gillespie (Phoenix Suns, Rotation / depth, fills shooting, TradeScore 0.387); CJ McCollum (Atlanta Hawks, Rotation / depth, fills shooting, TradeScore 0.381); Dean Wade (Philadelphia 76ers, Undervalued / buy-low, fills shooting, TradeScore 0.373)</p>
+<p>Star: Anthony Davis (RPR 1.93) &middot; Top needs: shooting, playmaking, bench_scoring</p>
+<p>Strengths: getting to the line (FT rate) (75th pct); opponent FT rate (92nd pct)<br>Weaknesses: offense (AdjO 109.6, 28th pct); defense (AdjD 114.4, 15th pct); shooting (eFG%) (8th pct); offensive rebounding (OREB%) (18th pct); forcing turnovers (opp TOV%) (5th pct); defensive rebounding (DREB%) (5th pct)</p>
+<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes (bench scoring is ranked bench-only, and the team bench skill is bench-only), then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36 plus half-weight BLK per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36; raw rate 1.55 per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:38%"></span><span class="skill-target"></span></span><span class="skill-value">38</span></div><div class="skill-row" title="AST per 36; raw rate 3.66 per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:42%"></span><span class="skill-target"></span></span><span class="skill-value">42</span></div><div class="skill-row" title="REB per 36; raw rate 6.25 per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:47%"></span><span class="skill-target"></span></span><span class="skill-value">47</span></div><div class="skill-row" title="BLK per 36; raw rate 0.86 per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:56%"></span><span class="skill-target"></span></span><span class="skill-value">56</span></div><div class="skill-row" title="STL per 36 plus half-weight BLK per 36; raw rate 1.55 per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:48%"></span><span class="skill-target"></span></span><span class="skill-value">48</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes; raw rate 13.53 per 36"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:41%"></span><span class="skill-target"></span></span><span class="skill-value">41</span></div></div><p class="note">Raw rates behind the bars: Shooting: 1.55 per 36 (38th percentile); Playmaking: 3.66 per 36 (42nd percentile); Rebounding: 6.25 per 36 (47th percentile); Rim protection: 0.86 per 36 (56th percentile); Perimeter defence: 1.55 per 36 (48th percentile); Bench scoring: 13.53 per 36 (41st percentile).</p>
+<p>Top realistic targets: Alex Caruso (Oklahoma City Thunder, Rotation / depth, fills shooting, TradeScore 0.251); Collin Gillespie (Phoenix Suns, Rotation / depth, fills shooting, TradeScore 0.235); Quenton Jackson (Indiana Pacers, Elite role player, fills playmaking, TradeScore 0.226)</p>
+<p>The top targets above are already less-common fits: they do not top many other teams' lists.</p>
 <h3>Game log</h3>
 <table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
 <tr><td>10/21</td><td><a href="milwaukee-bucks.html">Milwaukee Bucks</a></td><td>H</td><td>W</td><td>128-116</td></tr>
@@ -110,27 +119,250 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </tbody></table>
 <h3>Roster</h3>
 <table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
-<tr><td>Trae Young</td><td>G</td><td>16</td><td>17.5</td><td>92.7</td><td>23.2</td><td>72.9</td><td>4.1</td><td>High-value starter</td></tr>
-<tr><td>Kyshawn George</td><td>F</td><td>16</td><td>17.8</td><td>101.3</td><td>22.5</td><td>70.2</td><td>3.9</td><td>Elite role player</td></tr>
-<tr><td>Anthony Davis</td><td>F</td><td>14</td><td>24.6</td><td>108.9</td><td>28.5</td><td>62.1</td><td>6.2</td><td>All-Star level</td></tr>
-<tr><td>Alex Sarr</td><td>C</td><td>15</td><td>11.9</td><td>109.2</td><td>17.2</td><td>53.1</td><td>4.5</td><td>High-value starter</td></tr>
-<tr><td>AJ Dybantsa</td><td>F</td><td>12</td><td>16.2</td><td>86.6</td><td>24.0</td><td>52.6</td><td>2.0</td><td>Rotation / depth</td></tr>
-<tr><td>Bilal Coulibaly</td><td>G</td><td>15</td><td>6.9</td><td>97.3</td><td>12.3</td><td>48.8</td><td>3.2</td><td>Rotation / depth</td></tr>
-<tr><td>Tre Johnson</td><td>G</td><td>14</td><td>8.9</td><td>84.4</td><td>20.5</td><td>40.6</td><td>0.7</td><td>Rotation / depth</td></tr>
-<tr><td>Bub Carrington</td><td>G</td><td>15</td><td>4.9</td><td>98.6</td><td>12.3</td><td>34.2</td><td>1.7</td><td>Rotation / depth</td></tr>
-<tr><td>Deandre Ayton</td><td>C</td><td>16</td><td>4.1</td><td>114.8</td><td>11.7</td><td>27.2</td><td>1.8</td><td>Rotation / depth</td></tr>
-<tr><td>Khris Middleton</td><td>F</td><td>8</td><td>4.6</td><td>97.5</td><td>14.1</td><td>15.1</td><td>0.8</td><td>Rotation / depth</td></tr>
-<tr><td>Will Riley</td><td>G</td><td>13</td><td>2.7</td><td>103.1</td><td>15.9</td><td>12.0</td><td>0.3</td><td>Rotation / depth</td></tr>
-<tr><td>Justin Champagnie</td><td>F</td><td>4</td><td>7.2</td><td>136.0</td><td>12.4</td><td>9.6</td><td>3.7</td><td>Rotation / depth</td></tr>
-<tr><td>Tre Mann</td><td>G</td><td>7</td><td>1.4</td><td>67.8</td><td>16.7</td><td>4.9</td><td>0.9</td><td>Rotation / depth</td></tr>
-<tr><td>Anthony Gill</td><td>F</td><td>5</td><td>1.6</td><td>87.0</td><td>19.8</td><td>2.6</td><td>0.1</td><td>Rotation / depth</td></tr>
-<tr><td>Felix Okpara</td><td>F</td><td>3</td><td>1.0</td><td>104.2</td><td>20.7</td><td>0.8</td><td>0.2</td><td>Rotation / depth</td></tr>
-<tr><td>Reece Beekman</td><td>G</td><td>1</td><td>0.0</td><td>—</td><td>—</td><td>0.1</td><td>—</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Trae Young|Washington Wizards"><td>Trae Young</td><td>G</td><td>16</td><td>17.5</td><td>92.7</td><td>23.2</td><td>72.9</td><td>-0.3</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Kyshawn George|Washington Wizards"><td>Kyshawn George</td><td>F</td><td>16</td><td>17.8</td><td>101.3</td><td>22.5</td><td>70.2</td><td>-0.3</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Anthony Davis|Washington Wizards"><td>Anthony Davis</td><td>F</td><td>14</td><td>24.6</td><td>108.9</td><td>28.5</td><td>62.1</td><td>1.9</td><td>High-value starter</td></tr>
+<tr class="player" data-pid="Alex Sarr|Washington Wizards"><td>Alex Sarr</td><td>C</td><td>15</td><td>11.9</td><td>109.2</td><td>17.2</td><td>53.1</td><td>1.1</td><td>Elite role player</td></tr>
+<tr class="player" data-pid="AJ Dybantsa|Washington Wizards"><td>AJ Dybantsa</td><td>F</td><td>12</td><td>16.2</td><td>86.6</td><td>24.0</td><td>52.6</td><td>-2.3</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Bilal Coulibaly|Washington Wizards"><td>Bilal Coulibaly</td><td>G</td><td>15</td><td>6.9</td><td>97.3</td><td>12.3</td><td>48.8</td><td>0.0</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Tre Johnson|Washington Wizards"><td>Tre Johnson</td><td>G</td><td>14</td><td>8.9</td><td>84.4</td><td>20.5</td><td>40.6</td><td>-2.1</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Bub Carrington|Washington Wizards"><td>Bub Carrington</td><td>G</td><td>15</td><td>4.9</td><td>98.6</td><td>12.3</td><td>34.2</td><td>-0.5</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Deandre Ayton|Washington Wizards"><td>Deandre Ayton</td><td>C</td><td>16</td><td>4.1</td><td>114.8</td><td>11.7</td><td>27.2</td><td>0.1</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Khris Middleton|Washington Wizards"><td>Khris Middleton</td><td>F</td><td>8</td><td>4.6</td><td>97.5</td><td>14.1</td><td>15.1</td><td>-1.1</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Will Riley|Washington Wizards"><td>Will Riley</td><td>G</td><td>13</td><td>2.7</td><td>103.1</td><td>15.9</td><td>12.0</td><td>-0.6</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Justin Champagnie|Washington Wizards"><td>Justin Champagnie</td><td>F</td><td>4</td><td>7.2</td><td>136.0</td><td>12.4</td><td>9.6</td><td>1.4</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Tre Mann|Washington Wizards"><td>Tre Mann</td><td>G</td><td>7</td><td>1.4</td><td>67.8</td><td>16.7</td><td>4.9</td><td>0.2</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Anthony Gill|Washington Wizards"><td>Anthony Gill</td><td>F</td><td>5</td><td>1.6</td><td>87.0</td><td>19.8</td><td>2.6</td><td>-0.4</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Felix Okpara|Washington Wizards"><td>Felix Okpara</td><td>F</td><td>3</td><td>1.0</td><td>104.2</td><td>20.7</td><td>0.8</td><td>-0.1</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Reece Beekman|Washington Wizards"><td>Reece Beekman</td><td>G</td><td>1</td><td>0.0</td><td>-</td><td>-</td><td>0.1</td><td>-</td><td>Insufficient minutes</td></tr>
 </tbody></table>
-<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is v1.1, our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<p class="note">Sorted by minutes. Click a player row to see that player's RPR components, ORtg (full) vs simple, and shooting. ORtg in the table is the simple approximation (no assist credit); RPR is v1.2, our own rating, not KenPom's kPOY. Tier is the GM board tier for that player.</p>
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
-<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Data through November 19, 2026 (226 games).
+Built November 20, 2026.</p>
 </footer>
+<script>var PLAYER_DETAIL = {"Anthony Davis|Washington Wizards":{"name":"Anthony Davis","team":"Washington Wizards","position":"F","rpr":"1.93","rpr_v1_1":"6.23","scoring":"1.19","playmaking":"-0.79","defense":"0.55","rebounding":"0.98","ortg_full":"105.75","ortg_simple":"108.92","ortg_shrunk":"105.6","ortg_adj":"105.5","opp_adj":"0.01","ts_pct":"0.6","fg3_pct":"0.34","fg3_pct_shrunk":"0.354","gp":"14","min_pct":"62.11","mpg":"34.07","poss_pct":"28.52","trend_ppg":"-3.9","last7_gp":"3"},"Kyshawn George|Washington Wizards":{"name":"Kyshawn George","team":"Washington Wizards","position":"F","rpr":"-0.32","rpr_v1_1":"3.92","scoring":"0.12","playmaking":"-0.01","defense":"0.02","rebounding":"-0.46","ortg_full":"100.69","ortg_simple":"101.34","ortg_shrunk":"100.9","ortg_adj":"101.0","opp_adj":"-0.08","ts_pct":"0.6","fg3_pct":"0.42","fg3_pct_shrunk":"0.362","gp":"16","min_pct":"70.18","mpg":"33.69","poss_pct":"22.48","trend_ppg":"-1.48","last7_gp":"3"},"Trae Young|Washington Wizards":{"name":"Trae Young","team":"Washington Wizards","position":"G","rpr":"-0.29","rpr_v1_1":"4.12","scoring":"-0.84","playmaking":"2.05","defense":"-0.61","rebounding":"-0.9","ortg_full":"102.76","ortg_simple":"92.7","ortg_shrunk":"95.7","ortg_adj":"95.8","opp_adj":"-0.11","ts_pct":"0.55","fg3_pct":"0.3","fg3_pct_shrunk":"0.348","gp":"16","min_pct":"72.92","mpg":"35.0","poss_pct":"23.23","trend_ppg":"-9.5","last7_gp":"3"},"AJ Dybantsa|Washington Wizards":{"name":"AJ Dybantsa","team":"Washington Wizards","position":"F","rpr":"-2.27","rpr_v1_1":"1.98","scoring":"-1.3","playmaking":"-0.82","defense":"-0.27","rebounding":"0.12","ortg_full":"87.81","ortg_simple":"86.64","ortg_shrunk":"93.0","ortg_adj":"93.3","opp_adj":"-0.28","ts_pct":"0.49","fg3_pct":"0.21","fg3_pct_shrunk":"0.346","gp":"12","min_pct":"52.6","mpg":"33.67","poss_pct":"24.0","trend_ppg":"3.75","last7_gp":"3"},"Alex Sarr|Washington Wizards":{"name":"Alex Sarr","team":"Washington Wizards","position":"C","rpr":"1.13","rpr_v1_1":"4.55","scoring":"0.46","playmaking":"-0.46","defense":"0.64","rebounding":"0.5","ortg_full":"109.37","ortg_simple":"109.23","ortg_shrunk":"104.3","ortg_adj":"104.4","opp_adj":"-0.16","ts_pct":"0.62","fg3_pct":"0.33","fg3_pct_shrunk":"0.352","gp":"15","min_pct":"53.12","mpg":"27.2","poss_pct":"17.2","trend_ppg":"2.8","last7_gp":"3"},"Tre Johnson|Washington Wizards":{"name":"Tre Johnson","team":"Washington Wizards","position":"G","rpr":"-2.15","rpr_v1_1":"0.65","scoring":"-0.7","playmaking":"-0.44","defense":"-0.51","rebounding":"-0.51","ortg_full":"85.43","ortg_simple":"84.37","ortg_shrunk":"93.5","ortg_adj":"93.7","opp_adj":"-0.16","ts_pct":"0.46","fg3_pct":"0.25","fg3_pct_shrunk":"0.345","gp":"14","min_pct":"40.62","mpg":"22.29","poss_pct":"20.46","trend_ppg":"-4.43","last7_gp":"2"},"Bilal Coulibaly|Washington Wizards":{"name":"Bilal Coulibaly","team":"Washington Wizards","position":"G","rpr":"0.03","rpr_v1_1":"3.16","scoring":"-0.07","playmaking":"-0.54","defense":"0.69","rebounding":"-0.05","ortg_full":"98.21","ortg_simple":"97.31","ortg_shrunk":"99.2","ortg_adj":"99.2","opp_adj":"0.0","ts_pct":"0.53","fg3_pct":"0.17","fg3_pct_shrunk":"0.345","gp":"15","min_pct":"48.83","mpg":"25.0","poss_pct":"12.28","trend_ppg":"0.73","last7_gp":"3"},"Bub Carrington|Washington Wizards":{"name":"Bub Carrington","team":"Washington Wizards","position":"G","rpr":"-0.45","rpr_v1_1":"1.74","scoring":"-0.02","playmaking":"0.31","defense":"-0.3","rebounding":"-0.44","ortg_full":"107.35","ortg_simple":"98.56","ortg_shrunk":"99.8","ortg_adj":"99.9","opp_adj":"-0.08","ts_pct":"0.55","fg3_pct":"0.44","fg3_pct_shrunk":"0.359","gp":"15","min_pct":"34.24","mpg":"17.53","poss_pct":"12.3","trend_ppg":"0.57","last7_gp":"2"},"Deandre Ayton|Washington Wizards":{"name":"Deandre Ayton","team":"Washington Wizards","position":"C","rpr":"0.14","rpr_v1_1":"1.78","scoring":"0.11","playmaking":"-0.19","defense":"-0.22","rebounding":"0.44","ortg_full":"128.33","ortg_simple":"114.76","ortg_shrunk":"103.5","ortg_adj":"103.5","opp_adj":"-0.01","ts_pct":"0.65","fg3_pct":"","fg3_pct_shrunk":"","gp":"16","min_pct":"27.21","mpg":"13.06","poss_pct":"11.67","trend_ppg":"-2.06","last7_gp":"3"},"Khris Middleton|Washington Wizards":{"name":"Khris Middleton","team":"Washington Wizards","position":"F","rpr":"-1.05","rpr_v1_1":"0.77","scoring":"-0.02","playmaking":"-0.42","defense":"-0.42","rebounding":"-0.19","ortg_full":"103.48","ortg_simple":"97.47","ortg_shrunk":"99.8","ortg_adj":"99.7","opp_adj":"0.08","ts_pct":"0.64","fg3_pct":"0.43","fg3_pct_shrunk":"0.355","gp":"8","min_pct":"15.1","mpg":"14.5","poss_pct":"14.1","trend_ppg":"3.71","last7_gp":"3"},"Will Riley|Washington Wizards":{"name":"Will Riley","team":"Washington Wizards","position":"G","rpr":"-0.58","rpr_v1_1":"0.31","scoring":"0.01","playmaking":"-0.21","defense":"-0.24","rebounding":"-0.15","ortg_full":"108.72","ortg_simple":"103.06","ortg_shrunk":"100.7","ortg_adj":"100.8","opp_adj":"-0.11","ts_pct":"0.58","fg3_pct":"0.29","fg3_pct_shrunk":"0.353","gp":"13","min_pct":"11.98","mpg":"7.08","poss_pct":"15.9","trend_ppg":"2.64","last7_gp":"3"},"Justin Champagnie|Washington Wizards":{"name":"Justin Champagnie","team":"Washington Wizards","position":"F","rpr":"1.37","rpr_v1_1":"3.69","scoring":"0.18","playmaking":"0.17","defense":"-0.02","rebounding":"1.04","ortg_full":"147.67","ortg_simple":"136.02","ortg_shrunk":"103.7","ortg_adj":"103.5","opp_adj":"0.15","ts_pct":"0.68","fg3_pct":"0.29","fg3_pct_shrunk":"0.353","gp":"4","min_pct":"9.64","mpg":"18.5","poss_pct":"12.41","trend_ppg":"","last7_gp":"0"},"Tre Mann|Washington Wizards":{"name":"Tre Mann","team":"Washington Wizards","position":"G","rpr":"0.24","rpr_v1_1":"0.92","scoring":"-0.05","playmaking":"-0.06","defense":"0.56","rebounding":"-0.21","ortg_full":"74.99","ortg_simple":"67.75","ortg_shrunk":"98.0","ortg_adj":"98.1","opp_adj":"-0.09","ts_pct":"0.43","fg3_pct":"0.2","fg3_pct_shrunk":"0.353","gp":"7","min_pct":"4.95","mpg":"5.43","poss_pct":"16.73","trend_ppg":"1.57","last7_gp":"2"},"Anthony Gill|Washington Wizards":{"name":"Anthony Gill","team":"Washington Wizards","position":"F","rpr":"-0.41","rpr_v1_1":"0.09","scoring":"-0.01","playmaking":"-0.2","defense":"-0.22","rebounding":"0.02","ortg_full":"98.53","ortg_simple":"86.96","ortg_shrunk":"99.7","ortg_adj":"99.7","opp_adj":"-0.05","ts_pct":"0.49","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"5","min_pct":"2.6","mpg":"4.0","poss_pct":"19.81","trend_ppg":"1.9","last7_gp":"2"},"Felix Okpara|Washington Wizards":{"name":"Felix Okpara","team":"Washington Wizards","position":"F","rpr":"-0.08","rpr_v1_1":"0.17","scoring":"0.0","playmaking":"-0.05","defense":"-0.11","rebounding":"0.08","ortg_full":"104.08","ortg_simple":"104.17","ortg_shrunk":"100.3","ortg_adj":"100.3","opp_adj":"-0.01","ts_pct":"0.52","fg3_pct":"","fg3_pct_shrunk":"","gp":"3","min_pct":"0.78","mpg":"2.0","poss_pct":"20.68","trend_ppg":"","last7_gp":"0"},"Reece Beekman|Washington Wizards":{"name":"Reece Beekman","team":"Washington Wizards","position":"G","rpr":"","rpr_v1_1":"","scoring":"","playmaking":"-0.02","defense":"-0.06","rebounding":"-0.05","ortg_full":"","ortg_simple":"","ortg_shrunk":"","ortg_adj":"","opp_adj":"","ts_pct":"","fg3_pct":"","fg3_pct_shrunk":"","gp":"1","min_pct":"0.13","mpg":"1.0","poss_pct":"","trend_ppg":"","last7_gp":"0"}};</script>
+<script>
+// Ratings tables: click-to-sort, text filter, conference tabs,
+// and click a team row to expand its game log (GAME_LOGS is
+// embedded in the page by the builder). Plain script, no
+// network, no dependencies. Numeric columns sort on the
+// data-v value; team and conference sort as text; W-L sorts on
+// win percentage (data-v is wins / (wins + losses)).
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function fmt1(v) {
+  // Values arrive as numbers (roster rows) or strings (PLAYER_DETAIL
+  // is built from CSVs); coerce so a string never throws on toFixed.
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(1);
+}
+function fmt2(v) {
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(2);
+}
+function fmtPct(v) {
+  // Fractions in the CSVs (0.61) rendered as percentages (61.0%).
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : (n * 100).toFixed(1) + "%";
+}
+function openPlayerDetail(row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  var table = row.closest("table");
+  if (table) closeDetails(table);
+  var pid = row.dataset.pid || "";
+  var d = (typeof PLAYER_DETAIL !== "undefined") ? PLAYER_DETAIL[pid] : null;
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = row.cells.length;
+  if (!d) {
+    td.textContent = "No detail available for this player.";
+  } else {
+    // PLAYER_DETAIL values are flat CSV strings, not nested
+    // components: scoring/playmaking/defense/rebounding sit on d.
+    var html = '<div class="player-detail"><strong>' + esc(d.name) + '</strong>'
+      + " (" + esc(d.team) + ", " + esc(d.position || "-") + ") - "
+      + d.gp + " GP, " + d.mpg + " MPG, " + d.min_pct + "% of team minutes"
+      + '<br><span class="pd-comp">RPR v1.2 ' + fmt2(d.rpr)
+      + " = scoring " + fmt2(d.scoring) + " + playmaking " + fmt2(d.playmaking)
+      + " + defense " + fmt2(d.defense) + " + rebounding "
+      + fmt2(d.rebounding) + "</span>"
+      + "<br>ORtg (full, with assist credit) " + fmt1(d.ortg_full)
+      + " - simple ORtg " + fmt1(d.ortg_simple)
+      + " (shrunk " + fmt1(d.ortg_shrunk) + ", opponent adj "
+      + fmt2(d.opp_adj) + ") - TS% " + fmtPct(d.ts_pct)
+      + "<br>3P% raw " + fmtPct(d.fg3_pct) + " - shrunk "
+      + fmtPct(d.fg3_pct_shrunk) + " (shrunk toward league average "
+      + "with m = 750 attempts; small samples shrink hard)"
+      + "<br>Usage " + fmt1(d.poss_pct) + "% of team possessions"
+      + (d.trend_ppg ? " - trend " + fmt1(d.trend_ppg) + " PPG vs season"
+         : "")
+      + '<br><span class="pd-note">RPR v1.1 was ' + fmt2(d.rpr_v1_1)
+      + "; v1.2 recenters the counting terms on league averages, "
+      + "so an average player scores about 0.</span></div>";
+    td.innerHTML = html;
+  }
+  tr.appendChild(td);
+  row.after(tr);
+}
+function closeDetails(table) {
+  table.querySelectorAll("tbody tr.detail").forEach(function (d) {
+    d.remove();
+  });
+}
+function applyFilter(table) {
+  var q = table._q || "";
+  var conf = table._conf || "";
+  var rk = table._rookiesOnly || false;
+  table.querySelectorAll("tbody tr:not(.detail)").forEach(function (r) {
+    var team = r.cells[1].textContent.toLowerCase();
+    var ok = (q === "" || team.indexOf(q) !== -1)
+      && (conf === "" || r.dataset.conf === conf)
+      && (!rk || r.dataset.rookie === "1");
+    r.style.display = ok ? "" : "none";
+  });
+}
+function openDetail(table, row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  closeDetails(table);
+  var entry = GAME_LOGS["2026-27"];
+  if (!entry || row.dataset.tidx === "") return;
+  var games = entry.logs[row.dataset.tidx] || [];
+  var teams = entry.teams;
+  var c = row.cells;
+  var html = '<div class="detail-box"><strong>' + esc(c[1].textContent)
+    + '</strong> - AdjO ' + c[4].dataset.v + ' (#' + c[4].dataset.r + ') &middot; AdjD '
+    + c[5].dataset.v + ' (#' + c[5].dataset.r + ') &middot; Net ' + c[6].dataset.v
+    + ' &middot; AdjT ' + c[7].dataset.v + ' (#' + c[7].dataset.r + ') &middot; '
+    + c[3].textContent + '</div>'
+    + '<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th>'
+    + '<th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>';
+  games.forEach(function (g) {
+    var f = g[3], a = g[4];
+    html += "<tr><td>" + g[0].slice(4, 6) + "/" + g[0].slice(6, 8)
+      + "</td><td>" + esc(teams[g[1]]) + "</td><td>" + g[2]
+      + "</td><td>" + (f > a ? "W" : "L") + "</td><td>"
+      + f + "-" + a + "</td></tr>";
+  });
+  html += "</tbody></table>";
+  var roster = (ROSTERS["2026-27"] || {})[c[1].textContent];
+  if (roster && roster.length) {
+    html += "<h4>Roster</h4>"
+      + '<table class="roster"><thead><tr><th>Player</th><th>Pos</th>'
+      + "<th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th>"
+      + "<th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>";
+    roster.forEach(function (p) {
+      var pid = esc(p[0]) + "|" + esc(c[1].textContent);
+      html += '<tr class="player" data-pid="' + pid + '"><td>' + esc(p[0]) + "</td><td>"
+        + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "-")
+        + "</td><td>" + p[2] + "</td><td>" + fmt1(p[3]) + "</td><td>"
+        + fmt1(p[4]) + "</td><td>" + fmt1(p[5]) + "</td><td>"
+        + fmt1(p[6]) + "</td><td>" + fmt1(p[7]) + "</td><td>"
+        + (p[8] ? esc(p[8]) : "-") + "</td></tr>";
+    });
+    html += "</tbody></table>"
+      + '<p class="note">Sorted by minutes. Click a player row for '
+      + "detail. ORtg is approximate "
+      + "(no assist credit); RPR is v1.2, our own rating, not KenPom's "
+      + "kPOY. Tier is the GM board tier for that player.</p>";
+  }
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = 8;
+  td.innerHTML = html;
+  tr.appendChild(td);
+  row.after(tr);
+}
+document.querySelectorAll("table.ratings").forEach(function (table) {
+  var headers = table.querySelectorAll("thead th");
+  headers.forEach(function (th, i) {
+    th.addEventListener("click", function () {
+      closeDetails(table);
+      var asc = !th.classList.contains("sorted-asc");
+      headers.forEach(function (h) {
+        h.classList.remove("sorted-asc", "sorted-desc");
+      });
+      th.classList.add(asc ? "sorted-asc" : "sorted-desc");
+      var rows = Array.from(table.querySelectorAll("tbody tr:not(.detail)"));
+      var numeric = th.dataset.t === "num" || th.dataset.t === "wl";
+      rows.sort(function (a, b) {
+        var va = a.cells[i].dataset.v, vb = b.cells[i].dataset.v;
+        var cmp = numeric ? (parseFloat(va) - parseFloat(vb))
+          : (va < vb ? -1 : va > vb ? 1 : 0);
+        return asc ? cmp : -cmp;
+      });
+      var body = table.querySelector("tbody");
+      rows.forEach(function (r) { body.appendChild(r); });
+      if (table.dataset.renumber) {
+        rows.forEach(function (r, idx) {
+          r.cells[0].dataset.v = String(idx + 1);
+          r.cells[0].textContent = String(idx + 1);
+        });
+      }
+    });
+  });
+  table.querySelectorAll("tbody tr.team").forEach(function (row) {
+    row.addEventListener("click", function (e) {
+      // The team name is a link to the team page; let it go
+      // there instead of toggling the detail panel.
+      if (e.target.closest("a")) return;
+      openDetail(table, row);
+    });
+  });
+});
+document.querySelectorAll("input.filter").forEach(function (input) {
+  input.addEventListener("input", function () {
+    var table = document.getElementById(input.dataset.table);
+    closeDetails(table);
+    table._q = input.value.trim().toLowerCase();
+    applyFilter(table);
+  });
+});
+document.querySelectorAll("button.rookie-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var table = document.getElementById(btn.dataset.table);
+    closeDetails(table);
+    table._rookiesOnly = !table._rookiesOnly;
+    btn.classList.toggle("active", table._rookiesOnly);
+    applyFilter(table);
+  });
+});
+document.querySelectorAll(".conftabs").forEach(function (bar) {
+  bar.addEventListener("click", function (e) {
+    var btn = e.target.closest("button.conf-tab");
+    if (!btn) return;
+    bar.querySelectorAll("button").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+    var table = document.getElementById(bar.dataset.table);
+    closeDetails(table);
+    table._conf = btn.dataset.conf;
+    applyFilter(table);
+  });
+});
+// Click a player row (top 100, rookies, team roster, or a roster
+// inside an expanded team panel) to expand that player's detail.
+// Delegated so rows added later by openDetail are covered too.
+document.addEventListener("click", function (e) {
+  var row = e.target.closest("tr.player");
+  if (!row) return;
+  if (e.target.closest("a")) return;
+  openPlayerDetail(row);
+});
+</script>
 </body>
 </html>

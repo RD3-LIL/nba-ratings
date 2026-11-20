@@ -32,6 +32,14 @@ table.ratings thead th.sorted-desc::after { content: " \25BC"; }
 table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
 table.ratings tbody tr.team { cursor: pointer; }
 table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings tbody tr.player { cursor: pointer; }
+table.ratings tbody tr.player:hover td { background: #eef4ff; }
+table.roster tbody tr.player { cursor: pointer; }
+table.roster tbody tr.player:hover td { background: #eef4ff; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.player-detail { font-size: 14px; line-height: 1.6; }
+.player-detail .pd-comp { font-variant-numeric: tabular-nums; }
+.player-detail .pd-note { color: #656d76; font-size: 13px; }
 table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
 table.ratings td.net { font-weight: 700; }
 table.ratings td .sub-rank { display: block; font-size: 10px;
@@ -81,14 +89,15 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </head>
 <body>
 <h1>Denver Nuggets</h1>
-<p class="subtitle">Western Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p class="subtitle">Western Conference &middot; Data through November 19, 2026 (226 games) &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
 <p class="warn">Teams reflect the 2026-27 rosters after a busy 2026 offseason: Giannis Antetokounmpo to Miami, LeBron James to Philadelphia, Walker Kessler to the Lakers, and Anthony Davis to Washington, among others.</p>
-<p>Net rank #13 &middot; AdjO 112.1 (#12) &middot; AdjD 110.9 (#16) &middot; Net 1.2 &middot; AdjT 100.4 (#26) &middot; 8-5</p>
+<p>Net rank #12 &middot; AdjO 112.2 (#10) &middot; AdjD 110.8 (#14) &middot; Net 1.3 &middot; AdjT 100.4 (#26) &middot; 8-5</p>
 <h3>Team needs</h3>
-<p>Star: Nikola Jokic (RPR 8.612267400436338) &middot; Top needs: shooting, bench_scoring, rim_protection</p>
-<p>Strengths: ball security (TOV%) (78th pct); getting to the line (FT rate) (78th pct); opponent FT rate (95th pct)<br>Weaknesses: offensive rebounding (OREB%) (25th pct); defensive rebounding (DREB%) (18th pct); bench_scoring (28th pct, rotation skill)</p>
-<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes, then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:37%"></span><span class="skill-target"></span></span><span class="skill-value">37</span></div><div class="skill-row" title="AST per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="REB per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:49%"></span><span class="skill-target"></span></span><span class="skill-value">49</span></div><div class="skill-row" title="BLK per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="STL per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:57%"></span><span class="skill-target"></span></span><span class="skill-value">57</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:28%"></span><span class="skill-target"></span></span><span class="skill-value">28</span></div></div>
-<p>Top realistic targets: Ajay Mitchell (Oklahoma City Thunder, High-value starter, fills bench_scoring, TradeScore 0.478); Paul Reed (Detroit Pistons, High-value starter, fills bench_scoring, TradeScore 0.457); Matisse Thybulle (Los Angeles Lakers, Rotation / depth, fills shooting, TradeScore 0.366)</p>
+<p>Star: Nikola Jokic (RPR 3.98) &middot; Top needs: shooting, bench_scoring, rim_protection</p>
+<p>Strengths: ball security (TOV%) (78th pct); getting to the line (FT rate) (78th pct); opponent FT rate (95th pct)<br>Weaknesses: offensive rebounding (OREB%) (25th pct); defensive rebounding (DREB%) (18th pct)</p>
+<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes (bench scoring is ranked bench-only, and the team bench skill is bench-only), then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36 plus half-weight BLK per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36; raw rate 1.57 per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:37%"></span><span class="skill-target"></span></span><span class="skill-value">37</span></div><div class="skill-row" title="AST per 36; raw rate 4.16 per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="REB per 36; raw rate 6.40 per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:49%"></span><span class="skill-target"></span></span><span class="skill-value">49</span></div><div class="skill-row" title="BLK per 36; raw rate 0.68 per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div><div class="skill-row" title="STL per 36 plus half-weight BLK per 36; raw rate 1.70 per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:55%"></span><span class="skill-target"></span></span><span class="skill-value">55</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes; raw rate 13.74 per 36"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:43%"></span><span class="skill-target"></span></span><span class="skill-value">43</span></div></div><p class="note">Raw rates behind the bars: Shooting: 1.57 per 36 (37th percentile); Playmaking: 4.16 per 36 (51st percentile); Rebounding: 6.40 per 36 (49th percentile); Rim protection: 0.68 per 36 (51st percentile); Perimeter defence: 1.70 per 36 (55th percentile); Bench scoring: 13.74 per 36 (43rd percentile).</p>
+<p>Top realistic targets: Paul Reed (Detroit Pistons, Elite role player, fills rim_protection, TradeScore 0.308); Aday Mara (Oklahoma City Thunder, Elite role player, fills rim_protection, TradeScore 0.230); Alex Caruso (Oklahoma City Thunder, Rotation / depth, fills shooting, TradeScore 0.205)</p>
+<p>Less-common alternatives (best targets who do not top many other teams' lists): Precious Achiuwa (Sacramento Kings, TradeScore 0.204)</p>
 <h3>Game log</h3>
 <table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
 <tr><td>10/22</td><td><a href="oklahoma-city-thunder.html">Oklahoma City Thunder</a></td><td>A</td><td>L</td><td>84-96</td></tr>
@@ -107,27 +116,250 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </tbody></table>
 <h3>Roster</h3>
 <table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
-<tr><td>Nikola Jokic</td><td>C</td><td>13</td><td>24.1</td><td>102.6</td><td>28.0</td><td>76.4</td><td>8.6</td><td>Franchise cornerstone</td></tr>
-<tr><td>Jamal Murray</td><td>G</td><td>13</td><td>25.7</td><td>116.0</td><td>26.6</td><td>76.0</td><td>7.1</td><td>All-Star level</td></tr>
-<tr><td>Christian Braun</td><td>G</td><td>13</td><td>12.8</td><td>102.4</td><td>16.2</td><td>70.4</td><td>4.2</td><td>High-value starter</td></tr>
-<tr><td>Aaron Gordon</td><td>F</td><td>13</td><td>11.2</td><td>94.4</td><td>17.8</td><td>60.6</td><td>2.6</td><td>Elite role player</td></tr>
-<tr><td>Cameron Johnson</td><td>F</td><td>10</td><td>11.4</td><td>99.7</td><td>17.7</td><td>45.4</td><td>2.3</td><td>Rotation / depth</td></tr>
-<tr><td>DeMar DeRozan</td><td>G</td><td>12</td><td>9.9</td><td>90.2</td><td>21.0</td><td>44.1</td><td>1.6</td><td>Rotation / depth</td></tr>
-<tr><td>Trevon Brazile</td><td>F</td><td>13</td><td>6.5</td><td>113.9</td><td>13.3</td><td>39.4</td><td>2.2</td><td>Rotation / depth</td></tr>
-<tr><td>Marvin Bagley III</td><td>F</td><td>13</td><td>5.6</td><td>105.3</td><td>19.6</td><td>24.8</td><td>1.7</td><td>Rotation / depth</td></tr>
-<tr><td>Tyus Jones</td><td>G</td><td>13</td><td>2.1</td><td>71.7</td><td>12.1</td><td>21.8</td><td>1.4</td><td>Rotation / depth</td></tr>
-<tr><td>Spencer Jones</td><td>F</td><td>6</td><td>4.3</td><td>104.5</td><td>10.2</td><td>17.1</td><td>1.3</td><td>Rotation / depth</td></tr>
-<tr><td>Bryce Hopkins</td><td>F</td><td>8</td><td>4.8</td><td>112.3</td><td>14.3</td><td>16.7</td><td>0.7</td><td>Rotation / depth</td></tr>
-<tr><td>Alpha Diallo</td><td>F</td><td>4</td><td>1.0</td><td>44.4</td><td>12.0</td><td>5.3</td><td>0.3</td><td>Rotation / depth</td></tr>
-<tr><td>Cam Whitmore</td><td>F</td><td>2</td><td>4.0</td><td>94.8</td><td>24.7</td><td>2.4</td><td>0.8</td><td>Rotation / depth</td></tr>
-<tr><td>DaRon Holmes II</td><td>F</td><td>4</td><td>0.8</td><td>75.0</td><td>15.9</td><td>1.8</td><td>0.4</td><td>Rotation / depth</td></tr>
-<tr><td>Ryan Nembhard</td><td>G</td><td>3</td><td>3.0</td><td>130.8</td><td>30.2</td><td>1.6</td><td>0.3</td><td>Rotation / depth</td></tr>
-<tr><td>Zeke Nnaji</td><td>F</td><td>2</td><td>3.5</td><td>253.6</td><td>15.1</td><td>1.3</td><td>0.2</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Nikola Jokic|Denver Nuggets"><td>Nikola Jokic</td><td>C</td><td>13</td><td>24.1</td><td>102.6</td><td>28.0</td><td>76.4</td><td>4.0</td><td>Franchise cornerstone</td></tr>
+<tr class="player" data-pid="Jamal Murray|Denver Nuggets"><td>Jamal Murray</td><td>G</td><td>13</td><td>25.7</td><td>116.0</td><td>26.6</td><td>76.0</td><td>2.5</td><td>All-Star level</td></tr>
+<tr class="player" data-pid="Christian Braun|Denver Nuggets"><td>Christian Braun</td><td>G</td><td>13</td><td>12.8</td><td>102.4</td><td>16.2</td><td>70.4</td><td>0.0</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Aaron Gordon|Denver Nuggets"><td>Aaron Gordon</td><td>F</td><td>13</td><td>11.2</td><td>94.4</td><td>17.8</td><td>60.6</td><td>-1.1</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Cameron Johnson|Denver Nuggets"><td>Cameron Johnson</td><td>F</td><td>10</td><td>11.4</td><td>99.7</td><td>17.7</td><td>45.4</td><td>-1.3</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="DeMar DeRozan|Denver Nuggets"><td>DeMar DeRozan</td><td>G</td><td>12</td><td>9.9</td><td>90.2</td><td>21.0</td><td>44.1</td><td>-1.3</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Trevon Brazile|Denver Nuggets"><td>Trevon Brazile</td><td>F</td><td>13</td><td>6.5</td><td>113.9</td><td>13.3</td><td>39.4</td><td>-0.2</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Marvin Bagley III|Denver Nuggets"><td>Marvin Bagley III</td><td>F</td><td>13</td><td>5.6</td><td>105.3</td><td>19.6</td><td>24.8</td><td>0.2</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Tyus Jones|Denver Nuggets"><td>Tyus Jones</td><td>G</td><td>13</td><td>2.1</td><td>71.7</td><td>12.1</td><td>21.8</td><td>0.0</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Spencer Jones|Denver Nuggets"><td>Spencer Jones</td><td>F</td><td>6</td><td>4.3</td><td>104.5</td><td>10.2</td><td>17.1</td><td>-0.9</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Bryce Hopkins|Denver Nuggets"><td>Bryce Hopkins</td><td>F</td><td>8</td><td>4.8</td><td>112.3</td><td>14.3</td><td>16.7</td><td>-1.0</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Alpha Diallo|Denver Nuggets"><td>Alpha Diallo</td><td>F</td><td>4</td><td>1.0</td><td>44.4</td><td>12.0</td><td>5.3</td><td>-0.8</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Cam Whitmore|Denver Nuggets"><td>Cam Whitmore</td><td>F</td><td>2</td><td>4.0</td><td>94.8</td><td>24.7</td><td>2.4</td><td>-0.2</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="DaRon Holmes II|Denver Nuggets"><td>DaRon Holmes II</td><td>F</td><td>4</td><td>0.8</td><td>75.0</td><td>15.9</td><td>1.8</td><td>0.1</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Ryan Nembhard|Denver Nuggets"><td>Ryan Nembhard</td><td>G</td><td>3</td><td>3.0</td><td>130.8</td><td>30.2</td><td>1.6</td><td>-0.1</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Zeke Nnaji|Denver Nuggets"><td>Zeke Nnaji</td><td>F</td><td>2</td><td>3.5</td><td>253.6</td><td>15.1</td><td>1.3</td><td>-0.3</td><td>Insufficient minutes</td></tr>
 </tbody></table>
-<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is v1.1, our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<p class="note">Sorted by minutes. Click a player row to see that player's RPR components, ORtg (full) vs simple, and shooting. ORtg in the table is the simple approximation (no assist credit); RPR is v1.2, our own rating, not KenPom's kPOY. Tier is the GM board tier for that player.</p>
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
-<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Data through November 19, 2026 (226 games).
+Built November 20, 2026.</p>
 </footer>
+<script>var PLAYER_DETAIL = {"Jamal Murray|Denver Nuggets":{"name":"Jamal Murray","team":"Denver Nuggets","position":"G","rpr":"2.52","rpr_v1_1":"7.12","scoring":"2.03","playmaking":"0.69","defense":"0.15","rebounding":"-0.34","ortg_full":"114.16","ortg_simple":"116.02","ortg_shrunk":"109.6","ortg_adj":"109.4","opp_adj":"0.14","ts_pct":"0.66","fg3_pct":"0.46","fg3_pct_shrunk":"0.366","gp":"13","min_pct":"75.96","mpg":"36.46","poss_pct":"26.63","trend_ppg":"-1.69","last7_gp":"3"},"Nikola Jokic|Denver Nuggets":{"name":"Nikola Jokic","team":"Denver Nuggets","position":"C","rpr":"3.98","rpr_v1_1":"8.61","scoring":"0.31","playmaking":"1.91","defense":"0.75","rebounding":"1.01","ortg_full":"108.66","ortg_simple":"102.64","ortg_shrunk":"101.7","ortg_adj":"101.6","opp_adj":"0.14","ts_pct":"0.6","fg3_pct":"0.28","fg3_pct_shrunk":"0.349","gp":"13","min_pct":"76.44","mpg":"36.69","poss_pct":"28.03","trend_ppg":"1.92","last7_gp":"3"},"Christian Braun|Denver Nuggets":{"name":"Christian Braun","team":"Denver Nuggets","position":"G","rpr":"0.01","rpr_v1_1":"4.25","scoring":"0.1","playmaking":"-0.25","defense":"0.6","rebounding":"-0.45","ortg_full":"100.72","ortg_simple":"102.39","ortg_shrunk":"101.2","ortg_adj":"101.1","opp_adj":"0.12","ts_pct":"0.57","fg3_pct":"0.32","fg3_pct_shrunk":"0.351","gp":"13","min_pct":"70.35","mpg":"33.77","poss_pct":"16.19","trend_ppg":"1.23","last7_gp":"3"},"Aaron Gordon|Denver Nuggets":{"name":"Aaron Gordon","team":"Denver Nuggets","position":"F","rpr":"-1.05","rpr_v1_1":"2.6","scoring":"-0.31","playmaking":"-0.44","defense":"-0.22","rebounding":"-0.08","ortg_full":"95.98","ortg_simple":"94.43","ortg_shrunk":"97.7","ortg_adj":"97.6","opp_adj":"0.13","ts_pct":"0.53","fg3_pct":"0.29","fg3_pct_shrunk":"0.35","gp":"13","min_pct":"60.58","mpg":"29.08","poss_pct":"17.81","trend_ppg":"0.51","last7_gp":"3"},"DeMar DeRozan|Denver Nuggets":{"name":"DeMar DeRozan","team":"Denver Nuggets","position":"G","rpr":"-1.3","rpr_v1_1":"1.58","scoring":"-0.45","playmaking":"0.27","defense":"-0.59","rebounding":"-0.54","ortg_full":"94.93","ortg_simple":"90.21","ortg_shrunk":"96.3","ortg_adj":"96.2","opp_adj":"0.06","ts_pct":"0.5","fg3_pct":"0.18","fg3_pct_shrunk":"0.35","gp":"12","min_pct":"44.07","mpg":"22.92","poss_pct":"21.04","trend_ppg":"-0.25","last7_gp":"3"},"Cameron Johnson|Denver Nuggets":{"name":"Cameron Johnson","team":"Denver Nuggets","position":"F","rpr":"-1.28","rpr_v1_1":"2.28","scoring":"-0.03","playmaking":"-0.44","defense":"-0.46","rebounding":"-0.35","ortg_full":"99.96","ortg_simple":"99.69","ortg_shrunk":"100.0","ortg_adj":"100.0","opp_adj":"0.03","ts_pct":"0.56","fg3_pct":"0.32","fg3_pct_shrunk":"0.352","gp":"10","min_pct":"45.35","mpg":"28.3","poss_pct":"17.72","trend_ppg":"-1.73","last7_gp":"3"},"Trevon Brazile|Denver Nuggets":{"name":"Trevon Brazile","team":"Denver Nuggets","position":"F","rpr":"-0.17","rpr_v1_1":"2.2","scoring":"0.2","playmaking":"-0.65","defense":"-0.19","rebounding":"0.47","ortg_full":"114.23","ortg_simple":"113.94","ortg_shrunk":"104.0","ortg_adj":"103.8","opp_adj":"0.17","ts_pct":"0.66","fg3_pct":"0.33","fg3_pct_shrunk":"0.353","gp":"13","min_pct":"39.42","mpg":"18.92","poss_pct":"13.3","trend_ppg":"-1.87","last7_gp":"3"},"Marvin Bagley III|Denver Nuggets":{"name":"Marvin Bagley III","team":"Denver Nuggets","position":"F","rpr":"0.21","rpr_v1_1":"1.71","scoring":"0.07","playmaking":"-0.29","defense":"0.11","rebounding":"0.33","ortg_full":"112.9","ortg_simple":"105.31","ortg_shrunk":"101.6","ortg_adj":"101.5","opp_adj":"0.08","ts_pct":"0.58","fg3_pct":"0.0","fg3_pct_shrunk":"0.352","gp":"13","min_pct":"24.84","mpg":"11.92","poss_pct":"19.61","trend_ppg":"-0.62","last7_gp":"3"},"Bryce Hopkins|Denver Nuggets":{"name":"Bryce Hopkins","team":"Denver Nuggets","position":"F","rpr":"-0.96","rpr_v1_1":"0.67","scoring":"0.07","playmaking":"-0.44","defense":"-0.47","rebounding":"-0.12","ortg_full":"116.05","ortg_simple":"112.29","ortg_shrunk":"102.0","ortg_adj":"101.9","opp_adj":"0.09","ts_pct":"0.66","fg3_pct":"0.4","fg3_pct_shrunk":"0.354","gp":"8","min_pct":"16.67","mpg":"13.0","poss_pct":"14.27","trend_ppg":"-4.75","last7_gp":"1"},"Tyus Jones|Denver Nuggets":{"name":"Tyus Jones","team":"Denver Nuggets","position":"G","rpr":"0.04","rpr_v1_1":"1.36","scoring":"-0.13","playmaking":"0.48","defense":"0.04","rebounding":"-0.34","ortg_full":"92.16","ortg_simple":"71.73","ortg_shrunk":"95.7","ortg_adj":"95.7","opp_adj":"0.06","ts_pct":"0.43","fg3_pct":"0.21","fg3_pct_shrunk":"0.351","gp":"13","min_pct":"21.79","mpg":"10.46","poss_pct":"12.14","trend_ppg":"-1.41","last7_gp":"3"},"Spencer Jones|Denver Nuggets":{"name":"Spencer Jones","team":"Denver Nuggets","position":"F","rpr":"-0.95","rpr_v1_1":"1.28","scoring":"0.02","playmaking":"-0.43","defense":"-0.31","rebounding":"-0.22","ortg_full":"111.86","ortg_simple":"104.5","ortg_shrunk":"100.7","ortg_adj":"100.7","opp_adj":"0.03","ts_pct":"0.65","fg3_pct":"0.5","fg3_pct_shrunk":"0.356","gp":"6","min_pct":"17.15","mpg":"17.83","poss_pct":"10.2","trend_ppg":"-1.0","last7_gp":"3"},"Ryan Nembhard|Denver Nuggets":{"name":"Ryan Nembhard","team":"Denver Nuggets","position":"G","rpr":"-0.14","rpr_v1_1":"0.28","scoring":"0.02","playmaking":"0.09","defense":"-0.18","rebounding":"-0.07","ortg_full":"143.36","ortg_simple":"130.81","ortg_shrunk":"101.3","ortg_adj":"101.3","opp_adj":"-0.01","ts_pct":"0.77","fg3_pct":"1.0","fg3_pct_shrunk":"0.355","gp":"3","min_pct":"1.6","mpg":"3.33","poss_pct":"30.17","trend_ppg":"","last7_gp":"0"},"Cam Whitmore|Denver Nuggets":{"name":"Cam Whitmore","team":"Denver Nuggets","position":"F","rpr":"-0.2","rpr_v1_1":"0.75","scoring":"-0.01","playmaking":"-0.18","defense":"0.09","rebounding":"-0.09","ortg_full":"101.27","ortg_simple":"94.79","ortg_shrunk":"100.0","ortg_adj":"100.0","opp_adj":"0.04","ts_pct":"0.54","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"2","min_pct":"2.4","mpg":"7.5","poss_pct":"24.67","trend_ppg":"","last7_gp":"0"},"Zeke Nnaji|Denver Nuggets":{"name":"Zeke Nnaji","team":"Denver Nuggets","position":"F","rpr":"-0.34","rpr_v1_1":"0.16","scoring":"0.03","playmaking":"-0.1","defense":"-0.22","rebounding":"-0.06","ortg_full":"253.11","ortg_simple":"253.62","ortg_shrunk":"102.3","ortg_adj":"102.3","opp_adj":"-0.0","ts_pct":"1.27","fg3_pct":"1.0","fg3_pct_shrunk":"0.355","gp":"2","min_pct":"1.28","mpg":"4.0","poss_pct":"15.13","trend_ppg":"","last7_gp":"0"},"Alpha Diallo|Denver Nuggets":{"name":"Alpha Diallo","team":"Denver Nuggets","position":"F","rpr":"-0.77","rpr_v1_1":"0.27","scoring":"-0.05","playmaking":"-0.33","defense":"-0.2","rebounding":"-0.19","ortg_full":"54.05","ortg_simple":"44.44","ortg_shrunk":"97.8","ortg_adj":"97.9","opp_adj":"-0.1","ts_pct":"0.33","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"4","min_pct":"5.29","mpg":"8.25","poss_pct":"11.96","trend_ppg":"","last7_gp":"0"},"DaRon Holmes II|Denver Nuggets":{"name":"DaRon Holmes II","team":"Denver Nuggets","position":"F","rpr":"0.09","rpr_v1_1":"0.44","scoring":"-0.0","playmaking":"0.06","defense":"0.1","rebounding":"-0.06","ortg_full":"89.9","ortg_simple":"75.0","ortg_shrunk":"99.8","ortg_adj":"99.8","opp_adj":"-0.01","ts_pct":"0.5","fg3_pct":"0.33","fg3_pct_shrunk":"0.354","gp":"4","min_pct":"1.76","mpg":"2.75","poss_pct":"15.95","trend_ppg":"","last7_gp":"0"}};</script>
+<script>
+// Ratings tables: click-to-sort, text filter, conference tabs,
+// and click a team row to expand its game log (GAME_LOGS is
+// embedded in the page by the builder). Plain script, no
+// network, no dependencies. Numeric columns sort on the
+// data-v value; team and conference sort as text; W-L sorts on
+// win percentage (data-v is wins / (wins + losses)).
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function fmt1(v) {
+  // Values arrive as numbers (roster rows) or strings (PLAYER_DETAIL
+  // is built from CSVs); coerce so a string never throws on toFixed.
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(1);
+}
+function fmt2(v) {
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(2);
+}
+function fmtPct(v) {
+  // Fractions in the CSVs (0.61) rendered as percentages (61.0%).
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : (n * 100).toFixed(1) + "%";
+}
+function openPlayerDetail(row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  var table = row.closest("table");
+  if (table) closeDetails(table);
+  var pid = row.dataset.pid || "";
+  var d = (typeof PLAYER_DETAIL !== "undefined") ? PLAYER_DETAIL[pid] : null;
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = row.cells.length;
+  if (!d) {
+    td.textContent = "No detail available for this player.";
+  } else {
+    // PLAYER_DETAIL values are flat CSV strings, not nested
+    // components: scoring/playmaking/defense/rebounding sit on d.
+    var html = '<div class="player-detail"><strong>' + esc(d.name) + '</strong>'
+      + " (" + esc(d.team) + ", " + esc(d.position || "-") + ") - "
+      + d.gp + " GP, " + d.mpg + " MPG, " + d.min_pct + "% of team minutes"
+      + '<br><span class="pd-comp">RPR v1.2 ' + fmt2(d.rpr)
+      + " = scoring " + fmt2(d.scoring) + " + playmaking " + fmt2(d.playmaking)
+      + " + defense " + fmt2(d.defense) + " + rebounding "
+      + fmt2(d.rebounding) + "</span>"
+      + "<br>ORtg (full, with assist credit) " + fmt1(d.ortg_full)
+      + " - simple ORtg " + fmt1(d.ortg_simple)
+      + " (shrunk " + fmt1(d.ortg_shrunk) + ", opponent adj "
+      + fmt2(d.opp_adj) + ") - TS% " + fmtPct(d.ts_pct)
+      + "<br>3P% raw " + fmtPct(d.fg3_pct) + " - shrunk "
+      + fmtPct(d.fg3_pct_shrunk) + " (shrunk toward league average "
+      + "with m = 750 attempts; small samples shrink hard)"
+      + "<br>Usage " + fmt1(d.poss_pct) + "% of team possessions"
+      + (d.trend_ppg ? " - trend " + fmt1(d.trend_ppg) + " PPG vs season"
+         : "")
+      + '<br><span class="pd-note">RPR v1.1 was ' + fmt2(d.rpr_v1_1)
+      + "; v1.2 recenters the counting terms on league averages, "
+      + "so an average player scores about 0.</span></div>";
+    td.innerHTML = html;
+  }
+  tr.appendChild(td);
+  row.after(tr);
+}
+function closeDetails(table) {
+  table.querySelectorAll("tbody tr.detail").forEach(function (d) {
+    d.remove();
+  });
+}
+function applyFilter(table) {
+  var q = table._q || "";
+  var conf = table._conf || "";
+  var rk = table._rookiesOnly || false;
+  table.querySelectorAll("tbody tr:not(.detail)").forEach(function (r) {
+    var team = r.cells[1].textContent.toLowerCase();
+    var ok = (q === "" || team.indexOf(q) !== -1)
+      && (conf === "" || r.dataset.conf === conf)
+      && (!rk || r.dataset.rookie === "1");
+    r.style.display = ok ? "" : "none";
+  });
+}
+function openDetail(table, row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  closeDetails(table);
+  var entry = GAME_LOGS["2026-27"];
+  if (!entry || row.dataset.tidx === "") return;
+  var games = entry.logs[row.dataset.tidx] || [];
+  var teams = entry.teams;
+  var c = row.cells;
+  var html = '<div class="detail-box"><strong>' + esc(c[1].textContent)
+    + '</strong> - AdjO ' + c[4].dataset.v + ' (#' + c[4].dataset.r + ') &middot; AdjD '
+    + c[5].dataset.v + ' (#' + c[5].dataset.r + ') &middot; Net ' + c[6].dataset.v
+    + ' &middot; AdjT ' + c[7].dataset.v + ' (#' + c[7].dataset.r + ') &middot; '
+    + c[3].textContent + '</div>'
+    + '<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th>'
+    + '<th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>';
+  games.forEach(function (g) {
+    var f = g[3], a = g[4];
+    html += "<tr><td>" + g[0].slice(4, 6) + "/" + g[0].slice(6, 8)
+      + "</td><td>" + esc(teams[g[1]]) + "</td><td>" + g[2]
+      + "</td><td>" + (f > a ? "W" : "L") + "</td><td>"
+      + f + "-" + a + "</td></tr>";
+  });
+  html += "</tbody></table>";
+  var roster = (ROSTERS["2026-27"] || {})[c[1].textContent];
+  if (roster && roster.length) {
+    html += "<h4>Roster</h4>"
+      + '<table class="roster"><thead><tr><th>Player</th><th>Pos</th>'
+      + "<th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th>"
+      + "<th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>";
+    roster.forEach(function (p) {
+      var pid = esc(p[0]) + "|" + esc(c[1].textContent);
+      html += '<tr class="player" data-pid="' + pid + '"><td>' + esc(p[0]) + "</td><td>"
+        + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "-")
+        + "</td><td>" + p[2] + "</td><td>" + fmt1(p[3]) + "</td><td>"
+        + fmt1(p[4]) + "</td><td>" + fmt1(p[5]) + "</td><td>"
+        + fmt1(p[6]) + "</td><td>" + fmt1(p[7]) + "</td><td>"
+        + (p[8] ? esc(p[8]) : "-") + "</td></tr>";
+    });
+    html += "</tbody></table>"
+      + '<p class="note">Sorted by minutes. Click a player row for '
+      + "detail. ORtg is approximate "
+      + "(no assist credit); RPR is v1.2, our own rating, not KenPom's "
+      + "kPOY. Tier is the GM board tier for that player.</p>";
+  }
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = 8;
+  td.innerHTML = html;
+  tr.appendChild(td);
+  row.after(tr);
+}
+document.querySelectorAll("table.ratings").forEach(function (table) {
+  var headers = table.querySelectorAll("thead th");
+  headers.forEach(function (th, i) {
+    th.addEventListener("click", function () {
+      closeDetails(table);
+      var asc = !th.classList.contains("sorted-asc");
+      headers.forEach(function (h) {
+        h.classList.remove("sorted-asc", "sorted-desc");
+      });
+      th.classList.add(asc ? "sorted-asc" : "sorted-desc");
+      var rows = Array.from(table.querySelectorAll("tbody tr:not(.detail)"));
+      var numeric = th.dataset.t === "num" || th.dataset.t === "wl";
+      rows.sort(function (a, b) {
+        var va = a.cells[i].dataset.v, vb = b.cells[i].dataset.v;
+        var cmp = numeric ? (parseFloat(va) - parseFloat(vb))
+          : (va < vb ? -1 : va > vb ? 1 : 0);
+        return asc ? cmp : -cmp;
+      });
+      var body = table.querySelector("tbody");
+      rows.forEach(function (r) { body.appendChild(r); });
+      if (table.dataset.renumber) {
+        rows.forEach(function (r, idx) {
+          r.cells[0].dataset.v = String(idx + 1);
+          r.cells[0].textContent = String(idx + 1);
+        });
+      }
+    });
+  });
+  table.querySelectorAll("tbody tr.team").forEach(function (row) {
+    row.addEventListener("click", function (e) {
+      // The team name is a link to the team page; let it go
+      // there instead of toggling the detail panel.
+      if (e.target.closest("a")) return;
+      openDetail(table, row);
+    });
+  });
+});
+document.querySelectorAll("input.filter").forEach(function (input) {
+  input.addEventListener("input", function () {
+    var table = document.getElementById(input.dataset.table);
+    closeDetails(table);
+    table._q = input.value.trim().toLowerCase();
+    applyFilter(table);
+  });
+});
+document.querySelectorAll("button.rookie-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var table = document.getElementById(btn.dataset.table);
+    closeDetails(table);
+    table._rookiesOnly = !table._rookiesOnly;
+    btn.classList.toggle("active", table._rookiesOnly);
+    applyFilter(table);
+  });
+});
+document.querySelectorAll(".conftabs").forEach(function (bar) {
+  bar.addEventListener("click", function (e) {
+    var btn = e.target.closest("button.conf-tab");
+    if (!btn) return;
+    bar.querySelectorAll("button").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+    var table = document.getElementById(bar.dataset.table);
+    closeDetails(table);
+    table._conf = btn.dataset.conf;
+    applyFilter(table);
+  });
+});
+// Click a player row (top 100, rookies, team roster, or a roster
+// inside an expanded team panel) to expand that player's detail.
+// Delegated so rows added later by openDetail are covered too.
+document.addEventListener("click", function (e) {
+  var row = e.target.closest("tr.player");
+  if (!row) return;
+  if (e.target.closest("a")) return;
+  openPlayerDetail(row);
+});
+</script>
 </body>
 </html>

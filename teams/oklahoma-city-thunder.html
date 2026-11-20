@@ -32,6 +32,14 @@ table.ratings thead th.sorted-desc::after { content: " \25BC"; }
 table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
 table.ratings tbody tr.team { cursor: pointer; }
 table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings tbody tr.player { cursor: pointer; }
+table.ratings tbody tr.player:hover td { background: #eef4ff; }
+table.roster tbody tr.player { cursor: pointer; }
+table.roster tbody tr.player:hover td { background: #eef4ff; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.player-detail { font-size: 14px; line-height: 1.6; }
+.player-detail .pd-comp { font-variant-numeric: tabular-nums; }
+.player-detail .pd-note { color: #656d76; font-size: 13px; }
 table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
 table.ratings td.net { font-weight: 700; }
 table.ratings td .sub-rank { display: block; font-size: 10px;
@@ -81,14 +89,15 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </head>
 <body>
 <h1>Oklahoma City Thunder</h1>
-<p class="subtitle">Western Conference &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
+<p class="subtitle">Western Conference &middot; Data through November 19, 2026 (226 games) &middot; <a href="../index.html">&larr; NBA Ratings</a></p>
 <p class="warn">Teams reflect the 2026-27 rosters after a busy 2026 offseason: Giannis Antetokounmpo to Miami, LeBron James to Philadelphia, Walker Kessler to the Lakers, and Anthony Davis to Washington, among others.</p>
-<p>Net rank #8 &middot; AdjO 109.6 (#21) &middot; AdjD 105.2 (#2) &middot; Net 4.4 &middot; AdjT 102.0 (#20) &middot; 9-6</p>
+<p>Net rank #10 &middot; AdjO 108.9 (#24) &middot; AdjD 105.9 (#2) &middot; Net 2.9 &middot; AdjT 102.0 (#20) &middot; 9-6</p>
 <h3>Team needs</h3>
-<p>Star: Shai Gilgeous-Alexander (RPR 5.360726483880898) &middot; Top needs: shooting, rebounding, perimeter_defense</p>
-<p>Strengths: defense (AdjD 105.2, 95th pct); ball security (TOV%) (92nd pct); opponent shooting (opp eFG%) (95th pct); defensive rebounding (DREB%) (68th pct); opponent FT rate (88th pct)<br>Weaknesses: offense (AdjO 109.6, 32nd pct); shooting (eFG%) (18th pct); offensive rebounding (OREB%) (35th pct); getting to the line (FT rate) (15th pct)</p>
-<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes, then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:47%"></span><span class="skill-target"></span></span><span class="skill-value">47</span></div><div class="skill-row" title="AST per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:52%"></span><span class="skill-target"></span></span><span class="skill-value">52</span></div><div class="skill-row" title="REB per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:50%"></span><span class="skill-target"></span></span><span class="skill-value">50</span></div><div class="skill-row" title="BLK per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:53%"></span><span class="skill-target"></span></span><span class="skill-value">53</span></div><div class="skill-row" title="STL per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:52%"></span><span class="skill-target"></span></span><span class="skill-value">52</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:53%"></span><span class="skill-target"></span></span><span class="skill-value">53</span></div></div>
-<p>Top realistic targets: Paul Reed (Detroit Pistons, High-value starter, fills rebounding, TradeScore 0.346); Jakob Poeltl (Toronto Raptors, Rotation / depth, fills rebounding, TradeScore 0.247); Precious Achiuwa (Sacramento Kings, Rotation / depth, fills rebounding, TradeScore 0.229)</p>
+<p>Star: Isaiah Hartenstein (RPR 1.89) &middot; Top needs: shooting, rim_protection, perimeter_defense</p>
+<p>Strengths: defense (AdjD 105.9, 95th pct); ball security (TOV%) (92nd pct); opponent shooting (opp eFG%) (95th pct); defensive rebounding (DREB%) (68th pct); opponent FT rate (88th pct)<br>Weaknesses: offense (AdjO 108.9, 22nd pct); shooting (eFG%) (18th pct); offensive rebounding (OREB%) (35th pct); getting to the line (FT rate) (15th pct)</p>
+<h4>Rotation skill profile (percentile, minutes-weighted)</h4><p class="note">Top 9 players by minutes. Each skill is percentile-ranked against every player in the league with 150+ minutes (bench scoring is ranked bench-only, and the team bench skill is bench-only), then minutes-weighted. The grey line is the 60th percentile target: orange bars below it are the holes. Shooting: 3PM per 36; Playmaking: AST per 36; Rebounding: REB per 36; Rim protection: BLK per 36; Perimeter defence: STL per 36 plus half-weight BLK per 36; Bench scoring: PTS per 36, players under 60% of team minutes.</p><div class="skill-chart"><div class="skill-row" title="3PM per 36; raw rate 1.77 per 36"><span class="skill-label">Shooting</span><span class="skill-track"><span class="skill-fill below" style="width:47%"></span><span class="skill-target"></span></span><span class="skill-value">47</span></div><div class="skill-row" title="AST per 36; raw rate 3.68 per 36"><span class="skill-label">Playmaking</span><span class="skill-track"><span class="skill-fill below" style="width:52%"></span><span class="skill-target"></span></span><span class="skill-value">52</span></div><div class="skill-row" title="REB per 36; raw rate 7.01 per 36"><span class="skill-label">Rebounding</span><span class="skill-track"><span class="skill-fill below" style="width:50%"></span><span class="skill-target"></span></span><span class="skill-value">50</span></div><div class="skill-row" title="BLK per 36; raw rate 0.82 per 36"><span class="skill-label">Rim protection</span><span class="skill-track"><span class="skill-fill below" style="width:53%"></span><span class="skill-target"></span></span><span class="skill-value">53</span></div><div class="skill-row" title="STL per 36 plus half-weight BLK per 36; raw rate 1.62 per 36"><span class="skill-label">Perimeter defence</span><span class="skill-track"><span class="skill-fill below" style="width:52%"></span><span class="skill-target"></span></span><span class="skill-value">52</span></div><div class="skill-row" title="PTS per 36, players under 60% of team minutes; raw rate 15.35 per 36"><span class="skill-label">Bench scoring</span><span class="skill-track"><span class="skill-fill below" style="width:51%"></span><span class="skill-target"></span></span><span class="skill-value">51</span></div></div><p class="note">Raw rates behind the bars: Shooting: 1.77 per 36 (47th percentile); Playmaking: 3.68 per 36 (52nd percentile); Rebounding: 7.01 per 36 (50th percentile); Rim protection: 0.82 per 36 (53rd percentile); Perimeter defence: 1.62 per 36 (52nd percentile); Bench scoring: 15.35 per 36 (51st percentile).</p>
+<p>Top realistic targets: Bilal Coulibaly (Washington Wizards, Rotation / depth, fills rim_protection, TradeScore 0.221); Collin Murray-Boyles (Toronto Raptors, Rotation / depth, fills rim_protection, TradeScore 0.220); Oso Ighodaro (Phoenix Suns, Rotation / depth, fills rim_protection, TradeScore 0.206)</p>
+<p>The top targets above are already less-common fits: they do not top many other teams' lists.</p>
 <h3>Game log</h3>
 <table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th><th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>
 <tr><td>10/20</td><td><a href="san-antonio-spurs.html">San Antonio Spurs</a></td><td>A</td><td>W</td><td>116-104</td></tr>
@@ -109,29 +118,252 @@ footer { margin-top: 48px; color: #656d76; font-size: 14px;
 </tbody></table>
 <h3>Roster</h3>
 <table class="roster"><thead><tr><th>Player</th><th>Pos</th><th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th><th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>
-<tr><td>Shai Gilgeous-Alexander</td><td>G</td><td>15</td><td>31.1</td><td>107.3</td><td>36.9</td><td>69.3</td><td>5.4</td><td>High-value starter</td></tr>
-<tr><td>Jared McCain</td><td>G</td><td>15</td><td>13.7</td><td>94.8</td><td>22.4</td><td>56.7</td><td>1.7</td><td>Rotation / depth</td></tr>
-<tr><td>Isaiah Hartenstein</td><td>C</td><td>15</td><td>8.4</td><td>94.7</td><td>15.0</td><td>52.1</td><td>5.0</td><td>High-value starter</td></tr>
-<tr><td>Ajay Mitchell</td><td>G</td><td>13</td><td>17.7</td><td>105.3</td><td>25.6</td><td>50.1</td><td>4.1</td><td>High-value starter</td></tr>
-<tr><td>Aday Mara</td><td>C</td><td>15</td><td>9.2</td><td>103.4</td><td>17.1</td><td>45.8</td><td>3.5</td><td>Rotation / depth</td></tr>
-<tr><td>Kenrich Williams</td><td>G</td><td>15</td><td>7.3</td><td>113.1</td><td>13.4</td><td>42.5</td><td>2.5</td><td>Rotation / depth</td></tr>
-<tr><td>Bennett Stirtz</td><td>G</td><td>15</td><td>7.1</td><td>114.9</td><td>14.5</td><td>37.4</td><td>1.8</td><td>Rotation / depth</td></tr>
-<tr><td>Alex Caruso</td><td>G</td><td>12</td><td>7.4</td><td>103.7</td><td>15.7</td><td>32.1</td><td>3.5</td><td>Rotation / depth</td></tr>
-<tr><td>Micah Peavy</td><td>G</td><td>9</td><td>3.4</td><td>72.9</td><td>12.1</td><td>20.6</td><td>1.6</td><td>Rotation / depth</td></tr>
-<tr><td>Jaylin Williams</td><td>F</td><td>8</td><td>2.9</td><td>55.8</td><td>12.0</td><td>20.1</td><td>1.4</td><td>Rotation / depth</td></tr>
-<tr><td>Josh Dix</td><td>G</td><td>8</td><td>2.0</td><td>55.2</td><td>10.2</td><td>16.7</td><td>0.7</td><td>Rotation / depth</td></tr>
-<tr><td>Jalen Williams</td><td>G</td><td>3</td><td>13.7</td><td>86.5</td><td>21.1</td><td>13.2</td><td>3.8</td><td>Rotation / depth</td></tr>
-<tr><td>Chet Holmgren</td><td>C</td><td>3</td><td>12.0</td><td>96.6</td><td>17.5</td><td>12.5</td><td>5.8</td><td>Rotation / depth</td></tr>
-<tr><td>Nique Clifford</td><td>G</td><td>5</td><td>5.0</td><td>105.8</td><td>11.8</td><td>11.8</td><td>0.8</td><td>Rotation / depth</td></tr>
-<tr><td>Cason Wallace</td><td>G</td><td>3</td><td>6.3</td><td>82.6</td><td>19.8</td><td>6.8</td><td>3.0</td><td>Rotation / depth</td></tr>
-<tr><td>Brooks Barnhizer</td><td>F</td><td>9</td><td>1.1</td><td>85.9</td><td>10.3</td><td>6.7</td><td>1.0</td><td>Rotation / depth</td></tr>
-<tr><td>Nikola Topic</td><td>G</td><td>3</td><td>2.7</td><td>53.3</td><td>18.7</td><td>4.7</td><td>0.7</td><td>Overvalued / avoid</td></tr>
-<tr><td>Dalen Terry</td><td>G</td><td>2</td><td>1.0</td><td>40.0</td><td>19.2</td><td>1.5</td><td>1.0</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Shai Gilgeous-Alexander|Oklahoma City Thunder"><td>Shai Gilgeous-Alexander</td><td>G</td><td>15</td><td>31.1</td><td>107.3</td><td>36.9</td><td>69.3</td><td>1.1</td><td>Elite role player</td></tr>
+<tr class="player" data-pid="Jared McCain|Oklahoma City Thunder"><td>Jared McCain</td><td>G</td><td>15</td><td>13.7</td><td>94.8</td><td>22.4</td><td>56.7</td><td>-1.7</td><td>Overvalued / avoid</td></tr>
+<tr class="player" data-pid="Isaiah Hartenstein|Oklahoma City Thunder"><td>Isaiah Hartenstein</td><td>C</td><td>15</td><td>8.4</td><td>94.7</td><td>15.0</td><td>52.1</td><td>1.9</td><td>High-value starter</td></tr>
+<tr class="player" data-pid="Ajay Mitchell|Oklahoma City Thunder"><td>Ajay Mitchell</td><td>G</td><td>13</td><td>17.7</td><td>105.3</td><td>25.6</td><td>50.1</td><td>0.6</td><td>Elite role player</td></tr>
+<tr class="player" data-pid="Aday Mara|Oklahoma City Thunder"><td>Aday Mara</td><td>C</td><td>15</td><td>9.2</td><td>103.4</td><td>17.1</td><td>45.8</td><td>0.8</td><td>Elite role player</td></tr>
+<tr class="player" data-pid="Kenrich Williams|Oklahoma City Thunder"><td>Kenrich Williams</td><td>G</td><td>15</td><td>7.3</td><td>113.1</td><td>13.4</td><td>42.5</td><td>-0.1</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Bennett Stirtz|Oklahoma City Thunder"><td>Bennett Stirtz</td><td>G</td><td>15</td><td>7.1</td><td>114.9</td><td>14.5</td><td>37.4</td><td>-0.5</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Alex Caruso|Oklahoma City Thunder"><td>Alex Caruso</td><td>G</td><td>12</td><td>7.4</td><td>103.7</td><td>15.7</td><td>32.1</td><td>1.1</td><td>Rotation / depth</td></tr>
+<tr class="player" data-pid="Micah Peavy|Oklahoma City Thunder"><td>Micah Peavy</td><td>G</td><td>9</td><td>3.4</td><td>72.9</td><td>12.1</td><td>20.6</td><td>-0.5</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Jaylin Williams|Oklahoma City Thunder"><td>Jaylin Williams</td><td>F</td><td>8</td><td>2.9</td><td>55.8</td><td>12.0</td><td>20.1</td><td>-0.9</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Josh Dix|Oklahoma City Thunder"><td>Josh Dix</td><td>G</td><td>8</td><td>2.0</td><td>55.2</td><td>10.2</td><td>16.7</td><td>-1.2</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Jalen Williams|Oklahoma City Thunder"><td>Jalen Williams</td><td>G</td><td>3</td><td>13.7</td><td>86.5</td><td>21.1</td><td>13.2</td><td>-0.2</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Chet Holmgren|Oklahoma City Thunder"><td>Chet Holmgren</td><td>C</td><td>3</td><td>12.0</td><td>96.6</td><td>17.5</td><td>12.5</td><td>2.0</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Nique Clifford|Oklahoma City Thunder"><td>Nique Clifford</td><td>G</td><td>5</td><td>5.0</td><td>105.8</td><td>11.8</td><td>11.8</td><td>-1.3</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Cason Wallace|Oklahoma City Thunder"><td>Cason Wallace</td><td>G</td><td>3</td><td>6.3</td><td>82.6</td><td>19.8</td><td>6.8</td><td>1.0</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Brooks Barnhizer|Oklahoma City Thunder"><td>Brooks Barnhizer</td><td>F</td><td>9</td><td>1.1</td><td>85.9</td><td>10.3</td><td>6.7</td><td>0.3</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Nikola Topic|Oklahoma City Thunder"><td>Nikola Topic</td><td>G</td><td>3</td><td>2.7</td><td>53.3</td><td>18.7</td><td>4.7</td><td>-0.8</td><td>Insufficient minutes</td></tr>
+<tr class="player" data-pid="Dalen Terry|Oklahoma City Thunder"><td>Dalen Terry</td><td>G</td><td>2</td><td>1.0</td><td>40.0</td><td>19.2</td><td>1.5</td><td>0.3</td><td>Insufficient minutes</td></tr>
 </tbody></table>
-<p class="note">Sorted by minutes. ORtg is approximate (no assist credit); RPR is v1.1, our own rating, not KenPom’s kPOY. Tier is the GM board tier for that player.</p>
+<p class="note">Sorted by minutes. Click a player row to see that player's RPR components, ORtg (full) vs simple, and shooting. ORtg in the table is the simple approximation (no assist credit); RPR is v1.2, our own rating, not KenPom's kPOY. Tier is the GM board tier for that player.</p>
 <footer>
 <p>Data: ESPN public scoreboard and box scores. Code and full CSVs:
-<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Data through November 19, 2026 (226 games).
+Built November 20, 2026.</p>
 </footer>
+<script>var PLAYER_DETAIL = {"Shai Gilgeous-Alexander|Oklahoma City Thunder":{"name":"Shai Gilgeous-Alexander","team":"Oklahoma City Thunder","position":"G","rpr":"1.13","rpr_v1_1":"5.35","scoring":"1.34","playmaking":"0.22","defense":"0.04","rebounding":"-0.47","ortg_full":"104.88","ortg_simple":"107.3","ortg_shrunk":"105.1","ortg_adj":"104.9","opp_adj":"0.2","ts_pct":"0.58","fg3_pct":"0.36","fg3_pct_shrunk":"0.354","gp":"15","min_pct":"69.31","mpg":"33.27","poss_pct":"36.88","trend_ppg":"5.87","last7_gp":"3"},"Ajay Mitchell|Oklahoma City Thunder":{"name":"Ajay Mitchell","team":"Oklahoma City Thunder","position":"G","rpr":"0.55","rpr_v1_1":"4.05","scoring":"0.41","playmaking":"0.36","defense":"0.09","rebounding":"-0.31","ortg_full":"105.62","ortg_simple":"105.27","ortg_shrunk":"102.9","ortg_adj":"102.7","opp_adj":"0.17","ts_pct":"0.58","fg3_pct":"0.25","fg3_pct_shrunk":"0.349","gp":"13","min_pct":"50.14","mpg":"27.77","poss_pct":"25.59","trend_ppg":"-4.19","last7_gp":"2"},"Jared McCain|Oklahoma City Thunder":{"name":"Jared McCain","team":"Oklahoma City Thunder","position":"G","rpr":"-1.74","rpr_v1_1":"1.69","scoring":"-0.43","playmaking":"-0.56","defense":"-0.36","rebounding":"-0.38","ortg_full":"93.69","ortg_simple":"94.82","ortg_shrunk":"97.4","ortg_adj":"97.3","opp_adj":"0.16","ts_pct":"0.53","fg3_pct":"0.34","fg3_pct_shrunk":"0.353","gp":"15","min_pct":"56.67","mpg":"27.2","poss_pct":"22.41","trend_ppg":"4.0","last7_gp":"3"},"Aday Mara|Oklahoma City Thunder":{"name":"Aday Mara","team":"Oklahoma City Thunder","position":"C","rpr":"0.77","rpr_v1_1":"3.54","scoring":"0.1","playmaking":"-0.47","defense":"0.52","rebounding":"0.62","ortg_full":"109.45","ortg_simple":"103.42","ortg_shrunk":"101.5","ortg_adj":"101.4","opp_adj":"0.15","ts_pct":"0.64","fg3_pct":"1.0","fg3_pct_shrunk":"0.355","gp":"15","min_pct":"45.83","mpg":"22.0","poss_pct":"17.1","trend_ppg":"2.8","last7_gp":"3"},"Isaiah Hartenstein|Oklahoma City Thunder":{"name":"Isaiah Hartenstein","team":"Oklahoma City Thunder","position":"C","rpr":"1.89","rpr_v1_1":"5.03","scoring":"-0.21","playmaking":"0.52","defense":"-0.04","rebounding":"1.62","ortg_full":"108.88","ortg_simple":"94.65","ortg_shrunk":"98.0","ortg_adj":"97.9","opp_adj":"0.16","ts_pct":"0.58","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"15","min_pct":"52.08","mpg":"25.0","poss_pct":"15.01","trend_ppg":"1.6","last7_gp":"3"},"Kenrich Williams|Oklahoma City Thunder":{"name":"Kenrich Williams","team":"Oklahoma City Thunder","position":"G","rpr":"-0.05","rpr_v1_1":"2.51","scoring":"0.26","playmaking":"0.07","defense":"-0.39","rebounding":"0.01","ortg_full":"116.46","ortg_simple":"113.08","ortg_shrunk":"104.4","ortg_adj":"104.2","opp_adj":"0.21","ts_pct":"0.59","fg3_pct":"0.42","fg3_pct_shrunk":"0.358","gp":"15","min_pct":"42.5","mpg":"20.4","poss_pct":"13.44","trend_ppg":"2.0","last7_gp":"3"},"Bennett Stirtz|Oklahoma City Thunder":{"name":"Bennett Stirtz","team":"Oklahoma City Thunder","position":"G","rpr":"-0.46","rpr_v1_1":"1.79","scoring":"0.27","playmaking":"-0.07","defense":"-0.12","rebounding":"-0.54","ortg_full":"115.4","ortg_simple":"114.87","ortg_shrunk":"104.9","ortg_adj":"104.7","opp_adj":"0.15","ts_pct":"0.62","fg3_pct":"0.45","fg3_pct_shrunk":"0.36","gp":"15","min_pct":"37.36","mpg":"17.93","poss_pct":"14.51","trend_ppg":"-3.4","last7_gp":"3"},"Alex Caruso|Oklahoma City Thunder":{"name":"Alex Caruso","team":"Oklahoma City Thunder","position":"G","rpr":"1.13","rpr_v1_1":"3.54","scoring":"0.07","playmaking":"0.32","defense":"0.69","rebounding":"0.05","ortg_full":"113.18","ortg_simple":"103.73","ortg_shrunk":"101.3","ortg_adj":"101.2","opp_adj":"0.09","ts_pct":"0.63","fg3_pct":"0.42","fg3_pct_shrunk":"0.358","gp":"12","min_pct":"32.08","mpg":"19.25","poss_pct":"15.71","trend_ppg":"-0.42","last7_gp":"3"},"Jalen Williams|Oklahoma City Thunder":{"name":"Jalen Williams","team":"Oklahoma City Thunder","position":"G","rpr":"-0.19","rpr_v1_1":"3.79","scoring":"-0.41","playmaking":"0.23","defense":"0.26","rebounding":"-0.27","ortg_full":"91.01","ortg_simple":"86.5","ortg_shrunk":"97.6","ortg_adj":"97.6","opp_adj":"-0.02","ts_pct":"0.47","fg3_pct":"0.33","fg3_pct_shrunk":"0.354","gp":"3","min_pct":"13.19","mpg":"31.67","poss_pct":"21.1","trend_ppg":"","last7_gp":"0"},"Chet Holmgren|Oklahoma City Thunder":{"name":"Chet Holmgren","team":"Oklahoma City Thunder","position":"C","rpr":"2.03","rpr_v1_1":"5.8","scoring":"-0.07","playmaking":"-0.9","defense":"2.02","rebounding":"0.98","ortg_full":"109.17","ortg_simple":"96.57","ortg_shrunk":"99.7","ortg_adj":"99.7","opp_adj":"-0.02","ts_pct":"0.56","fg3_pct":"0.33","fg3_pct_shrunk":"0.354","gp":"3","min_pct":"12.5","mpg":"30.0","poss_pct":"17.52","trend_ppg":"","last7_gp":"0"},"Micah Peavy|Oklahoma City Thunder":{"name":"Micah Peavy","team":"Oklahoma City Thunder","position":"G","rpr":"-0.5","rpr_v1_1":"1.56","scoring":"-0.23","playmaking":"-0.35","defense":"-0.02","rebounding":"0.09","ortg_full":"80.4","ortg_simple":"72.91","ortg_shrunk":"95.5","ortg_adj":"95.3","opp_adj":"0.13","ts_pct":"0.37","fg3_pct":"0.28","fg3_pct_shrunk":"0.352","gp":"9","min_pct":"20.56","mpg":"16.44","poss_pct":"12.15","trend_ppg":"1.56","last7_gp":"1"},"Nique Clifford|Oklahoma City Thunder":{"name":"Nique Clifford","team":"Oklahoma City Thunder","position":"G","rpr":"-1.29","rpr_v1_1":"0.84","scoring":"0.03","playmaking":"-0.31","defense":"-0.74","rebounding":"-0.27","ortg_full":"106.26","ortg_simple":"105.75","ortg_shrunk":"100.8","ortg_adj":"100.8","opp_adj":"0.03","ts_pct":"0.55","fg3_pct":"0.25","fg3_pct_shrunk":"0.353","gp":"5","min_pct":"11.81","mpg":"17.0","poss_pct":"11.76","trend_ppg":"0.33","last7_gp":"3"},"Jaylin Williams|Oklahoma City Thunder":{"name":"Jaylin Williams","team":"Oklahoma City Thunder","position":"F","rpr":"-0.87","rpr_v1_1":"1.4","scoring":"-0.39","playmaking":"-0.07","defense":"-0.5","rebounding":"0.09","ortg_full":"64.35","ortg_simple":"55.83","ortg_shrunk":"92.7","ortg_adj":"92.7","opp_adj":"-0.0","ts_pct":"0.33","fg3_pct":"0.23","fg3_pct_shrunk":"0.35","gp":"8","min_pct":"20.14","mpg":"18.12","poss_pct":"12.02","trend_ppg":"0.12","last7_gp":"1"},"Cason Wallace|Oklahoma City Thunder":{"name":"Cason Wallace","team":"Oklahoma City Thunder","position":"G","rpr":"1.0","rpr_v1_1":"3.05","scoring":"-0.14","playmaking":"-0.23","defense":"1.43","rebounding":"-0.07","ortg_full":"87.75","ortg_simple":"82.61","ortg_shrunk":"98.4","ortg_adj":"98.5","opp_adj":"-0.05","ts_pct":"0.47","fg3_pct":"0.3","fg3_pct_shrunk":"0.353","gp":"3","min_pct":"6.81","mpg":"16.33","poss_pct":"19.85","trend_ppg":"","last7_gp":"0"},"Josh Dix|Oklahoma City Thunder":{"name":"Josh Dix","team":"Oklahoma City Thunder","position":"G","rpr":"-1.17","rpr_v1_1":"0.7","scoring":"-0.21","playmaking":"-0.18","defense":"-0.45","rebounding":"-0.33","ortg_full":"62.98","ortg_simple":"55.17","ortg_shrunk":"94.5","ortg_adj":"94.4","opp_adj":"0.13","ts_pct":"0.3","fg3_pct":"0.12","fg3_pct_shrunk":"0.349","gp":"8","min_pct":"16.67","mpg":"15.0","poss_pct":"10.22","trend_ppg":"-2.0","last7_gp":"1"},"Brooks Barnhizer|Oklahoma City Thunder":{"name":"Brooks Barnhizer","team":"Oklahoma City Thunder","position":"F","rpr":"0.3","rpr_v1_1":"0.97","scoring":"-0.01","playmaking":"0.15","defense":"0.15","rebounding":"0.01","ortg_full":"108.73","ortg_simple":"85.91","ortg_shrunk":"99.5","ortg_adj":"99.4","opp_adj":"0.01","ts_pct":"0.52","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"9","min_pct":"6.67","mpg":"5.33","poss_pct":"10.25","trend_ppg":"-1.11","last7_gp":"1"},"Nikola Topic|Oklahoma City Thunder":{"name":"Nikola Topic","team":"Oklahoma City Thunder","position":"G","rpr":"-0.75","rpr_v1_1":"0.68","scoring":"-0.17","playmaking":"-0.44","defense":"0.04","rebounding":"-0.18","ortg_full":"61.98","ortg_simple":"53.33","ortg_shrunk":"97.0","ortg_adj":"96.9","opp_adj":"0.08","ts_pct":"0.4","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"3","min_pct":"4.72","mpg":"11.33","poss_pct":"18.66","trend_ppg":"0.0","last7_gp":"3"},"Dalen Terry|Oklahoma City Thunder":{"name":"Dalen Terry","team":"Oklahoma City Thunder","position":"G","rpr":"0.28","rpr_v1_1":"0.97","scoring":"-0.04","playmaking":"-0.38","defense":"0.2","rebounding":"0.5","ortg_full":"45.21","ortg_simple":"40.0","ortg_shrunk":"98.8","ortg_adj":"98.8","opp_adj":"0.02","ts_pct":"0.33","fg3_pct":"0.0","fg3_pct_shrunk":"0.353","gp":"2","min_pct":"1.53","mpg":"5.5","poss_pct":"19.22","trend_ppg":"","last7_gp":"0"}};</script>
+<script>
+// Ratings tables: click-to-sort, text filter, conference tabs,
+// and click a team row to expand its game log (GAME_LOGS is
+// embedded in the page by the builder). Plain script, no
+// network, no dependencies. Numeric columns sort on the
+// data-v value; team and conference sort as text; W-L sorts on
+// win percentage (data-v is wins / (wins + losses)).
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+function fmt1(v) {
+  // Values arrive as numbers (roster rows) or strings (PLAYER_DETAIL
+  // is built from CSVs); coerce so a string never throws on toFixed.
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(1);
+}
+function fmt2(v) {
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : n.toFixed(2);
+}
+function fmtPct(v) {
+  // Fractions in the CSVs (0.61) rendered as percentages (61.0%).
+  var n = (v === null || v === undefined || v === "") ? NaN : parseFloat(v);
+  return isNaN(n) ? "-" : (n * 100).toFixed(1) + "%";
+}
+function openPlayerDetail(row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  var table = row.closest("table");
+  if (table) closeDetails(table);
+  var pid = row.dataset.pid || "";
+  var d = (typeof PLAYER_DETAIL !== "undefined") ? PLAYER_DETAIL[pid] : null;
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = row.cells.length;
+  if (!d) {
+    td.textContent = "No detail available for this player.";
+  } else {
+    // PLAYER_DETAIL values are flat CSV strings, not nested
+    // components: scoring/playmaking/defense/rebounding sit on d.
+    var html = '<div class="player-detail"><strong>' + esc(d.name) + '</strong>'
+      + " (" + esc(d.team) + ", " + esc(d.position || "-") + ") - "
+      + d.gp + " GP, " + d.mpg + " MPG, " + d.min_pct + "% of team minutes"
+      + '<br><span class="pd-comp">RPR v1.2 ' + fmt2(d.rpr)
+      + " = scoring " + fmt2(d.scoring) + " + playmaking " + fmt2(d.playmaking)
+      + " + defense " + fmt2(d.defense) + " + rebounding "
+      + fmt2(d.rebounding) + "</span>"
+      + "<br>ORtg (full, with assist credit) " + fmt1(d.ortg_full)
+      + " - simple ORtg " + fmt1(d.ortg_simple)
+      + " (shrunk " + fmt1(d.ortg_shrunk) + ", opponent adj "
+      + fmt2(d.opp_adj) + ") - TS% " + fmtPct(d.ts_pct)
+      + "<br>3P% raw " + fmtPct(d.fg3_pct) + " - shrunk "
+      + fmtPct(d.fg3_pct_shrunk) + " (shrunk toward league average "
+      + "with m = 750 attempts; small samples shrink hard)"
+      + "<br>Usage " + fmt1(d.poss_pct) + "% of team possessions"
+      + (d.trend_ppg ? " - trend " + fmt1(d.trend_ppg) + " PPG vs season"
+         : "")
+      + '<br><span class="pd-note">RPR v1.1 was ' + fmt2(d.rpr_v1_1)
+      + "; v1.2 recenters the counting terms on league averages, "
+      + "so an average player scores about 0.</span></div>";
+    td.innerHTML = html;
+  }
+  tr.appendChild(td);
+  row.after(tr);
+}
+function closeDetails(table) {
+  table.querySelectorAll("tbody tr.detail").forEach(function (d) {
+    d.remove();
+  });
+}
+function applyFilter(table) {
+  var q = table._q || "";
+  var conf = table._conf || "";
+  var rk = table._rookiesOnly || false;
+  table.querySelectorAll("tbody tr:not(.detail)").forEach(function (r) {
+    var team = r.cells[1].textContent.toLowerCase();
+    var ok = (q === "" || team.indexOf(q) !== -1)
+      && (conf === "" || r.dataset.conf === conf)
+      && (!rk || r.dataset.rookie === "1");
+    r.style.display = ok ? "" : "none";
+  });
+}
+function openDetail(table, row) {
+  var next = row.nextElementSibling;
+  if (next && next.classList.contains("detail")) {
+    next.remove();
+    return;
+  }
+  closeDetails(table);
+  var entry = GAME_LOGS["2026-27"];
+  if (!entry || row.dataset.tidx === "") return;
+  var games = entry.logs[row.dataset.tidx] || [];
+  var teams = entry.teams;
+  var c = row.cells;
+  var html = '<div class="detail-box"><strong>' + esc(c[1].textContent)
+    + '</strong> - AdjO ' + c[4].dataset.v + ' (#' + c[4].dataset.r + ') &middot; AdjD '
+    + c[5].dataset.v + ' (#' + c[5].dataset.r + ') &middot; Net ' + c[6].dataset.v
+    + ' &middot; AdjT ' + c[7].dataset.v + ' (#' + c[7].dataset.r + ') &middot; '
+    + c[3].textContent + '</div>'
+    + '<table class="gamelog"><thead><tr><th>Date</th><th>Opponent</th>'
+    + '<th>Venue</th><th>Result</th><th>Score</th></tr></thead><tbody>';
+  games.forEach(function (g) {
+    var f = g[3], a = g[4];
+    html += "<tr><td>" + g[0].slice(4, 6) + "/" + g[0].slice(6, 8)
+      + "</td><td>" + esc(teams[g[1]]) + "</td><td>" + g[2]
+      + "</td><td>" + (f > a ? "W" : "L") + "</td><td>"
+      + f + "-" + a + "</td></tr>";
+  });
+  html += "</tbody></table>";
+  var roster = (ROSTERS["2026-27"] || {})[c[1].textContent];
+  if (roster && roster.length) {
+    html += "<h4>Roster</h4>"
+      + '<table class="roster"><thead><tr><th>Player</th><th>Pos</th>'
+      + "<th>GP</th><th>PPG</th><th>ORtg</th><th>%Poss</th>"
+      + "<th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>";
+    roster.forEach(function (p) {
+      var pid = esc(p[0]) + "|" + esc(c[1].textContent);
+      html += '<tr class="player" data-pid="' + pid + '"><td>' + esc(p[0]) + "</td><td>"
+        + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "-")
+        + "</td><td>" + p[2] + "</td><td>" + fmt1(p[3]) + "</td><td>"
+        + fmt1(p[4]) + "</td><td>" + fmt1(p[5]) + "</td><td>"
+        + fmt1(p[6]) + "</td><td>" + fmt1(p[7]) + "</td><td>"
+        + (p[8] ? esc(p[8]) : "-") + "</td></tr>";
+    });
+    html += "</tbody></table>"
+      + '<p class="note">Sorted by minutes. Click a player row for '
+      + "detail. ORtg is approximate "
+      + "(no assist credit); RPR is v1.2, our own rating, not KenPom's "
+      + "kPOY. Tier is the GM board tier for that player.</p>";
+  }
+  var tr = document.createElement("tr");
+  tr.className = "detail";
+  var td = document.createElement("td");
+  td.colSpan = 8;
+  td.innerHTML = html;
+  tr.appendChild(td);
+  row.after(tr);
+}
+document.querySelectorAll("table.ratings").forEach(function (table) {
+  var headers = table.querySelectorAll("thead th");
+  headers.forEach(function (th, i) {
+    th.addEventListener("click", function () {
+      closeDetails(table);
+      var asc = !th.classList.contains("sorted-asc");
+      headers.forEach(function (h) {
+        h.classList.remove("sorted-asc", "sorted-desc");
+      });
+      th.classList.add(asc ? "sorted-asc" : "sorted-desc");
+      var rows = Array.from(table.querySelectorAll("tbody tr:not(.detail)"));
+      var numeric = th.dataset.t === "num" || th.dataset.t === "wl";
+      rows.sort(function (a, b) {
+        var va = a.cells[i].dataset.v, vb = b.cells[i].dataset.v;
+        var cmp = numeric ? (parseFloat(va) - parseFloat(vb))
+          : (va < vb ? -1 : va > vb ? 1 : 0);
+        return asc ? cmp : -cmp;
+      });
+      var body = table.querySelector("tbody");
+      rows.forEach(function (r) { body.appendChild(r); });
+      if (table.dataset.renumber) {
+        rows.forEach(function (r, idx) {
+          r.cells[0].dataset.v = String(idx + 1);
+          r.cells[0].textContent = String(idx + 1);
+        });
+      }
+    });
+  });
+  table.querySelectorAll("tbody tr.team").forEach(function (row) {
+    row.addEventListener("click", function (e) {
+      // The team name is a link to the team page; let it go
+      // there instead of toggling the detail panel.
+      if (e.target.closest("a")) return;
+      openDetail(table, row);
+    });
+  });
+});
+document.querySelectorAll("input.filter").forEach(function (input) {
+  input.addEventListener("input", function () {
+    var table = document.getElementById(input.dataset.table);
+    closeDetails(table);
+    table._q = input.value.trim().toLowerCase();
+    applyFilter(table);
+  });
+});
+document.querySelectorAll("button.rookie-toggle").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    var table = document.getElementById(btn.dataset.table);
+    closeDetails(table);
+    table._rookiesOnly = !table._rookiesOnly;
+    btn.classList.toggle("active", table._rookiesOnly);
+    applyFilter(table);
+  });
+});
+document.querySelectorAll(".conftabs").forEach(function (bar) {
+  bar.addEventListener("click", function (e) {
+    var btn = e.target.closest("button.conf-tab");
+    if (!btn) return;
+    bar.querySelectorAll("button").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
+    var table = document.getElementById(bar.dataset.table);
+    closeDetails(table);
+    table._conf = btn.dataset.conf;
+    applyFilter(table);
+  });
+});
+// Click a player row (top 100, rookies, team roster, or a roster
+// inside an expanded team panel) to expand that player's detail.
+// Delegated so rows added later by openDetail are covered too.
+document.addEventListener("click", function (e) {
+  var row = e.target.closest("tr.player");
+  if (!row) return;
+  if (e.target.closest("a")) return;
+  openPlayerDetail(row);
+});
+</script>
 </body>
 </html>
