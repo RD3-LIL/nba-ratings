@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA Ratings - 2026-27</title>
+<style>
+body { font-family: -apple-system, system-ui, sans-serif; max-width: 960px; margin: 0 auto; padding: 24px 16px; line-height: 1.5; color: #111; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0 24px; font-size: 14px; }
+th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+th { background: #f2f2f2; }
+h1 { margin-bottom: 4px; } .sub { color: #555; margin-top: 0; }
+</style>
+</head>
+<body>
+<h1>NBA Ratings</h1>
+<p class="sub">2026-27 season through Nov 19, 2026. 226 games, 30 teams, 475 players. Free ESPN box scores, no key. Same ORtg, %Poss, and RPR formulas as RonPom, adapted to 48-minute games.</p>
+<p>Data: <a href="data/players_2026_27.csv">player ratings CSV</a> | <a href="data/players_2026_27_eval.csv">deep eval CSV</a> | <a href="data/gm_board_2026_27.csv">GM board CSV</a> | <a href="README.md">README and method</a></p>
+<h2>Top 20 players by RPR (40% minutes floor)</h2>
+<p>RPR = (ORtg - 100) x possessions used per game / 100 + 0.5 x (AST - TO) per game + (STL + BLK) per game + 0.25 x REB per game. ORtg here is the simplified version, points per 100 possessions used, no assist credit, so it underrates playmakers. Read it with %Poss.</p>
+<table><tr><th>Rk</th><th>Player</th><th>Team</th><th>GP</th><th>PTS</th><th>REB</th><th>AST</th><th>ORtg</th><th>%Poss</th><th>RPR</th></tr>
+<tr><td>1</td><td>Victor Wembanyama</td><td>San Antonio Spurs</td><td>16</td><td>28.6</td><td>11.9</td><td>3.3</td><td>112.7</td><td>35.3</td><td><b>11.80</b></td></tr>
+<tr><td>2</td><td>Giannis Antetokounmpo</td><td>Miami Heat</td><td>15</td><td>28.2</td><td>12.6</td><td>5.5</td><td>111.9</td><td>32.5</td><td><b>9.45</b></td></tr>
+<tr><td>3</td><td>Nikola Jokic</td><td>Denver Nuggets</td><td>13</td><td>24.1</td><td>10.7</td><td>8.9</td><td>102.6</td><td>28.0</td><td><b>8.87</b></td></tr>
+<tr><td>4</td><td>Jamal Murray</td><td>Denver Nuggets</td><td>13</td><td>25.7</td><td>5.2</td><td>5.7</td><td>116.0</td><td>26.6</td><td><b>8.59</b></td></tr>
+<tr><td>5</td><td>Luka Doncic</td><td>Los Angeles Lakers</td><td>14</td><td>38.1</td><td>7.0</td><td>7.6</td><td>108.0</td><td>40.7</td><td><b>8.34</b></td></tr>
+<tr><td>6</td><td>Tyrese Maxey</td><td>Philadelphia 76ers</td><td>15</td><td>26.5</td><td>3.3</td><td>5.8</td><td>116.3</td><td>27.1</td><td><b>8.24</b></td></tr>
+<tr><td>7</td><td>Walker Kessler</td><td>Los Angeles Lakers</td><td>15</td><td>14.2</td><td>10.9</td><td>1.8</td><td>116.1</td><td>16.6</td><td><b>7.97</b></td></tr>
+<tr><td>8</td><td>Alperen Sengun</td><td>Houston Rockets</td><td>14</td><td>21.6</td><td>9.1</td><td>6.8</td><td>107.0</td><td>26.1</td><td><b>7.67</b></td></tr>
+<tr><td>9</td><td>Zion Williamson</td><td>New Orleans Pelicans</td><td>15</td><td>21.7</td><td>5.4</td><td>2.5</td><td>119.5</td><td>23.8</td><td><b>7.61</b></td></tr>
+<tr><td>10</td><td>Bam Adebayo</td><td>Miami Heat</td><td>15</td><td>18.9</td><td>7.7</td><td>3.1</td><td>111.5</td><td>21.7</td><td><b>7.42</b></td></tr>
+<tr><td>11</td><td>Davion Mitchell</td><td>Miami Heat</td><td>15</td><td>17.2</td><td>2.4</td><td>9.0</td><td>107.7</td><td>18.7</td><td><b>7.10</b></td></tr>
+<tr><td>12</td><td>Cooper Flagg</td><td>Dallas Mavericks</td><td>14</td><td>24.2</td><td>6.6</td><td>6.4</td><td>104.1</td><td>29.4</td><td><b>7.05</b></td></tr>
+<tr><td>13</td><td>Anthony Davis</td><td>Washington Wizards</td><td>14</td><td>24.6</td><td>10.1</td><td>2.1</td><td>108.9</td><td>28.5</td><td><b>6.99</b></td></tr>
+<tr><td>14</td><td>Cade Cunningham</td><td>Detroit Pistons</td><td>13</td><td>25.8</td><td>5.2</td><td>7.8</td><td>103.8</td><td>30.6</td><td><b>6.90</b></td></tr>
+<tr><td>15</td><td>Evan Mobley</td><td>Cleveland Cavaliers</td><td>12</td><td>16.9</td><td>7.3</td><td>3.6</td><td>116.1</td><td>19.2</td><td><b>6.89</b></td></tr>
+<tr><td>16</td><td>Karl-Anthony Towns</td><td>New York Knicks</td><td>15</td><td>21.3</td><td>13.9</td><td>3.9</td><td>107.7</td><td>26.0</td><td><b>6.87</b></td></tr>
+<tr><td>17</td><td>Jarrett Allen</td><td>Cleveland Cavaliers</td><td>13</td><td>13.1</td><td>8.8</td><td>1.7</td><td>118.0</td><td>17.7</td><td><b>6.30</b></td></tr>
+<tr><td>18</td><td>Cedric Coward</td><td>Memphis Grizzlies</td><td>15</td><td>14.8</td><td>8.1</td><td>3.5</td><td>110.4</td><td>19.5</td><td><b>6.28</b></td></tr>
+<tr><td>19</td><td>Domantas Sabonis</td><td>Sacramento Kings</td><td>13</td><td>13.7</td><td>13.2</td><td>5.8</td><td>105.5</td><td>16.6</td><td><b>6.23</b></td></tr>
+<tr><td>20</td><td>Donovan Clingan</td><td>Portland Trail Blazers</td><td>15</td><td>10.7</td><td>10.7</td><td>1.8</td><td>105.3</td><td>16.6</td><td><b>6.19</b></td></tr>
+</table>
+<p>Note: Stephen Curry would rank #2 by RPR (9.78, ORtg 132.1) but is at 34.5% of minutes, under the 40% floor.</p>
+<h2>Top 10 teams by Net</h2>
+<table><tr><th>Rk</th><th>Team</th><th>GP</th><th>AdjO</th><th>AdjD</th><th>Net</th><th>AdjT</th></tr>
+<tr><td>1</td><td>San Antonio Spurs</td><td>16</td><td>115.4</td><td>106.3</td><td><b>9.1</b></td><td>101.4</td></tr>
+<tr><td>2</td><td>Minnesota Timberwolves</td><td>16</td><td>111.0</td><td>102.7</td><td><b>8.3</b></td><td>103.5</td></tr>
+<tr><td>3</td><td>Houston Rockets</td><td>16</td><td>118.0</td><td>110.2</td><td><b>7.8</b></td><td>99.5</td></tr>
+<tr><td>4</td><td>Boston Celtics</td><td>15</td><td>113.4</td><td>106.4</td><td><b>7.0</b></td><td>99.5</td></tr>
+<tr><td>5</td><td>Memphis Grizzlies</td><td>16</td><td>116.8</td><td>110.6</td><td><b>6.3</b></td><td>102.4</td></tr>
+<tr><td>6</td><td>Portland Trail Blazers</td><td>15</td><td>114.5</td><td>108.4</td><td><b>6.1</b></td><td>102.8</td></tr>
+<tr><td>7</td><td>New York Knicks</td><td>15</td><td>110.9</td><td>106.4</td><td><b>4.5</b></td><td>98.2</td></tr>
+<tr><td>8</td><td>Oklahoma City Thunder</td><td>15</td><td>109.6</td><td>105.2</td><td><b>4.4</b></td><td>102.0</td></tr>
+<tr><td>9</td><td>Detroit Pistons</td><td>14</td><td>112.2</td><td>108.0</td><td><b>4.1</b></td><td>102.3</td></tr>
+<tr><td>10</td><td>Los Angeles Lakers</td><td>16</td><td>115.8</td><td>112.0</td><td><b>3.9</b></td><td>103.0</td></tr>
+</table>
+<p>League average OffEff 111.1, tempo 102.3. League-average prior only, no last-season prior yet, so early-season team order is noisy.</p>
+<h2>GM acquisition board</h2>
+<p>Tiers are set by thresholds on RPR, efficiency at usage, defense, and availability, not by reputation. No contracts, salaries, age, or height/weight in v1.</p>
+<h3>Franchise cornerstone (6)</h3><p>Victor Wembanyama (San Antonio Spurs, RPR 11.80), Giannis Antetokounmpo (Miami Heat, RPR 9.45), Nikola Jokic (Denver Nuggets, RPR 8.87), Jamal Murray (Denver Nuggets, RPR 8.59), Luka Doncic (Los Angeles Lakers, RPR 8.34), Tyrese Maxey (Philadelphia 76ers, RPR 8.24)</p>
+<h3>All-Star level (15)</h3><p>Walker Kessler (Los Angeles Lakers, RPR 7.97), Alperen Sengun (Houston Rockets, RPR 7.67), Zion Williamson (New Orleans Pelicans, RPR 7.61), Bam Adebayo (Miami Heat, RPR 7.42), Davion Mitchell (Miami Heat, RPR 7.10), Cooper Flagg (Dallas Mavericks, RPR 7.05), Anthony Davis (Washington Wizards, RPR 6.99), Cade Cunningham (Detroit Pistons, RPR 6.90), Evan Mobley (Cleveland Cavaliers, RPR 6.89), Karl-Anthony Towns (New York Knicks, RPR 6.87)</p>
+<h3>High-value starter (41)</h3><p>Devin Booker (Phoenix Suns, RPR 6.00), Miles Bridges (Phoenix Suns, RPR 6.00), Dyson Daniels (Atlanta Hawks, RPR 5.93), Duncan Robinson (Detroit Pistons, RPR 5.80), Pascal Siakam (Indiana Pacers, RPR 5.78), Deni Avdija (Portland Trail Blazers, RPR 5.72), Donovan Mitchell (Cleveland Cavaliers, RPR 5.62), Wendell Carter Jr. (Orlando Magic, RPR 5.56), Brook Lopez (LA Clippers, RPR 5.56), Onyeka Okongwu (Atlanta Hawks, RPR 5.50)</p>
+<h3>Undervalued / buy-low (31)</h3><p>Stephen Curry (Golden State Warriors, RPR 9.78), Mo Bamba (Utah Jazz, RPR 6.90), Jarrett Allen (Cleveland Cavaliers, RPR 6.30), Jalen Smith (Chicago Bulls, RPR 6.15), Cam Spencer (Memphis Grizzlies, RPR 5.78), Ziaire Williams (Los Angeles Lakers, RPR 5.29), Ty Jerome (Memphis Grizzlies, RPR 5.26), Daniel Gafford (Dallas Mavericks, RPR 5.06), Jaxson Hayes (Utah Jazz, RPR 4.79), Trey Murphy III (New Orleans Pelicans, RPR 4.56)</p>
+<h3>Elite role player (24)</h3><p>Kyshawn George (Washington Wizards, RPR 3.99), De&#x27;Aaron Fox (San Antonio Spurs, RPR 3.97), Devin Vassell (San Antonio Spurs, RPR 3.87), Desmond Bane (Orlando Magic, RPR 3.82), Toumani Camara (Portland Trail Blazers, RPR 3.75), James Harden (Cleveland Cavaliers, RPR 3.59), Damian Lillard (Portland Trail Blazers, RPR 3.58), Trae Young (Washington Wizards, RPR 3.53), Jonathan Kuminga (Minnesota Timberwolves, RPR 3.50), Cameron Boozer (Memphis Grizzlies, RPR 3.45)</p>
+<h3>Overvalued / avoid (56)</h3><p>Franz Wagner (Orlando Magic, RPR 4.05), Nickeil Alexander-Walker (Atlanta Hawks, RPR 3.71), Scottie Barnes (Toronto Raptors, RPR 3.50), Yaxel Lendeborg (Golden State Warriors, RPR 3.48), RJ Barrett (Toronto Raptors, RPR 3.25), Keyonte George (Utah Jazz, RPR 3.24), Jalen Johnson (Atlanta Hawks, RPR 2.95), Julius Randle (Brooklyn Nets, RPR 2.81), Tyler Herro (Milwaukee Bucks, RPR 2.58), T.J. McConnell (Indiana Pacers, RPR 2.30)</p>
+
+<p><small>Built Nov 20, 2026. Box-score only: no tracking, no on/off, no opponent adjustment at player level. Full method in the README.</small></p>
+</body>
+</html>
