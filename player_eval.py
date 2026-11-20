@@ -24,7 +24,8 @@ and adds per player:
     split OREB/DREB, PF per 36.
   - Volume vs efficiency quadrant (%Poss vs ORtg_full) and the RPR
     component breakdown (scoring, playmaking, defense, rebounding
-    terms, which sum to RPR) so each RPR can be explained.
+    terms, which sum to RPR v1.1; the scoring term uses ORtg_adj)
+    so each RPR can be explained.
   - Per-36 for all counting stats.
   - Consistency from game logs (never invented): std dev of points
     per game, games with 20+ / 30+ points.
@@ -328,9 +329,16 @@ def evaluate(profiles, game_map):
         gp = tot["gp"]
         poss_used = tot["fga"] + 0.44 * tot["fta"] + tot["to"]
         poss_pg = poss_used / gp if gp else 0.0
-        # RPR component breakdown (sums to RPR)
-        scoring = ((ortg_simple - 100) * poss_pg / 100
-                   if ortg_simple is not None else None)
+        # RPR component breakdown (sums to RPR v1.1). The scoring
+        # term uses ORtg_adj (shrunk, opponent-adjusted), not the
+        # raw simplified ORtg, so the four terms sum to ratings.rpr
+        # (v1.1), not to rpr_v1. Falls back to ortg_simple only
+        # for profiles written before v1.1 existed.
+        ortg_adj = ratings.get("ortg_adj")
+        scoring = (((ortg_adj if ortg_adj is not None else ortg_simple)
+                    - 100) * poss_pg / 100
+                   if (ortg_adj is not None or ortg_simple is not None)
+                   else None)
         playmaking = 0.5 * (pg["ast"] - pg["to"])
         defense = pg["stl"] + pg["blk"]
         rebounding = 0.25 * pg["reb"]
@@ -421,6 +429,7 @@ def write_csv(profiles, out_path):
     fields = ["athlete_id", "name", "team", "position", "gp", "min_pct",
               "mpg", "pts_pg", "reb_pg", "ast_pg", "stl_blk_pg",
               "ortg_simple", "ortg_full", "ortg_diff", "poss_pct", "rpr",
+              "rpr_v1", "rpr_value",
               "is_rookie", "experience_years",
               "rpr_scoring", "rpr_playmaking", "rpr_defense",
               "rpr_rebounding", "quadrant", "ts_pct", "efg_pct",
@@ -450,6 +459,8 @@ def write_csv(profiles, out_path):
                 "ortg_full": f(ev["ortg_full"]),
                 "ortg_diff": f(ev["ortg_diff"]),
                 "poss_pct": f(r.get("poss_pct")), "rpr": f(r.get("rpr")),
+                "rpr_v1": f(r.get("rpr_v1")),
+                "rpr_value": f(r.get("rpr_value")),
                 "is_rookie": 1 if p.get("is_rookie") else 0,
                 "experience_years": (
                     p.get("experience_years")
@@ -508,8 +519,14 @@ def main():
                          "Dean Oliver / Basketball-Reference style ORtg "
                          "in points form (see player_eval.py _oliver_ortg), "
                          "box-score only; no play-by-play, no opponent "
-                         "adjustment. "
+                         "adjustment on ortg_full itself. "
                          "ortg_simple is the base simplified ORtg. "
+                         "ratings.rpr is RPR v1.1 (ORtg shrunk toward "
+                         "the league average, K = 200 possessions used, "
+                         "and opponent-adjusted; old value kept as "
+                         "rpr_v1, value delivered as rpr_value = RPR "
+                         "v1.1 * GP / 82). The RPR component breakdown "
+                         "sums to RPR v1.1. "
                          "Trending window is the last 7 days of games "
                          "in the data."),
                "players": ev_profiles}

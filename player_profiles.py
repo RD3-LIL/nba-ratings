@@ -65,6 +65,37 @@ Ratings (added Nov 10, 2026, KenPom-style, from the same box scores):
       player about +1 to +3, below average about 0 or negative.
       None when ORtg is None (no possessions used).
 
+  RPR v1.1 (Nov 20, 2026; research report sections 2.0, 2.1, 2.6):
+  the same formula, but ORtg is first shrunk toward the
+  league-average ORtg and adjusted for the defences faced.
+  ORtg_shrunk = (PossUsed * ORtg + K * league ORtg) / (PossUsed + K),
+  K = 200 possessions used. Split-half calibration on this season
+  (216 players, first half of games predicting second half) gave
+  best K = 150 by MSE (207.5 vs 295.8 unshrunk) with the curve
+  essentially flat from 150 to 250, so 200 is the midpoint,
+  chosen for robustness, not fitted to the leaderboard. The
+  prior is the league-average simple ORtg computed from this
+  season's data (100.25 on the Nov 20 run); there is no prior
+  season in this project, so rookies and veterans alike shrink
+  to the same league average, and that is stated, not hidden.
+  OppAdj = possessions-weighted mean of (opponent AdjD - league
+  average AdjD) over the games the player played, where a
+  player's possessions faced in a game = game possessions *
+  (player minutes / team minutes in that game), and AdjD comes
+  from the same damped Gauss-Seidel solve team_ratings.py runs
+  (prior weight 300 possessions, home court 0). OppAdj is itself
+  shrunk toward 0 with K = 500 possessions faced:
+  OppAdj = OppAdj_raw * poss_faced / (poss_faced + 500).
+  ORtg_adj = ORtg_shrunk - OppAdj (scoring against defences
+  better than league average, AdjD below average, is credited
+  up). RPR v1.1 uses ORtg_adj; the old value is kept in parallel
+  as rpr_v1, and ratings.rpr IS v1.1. RPR_value = RPR v1.1 * GP / 82
+  is reported separately ("how much value delivered so far") and
+  is never baked into the rating. TS% and 3P% are also shrunk
+  toward league rates for display (TS% m = 170 scoring attempts,
+  3P% m = 750 attempts): ts_pct_shrunk, fg3_pct_shrunk. No
+  black-box metric (EPM, LEBRON, BPM, tracking) enters v1.1.
+
 DNP handling: a player with didNotPlay true, or with an empty stats
 array, does not count as a game played and contributes nothing.
 
@@ -101,6 +132,15 @@ RAW_DIR = DATA / "raw" / "summary"
 
 STAT_NAMES = ["MIN", "PTS", "FG", "3PT", "FT", "REB", "AST", "TO",
               "STL", "BLK", "OREB", "DREB", "PF", "+/-"]  # NBA adds +/-; ignored, indexed by name
+
+# RPR v1.1 shrinkage constants (see module docstring for how they
+# were chosen). K_ORtg = 200 possessions used; K_OPP_ADJ = 500
+# possessions faced; TS% m = 170 scoring attempts; 3P% m = 750
+# attempts (reliability 0.7, report section 2.0).
+RPR_V11_K_ORTG = 200.0
+RPR_V11_K_OPP_ADJ = 500.0
+RPR_V11_M_TS = 170.0
+RPR_V11_M_FG3 = 750.0
 
 # Totals fields, in the order they are stored on a profile.
 TOTAL_FIELDS = ["gp", "gs", "min", "pts", "fgm", "fga", "fg3m", "fg3a",
@@ -182,6 +222,8 @@ def compute_rpr(ortg, poss_used_per_game, per_game):
         + 0.25 * REB per game
     Baseline ORtg 100 is about average. None when ORtg is None.
     This is NOT KenPom's kPOY; that formula is proprietary.
+    v1 passes the raw ORtg; v1.1 passes ORtg_adj (shrunk and
+    opponent-adjusted). The formula itself is unchanged.
     """
     if ortg is None:
         return None
@@ -191,12 +233,40 @@ def compute_rpr(ortg, poss_used_per_game, per_game):
             + 0.25 * per_game["reb"])
 
 
+def _game_possessions(game):
+    """Possessions in a parsed game, mean of both sides.
+
+    Same definition as team_ratings.possessions: FGA - ORB + TOV
+    + 0.44 * FTA. None when the stats are missing or zero.
+    """
+    poss = []
+    for side in ("home", "away"):
+        stats = (game or {}).get(f"{side}_stats") or {}
+        try:
+            p = (stats["fga"] - stats["orb"] + stats["tov"]
+                 + 0.44 * stats["fta"])
+        except (KeyError, TypeError):
+            return None
+        poss.append(p)
+    if not poss or min(poss) <= 0:
+        return None
+    return sum(poss) / len(poss)
+
+
+def _shrink_rate(makes, attempts, league_rate, m):
+    """(makes + m * league_rate) / (attempts + m), or None."""
+    if not attempts:
+        return None
+    return (makes + m * league_rate) / (attempts + m)
+
+
 def load_roster_map(data_dir=DATA):
     """athlete_id -> roster record, or {} if rosters not pulled yet.
 
-    Matched by athlete_id only: the box-score team assignments
-    have ESPN's scrambled teams in places, so a roster's team
-    name must never override the team a player played for.
+    Matched by athlete_id only: players can change teams
+    mid-season (e.g. Carson Cooper), so a roster's team
+    name must never override the team a player played for
+    in the box scores.
     A player on no current roster (waived, etc.) gets no record
     and keeps experience_years None / is_rookie False.
     """
@@ -265,6 +335,11 @@ def aggregate_players(data_dir=DATA, season_filter=None):
     working = {}
     # athlete_id -> set of (season, team_id), to flag mid-season moves
     teams_by_athlete = {}
+    # RPR v1.1 opponent exposure: (athlete_id, season, team_id) ->
+    # [(opponent team name, possessions faced in that game)].
+    # Possessions faced = game possessions * (player minutes /
+    # team minutes in that game). Filled during the raw loop below.
+    exposure = {}
 
     for raw_path in raw_files:
         event_id = raw_path.stem
@@ -288,10 +363,29 @@ def aggregate_players(data_dir=DATA, season_filter=None):
             report["games_included"].get(season, 0) + 1)
 
         players = summary.get("boxscore", {}).get("players", []) or []
+        game_poss = _game_possessions(game)
         for team_entry in players:
             team = team_entry.get("team", {}) or {}
             team_id = str(team.get("id", ""))
             team_name = team.get("displayName", "")
+            # Opponent for this game, and this team's total minutes
+            # in it, for the v1.1 opponent-exposure tracking.
+            opp_name = None
+            for other in players:
+                if other is not team_entry:
+                    opp_name = ((other.get("team", {}) or {})
+                                .get("displayName", ""))
+                    break
+            team_min_game = 0
+            for _g in team_entry.get("statistics", []) or []:
+                _names = _g.get("names", []) or STAT_NAMES
+                _idx = {n: i for i, n in enumerate(_names)}
+                for _row in _g.get("athletes", []) or []:
+                    if _row.get("didNotPlay") or not _row.get("stats"):
+                        continue
+                    _i = _idx.get("MIN")
+                    if _i is not None and _i < len(_row["stats"]):
+                        team_min_game += _parse_int(_row["stats"][_i]) or 0
             for group in team_entry.get("statistics", []) or []:
                 names = group.get("names", []) or STAT_NAMES
                 idx = {name: i for i, name in enumerate(names)}
@@ -356,6 +450,11 @@ def aggregate_players(data_dir=DATA, season_filter=None):
                     report["player_rows"] += 1
                     teams_by_athlete.setdefault(athlete_id, set()).add(
                         (season, team_id))
+                    if (opp_name and game_poss and team_min_game
+                            and minutes):
+                        exposure.setdefault(key, []).append(
+                            (opp_name,
+                             game_poss * minutes / team_min_game))
 
     for athlete_id, teams in teams_by_athlete.items():
         seasons = {}
@@ -434,8 +533,55 @@ def aggregate_players(data_dir=DATA, season_filter=None):
             team_totals.setdefault(key, {"fga": 0, "fta": 0, "to": 0,
                                          "min": 0, "games": 0})
             team_totals[key]["min"] += profile["totals"]["min"]
+    # --- RPR v1.1 inputs: league priors and opponent AdjD. ---
+    # League-average simple ORtg / TS% / 3P% per season, from the
+    # profiles themselves (no prior season exists in this project).
+    league_prior = {}
+    for season, profiles in profiles_by_season.items():
+        tot_pts = sum(p["totals"]["pts"] for p in profiles)
+        tot_pu = sum(possessions_used(p["totals"]) for p in profiles)
+        tot_tsa = sum(p["totals"]["fga"] + 0.44 * p["totals"]["fta"]
+                      for p in profiles)
+        tot_fg3m = sum(p["totals"]["fg3m"] for p in profiles)
+        tot_fg3a = sum(p["totals"]["fg3a"] for p in profiles)
+        league_prior[season] = {
+            "ortg": (100 * tot_pts / tot_pu if tot_pu else 110.0),
+            # Points per scoring attempt (TSA = FGA + 0.44*FTA);
+            # TS% = (PTS / TSA) / 2.
+            "ppa": (tot_pts / tot_tsa if tot_tsa else 1.0),
+            "fg3_pct": (tot_fg3m / tot_fg3a if tot_fg3a else 0.35),
+        }
+    # Opponent AdjD from the same solve team_ratings.py runs
+    # (damped Gauss-Seidel, prior weight 300 possessions, home
+    # court 0). If the solve cannot run, OppAdj falls back to 0
+    # and v1.1 is just the shrunk RPR; that fallback is logged
+    # in the report, never silent in the output (opp_adj = 0.0
+    # with poss_faced > 0 would be the tell).
+    adj_d_by_team = {}
+    league_adj_d = None
+    try:
+        import team_ratings as _tr
+        _games_path = Path(data_dir) / "games_2026_27.json"
+        _games = json.loads(_games_path.read_text())
+        _games = [g for g in _games
+                  if not (g.get("home_score") == 0
+                          and g.get("away_score") == 0)
+                  and not g.get("stats_missing")]
+        _teams, _league_o, _league_t = _tr.solve(_games)
+        adj_d_by_team = {n: t["adj_d"] for n, t in _teams.items()}
+        if adj_d_by_team:
+            league_adj_d = (sum(adj_d_by_team.values())
+                            / len(adj_d_by_team))
+    except Exception as exc:  # noqa: BLE001 - OppAdj fallback, see above
+        print(f"RPR v1.1: team_ratings solve unavailable ({exc}), "
+              f"opponent adjustment set to 0")
+        adj_d_by_team = {}
+        league_adj_d = None
+
     roster_map = load_roster_map(data_dir)
     for season, profiles in profiles_by_season.items():
+        prior = league_prior.get(season, {"ortg": 110.0, "ppa": 1.0,
+                                          "fg3_pct": 0.35})
         for profile in profiles:
             totals = profile["totals"]
             team = team_totals.get((season, profile["team"]),
@@ -452,16 +598,69 @@ def aggregate_players(data_dir=DATA, season_filter=None):
             profile["height_in"] = rec.get("height_in")
             profile["weight_lbs"] = rec.get("weight_lbs")
             ortg = compute_ortg(totals)
-            poss_used_pg = (possessions_used(totals) / totals["gp"]
+            poss_used = possessions_used(totals)
+            poss_used_pg = (poss_used / totals["gp"]
                             if totals["gp"] else 0.0)
             team_games = team["games"]
+            # RPR v1.1: shrink ORtg toward the league-average
+            # prior, then adjust for the defences faced.
+            if ortg is None:
+                ortg_shrunk = None
+                ortg_adj = None
+                opp_adj = None
+                opp_adj_raw = None
+                poss_faced = 0.0
+            else:
+                ortg_shrunk = (
+                    (poss_used * ortg
+                     + RPR_V11_K_ORTG * prior["ortg"])
+                    / (poss_used + RPR_V11_K_ORTG))
+                _exp = exposure.get(
+                    (profile["athlete_id"], season, profile["team_id"]),
+                    [])
+                poss_faced = sum(pf for _, pf in _exp)
+                if poss_faced and league_adj_d is not None:
+                    opp_adj_raw = sum(
+                        (adj_d_by_team.get(opp, league_adj_d)
+                         - league_adj_d) * pf
+                        for opp, pf in _exp) / poss_faced
+                    opp_adj = (opp_adj_raw * poss_faced
+                               / (poss_faced + RPR_V11_K_OPP_ADJ))
+                else:
+                    opp_adj_raw = 0.0
+                    opp_adj = 0.0
+                ortg_adj = ortg_shrunk - opp_adj
+            rpr_v1 = compute_rpr(ortg, poss_used_pg, profile["per_game"])
+            rpr_v11 = compute_rpr(ortg_adj, poss_used_pg,
+                                  profile["per_game"])
+            # Shrunk shooting percentages for display (TS% shrunk
+            # in points-per-scoring-attempt space, m = 170
+            # attempts; 3P% m = 750 attempts, report section 2.0).
+            _tsa = totals["fga"] + 0.44 * totals["fta"]
+            profile["shooting"]["ts_pct_shrunk"] = (
+                ((totals["pts"] + RPR_V11_M_TS * prior["ppa"])
+                 / (_tsa + RPR_V11_M_TS) / 2)
+                if _tsa else None)
+            profile["shooting"]["fg3_pct_shrunk"] = _shrink_rate(
+                totals["fg3m"], totals["fg3a"], prior["fg3_pct"],
+                RPR_V11_M_FG3)
             profile["ratings"] = {
                 "ortg": ortg,
+                "ortg_shrunk": ortg_shrunk,
+                "ortg_adj": ortg_adj,
+                "opp_adj": opp_adj,
+                "opp_adj_raw": opp_adj_raw,
+                "poss_faced": round(poss_faced, 1),
                 "poss_pct": compute_usage(totals, team),
                 "min_pct": (100 * totals["min"] / (team_games * 48)
                             if team_games else None),
-                "rpr": compute_rpr(ortg, poss_used_pg,
-                                   profile["per_game"]),
+                # ratings.rpr IS RPR v1.1; rpr_v1 is the old value
+                # kept in parallel so regressions are visible.
+                "rpr": rpr_v11,
+                "rpr_v1": rpr_v1,
+                "rpr_v11": rpr_v11,
+                "rpr_value": (rpr_v11 * totals["gp"] / 82
+                              if rpr_v11 is not None else None),
             }
 
     for season in profiles_by_season:
@@ -492,7 +691,18 @@ def write_players_json(season, profiles, games_included, out_path):
             "zero. DNP players are excluded. ratings.ortg is a "
             "simplified ORtg (points per 100 possessions used, no "
             "assist credit), an approximation of KenPom's full Dean "
-            "Oliver formula. ratings.rpr is our own single-number "
+            "Oliver formula. ratings.rpr IS RPR v1.1 (Nov 20, 2026): "
+            "ORtg shrunk toward the league-average ORtg (K = 200 "
+            "possessions used; prior is this season's league average, "
+            "no prior season exists in this project) and adjusted "
+            "for the defences faced (OppAdj, shrunk toward 0 with "
+            "K = 500 possessions faced; see player_profiles.py "
+            "docstring). ratings.rpr_v1 is the old unshrunk, "
+            "unadjusted RPR, kept in parallel. ratings.rpr_value "
+            "= RPR v1.1 * GP / 82 (value delivered so far, "
+            "separate from the per-game rating). shooting.ts_pct_shrunk "
+            "and fg3_pct_shrunk are shrunk toward league rates "
+            "(m = 170 / 750 attempts). RPR is our own single-number "
             "rating, not KenPom's proprietary kPOY."
         ),
     }
@@ -515,7 +725,9 @@ def write_players_csv(season, profiles, out_path):
               "fg3m", "fg3a", "ftm", "fta", "reb", "oreb", "dreb",
               "ast", "to", "stl", "blk", "pf", "pts_pg", "reb_pg",
               "ast_pg", "pts_per36", "fg_pct", "fg3_pct", "ft_pct", "efg_pct",
-              "ts_pct", "ortg", "poss_pct", "min_pct", "rpr",
+              "ts_pct", "ts_pct_shrunk", "fg3_pct_shrunk",
+              "ortg", "ortg_shrunk", "ortg_adj", "opp_adj",
+              "poss_pct", "min_pct", "rpr", "rpr_v1", "rpr_value",
               "experience_years", "is_rookie", "age", "height_in",
               "weight_lbs"]
     with open(out_path, "w", newline="") as handle:
@@ -564,9 +776,27 @@ def write_players_csv(season, profiles, out_path):
                             if shooting["efg_pct"] is not None else ""),
                 "ts_pct": (round(shooting["ts_pct"], 3)
                            if shooting["ts_pct"] is not None else ""),
+                "ts_pct_shrunk": (
+                    round(shooting["ts_pct_shrunk"], 3)
+                    if shooting.get("ts_pct_shrunk") is not None else ""),
+                "fg3_pct_shrunk": (
+                    round(shooting["fg3_pct_shrunk"], 3)
+                    if shooting.get("fg3_pct_shrunk") is not None else ""),
                 "ortg": (round(profile["ratings"]["ortg"], 1)
                          if profile["ratings"]["ortg"] is not None
                          else ""),
+                "ortg_shrunk": (
+                    round(profile["ratings"]["ortg_shrunk"], 1)
+                    if profile["ratings"]["ortg_shrunk"] is not None
+                    else ""),
+                "ortg_adj": (
+                    round(profile["ratings"]["ortg_adj"], 1)
+                    if profile["ratings"]["ortg_adj"] is not None
+                    else ""),
+                "opp_adj": (
+                    round(profile["ratings"]["opp_adj"], 2)
+                    if profile["ratings"]["opp_adj"] is not None
+                    else ""),
                 "poss_pct": (round(profile["ratings"]["poss_pct"], 1)
                              if profile["ratings"]["poss_pct"] is not None
                              else ""),
@@ -575,6 +805,13 @@ def write_players_csv(season, profiles, out_path):
                             else ""),
                 "rpr": (round(profile["ratings"]["rpr"], 2)
                         if profile["ratings"]["rpr"] is not None else ""),
+                "rpr_v1": (round(profile["ratings"]["rpr_v1"], 2)
+                           if profile["ratings"]["rpr_v1"] is not None
+                           else ""),
+                "rpr_value": (
+                    round(profile["ratings"]["rpr_value"], 2)
+                    if profile["ratings"]["rpr_value"] is not None
+                    else ""),
                 "experience_years": (
                     profile.get("experience_years")
                     if profile.get("experience_years") is not None
@@ -656,7 +893,8 @@ def print_profile(profile):
     print(f'    ORtg {"%.1f" % ortg if ortg is not None else "-"} (approx) '
           f'%Poss {"%.1f%%" % poss if poss is not None else "-"} '
           f'%Min {"%.1f%%" % min_pct if min_pct is not None else "-"} '
-          f'RPR {"%.2f" % rpr if rpr is not None else "-"}')
+          f'RPR v1.1 {"%.2f" % rpr if rpr is not None else "-"} '
+          f'(v1 {"%.2f" % r.get("rpr_v1") if r.get("rpr_v1") is not None else "-"})')
 
 
 def main(argv=None):

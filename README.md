@@ -56,14 +56,44 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
   20% is average, 25% a go-to guy.
 - %Min = player MIN / (team games x 48). NBA games are 48 minutes,
   not 40. Slightly high in overtime games.
-- RPR = our own single-number rating, in the spirit of KenPom's kPOY
-  but a different, documented formula (kPOY is proprietary):
-  (ORtg - 100) * poss used per game / 100
+- RPR v1.1 (Nov 20, 2026) = our own single-number rating, in the
+  spirit of KenPom's kPOY but a different, documented formula (kPOY
+  is proprietary). The formula is unchanged from v1:
+  (ORtg_adj - 100) * poss used per game / 100
   + 0.5 * (AST - TO) per game
   + (STL + BLK) per game
   + 0.25 * REB per game.
-  Rough scale: a star is about +6 to +10, an average rotation player
-  about +1 to +3, below average about 0 or negative.
+  What changed is the ORtg that enters it. ORtg is first shrunk
+  toward the league-average ORtg:
+  ORtg_shrunk = (PossUsed * ORtg + K * league ORtg) / (PossUsed + K),
+  K = 200 possessions used. The prior is the league-average simple
+  ORtg computed from this season's data (100.25 on the Nov 20 run);
+  there is no prior season in this project, so rookies and veterans
+  alike shrink to the same league average. K was calibrated by
+  split-half: first half of each player's games predicting the
+  second half (216 players), best K = 150 by MSE (207.5 vs 295.8
+  unshrunk), curve flat from 150 to 250, so 200 is the midpoint,
+  chosen for robustness. Then it is adjusted for the defences
+  faced: OppAdj = possessions-weighted mean of (opponent AdjD -
+  league-average AdjD) over the games the player played, where a
+  player's possessions faced in a game = game possessions *
+  (player minutes / team minutes in that game), AdjD from the same
+  damped Gauss-Seidel solve as team_ratings.py. OppAdj is itself
+  shrunk toward 0 with K = 500 possessions faced. ORtg_adj =
+  ORtg_shrunk - OppAdj. On this data OppAdj is small (range -0.49
+  to +0.58, mean ~0): a player's schedule is close to league
+  average, so the adjustment is a nudge, not a shuffler. The big
+  v1 to v1.1 moves are shrinkage: extreme small-sample ORtgs get
+  pulled toward the average (e.g. Sam Hauser 135.7 -> 111.5,
+  Draymond Green 54.2 -> 87.6). The old value is kept in parallel
+  as rpr_v1 in the CSVs and JSON. Rough scale: a star is about +6
+  to +10, an average rotation player about +1 to +3, below average
+  about 0 or negative.
+- RPR_value = RPR v1.1 * GP / 82, reported separately ("how much
+  value delivered so far"). It is never baked into the rating.
+- TS% and 3P% are also shrunk toward league rates for display
+  (ts_pct_shrunk, fg3_pct_shrunk): TS% m = 170 scoring attempts,
+  3P% m = 750 attempts. They do not enter RPR.
 - Leaderboards use a minutes floor: at least 40% of team minutes and
   at least 1 game, so a two-minute cameo cannot top the ORtg list.
 - Team ratings: damped Gauss-Seidel solve (damping 0.5, prior weight
@@ -120,11 +150,16 @@ high-usage, best playmakers, best defenders (STL+BLK per 36), best
 rebounders (REB per 36), trending up, biggest ORtg lift from assist
 credit.
 
-Limits: box-score only. No tracking data, no on/off, no lineup data,
-no opponent adjustment at player level. ORtg_full runs hot for
-low-usage players (a hyper-efficient bench big on few possessions
-can post 130+), so always read it with %Poss; the high-usage lens
-is the meaningful one. Early season, about 15 games per team, so
+Limits: box-score only. No tracking data, no on/off, no lineup data.
+RPR v1.1 adjusts ORtg for opponent defence; ORtg_full does not, and
+ORtg_full runs hot for low-usage players (a hyper-efficient bench
+big on few possessions can post 130+), so always read it with %Poss;
+the high-usage lens is the meaningful one. The shrinkage prior is
+the league average for every player (no prior season in this
+project), so a known elite shooter on a hot streak is still pulled
+hard toward league average (e.g. Curry's 45.7% from three shrinks
+to 36.5% at m = 750); the shrunk percentages are display-only and
+do not enter RPR. Early season, about 15 games per team, so
 everything is noisy.
 
 ## GM Board (gm_board.py)
@@ -178,12 +213,17 @@ scoring. `python3 gm_board.py --need shooting` returns the top 10
 fits for a need (GP >= 8 required; shooting sorts by made 3s per 36,
 not raw attempts).
 
-This run: 6 Franchise cornerstone, 15 All-Star level, 41 High-value
-starter, 31 Undervalued / buy-low, 24 Elite role player, 56
-Overvalued / avoid, 302 Rotation / depth.
+This run (RPR v1.1, Nov 20, 2026): 3 Franchise cornerstone, 13
+All-Star level, 43 High-value starter, 18 Undervalued / buy-low,
+26 Elite role player, 52 Overvalued / avoid, 320 Rotation / depth.
+(In v1 it was 6 / 15 / 41 / 31 / 24 / 56 / 302. v1.1 compresses
+RPR toward the average, so fewer players clear the tier
+thresholds, which were set on v1's scale; the thresholds have
+not been recalibrated yet, and that is an open follow-up, not a
+silent change.)
 
-Limits: box-score only, no tracking, no on/off, no opponent
-adjustment at player level, early season (about 15 games per team).
+Limits: box-score only, no tracking, no on/off, early season (about
+15 games per team). RPR here is v1.1 (shrunk, opponent-adjusted).
 Tiers are a starting point for a target list, not a trade machine.
 
 ## Team Needs and Trade Fit (team_needs.py)
@@ -202,7 +242,9 @@ needs, and the *realistic* players who would fill them. Method follows
   (STL per 36, a weak proxy: steals reward gambling and miss
   positional defense, flagged as such), bench scoring (PTS per 36
   for players under 60% Min). Strength is 65th percentile or better,
-  weakness 35th or worse.
+  weakness 35th or worse. Each team page shows this profile as a
+  chart: horizontal percentile bars with a 60th percentile target
+  line, orange below 60, blue at or above.
 - **Needs are star-anchored.** The star is the highest-RPR player
   with at least 8 games and 40% of team minutes. Need = max(0, 60 -
   team skill percentile), weighted by base weights (shooting .25,
@@ -246,15 +288,18 @@ needs, and the *realistic* players who would fill them. Method follows
   Oscar Tshiebwe) or are Overvalued / avoid (Tarris Reed Jr.).
   "Realistic" is a data-only proxy for availability, never a claim
   a player is actually available.
-- **Star clarity and scrambled teams.** Team assignments are as
-  reported by ESPN's box scores and include known errors
-  (Giannis listed on Miami, LeBron on Philadelphia); profiles
-  are reported as fetched, not corrected, and the site says so
-  on the index and every team page. A team whose highest-RPR
-  qualifying player is under RPR 5.0 is labelled "No clear star
-  in this data" instead of naming a role player as the star
-  (six teams in this run: Golden State, Milwaukee, Brooklyn,
-  Charlotte, Toronto, Utah).
+- **Star clarity and the 2026 offseason.** Teams reflect the
+  2026-27 rosters after a busy 2026 offseason: Giannis
+  Antetokounmpo to Miami, LeBron James to Philadelphia, Walker
+  Kessler to the Lakers, and Anthony Davis to Washington, among
+  others, so 2026-27 teams look different from 2025-26. The site
+  says so on the index and every team page. A team whose
+  highest-RPR qualifying player is under RPR 5.0 is labelled
+  "No clear star in this data" instead of naming a role player
+  as the star (six teams in this run: Golden State, Milwaukee,
+  Brooklyn, Charlotte, Toronto, Utah). Those are rebuilding teams
+  that traded their star away, Milwaukee after trading Giannis,
+  not data errors.
 - **Calibration honesty.** The per-skill FitGain cap (2.0) and
   the usage penalty (0.02 per point over a 65 budget) are
   tiebreakers and safety rails, not fitted effects. On this run
@@ -299,9 +344,9 @@ not a lineup prediction. Early season, about 15 games per team, so
 percentiles are noisy and 3P% is the noisiest stat. Regular-season,
 average-opponent only. Weights and the concave shape are hand-set
 v1 choices, not fitted; v2 should fit them against post-trade Adj
-Net. The ESPN team assignments in this run have known quirks (for
-example Giannis is listed on Miami and LeBron on Philadelphia);
-profiles are reported as fetched, not corrected.
+Net. The 2026-27 teams reflect a busy 2026 offseason (Giannis to
+Miami, LeBron to Philadelphia, Kessler to the Lakers, Davis to
+Washington, among others).
 
 ## Rookies (fetch_rosters.py)
 
@@ -327,16 +372,17 @@ second-year players in 2026-27, not rookies: Cooper Flagg and
 Cedric Coward both show `experience.years == 2`. No veteran with
 5+ years is in the rookie list.
 
-Current best rookie by RPR (Nov 20, 2026, min 2 games and 40%
-of team minutes, same floor as every leaderboard): Aday Mara
-(Oklahoma City Thunder), RPR 3.72, 9.2 PPG in 15 games. Next are
-Yaxel Lendeborg (3.48), Cameron Boozer (3.45), and Meleek Thomas
-(3.44). The raw RPR leader among rookies is Norchad Omier
-(3.92), but on only 5 games at 9.2% of minutes, so he sits in
-the below-floor list, labelled as a small sample, not at the top
-of the ranking. The site has a Rookies section (top 10 by RPR
-plus notable below-floor rookies) and a Rookies only toggle on
-the top-100 players table.
+Current best rookie by RPR v1.1 (Nov 20, 2026, min 2 games and 40%
+of team minutes, same floor as every leaderboard): Cameron Boozer
+(Memphis Grizzlies), RPR 4.04, 16.6 PPG in 16 games. Next are
+Yaxel Lendeborg (3.67), Aday Mara (3.54), and Darryn Peterson
+(3.20). (In v1 Mara led at 3.72; v1.1's shrinkage moves the
+order.) The raw RPR leader among below-floor rookies is Norchad
+Omier (2.97 in v1.1, 3.92 in v1), but on only 5 games at 9.2% of
+minutes, so he sits in the below-floor list, labelled as a small
+sample, not at the top of the ranking. The site has a Rookies
+section (top 10 by RPR plus notable below-floor rookies) and a
+Rookies only toggle on the top-100 players table.
 
 Ambiguous cases, handled conservatively: Johni Broome's ESPN
 roster entry carries no experience value, so he is not labelled

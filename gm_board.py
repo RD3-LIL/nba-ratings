@@ -342,10 +342,13 @@ def main():
            "player_count": len(board),
            "notes": ("GM board v1, box-score only. Tiers and archetypes "
                      "are threshold rules in gm_board.py, never "
-                     "reputation. No contracts, salaries, age, height "
-                     "or weight: rosters not fetched in v1, contracts "
-                     "are not free anywhere. No tracking, on/off or "
-                     "opponent adjustment at player level."),
+                     "reputation. RPR here is RPR v1.1 (Nov 20, 2026): "
+                     "ORtg shrunk toward the league average (K = 200 "
+                     "possessions used) and opponent-adjusted; the tier "
+                     "thresholds were set on v1's scale and have not "
+                     "been recalibrated for v1.1's compressed scale. "
+                     "No contracts or salaries: contracts are not free "
+                     "anywhere. No tracking or on/off data."),
            "tiers": ["Franchise cornerstone", "All-Star level",
                      "High-value starter", "Undervalued / buy-low",
                      "Elite role player", "Overvalued / avoid",

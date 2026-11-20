@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to improve RPR: free data, ranked | NBA Ratings</title>
+<style>
+body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  max-width: 960px; margin: 0 auto; padding: 24px 16px 64px; color: #1f2328;
+  line-height: 1.5; }
+h1 { font-size: 2em; margin-bottom: 0; }
+h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 40px; }
+h3 { margin-top: 28px; }
+.subtitle { color: #656d76; margin-top: 4px; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+th, td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; }
+th { background: #f6f8fa; }
+nav.topnav { position: sticky; top: 0; z-index: 20; background: #fff;
+  border-bottom: 1px solid #d0d7de; padding: 8px 0; display: flex;
+  gap: 4px; flex-wrap: wrap; }
+nav.topnav a { padding: 4px 10px; border-radius: 6px; color: #0969da;
+  text-decoration: none; font-weight: 600; font-size: 14px; }
+nav.topnav a:hover { background: #eaeef2; }
+section, div[id] { scroll-margin-top: 54px; }
+table.ratings { font-size: 13px; }
+table.ratings th, table.ratings td { padding: 3px 8px; }
+table.ratings thead th { position: sticky; top: 40px; cursor: pointer;
+  user-select: none; }
+table.ratings thead th:hover { background: #eaeef2; }
+table.ratings thead th.sorted-asc::after { content: " \25B2"; }
+table.ratings thead th.sorted-desc::after { content: " \25BC"; }
+table.ratings tbody tr:nth-child(even) td { background: #f6f8fa; }
+table.ratings tbody tr.team { cursor: pointer; }
+table.ratings tbody tr.team:hover td { background: #eef4ff; }
+table.ratings td:nth-child(n+4) { text-align: right; font-variant-numeric: tabular-nums; }
+table.ratings td.net { font-weight: 700; }
+table.ratings td .sub-rank { display: block; font-size: 10px;
+  line-height: 1.1; color: #656d76; font-weight: 400; }
+tr.detail td { background: #fff; padding: 10px 14px; cursor: default; }
+.detail-box { margin-bottom: 8px; }
+table.gamelog { font-size: 13px; width: auto; margin: 0; }
+table.gamelog th, table.gamelog td { padding: 2px 10px; }
+table.gamelog td:nth-child(n+3) { text-align: right; }
+.detail-box h4 { margin: 14px 0 4px; }
+table.roster { font-size: 13px; width: auto; margin: 0; }
+table.roster th, table.roster td { padding: 2px 10px; }
+table.roster td:nth-child(n+3) { text-align: right; }
+a.team-link, a.team-page-link { color: #0969da; text-decoration: none; }
+a.team-link:hover, a.team-page-link:hover { text-decoration: underline; }
+.conftabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 4px; }
+button.conf-tab { padding: 3px 9px; font-size: 12px;
+  border: 1px solid #d0d7de; border-radius: 999px; background: #fff;
+  cursor: pointer; }
+button.conf-tab.active { background: #1f2328; color: #fff;
+  border-color: #1f2328; }
+input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
+  border: 1px solid #d0d7de; border-radius: 6px; margin: 4px 0; }
+.leaders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.leaders table { font-size: 15px; }
+.leaders td:nth-child(n+3) { text-align: right; }
+@media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
+.note { color: #656d76; font-size: 14px; }
+.skill-chart { max-width: 640px; margin: 8px 0 4px; }
+.skill-row { display: grid; grid-template-columns: 150px 1fr 36px;
+  align-items: center; gap: 10px; margin: 8px 0; }
+.skill-label { font-size: 15px; }
+.skill-track { position: relative; display: block; height: 16px;
+  background: #eaeef2; border-radius: 999px; overflow: visible; }
+.skill-fill { display: block; height: 100%; border-radius: 999px; }
+.skill-fill.below { background: #f59e0b; }
+.skill-fill.above { background: #38bdf8; }
+.skill-target { position: absolute; left: 60%; top: -3px; bottom: -3px;
+  width: 2px; background: #656d76; }
+.skill-value { text-align: right; font-variant-numeric: tabular-nums;
+  font-weight: 600; }
+.warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
+  border-radius: 6px; }
+footer { margin-top: 48px; color: #656d76; font-size: 14px;
+  border-top: 1px solid #d0d7de; padding-top: 16px; }
+
+pre { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px;
+  padding: 12px 14px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
+label { display: inline-block; margin: 4px 12px 4px 0; font-size: 14px; }
+input[type=number] { width: 90px; padding: 4px 6px; font-size: 14px;
+  border: 1px solid #d0d7de; border-radius: 6px; }
+button { padding: 5px 12px; font-size: 14px; border: 1px solid #d0d7de;
+  border-radius: 6px; background: #f6f8fa; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<h1>How to improve RPR: free data, ranked</h1>
+<p class="subtitle">Research read 20 November 2026, for the 2026-27 season (about
+15 games per team). The rule throughout: only add a source if the benefit
+clearly outweighs the cost, complexity, fragility, and noise. &larr;
+<a href="index.html">Back to NBA Ratings</a></p>
+
+<p><strong>Short answer: do not buy or bolt on a black-box metric.</strong>
+The worthwhile work is (1) shrinkage and opponent adjustment using data the
+project already has, (2) one careful, cached pull of NBA tracking, hustle,
+and shot-location data via <code>nba_api</code>, and (3) using free,
+pre-built RAPM / impact files (SportsDataverse
+<code>nba_player_impact</code>, DARKO, OpenRAPM) as a prior and validation
+benchmark, not as a daily ingredient.</p>
+
+<p>The single biggest RPR blind spot is defence, and the only honest fix at
+15 games is a <em>small, heavily shrunk</em> defence term from a
+prior-informed impact metric, not raw single-season RAPM, not raw on/off,
+and not a full EPM / LEBRON import. At 15 games every impact estimate is
+mostly prior; pretending otherwise is the main way this project would get
+worse while looking more sophisticated.</p>
+
+<section id="current-rpr"><h2>Where RPR stands now</h2>
+<p>The current formula (RPR v1.1 in this repo, see the note at the bottom):</p>
+<pre>RPR = (ORtg &minus; 100) &times; PossUsed/G / 100
+    + 0.5 &times; (AST &minus; TO)/G
+    + (STL + BLK)/G
+    + 0.25 &times; REB/G</pre>
+<p>ORtg is the fuller Oliver ORtg with assist credit. PossUsed/G is
+possessions used per game. Verified weaknesses: defence is STL+BLK only
+(misses positional defence, rim deterrence, point-of-attack defence);
+playmaking is AST&minus;TO only (misses creation gravity and spacing); no
+opponent adjustment at player level; no on/off; no tracking; no shot
+location; per-game volume leans on minutes (RPR correlates 0.64 with
+minutes share); and about 15-game samples are noisy.</p>
+<p class="note">Formula changes in the proposals below are labelled
+<strong>PROPOSAL</strong> where a coefficient is a choice, not a fact.
+Coefficients must be calibrated by the validation protocol in the
+Validation section, not taken as sourced facts.</p>
+</section>
+
+<section id="worthwhile"><h2>Worthwhile additions, ranked</h2>
+<table>
+<thead><tr><th>#</th><th>Addition</th><th>Why it earns its place</th><th>Cost / risk</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><strong>Shrinkage + opponent adjustment</strong> (no new source)</td>
+<td>Fixes the two cheapest blind spots (noise, opponent strength) with data
+already in the project. Zero new fragility. Every later addition is safer
+once rates are shrunk.</td>
+<td>About 1 day. Calibrate K by split-half.</td></tr>
+<tr><td>2</td><td><strong>stats.nba.com tracking / hustle / shot data via
+<code>nba_api</code></strong>, league-wide dashboards, cached daily</td>
+<td>Only source that adds <em>transparent, first-party</em> inputs for the
+two named gaps: creation beyond AST (potential assists, secondary assists,
+screen assists, drives) and defence beyond STL/BLK (deflections, contested
+shots, charges, loose balls, defended FG% vs. baseline), plus shot diet.
+One call per stat family per day.</td>
+<td>Medium fragility: undocumented limits, cloud-IP blocks, timeouts.
+Mitigate with caching, browser headers, residential run or GitHub-release
+fallback, ESPN fallback. About 2&ndash;3 days to build, minutes/day to run.</td></tr>
+<tr><td>3</td><td><strong>SportsDataverse <code>nba_player_impact</code> parquet</strong>
+as prior + benchmark</td>
+<td>Free, no key, no rate limit, one file download. Gives RAPM, adj-RAPM
+(shrunk to prior-season SPM, exactly the shrinkage RPR needs), SPM, BPM,
+WAR, and a DARKO-style projection side by side since 1997. Best free way to
+get a <em>stable</em> impact prior without scraping stats.nba.com
+yourself.</td>
+<td>Season-level file; verify 2026&ndash;27 build freshness mid-season. Use
+as prior/benchmark, not as a daily feed. About half a day.</td></tr>
+<tr><td>4</td><td><strong>DARKO leaderboard CSV</strong> as prior / benchmark</td>
+<td>Free CSV download, daily, Bayesian (exponential decay + Kalman filter)
+so it is <em>designed</em> for small samples and early-season updating;
+Box DPM vs. DPM split lets you see how much is on/off. Good second opinion
+on the defence prior.</td>
+<td>No bulk API; CSV is a leaderboard snapshot, join on name/ID carefully,
+version the file by date. About half a day.</td></tr>
+<tr><td>5</td><td><strong>Multi-year RAPM</strong> (nbarapm.com / OpenRAPM) as a
+low-weight prior only</td>
+<td>The most stable defence signal available; factor split
+(oTS / oTOV / oREB / dTS / dTOV / dREB) is genuinely informative. At
+&lambda; &le; 0.25 it can only nudge RPR.</td>
+<td>No verified bulk download for nbarapm.com; multi-year is mostly last
+season. Manual or OpenRAPM snapshot only.</td></tr>
+</tbody></table>
+</section>
+
+<section id="sources"><h2>What each free source adds</h2>
+<h3>stats.nba.com via <code>nba_api</code> (Python) &mdash; highest leverage</h3>
+<p>MIT-licensed Python wrapper around the undocumented JSON endpoints that
+power NBA.com stats, 130+ endpoints, no API key, no signup, $0.
+<code>pip install nba_api</code>. No documented rate limits, which is the
+problem: stats.nba.com throttles rapid requests and does not respond to many
+cloud-hosting IP ranges (AWS, GCP, Azure, Colab, and others). Independent
+testing in Nov 2026 found hustle and tracking-defence endpoints timing out
+after 45&ndash;90 s on a single request with a descriptive user agent and no
+browser headers. Practical rules: pause between requests, send full browser
+headers (Referer, User-Agent, <code>x-nba-stats-origin</code>), cache
+everything, fetch league-wide dashboards (one call per stat family per day)
+rather than one call per player. Reliability: medium-low as a daily
+dependency; endpoints break when the NBA changes headers/schemas, and some
+silently return empty responses. Mitigation: cache daily, keep ESPN as
+fallback, never let a failed tracking pull block the RPR update.</p>
+<p>Fields that matter, league-wide dashboards, one call each:
+<code>LeagueDashPtStats</code> (passing: passes, potential assists, assist
+points created, secondary assists; drives, touches, rebounding, shooting by
+dribbles / touch-time / defender distance, speed/distance),
+<code>LeagueDashPtDefend</code> / <code>PlayerDashPtShotDefend</code>
+(opponent FG% vs. baseline, defended attempts, by zone),
+<code>LeagueHustleStatsPlayer</code> (deflections, contested shots, loose
+balls recovered, charges drawn, screen assists, box-outs),
+<code>ShotChartDetail</code> (every shot with x/y coordinates, zone, shot
+type, defender distance), <code>LeagueDashLineups</code> (5-man lineup
+Net/Off/Def rating and possessions), and
+<code>LeagueDashPlayerStats</code> with
+<code>MeasureType=Defense/Advanced/Misc</code>.</p>
+
+<h3>Basketball-Reference advanced stats (BPM, VORP, PER, Win Shares)</h3>
+<p>Free to browse, no official API. Access is HTML scraping, or community
+scrapers. $0 to view; Stathead (the query/export layer) is paid and is not
+needed here. Sports Reference Terms of Use govern use, with a linked
+data-use and bot-traffic/limiting policy: respect robots.txt, &ge;3 s delays,
+cache, identify with a User-Agent, do not harm site performance, do not use
+for profit or a competing product. Reliability: high for the numbers
+themselves, low as a pipeline (HTML structure changes, blocks happen, no
+contract). Fields: TS%, eFG%, ORtg/DRtg, usage, PER, BPM (OBPM/DBPM), VORP,
+Win Shares/48, per-100 stats, shooting splits by zone, on/off. What it
+adds: almost nothing RPR does not already have. BPM 2.0 is a box-score
+regression <em>trained to predict RAPM</em>, a linear combination of the
+same box-score inputs RPR already uses. Its proper role is validation
+benchmark, not ingredient.</p>
+
+<h3>Dunks and Threes &mdash; EPM</h3>
+<p>Per-100-possession impact metric (O-EPM / D-EPM / EPM), updated nightly,
+covering every day since 2001&ndash;02. Two components: a statistical
+plus-minus (SPM) model built on "Estimated Skills", and a RAPM calculation.
+Web leaderboards are free to view; programmatic access is a
+token-authenticated API (<code>/api/v1/epm</code>,
+<code>/api/v1/epm-all</code>, <code>/api/v1/season-epm</code>).
+<strong>Cost not verified as free</strong>: the API requires a token, the
+site gates custom-date team ratings and other views behind subscription, and
+no subscription/API price was found in searches on 20 Nov 2026. Do not
+budget $0, and do not assume the token is free. API v1 is legacy and will be
+retired at the end of the 2026&ndash;27 season; new integrations should use
+v2 (<code>/api/v2/epm-actual</code>, <code>/api/v2/team-epm</code>).
+Responses support ETag / <code>If-None-Match</code> and gzip (4&ndash;8&times;
+smaller). Since 19 Oct 2026, season EPM is padded toward the player's
+<em>preseason Expected EPM</em> rather than replacement level. What it
+adds: the single best off-the-shelf defence term available (D-EPM) plus a
+validated overall impact number, but it is a black box whose SPM
+coefficients and RAPM prior are not public in full. Importing EPM wholesale
+would make RPR "EPM, plus some box score" and destroy the transparency that
+is RPR's reason to exist. Validation: prior-season EPM game-margin R&sup2;
+= 0.157 (90% CI .141&ndash;.174), team win% r = .778 in hoop-impact-bench,
+good, but not separated from LEBRON (.159), DARKO (.155), or BPM (.154)
+once bootstrap intervals are considered. Note: "DunkAPI" at dunkapi.com
+(500 free credits/month, $19/mo starter) is a <em>different, unrelated</em>
+product; do not confuse the two.</p>
+
+<h3>BBall-Index &mdash; LEBRON</h3>
+<p><strong>L</strong>uck-adjusted player <strong>E</strong>stimate using a
+<strong>B</strong>ox prior <strong>R</strong>egularized
+<strong>ON</strong>-off. Box-score prior (boxPIPM weights, stabilised by
+offensive archetype) + luck-adjusted RAPM. Reported as LEBRON / O-LEBRON /
+D-LEBRON (per 100 poss) and LEBRON WAR. Free interactive dashboards; the
+site lists seven free tools including the LEBRON Suite. <strong>No free bulk
+CSV download or public API was found.</strong> Full access is $5/month or
+$52.50/year. The 700+ talent grades (perimeter defence, interior defence,
+playmaking, screening, etc.) are the deeper product, but they are also
+behind the paywall/app. A daily pipeline would require either manual
+dashboard reads or scraping an app; neither is a supported feed. What it
+adds: D-LEBRON is a credible defence term; the talent grades are the
+<em>only</em> source in this report that directly measures <em>who</em> a
+player guards and how hard that assignment is, but that is exactly the part
+that is not freely exportable. Validation: prior-season LEBRON game-margin
+R&sup2; = 0.159 (.142&ndash;.175), team win% r = .770, statistically
+indistinguishable from EPM / BPM / DARKO.</p>
+
+<h3>nbarapm.com &mdash; pure and factor RAPM</h3>
+<p>Free site publishing RAPM (ridge regression of possession outcomes on who
+was on the floor, no box score at all) in rolling windows (2/3/4/5-year,
+time-decay) and a six-factor decomposition:
+<code>RAPM = oTS + oTOV + oREB + dTS + dTOV + dREB</code>. Free website,
+per-player pages and leaderboards. <strong>No bulk CSV/API download URL was
+verified</strong> on 20 Nov 2026; the datasets page is rendered in-page.
+Treat as "free to read, not free to ingest" unless a download link is found
+on the site itself. Cost $0 to view. Reliability medium: a one-person /
+community site; update cadence and long-term availability are not
+guaranteed. What it adds: the <em>cleanest</em> defence signal
+conceptually (DRAPM sees rim deterrence, point-of-attack defence, help,
+everything the box score misses) and a factor split that tells you
+<em>how</em> a player helps. But at 15 games a 1-year RAPM is mostly noise,
+and the multi-year versions that are stable are mostly <em>last
+season's</em> information. Stability evidence: single-season RAPM
+year-over-year rank repeatability is Spearman <strong>0.322</strong>
+(2024&ndash;25 to 2025&ndash;26, 293 players with &gt;2,000 possessions,
+SportsDataverse docs). The consensus is "never trust one season of RAPM; use
+multi-year and combine with box-score metrics".</p>
+
+<h3>Cleaning the Glass</h3>
+<p>Ben Falk's site: lineup and on/off stats with shot-by-location and
+play-context splits, garbage-time filtering, position-adjusted percentiles.
+Website only, <strong>no API</strong>. Most of the useful content is
+subscriber-only: $5/month after a 1-week free trial. High editorially,
+unusable as a pipeline: no export, no API, paywall. Lineups shown only with
+&ge;15 possessions; percentiles vs. lineups with &ge;100 possessions. What
+it adds: nothing RPR cannot get from stats.nba.com lineups plus its own
+play-by-play parsing, except CTG's cleaning (garbage-time removal,
+shot-location splits).</p>
+
+<h3>pbpstats / hoopR play-by-play</h3>
+<p>Two different things share the name. <strong>pbpstats (Python
+package)</strong>: open-source parser that scrapes play-by-play from
+stats.nba.com / data.nba.com, adds the lineup on the floor for every event,
+and splits games into possessions. Free, MIT-style open source. It inherits
+stats.nba.com fragility and needs one request per game (about 1,230
+games/season), so a daily refresh is heavy; a cached, incremental build is
+the only sane mode. <strong>pbpstats.com / PBP Stats API</strong>: the
+hosted API for the same derived possession/lineup/on-off/WOWY data.
+<strong>Paid/subscriber</strong> (no public price list found). Do not assume
+the API is free because the parser is. <strong>hoopR (R package,
+CRAN)</strong>: wraps ESPN, NBA Stats API, Basketball-Reference, and others.
+Its killer feature is not the live wrappers but the <strong>pre-built
+release loaders</strong> (<code>load_nba_pbp()</code>,
+<code>load_nba_shots()</code>, <code>load_nba_stats_possessions()</code>,
+<code>load_nba_player_impact()</code>) that pull whole seasons as CSV /
+Parquet / RDS from GitHub releases, "fast, no rate limits, NBA from 2002".
+The <code>nba_*()</code> live wrappers hit stats.nba.com and are "slow and
+sometimes blocked from cloud servers". hoopR is R; if the project is Python,
+use <code>sportsdataverse-py</code> instead (same data releases). What it
+adds: possession-level truth, the precondition for on/off, RAPM, opponent
+adjustment, and shot-quality work. But building and maintaining a possession
+engine is a <em>project</em>, not a data source; only take the pre-built
+releases, not the live scrape.</p>
+
+<h3>Shot-location / tracking data</h3>
+<p>There is no separate "shot location API"; it is three views of the same
+underlying data. <code>ShotChartDetail</code> via <code>nba_api</code>: every
+FGA with x/y (tenths of a foot, origin at hoop), zone, shot type, defender
+distance, shot-clock; $0, throttled. <code>load_nba_shots()</code> /
+<code>load_nba_stats_shots()</code> via hoopR / sportsdataverse-py: same
+shots, pre-compiled per season from GitHub releases; $0, no rate limit.
+ESPN PBP via hoopR <code>load_nba_pbp()</code>: shot coordinates when ESPN
+has them, plus play text; $0. Hawk-Eye / Second Spectrum raw tracking
+(player x/y 25&times;/s) is <strong>not public</strong>; do not plan around
+it. DunkAPI (<code>dunkapi.com</code>): REST/MCP, API key, 500 free
+credits/month, then $19/mo (10k credits); play-by-play 10 credits, shot
+chart 10 credits; every shot located since 2004 plus
+<code>expected_points</code> per shot. What it adds: shot diet (rim/mid/3
+mix), shot quality (expected eFG% from location), and shot-making over
+expected (<code>eFG% &minus; xeFG%</code>). This separates "good shooter"
+from "good shot-taker" and "lucky shooter", the single most actionable
+offensive refinement, because shooting percentages at 15 games are mostly
+noise.</p>
+
+<h3>On/off and lineup data</h3>
+<p>Free routes: stats.nba.com <code>LeagueDashLineups</code> + team/player
+dashboards (via <code>nba_api</code>); hoopR/sportsdataverse
+<code>load_nba_stats_lineups()</code> release files; ESPN PBP + pbpstats
+parser (build your own); CTG ($5/mo). What it adds: on/off is the
+<em>raw material</em> of RAPM, not a rating itself. Raw on/off at 15 games
+is dominated by teammates, opponent, garbage time, and shooting luck; the
+project already has team AdjO/AdjD, so a naive on/off term would mostly
+re-add team strength with noise. Its correct uses are (a) diagnostic, flag
+players whose RPR and on/off disagree violently, and (b) input to a
+regularised model (RAPM), never a direct additive term at full weight. A
+single player at 15 games has roughly 300&ndash;500 on-court possessions,
+an order of magnitude below what RAPM needs to separate players.</p>
+
+<h3>Other free APIs / datasets</h3>
+<p><strong>SportsDataverse pre-built player-impact files (best free RAPM
+route).</strong> GitHub releases,
+<code>nba_player_impact_{season}.parquet</code>, one row per
+player-team-season since 1997 with <code>o_rapm / d_rapm / rapm</code>,
+<code>o_adj_rapm / d_adj_rapm / adj_rapm</code> (RAPM shrunk toward the
+<em>previous season's</em> SPM instead of zero), SPM, BPM 2.0, WAR, and a
+DARKO-style Kalman projection (<code>boban_filtered_skill</code>,
+<code>boban_projected_rating</code>, <code>boban_projected_sd</code>).
+Fixed ridge penalty (2,683) so seasons compare; regular-season RAPM SD
+1.53&ndash;1.99 per 100. Also <code>nba_stats_possessions</code> (every
+possession with all 10 players) and <code>nba_stats_rolling_windows</code>.
+Loaders: <code>hoopR::load_nba_player_impact()</code> (R) or
+<code>sportsdataverse-py</code> (Python). Cost $0, no key, no rate limit
+(GitHub release download). Caveat: season-level files built from a live
+stats.nba.com scrape ("run from a residential IP, stats.nba.com hangs on
+cloud IPs"), so check how current the 2026&ndash;27 file is before treating
+it as daily data.</p>
+<p><strong>DARKO (darko.app).</strong> Free leaderboard with <strong>CSV
+downloads</strong> (leaderboard, team, compare, standings, WOWY, lineups,
+fantasy lab); no account mentioned for downloads. DPM is Bayesian
+(exponential decay + Kalman filter), inputs are box scores + tracking +
+BRef/NBA.com + pbpstats, coverage since 1996&ndash;97; Box DPM (box only)
+vs DPM (adds on-off). Published example from crawls: Jokic +7.1 DPM,
+Wembanyama +6.9 (Nov 2026). No documented bulk API; an MCP endpoint exists
+for AI assistants, not a data feed, so do not build a pipeline on it.</p>
+<p><strong>OpenRAPM (openrapm.com).</strong> Prior-informed RAPM by Nathan
+Walker (ex-GSW data science). Free site; bundled MIT-licensed snapshot in
+hoop-impact-bench. Prior-season OpenRAPM game-margin R&sup2; = 0.162
+(.146&ndash;.178), top-3 among public metrics.</p>
+<p><strong>FiveThirtyEight RAPTOR (archival).</strong>
+<code>modern_RAPTOR_by_player.csv</code> /
+<code>historical_RAPTOR_by_player.csv</code> (CC BY 4.0) via
+fivethirtyeight/data on GitHub. <strong>Stopped in 2023</strong>: useful for
+backtesting on past seasons, useless for 2026&ndash;27.</p>
+<p><strong>ESPN undocumented API</strong>
+(<code>site.api.espn.com</code>). No auth, JSON, scoreboard/summary (box
+score + PBP + win probability). The project already uses ESPN; this adds PBP
+and shot coordinates in some responses, but it is undocumented, no SLA, may
+change without notice, and adds little over <code>nba_api</code>
+tracking.</p>
+<p><strong>balldontlie API.</strong> Free tier covers teams/players/games;
+statistics, play-by-play, lineups, and injuries require paid tiers. Not
+recommended: a reseller of the same data, with the good parts paid.</p>
+<p><strong>Kaggle NBA datasets.</strong> Community uploads; provenance,
+licence, coverage, and correction behaviour must be checked per dataset.
+Stale by construction. Only for backtests, never for a live rating.</p>
+</section>
+
+<section id="formulas"><h2>Proposed formula changes</h2>
+<p>Notation: <code>Poss/G</code> = possessions <em>played</em> per game
+(about MIN/G &times; team pace / 48); <code>PossUsed/G</code> = possessions
+<em>used</em> (scoring attempts + turnovers + assist credit, Oliver sense).
+Any per-100-possession impact term must be multiplied by
+<code>Poss/G / 100</code> to become points-per-game (RPR's unit), and any
+term that re-uses box-score inputs already in RPR must be <em>netted</em>
+against the term it replaces, or it double-counts.</p>
+
+<h3>Shrinkage: the baseline that costs nothing (do this before adding any source)</h3>
+<p>At 15 games, raw ORtg and raw shooting percentages are mostly noise.
+Shrink every rate toward a prior before it enters RPR:</p>
+<pre>ORtg_shrunk  = (PossUsed &times; ORtg + K &times; ORtg_prior) / (PossUsed + K)
+  ORtg_prior = player's prior-season ORtg (or 110, league average,
+                for rookies / no history)
+  K &asymp; 150&ndash;250 possessions used  [PROPOSAL, calibrate by split-half]
+
+TS%_shrunk, 3P%_shrunk:  (Makes + m &times; LeagueRate) / (Attempts + m)
+  m &asymp; 170 for TS% (stabilises ~169 attempts),
+  m &asymp; 750 for 3P% at reliability 0.7,
+  or m &asymp; 480 at reliability ~0.5
+  At 15 games (typically 60&ndash;90 3PA) a player's raw 3P% should be
+  trusted at well under half weight.</pre>
+<p>Evidence: split-half analysis finds FT% stabilises at ~27 attempts, TS%
+at ~169, and 3P% "never reached 0.5 [reliability] within the samples real
+players have" up to 480 attempts; shrinkage cuts next-season prediction
+error by 53% for 3P% and 32% for FT% (CourtLens). The older KR-21 estimate
+is ~750 3PA for reliability 0.7, more than a full season's record for most
+players. <strong>Implication: never let a 15-game hot/cold shooting stretch
+move RPR by its full raw amount.</strong> Also shrink RPR itself toward a
+prior for low-minute players, and report a minutes floor: no full RPR rank
+for players under ~200 possessions played; show them as "provisional".</p>
+
+<h3>Opponent adjustment (uses existing team AdjO/AdjD, no new source)</h3>
+<pre>OppAdj = weighted mean of (opponent AdjD &minus; league-average AdjD)
+         over the player's minutes, weighted by possessions
+         faced vs. each opponent
+ORtg_adj = ORtg_shrunk &minus; OppAdj        [PROPOSAL: 1-for-1 subtraction]
+  Scoring 115 per 100 against defences that are on average 3 points
+  better than league average is credited as ~118.
+DefOppAdj (for the defence term): add back the quality of opposing
+  offences faced, symmetrically, using opponent AdjO.</pre>
+<p>Cost: one join of game logs to team AdjD. Fragility: zero new vendors.
+This is the highest benefit/cost change in the whole report and should be
+done before any external metric is considered. Caveat: team AdjD is itself
+estimated from the same ~15 games, so shrink <code>OppAdj</code> by the
+same logic (weight by possessions faced; shrink toward 0 with K &asymp;
+500 team-possessions faced).</p>
+
+<h3>Defence term, from D-EPM / DRAPM / D-LEBRON / DARKO-defence (the main prize)</h3>
+<p><strong>Replace, do not stack, the STL+BLK term.</strong> STL+BLK is a
+subset of what D-EPM/DRAPM measures (contests, deterrence, point-of-attack
+defence, help, rebounding value). Keeping both at full weight
+double-counts steals/blocks.</p>
+<pre>DefPts/G = D_impact_shrunk &times; Poss/G / 100
+  D_impact_shrunk = &lambda; &times; D_metric + (1 &minus; &lambda;) &times; D_box_prior
+  D_metric  = D-EPM (preferred: tracking SPM + RAPM, nightly,
+              season-padded) or DRAPM from a multi-year window,
+              or D-LEBRON, or DARKO defence
+  D_box_prior = a box-score defence prior, e.g. standardised
+                (STL+BLK)/Poss, keeps the term defined when the
+                external metric is missing
+  &lambda; = 0.25 at ~15 games, rising to 0.50 at a full season  [PROPOSAL]
+  &lambda;_eff = &lambda; &times; Poss / (Poss + 800)  [PROPOSAL]
+
+RPR_v2 = (ORtg_adj &minus; 100) &times; PossUsed/G / 100
+       + PlayTerm/G
+       + DefPts/G                         (replaces (STL+BLK)/G)
+       + 0.25 &times; REB/G                     (see rebound note)</pre>
+<p>Worked scale check (arithmetic only, no player data invented): a player
+with D-EPM +2.0 playing 30 min on a 100-possession-pace team plays ~62
+possessions; <code>DefPts/G = 2.0 &times; 0.62 = +1.24</code> points/game.
+That is the same order as <code>(STL+BLK)/G</code> for a good defender
+(~2.0), so the term does not swamp RPR, but at &lambda; = 0.25 the
+<em>incremental</em> move vs. the old term is ~&plusmn;0.3&ndash;0.6
+pts/game for most players, which is honest at this sample. If the defence
+term moves RPR by more than that at 15 games, the weight is too high.</p>
+<p><strong>Which D-metric?</strong> D-EPM first (nightly, season-padded
+toward preseason Expected EPM since Oct 2026, O/D split published).
+Multi-year DRAPM second (stable, but stale: it rates last season more than
+this one). D-LEBRON third (no bulk access). Never use single-season RAPM at
+&lambda; &gt; 0.25, and never use raw on/off as the D-metric.</p>
+<p><strong>Rebound note:</strong> keep <code>0.25 &times; REB/G</code> only
+if the D-metric chosen does <em>not</em> already include rebounding value.
+DRAPM's factor split includes dREB; EPM's tracking SPM includes
+rebounding. If using D-EPM/DRAPM, reduce or drop the separate rebound term
+for defence and keep rebound credit on the offensive side only (offensive
+rebounds already enter Oliver ORtg via points produced). This is a
+calibration decision, not a guess to bake in silently.</p>
+
+<h3>Playmaking term, from tracking passing data (<code>nba_api</code>)</h3>
+<p>Replace <code>0.5 &times; (AST &minus; TO)/G</code> with a creation term
+built from potential assists and secondary assists:</p>
+<pre>PotAST/G  = potential assists per game   (LeagueDashPtStats, Passing)
+SecAST/G  = secondary ("hockey") assists per game
+Creation/G = AST/G + 0.5 &times; (PotAST &minus; AST)/G + 0.5 &times; SecAST/G  [PROPOSAL]
+PlayTerm/G = 0.5 &times; (Creation/G &minus; TO/G)
+             + 0.25 &times; ScreenAST_pts/G ... (optional)</pre>
+<p>Rationale: (AST &minus; TO) credits only passes that ended in a make,
+punishing creators whose teammates miss and creators who make the pass
+<em>before</em> the assist. Potential assists stabilise faster than assists
+(more events per game) and capture creation gravity; screen assists credit
+bigs whose value is currently invisible except via REB. Keep the 0.5
+coefficient on the (Creation &minus; TO) core so the scale stays comparable
+to current RPR; the 0.5 weights on missed-potential-assists and secondary
+assists are <strong>PROPOSAL</strong>, they must be fitted against RAPM/EPM,
+and if they do not improve out-of-sample prediction they should be set to
+zero. A cheaper variant was considered and rejected: adding
+<code>0.5 &times; (AST &minus; TO)/G + 0.15 &times; (AST/G) &times;
+(teammate eFG% on assisted shots &minus; league eFG%)</code> is just
+shooting luck relabelled. Use PotAST or do not change the term. Also
+available from the same pull, for a <em>diagnostic</em> (not RPR) column:
+drives per game, touches, pass rate, and gravity/leverage scores where
+published, which explain <em>why</em> a playmaking term moved, without
+entering the formula.</p>
+
+<h3>Shot-quality term, from shot location</h3>
+<p><strong>Option A, shot-diet adjustment to ORtg (recommended):</strong></p>
+<pre>xeFG% = &Sigma;_zones (league FG% in zone z &times; player's FGA share in zone z)
+        zones: rim (&lt;5 ft), mid-range, corner 3, above-break 3
+ShotDietPts/G = 2 &times; (xeFG% &minus; league eFG%) &times; FGA/G
+  Positive when a player <em>takes</em> better shots than average,
+  regardless of makes.
+ORtg_adj_shot = ORtg_adj + ShotDietPts/G &times; 100 / PossUsed/G</pre>
+<p>This rewards shot selection (a repeatable skill) and does not reward
+make/miss luck.</p>
+<p><strong>Option B, shooting-luck haircut (diagnostic, then
+optional):</strong></p>
+<pre>ShootingLuckPts/G = 2 &times; (eFG% &minus; xeFG%) &times; FGA/G
+RPR_reported = RPR_v2 &minus; 0.5 &times; ShootingLuckPts/G_shrunk  [PROPOSAL]</pre>
+<p>At 15 games, <code>eFG% &minus; xeFG%</code> is dominated by variance
+(3P% needs ~750 attempts to stabilise). Shrinking it 50%+ toward zero is
+the minimum honest treatment; the cleaner choice is to <em>report</em>
+shooting luck as a separate column ("RPR, of which ~X is shooting over
+expected") and not subtract it from the headline number until validation
+shows the subtraction predicts better. Do not build a "shot-making over
+expected" leaderboard into RPR itself.</p>
+
+<h3>On/off and lineup term: do not add as a term</h3>
+<pre>OnOff_shrunk = OnOff_raw &times; PossOn / (PossOn + 1000)  [PROPOSAL, diagnostic only]</pre>
+<p>No additive on/off term in RPR at any weight before a full season, and
+none at all without garbage-time filtering and teammate adjustment; at that
+point it <em>is</em> RAPM, so use RAPM instead. Use on/off only as a flag:
+if <code>|RPR rank &minus; OnOff rank|</code> is extreme, investigate
+(role change, injury return, lineup quirk) rather than "fixing" RPR toward
+on/off.</p>
+
+<h3>Durability / availability: report separately, do not bake in</h3>
+<p>RPR is a per-game rate; it already correlates 0.64 with minutes share,
+so folding minutes in again double-counts availability <em>and</em> coach
+trust. Instead publish two numbers:</p>
+<pre>RPR         (per-game rate, as now, "how good when he plays")
+RPR_value   = RPR &times; GP / 82            [PROPOSAL, "how much value delivered so far"]
+  or WinsAdded-style: RPR &times; Poss/G &times; GP / 100 / (points per win &asymp; 30)</pre>
+<p><code>RPR_value</code> is the GM-board number (who has actually helped
+win games); <code>RPR</code> is the rating number. Do not multiply RPR by
+minutes share inside the rating, that is how a durable mediocrity outranks
+a brilliant part-timer, and it is a presentation choice, not a measurement.
+Games missed through injury should also be shown as GP and a "provisional"
+flag, not silently imputed as replacement level inside RPR (replacement
+level <em>is</em> the right imputation for the team-rating aggregation in
+Validation, not for the player rating).</p>
+
+<h3>What each black-box metric would do if imported wholesale (not recommended)</h3>
+<pre>RPR_blend = 0.5 &times; RPR_standardised + 0.5 &times; EPM_standardised  [NOT RECOMMENDED]</pre>
+<p>Standardise each to mean 0 / SD 1 across qualified players, then blend.
+This would almost certainly <em>improve</em> RPR's correlation with future
+wins: EPM/LEBRON/DARKO/BPM all beat raw RAPM out-of-sample, and blending a
+box metric with a plus-minus metric cancels partly-uncorrelated noise. But
+it converts RPR from a transparent, explainable rating ("here is exactly
+what each point comes from") into a 50% black box whose defence and
+playmaking components cannot be explained, audited, or debugged, and whose
+values change when the model owner retrains their models. If the project's
+goal is <em>prediction</em>, do the blend and rename the product. If the
+goal is a <em>transparent hobby rating</em>, keep RPR's own formula, use
+EPM/LEBRON/DARKO only as the defence prior at low weight and as validation
+targets, and say so explicitly wherever RPR is published.</p>
+</section>
+
+<section id="calculators"><h2>Try the mechanics</h2>
+<p>Two small calculators, using exactly the formulas above. Nothing is sent
+anywhere; they run in your browser.</p>
+<h3>3P% shrinkage</h3>
+<p>Shrunk 3P% = (Makes + m &times; LeagueRate) / (Attempts + m), with
+m = 750 by default. Trust in the raw figure = Attempts / (Attempts +
+m).</p>
+<p><label>3P makes <input id="c1m" type="number" value="30" min="0"></label>
+<label>3P attempts <input id="c1a" type="number" value="75" min="1"></label>
+<label>League 3P% <input id="c1l" type="number" value="0.36" step="0.01" min="0" max="1"></label>
+<label>m <input id="c1k" type="number" value="750" min="0"></label>
+<button type="button" onclick="calcShrink()">Calculate</button></p>
+<p id="c1out" class="note"></p>
+<h3>Shrunk defence term</h3>
+<p>Possessions per game &asymp; MIN/G &times; pace / 48.
+DefPts/G = D-impact &times; Poss/G / 100. At &lambda; = 0.25 the term that
+enters RPR is a quarter of that (the rest is the box-score prior).</p>
+<p><label>D-EPM (per 100) <input id="c2d" type="number" value="2.0" step="0.1"></label>
+<label>Minutes per game <input id="c2min" type="number" value="30" min="0" step="0.5"></label>
+<label>Team pace <input id="c2p" type="number" value="100" min="0" step="0.5"></label>
+<button type="button" onclick="calcDef()">Calculate</button></p>
+<p id="c2out" class="note"></p>
+<script>
+function calcShrink() {
+  var m = parseFloat(document.getElementById('c1m').value) || 0;
+  var a = parseFloat(document.getElementById('c1a').value) || 0;
+  var l = parseFloat(document.getElementById('c1l').value);
+  if (isNaN(l)) l = 0.36;
+  var k = parseFloat(document.getElementById('c1k').value) || 0;
+  var raw = a > 0 ? m / a : 0;
+  var shrunk = (m + k * l) / (a + k);
+  var trust = a + k > 0 ? a / (a + k) : 0;
+  document.getElementById('c1out').textContent =
+    'Raw 3P%: ' + (100 * raw).toFixed(1) + '%. Shrunk 3P%: ' +
+    (100 * shrunk).toFixed(1) + '%. Trust in the raw figure: ' +
+    (100 * trust).toFixed(1) + '% (so ' + (100 * (1 - trust)).toFixed(1) +
+    '% of the shrunk figure is the league prior).';
+}
+function calcDef() {
+  var d = parseFloat(document.getElementById('c2d').value) || 0;
+  var min = parseFloat(document.getElementById('c2min').value) || 0;
+  var pace = parseFloat(document.getElementById('c2p').value) || 0;
+  var poss = min * pace / 48;
+  var full = d * poss / 100;
+  var at025 = 0.25 * full;
+  document.getElementById('c2out').textContent =
+    'Possessions per game: ' + poss.toFixed(1) + '. DefPts/G at full weight: ' +
+    (full >= 0 ? '+' : '') + full.toFixed(2) +
+    ' pts/game. At \u03bb = 0.25 (15 games): ' +
+    (at025 >= 0 ? '+' : '') + at025.toFixed(2) + ' pts/game enters RPR.';
+}
+calcShrink();
+calcDef();
+</script>
+</section>
+
+<section id="not-worthwhile"><h2>Not worthwhile as an RPR ingredient</h2>
+<p>Benchmark only, or not at all.</p>
+<table>
+<thead><tr><th>Addition</th><th>Why not</th><th>What to do instead</th></tr></thead>
+<tbody>
+<tr><td><strong>EPM as ingredient</strong></td>
+<td>Paid/token API (price unverified, subscription-gated), v1 retires end of
+2026&ndash;27 (forced v2 migration mid-project), black box. Its
+<em>marginal</em> predictive edge over BPM/LEBRON/DARKO is within bootstrap
+noise (R&sup2; .157 vs .154&ndash;.159).</td>
+<td>Use EPM as a <strong>validation target</strong>: report corr(RPR, EPM)
+and whether RPR v2 closes the gap. If you can view it free, use D-EPM as a
+<em>cross-check</em> on the defence term, not an input.</td></tr>
+<tr><td><strong>LEBRON as ingredient</strong></td>
+<td>No bulk CSV/API; $5/mo for full access; data lives in an app. The
+uniquely valuable part (talent grades, matchup difficulty) is the least
+exportable part. Same black-box objection as EPM.</td>
+<td>Benchmark only. Cite LEBRON WAR / D-LEBRON qualitatively for individual
+player write-ups.</td></tr>
+<tr><td><strong>BRef BPM / VORP as ingredient</strong></td>
+<td>Duplicates RPR: BPM is a box-score regression to RAPM on the same inputs
+RPR already uses. DBPM is a weak defence proxy. Adds scraping fragility +
+Terms-of-Use exposure for ~zero new information.</td>
+<td>Benchmark only. It is the cheapest, most available "does RPR beat a
+standard box metric?" check.</td></tr>
+<tr><td><strong>Cleaning the Glass</strong></td>
+<td>$5/mo, no API, no export, paywalled on/off. Everything it offers is
+reproducible from stats.nba.com + play-by-play with more work but zero
+marginal cost and no Terms-of-Use grey area.</td>
+<td>Read it for ideas / sanity checks on lineups; do not pipe it into
+RPR.</td></tr>
+<tr><td><strong>pbpstats paid API</strong></td>
+<td>Paid for data the free parser + <code>nba_api</code> already provide; no
+public price list found.</td>
+<td>Use the free <code>pbpstats</code> parser only if building a possession
+engine.</td></tr>
+<tr><td><strong>Self-built RAPM from play-by-play</strong></td>
+<td>A research project, not a data source: possession engine, stint
+construction, ridge tuning, cross-validation, garbage-time handling. At 15
+games the output is unusable at any weight; at a full season it replicates
+the pre-built file, worse.</td>
+<td>Download the pre-built file (SportsDataverse). Revisit only if the
+project explicitly wants to <em>own</em> a RAPM model.</td></tr>
+<tr><td><strong>Raw on/off as a term</strong></td>
+<td>Dominated by teammates/opponents/luck at 15 games; no regularisation;
+duplicates team AdjO/AdjD already in the project.</td>
+<td>Diagnostic flag only.</td></tr>
+<tr><td><strong>Single-season RAPM at full weight</strong></td>
+<td>Year-over-year rank Spearman 0.322; "never trust one season of RAPM".
+Full weight would inject more noise than signal and shuffle rankings on
+every update.</td>
+<td>Multi-year / prior-informed only, &lambda; &le; 0.25.</td></tr>
+<tr><td><strong>Hawk-Eye / raw optical tracking</strong></td>
+<td>Not public. Any "tracking" product that claims it is reselling or
+modelling it: verify provenance before use.</td>
+<td>Use the aggregated tracking endpoints (they <em>are</em> the public face
+of that tracking).</td></tr>
+<tr><td><strong>DunkAPI / balldontlie / Kaggle</strong></td>
+<td>DunkAPI is a paid credit API ($19/mo beyond 500 free credits) for data
+available free elsewhere; balldontlie paywalls stats/PBP; Kaggle is stale
+and provenance-uncertain.</td>
+<td>Skip.</td></tr>
+</tbody></table>
+<h3>Proposed sequence of work</h3>
+<ol>
+<li><strong>Week 1:</strong> shrinkage + opponent adjustment + the
+<code>RPR_value</code> split. Re-run validation. Ship as RPR v1.1. No new
+vendor. (Done in this repo, see the note below.)</li>
+<li><strong>Week 2:</strong> one cached <code>nba_api</code> pull (hustle +
+passing + shot chart, league-wide). Add the potential-assists / creation
+term and the shot-diet term at proposal weights; validate; keep or drop
+each term independently.</li>
+<li><strong>Week 2&ndash;3:</strong> download SportsDataverse
+<code>nba_player_impact</code> + DARKO CSV. Add the defence term at
+&lambda; = 0.25. Validate. This is the only step that imports someone
+else's model, and it is capped and labelled as such.</li>
+<li><strong>Do not do</strong> in 2026&ndash;27: EPM/LEBRON import, Cleaning
+the Glass subscription for the pipeline, self-built RAPM, raw on/off
+term.</li>
+</ol>
+</section>
+
+<section id="validation"><h2>Validation: before and after any change</h2>
+<h3>The ready-made harness: hoop-impact-bench</h3>
+<p>Use <code>hoop-impact-bench</code> (open benchmark, v1.1.0, Oct 2026)
+instead of inventing a validation protocol. It takes prior-season ratings
+and scores them on the <em>next</em> season's games: 7,230 games,
+2020&ndash;21 to 2025&ndash;26, 180 team-seasons, with 2,000 bootstrap
+resamples.</p>
+<pre>pip install hoop-impact-bench
+hib --ratings my_metric.csv
+  # CSV: season,nba_id,rating (per-100, known before opening night)</pre>
+<p>Tests: (1) game-margin R&sup2;, (2) team win% correlation r, (3) team
+net-rating error (RMSE, points, also grades a metric's <em>scale</em>),
+(4) rebuilt-roster subset (third of games/teams keeping least of last
+season's minutes, the post-trade test in miniature). Rules that matter:
+players with &lt;250 minutes the prior season (including rookies) count as
+&minus;2.0; a team's rating is 5&times; the minutes-weighted average of
+its players using minutes <em>actually played</em>; ranks are reported as
+ranges over resamples, and "gaps under about .006 [in R&sup2;] are within
+the noise".</p>
+<p>Published reference points (established players, game-margin R&sup2;,
+90% CI). Use these as the bar, not as a target to beat by a whisker:</p>
+<table>
+<thead><tr><th>Metric</th><th>R&sup2;</th><th>Team win% r</th><th>Team net error</th></tr></thead>
+<tbody>
+<tr><td>Same-season RAPM (ceiling, in-sample)</td><td>.268 (.251&ndash;.286)</td><td>.949</td><td>1.68</td></tr>
+<tr><td>Pulse</td><td>.171 (.154&ndash;.187)</td><td>.800</td><td>3.13</td></tr>
+<tr><td>LOKI</td><td>.170 (.152&ndash;.186)</td><td>.805</td><td>3.08</td></tr>
+<tr><td>OpenRAPM</td><td>.162 (.146&ndash;.178)</td><td>.786</td><td>3.39</td></tr>
+<tr><td>xRAPM</td><td>.161 (.144&ndash;.177)</td><td>.772</td><td>3.48</td></tr>
+<tr><td>LEBRON</td><td>.159 (.142&ndash;.175)</td><td>.770</td><td>3.39</td></tr>
+<tr><td>EPM</td><td>.157 (.141&ndash;.174)</td><td>.778</td><td>3.87</td></tr>
+<tr><td>DARKO</td><td>.155 (.138&ndash;.172)</td><td>.767</td><td>3.36</td></tr>
+<tr><td>BPM (BRef)</td><td>.154 (.136&ndash;.170)</td><td>.773</td><td>3.50</td></tr>
+<tr><td>Last-season plain RAPM (no prior)</td><td>.141 (.123&ndash;.157)</td><td>.729</td><td>3.53</td></tr>
+<tr><td>Everyone 0 (floor)</td><td>.125 (.109&ndash;.141)</td><td>.678</td><td>4.65</td></tr>
+</tbody></table>
+<p>Two lessons from that table: (i) the gap between the best public metric
+and plain BPM is ~0.017 R&sup2;, small, and the intervals overlap heavily,
+so a new RPR component that "beats BPM by 0.005" has proved nothing; (ii)
+the gap between <em>any</em> prior-season metric and the same-season RAPM
+ceiling (.268) is the headroom. Most of it is information that only the
+season itself contains, and no ingredient can conjure it in November.</p>
+
+<h3>Validation protocol for RPR specifically</h3>
+<ol>
+<li><strong>Correlation with established impact metrics (concurrent
+validity).</strong> Compute Pearson/Spearman corr(RPR, EPM), corr(RPR,
+LEBRON), corr(RPR, DARKO DPM), corr(RPR, BPM), corr(RPR, multi-year RAPM)
+on qualified players (&ge;500 possessions), this season and past seasons.
+Expect RPR to correlate most with BPM/SPM (same inputs) and less with
+RAPM-family metrics; a <em>defence</em> change should specifically raise
+corr(RPR, D-EPM / DRAPM) without raising corr(RPR, BPM). If it only raises
+the BPM correlation, it added no new information. Report correlations
+<em>by component</em> (offence vs. defence term separately).</li>
+<li><strong>Correlation with team wins and Net rating (aggregation
+test).</strong> Aggregate RPR to team level exactly as hoop-impact-bench
+does (5&times; minutes-weighted average, actual minutes, replacement
+&minus;2.0 for unrated/low-minute players) and correlate with team win% and
+opponent-adjusted Net rating (use Adj Net, not raw Net). Do this in-sample
+<em>and</em> out-of-sample (first-half RPR vs. second-half Adj Net). A
+player rating that cannot aggregate to team performance is not measuring
+impact.</li>
+<li><strong>Out-of-sample prediction (the real test).</strong> Split-half /
+forward prediction: fit any weights (&lambda;, shrinkage K, playmaking
+coefficients) on games 1&ndash;~40 of past seasons, test on the remainder;
+or fit on season <em>t</em>, test on season <em>t+1</em> (the
+hoop-impact-bench design). Never fit and test on the same games. Future
+performance: does RPR at game 15 predict RPR/EPM/RAPM at game 82 better
+than RPR without the new term? Report R&sup2; gain with bootstrap CI.
+Post-trade / rebuilt-roster test: hoop-impact-bench's rebuilt-roster
+subset, or manually, players who changed teams, does pre-trade RPR predict
+post-trade team Adj Net movement (teammate-adjusted) better than the old
+RPR? This is the closest test to "does the rating travel with the player,
+or was it his team?" A defence term that only works for players who stay
+put has not measured defence. Game-margin test: submit RPR (converted to
+per-100, pre-season version) to hoop-impact-bench and compare R&sup2; /
+win% r / net error against the published rows, with paired bootstrap
+intervals (<code>hib --pairs</code>).</li>
+<li><strong>Stability across samples.</strong> Split-half reliability:
+randomly split each player's possessions/games into halves; correlate RPR
+halves. Report by component, the defence term will be least stable, the
+scoring-efficiency term most. A component with split-half r &lt; 0.3 at 15
+games should not carry weight &gt;0.25. Rolling stability: recompute RPR
+weekly; report mean absolute rank change per week and the share of players
+moving &gt;20 ranks on one week's games. A "better" RPR that whipsaws weekly
+is worse for a GM board. Year-over-year repeatability: for past seasons,
+corr(RPR_t, RPR_t+1) for qualified players, vs. the same for EPM/BPM/RAPM.
+Single-season RAPM's 0.322 Spearman is the cautionary reference.</li>
+<li><strong>Ablation / placebo.</strong> Remove each new term in turn and
+re-run tests 1&ndash;3. If removing the term does not worsen out-of-sample
+prediction, the term is decoration, drop it even if it "looks right". Also
+run a placebo: a term built from <em>shuffled</em> tracking data should not
+improve anything; if it does, the validation pipeline is leaking (e.g.
+minutes or team strength smuggled in through the shuffle).</li>
+</ol>
+<p><strong>What to report with every change:</strong> a one-page changelog
+entry, what changed, the exact formula, the weight and how it was chosen
+(which seasons, which fit), and a table of the four tests above (old RPR vs.
+new RPR, with bootstrap intervals and n). Keep the old RPR computed in
+parallel for at least a month so regressions are visible. Version the data
+files by date (EPM/DARKO/SportsDataverse snapshots change under you).</p>
+
+<h3>Minimum test a new component must pass to earn its place</h3>
+<p><strong>All three, on data the component's weights were not fitted
+on:</strong></p>
+<ol>
+<li><strong>Out-of-sample gain:</strong> it improves forward prediction
+(game-margin R&sup2; or second-half Adj Net correlation) by more than the
+bootstrap noise floor, practically, a paired R&sup2; gain whose 90%
+interval excludes 0, and larger than ~0.006 (the hoop-impact-bench noise
+threshold). A concurrent-correlation gain alone (e.g. "corr with EPM went
+up") does <strong>not</strong> pass. Concurrent correlation can be
+manufactured by copying EPM.</li>
+<li><strong>No stability regression:</strong> split-half reliability and
+week-to-week rank churn do not get worse; the component's own split-half r
+at the current sample size is reported, not hidden.</li>
+<li><strong>No duplication:</strong> ablation shows the component adds
+predictive information <em>beyond</em> the box-score terms already in RPR
+(test: residualise the new term on existing RPR components; the residual
+must still predict). If it only re-weights AST/STL/BLK, it is a re-skin,
+not an improvement.</li>
+</ol>
+<p>If a component fails any one of the three, it stays out, even if it fixes
+a "real" blind spot in theory. A theoretically-motivated term that does not
+survive this test is a hypothesis, not an improvement.</p>
+</section>
+
+<section id="pitfalls"><h2>Pitfalls</h2>
+<ul>
+<li><strong>Overfitting the formula to one season (especially this
+one).</strong> With ~15 games per team, it is trivially easy to find
+weights that "fix" 2026&ndash;27's surprises and fail everywhere else.
+Every coefficient must be fitted on <em>past</em> seasons (2021&ndash;22
+to 2025&ndash;26) and frozen before being applied to 2026&ndash;27; the
+current season is test data, not training data. If a weight was chosen by
+looking at this season's leaderboard, say so and discount the validation
+accordingly.</li>
+<li><strong>Chasing noisy single-season RAPM.</strong> Single-season RAPM
+repeats year-over-year at Spearman 0.322; its standard errors at 15 games
+are larger than the differences between most rotation players. Treating a
++2.0 DRAPM at game 15 as a fact (rather than a shrunk prior with a wide
+interval) will manufacture false "breakout defenders" and false "washed"
+stars, and will reverse itself by January. Always publish the shrinkage
+weight and, ideally, a standard error or "provisional" flag alongside any
+RAPM-derived term.</li>
+<li><strong>Laundering a black-box metric into RPR and losing
+transparency.</strong> Importing EPM/LEBRON/DARKO at full weight makes RPR
+unexplainable: when a reader asks "why is Player X rated +3?", the honest
+answer becomes "because Dunks &amp; Threes' model says so", and when that
+model is retrained, RPR changes for reasons nobody on the project can state.
+It also creates a hidden dependency: EPM v1 retires at the end of this
+season, LEBRON's methodology can change, DARKO is one person's project. Cap
+any imported metric at low weight (&lambda; &le; 0.25 early season), label
+it in every display ("includes D-EPM defence prior, weight 25%"), and keep
+a pure-box-score RPR computed in parallel so the rating never
+<em>depends</em> on a vendor.</li>
+<li><strong>Small-sample shooting noise.</strong> 3P% needs ~750 attempts
+for reliability 0.7 and does not reach reliability 0.5 even at 480 attempts
+in split-half data; TS% needs ~169. At 15 games a player has ~60&ndash;90
+3PA and ~150&ndash;250 total scoring attempts. Any formula that takes raw
+3P%/TS%/ORtg at face value in November is mostly ranking luck. Shrink,
+separate shot diet from shot making, and show attempts alongside every
+percentage.</li>
+<li><strong>Collinearity / double-counting.</strong> The traps: STL+BLK
+<em>and</em> D-EPM (both contain steals/blocks); AST <em>and</em> potential
+assists <em>and</em> EPM's SPM (assists enter three times); REB
+<em>and</em> DRAPM's dREB; minutes <em>and</em> per-game volume
+<em>and</em> a durability multiplier. Every new term must be checked
+against the terms it overlaps with (variance inflation / correlation matrix
+of components) and <em>netted</em> against the term it replaces. A component
+correlation above ~0.7 with an existing component is a red flag that it is
+a duplicate.</li>
+<li><strong>Ignoring availability.</strong> A per-game rate that ignores GP
+will rank a 10-game star above an 82-game star and mislead a GM board whose
+job is wins delivered. But the fix is a <em>separate</em> value column, not
+a hidden minutes multiplier inside the rating, otherwise availability is
+counted twice (once in per-game volume via minutes share, once in the
+multiplier) and the rating quietly becomes a playing-time leaderboard (the
+existing 0.64 correlation with minutes share is already a warning sign).
+Also: do not impute missed games as league-average inside RPR; replacement
+level belongs in <em>team aggregation</em>, not in the player rating.</li>
+<li><strong>Fragility as a silent failure mode.</strong> The most likely way
+this project breaks is not a wrong formula but a dead feed: stats.nba.com
+blocks the host IP, <code>nba_api</code> breaks on a header change, the
+SportsDataverse 2026&ndash;27 file is a month stale, D&amp;T retires v1.
+Design for it now: cache every external pull with its date, keep ESPN as
+the always-on fallback, make every new term <em>optional</em> (RPR computes
+cleanly with the term missing, falling back to the box-score prior), and
+alert/log when a source is stale rather than silently serving last week's
+numbers.</li>
+<li><strong>Garbage time and role changes.</strong> On/off, RAPM, and
+tracking matchup stats are all polluted by garbage time and by players
+changing roles (injury fill-in vs. regular rotation). Any possession-level
+work should exclude garbage time (e.g. margin &gt;20 in the 4th, or use
+CTG-style filtering as a reference) and should be split by role/position
+where possible. A player's "defence" measured in 100 garbage-time
+possessions against third-stringers is not his defence.</li>
+<li><strong>Scale confusion.</strong> Per-100-possession impact (EPM, RAPM,
+D-EPM) and per-game value (RPR) are different units. The most common
+formula bug in this area is adding a per-100 number directly to a per-game
+number. Every conversion must go through
+<code>&times; Poss/G / 100</code> and be sanity-checked: a +2.0 per-100
+defender playing 60 possessions is worth ~+1.2 points/game, not +2.0.</li>
+</ul>
+</section>
+
+<section id="open-questions"><h2>Open questions: what the research could not verify</h2>
+<p>Labelled plainly as unverified, from the report's "Could not verify"
+section (20 Nov 2026). Do not treat any of these as settled.</p>
+<ul>
+<li><strong>Dunks &amp; Threes subscription / API token price and free-tier
+terms.</strong> The API requires a token and the site gates some views
+behind subscription, but no price was found in searches on 20 Nov 2026. Do
+not budget $0 or any specific $/mo figure without checking the API
+documentation and the site's subscribe page directly.</li>
+<li><strong>nbarapm.com bulk download.</strong> No CSV/API download URL was
+verified; the site is per-player pages and leaderboards. Bulk ingestion may
+require scraping (terms not verified) or may not be possible at all.</li>
+<li><strong>BBall-Index LEBRON bulk export / scraping terms.</strong> No
+public API or CSV was found; whether automated access to the free dashboards
+is permitted was not verified.</li>
+<li><strong>SportsDataverse <code>nba_player_impact</code> freshness for
+2026&ndash;27.</strong> The file exists as a release asset; how quickly
+the in-progress season's file is rebuilt (daily? monthly?) was not
+verified. Check the release date on the asset before relying on it
+mid-season.</li>
+<li><strong>Exact <code>LeagueDashPtStats</code> Passing field
+names</strong> (e.g. potential assists column name) were not verified from
+primary docs in this pass; confirm against the <code>nba_api</code>
+endpoint docs before coding the playmaking term.</li>
+<li><strong>pbpstats API pricing.</strong> No public price list was found;
+it is described as paid/subscriber in secondary sources. Not needed for the
+recommendations (the free parser is the relevant part).</li>
+<li><strong>Cleaning the Glass terms for automated access.</strong> No API
+exists; scraping a paywalled site is not recommended and its terms were not
+examined.</li>
+</ul>
+</section>
+
+<section id="v11"><h2>Where this project is: RPR v1.1 is step 1</h2>
+<p>Step 1 of the sequence above, shrinkage + opponent adjustment, is already
+built in this repo as RPR v1.1. As implemented in
+<code>player_profiles.py</code>: ORtg is shrunk toward the league-average
+ORtg with K = 200 possessions used (split-half calibration on this season
+found the best K = 150 by MSE, with the curve essentially flat from 150 to
+250, so 200 is the midpoint); OppAdj is shrunk toward 0 with K = 500
+possessions faced; TS% and 3P% are also shrunk toward league rates (3P%
+m = 750 attempts). The old value is kept as <code>rpr_v1</code> in the CSVs,
+and <code>RPR_value = RPR v1.1 &times; GP / 82</code> is reported
+separately. No prior-season ORtg is used: the shrinkage pulls every player
+toward the same league average, rookies and veterans alike. Steps 2 and 3
+(the <code>nba_api</code> pull and the defence prior) are not built yet.</p>
+<p><a href="index.html">&larr; Back to NBA Ratings</a></p>
+</section>
+
+<section id="sources"><h2>Sources</h2>
+<p>All URLs copied verbatim from the research report; read 20 November
+2026 unless noted.</p>
+<ul>
+<li>nba_api (GitHub): <a href="https://github.com/swar/nba_api">https://github.com/swar/nba_api</a></li>
+<li>Free basketball data sources, ranked: <a href="https://nbaanalytic.com/articles/free-basketball-data-sources-ranked.html">https://nbaanalytic.com/articles/free-basketball-data-sources-ranked.html</a></li>
+<li>Dunks &amp; Threes API v1 documentation: <a href="https://dunksandthrees.com/api/v1/documentation">https://dunksandthrees.com/api/v1/documentation</a></li>
+<li>Dunks &amp; Threes EPM methodology: <a href="https://dunksandthrees.com/about/epm">https://dunksandthrees.com/about/epm</a></li>
+<li>Dunks &amp; Threes metric comparison: <a href="https://dunksandthrees.com/blog/metric-comparison?s=09">https://dunksandthrees.com/blog/metric-comparison?s=09</a></li>
+<li>BBall-Index LEBRON introduction: <a href="https://www.bball-index.com/lebron-introduction/">https://www.bball-index.com/lebron-introduction/</a></li>
+<li>BBall-Index home: <a href="https://www.bball-index.com">https://www.bball-index.com</a></li>
+<li>BBall-Index review / pricing: <a href="https://www.sportsdeck.io/apps/bball-index">https://www.sportsdeck.io/apps/bball-index</a></li>
+<li>nbarapm.com player page (example): <a href="https://nbarapm.com/player/Nikola_Jokic">https://nbarapm.com/player/Nikola_Jokic</a></li>
+<li>nbarapm.com datasets/comp (mirror): <a href="https://www.dejavu.org/cgi-bin/get.cgi?ver=95&amp;url=https%3A%2F%2Fwww.nbarapm.com%2Fdatasets%2Fcomp">https://www.dejavu.org/cgi-bin/get.cgi?ver=95&amp;url=https%3A%2F%2Fwww.nbarapm.com%2Fdatasets%2Fcomp</a></li>
+<li>Plus-minus, RAPM and why noise wins: <a href="https://nbaanalytic.com/articles/plus-minus-rapm-noise.html">https://nbaanalytic.com/articles/plus-minus-rapm-noise.html</a></li>
+<li>SimulNBA RAPM methodology: <a href="https://www.simulnba.com/blog/simul-rapm">https://www.simulnba.com/blog/simul-rapm</a></li>
+<li>SportsDataverse factor RAPM / repeatability: <a href="https://sportsdataverse-py.sportsdataverse.org/docs/nba/reference/additional/analytics-4">https://sportsdataverse-py.sportsdataverse.org/docs/nba/reference/additional/analytics-4</a></li>
+<li>Cleaning the Glass team lineups: <a href="https://cleaningtheglass.com/stats/team/6/lineups?PG=4576&amp;SG=4362&amp;PF=4866&amp;C=4337">https://cleaningtheglass.com/stats/team/6/lineups</a></li>
+<li>Cleaning the Glass player positions: <a href="https://cleaningtheglass.com/stats/player/4649/positions">https://cleaningtheglass.com/stats/player/4649/positions</a></li>
+<li>Sports Reference Terms of Use: <a href="https://www.sports-reference.com/termsofuse.html">https://www.sports-reference.com/termsofuse.html</a></li>
+<li>Basketball-Reference data sources: <a href="https://datafield.dev/professional-basketball-analytics/appendices/appendix-d-data-sources.html">https://datafield.dev/professional-basketball-analytics/appendices/appendix-d-data-sources.html</a></li>
+<li>BPM vs RAPM: <a href="https://datafield.dev/professional-basketball-analytics/part-03/chapter-12/">https://datafield.dev/professional-basketball-analytics/part-03/chapter-12/</a></li>
+<li>pbpstats (PyPI): <a href="https://pypi.org/project/pbpstats/">https://pypi.org/project/pbpstats/</a></li>
+<li>hoopR getting started: <a href="https://hoopR.sportsdataverse.org/articles/getting-started-hoopR.html">https://hoopR.sportsdataverse.org/articles/getting-started-hoopR.html</a></li>
+<li>hoopR shot charts: <a href="https://hoopR.sportsdataverse.org/articles/nba-college-basketball-shot-charts.html">https://hoopR.sportsdataverse.org/articles/nba-college-basketball-shot-charts.html</a></li>
+<li>hoopR NBA player impact model: <a href="https://hoopR.sportsdataverse.org/articles/nba-player-impact-model.html">https://hoopR.sportsdataverse.org/articles/nba-player-impact-model.html</a></li>
+<li>SportsDataverse NBA dataset loaders: <a href="https://sportsdataverse-py.sportsdataverse.org/docs/nba/reference/loaders/player">https://sportsdataverse-py.sportsdataverse.org/docs/nba/reference/loaders/player</a></li>
+<li>SportsDataverse NBA stats loaders: <a href="https://sportsdataverse-py.sportsdataverse.org/docs/nba/reference/loaders/stats-2">https://sportsdataverse-py.sportsdataverse.org/docs/nba/reference/loaders/stats-2</a></li>
+<li>SportsDataverse hoopR-nba-stats-data builder README: <a href="https://github.com/sportsdataverse/hoopr-nba-stats-data/blob/HEAD/python/README.md">https://github.com/sportsdataverse/hoopr-nba-stats-data/blob/HEAD/python/README.md</a></li>
+<li>DARKO about: <a href="https://www.darko.app/about">https://www.darko.app/about</a></li>
+<li>DARKO leaderboard: <a href="https://www.darko.app/">https://www.darko.app/</a></li>
+<li>OpenRAPM about: <a href="https://openrapm.com/about.html">https://openrapm.com/about.html</a></li>
+<li>hoop-impact-bench (PyPI): <a href="https://pypi.org/project/hoop-impact-bench/">https://pypi.org/project/hoop-impact-bench/</a></li>
+<li>FiveThirtyEight RAPTOR datasets: <a href="https://fivethirtyeight.datasettes.com/fivethirtyeight/nba-raptor~2Fhistorical_RAPTOR_by_team">https://fivethirtyeight.datasettes.com/fivethirtyeight/nba-raptor~2Fhistorical_RAPTOR_by_team</a></li>
+<li>ESPN API overview: <a href="http://dev.to/sportsapis/espn-api-free-sports-data-for-scores-stats-and-news-4n2i">http://dev.to/sportsapis/espn-api-free-sports-data-for-scores-stats-and-news-4n2i</a></li>
+<li>DunkAPI pricing: <a href="https://dunkapi.com/">https://dunkapi.com/</a> and <a href="https://sportsapis.dev/apis/dunkapi">https://sportsapis.dev/apis/dunkapi</a></li>
+<li>CourtLens stabilisation / shrinkage: <a href="https://courtlens.calebhabesh.com/methodology/learning">https://courtlens.calebhabesh.com/methodology/learning</a></li>
+<li>Three-point stabilisation, ~750 attempts: <a href="https://fansided.com/2014/08/29/long-take-three-point-shooting-stabilize/">https://fansided.com/2014/08/29/long-take-three-point-shooting-stabilize/</a></li>
+<li>Dean Oliver individual ORtg: <a href="http://www.basketballgeek.com/2009/10/25/individual-offensive-efficiency-ratings-extracted-from-play-by-play-data/">http://www.basketballgeek.com/2009/10/25/individual-offensive-efficiency-ratings-extracted-from-play-by-play-data/</a></li>
+<li>Awesome NBA data catalogue: <a href="https://github.com/jovanipink/awesome-nba-data/blob/HEAD/README.md">https://github.com/jovanipink/awesome-nba-data/blob/HEAD/README.md</a></li>
+</ul>
+</section>
+
+<footer>
+<p>Data: ESPN public scoreboard and box scores. Research: free data sources for RPR, read 20 Nov 2026 (see Sources above). Code and full CSVs:
+<a href="https://github.com/RD3-LIL/nba-ratings">RD3-LIL/nba-ratings on GitHub</a>. Built November 20, 2026.</p>
+</footer>
+</body>
+</html>

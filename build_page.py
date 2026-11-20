@@ -57,15 +57,13 @@ DATA = HERE / "data"
 SEASON = "2026-27"
 REPO = "https://github.com/RD3-LIL/nba-ratings"
 
-# ESPN's box scores scramble some team assignments in this run
-# (Giannis Antetokounmpo is listed on Miami, LeBron James on
-# Philadelphia). Everything on the site is reported as fetched,
-# not corrected, and the disclaimer below says so on the index
-# and on every team page.
-DISCLAIMER = ("Team assignments are as reported by ESPN's box "
-              "scores and include known errors, e.g. Giannis "
-              "Antetokounmpo is listed on Miami and LeBron James "
-              "on Philadelphia. Reported as fetched, not corrected.")
+# Teams reflect the 2026-27 rosters after a busy 2026 offseason.
+# The note below says so on the index and on every team page.
+DISCLAIMER = ("Teams reflect the 2026-27 rosters after a busy "
+              "2026 offseason: Giannis Antetokounmpo to Miami, "
+              "LeBron James to Philadelphia, Walker Kessler to "
+              "the Lakers, and Anthony Davis to Washington, "
+              "among others.")
 
 # Standard NBA alignment. ESPN's NBA teams endpoint has no
 # conference field, so this is a fixed map, checked at build
@@ -598,8 +596,8 @@ def team_needs_section():
                        reverse=True):
         prof = teams[team]
         _star = prof["star"] or {}
-        # A star under RPR 5.0 is a role player on scrambled data,
-        # not a star. Fall back to the RPR check for a team_needs
+        # A star under RPR 5.0 is a role player on a rebuilding
+        # team, not a star. Fall back to the RPR check for a team_needs
         # file built before is_clear_star existed.
         _clear = _star.get("is_clear_star",
                            (_star.get("rpr") or 0) >= 5.0)
@@ -666,6 +664,64 @@ def _roster_table(roster):
     return "\n".join(parts)
 
 
+# Rotation skill profile chart (team pages). Labels and per-skill
+# definitions match team_needs.py skill_rates exactly: shooting is
+# 3PM per 36, playmaking AST per 36, rebounding REB per 36, rim
+# protection BLK per 36, perimeter defence STL per 36, bench
+# scoring PTS per 36 for players under 60% of team minutes.
+# Values are the minutes-weighted mean of per-player percentiles
+# for the top 9 rotation players, from data/team_needs_2026_27.json
+# (team["skills"]). Bars at or above the 60th percentile target
+# are blue; below it, orange: those are the holes.
+SKILL_LABELS = [
+    ("shooting", "Shooting", "3PM per 36"),
+    ("playmaking", "Playmaking", "AST per 36"),
+    ("rebounding", "Rebounding", "REB per 36"),
+    ("rim_protection", "Rim protection", "BLK per 36"),
+    ("perimeter_defense", "Perimeter defence", "STL per 36"),
+    ("bench_scoring", "Bench scoring",
+     "PTS per 36, players under 60% of team minutes"),
+]
+SKILL_TARGET_PCT = 60
+
+
+def skill_chart_html(skills):
+    """Rotation skill profile chart: horizontal percentile bars.
+
+    skills is the team's dict from team_needs (team["skills"]).
+    Returns "" when the data is missing, so a team page never
+    breaks on a missing team_needs run.
+    """
+    if not skills:
+        return ""
+    rows = []
+    for key, label, definition in SKILL_LABELS:
+        value = skills.get(key)
+        if value is None:
+            continue
+        pct = int(round(value))
+        cls = "above" if pct >= SKILL_TARGET_PCT else "below"
+        rows.append(
+            f'<div class="skill-row" title="{html.escape(definition)}">'
+            f'<span class="skill-label">{html.escape(label)}</span>'
+            f'<span class="skill-track"><span class="skill-fill {cls}" '
+            f'style="width:{pct}%"></span>'
+            f'<span class="skill-target"></span></span>'
+            f'<span class="skill-value">{pct}</span></div>')
+    if not rows:
+        return ""
+    defs = "; ".join(f"{label}: {definition}"
+                     for _, label, definition in SKILL_LABELS)
+    return (
+        '<h4>Rotation skill profile (percentile, minutes-weighted)</h4>'
+        '<p class="note">Top 9 players by minutes. Each skill is '
+        'percentile-ranked against every player in the league with '
+        '150+ minutes, then minutes-weighted. The grey line is the '
+        '60th percentile target: orange bars below it are the holes. '
+        f'{html.escape(defs)}.</p>'
+        '<div class="skill-chart">' + "".join(rows) + '</div>')
+
+
 def team_page_html(team, row, slug_by_team):
     """One team's full page, as an HTML string."""
     conf = row["conf"]
@@ -699,6 +755,7 @@ def team_page_html(team, row, slug_by_team):
             f"{html.escape('; '.join(needs['strengths'])) or 'none flagged'}"
             f"<br>Weaknesses: "
             f"{html.escape('; '.join(needs['weaknesses'])) or 'none flagged'}</p>")
+        parts.append(skill_chart_html(needs.get("skills") or {}))
         top = needs["targets"]["top_overall"][:3]
         if top:
             parts.append("<p>Top realistic targets: " + "; ".join(
@@ -737,7 +794,7 @@ def team_page_html(team, row, slug_by_team):
     if roster:
         parts.append(_roster_table(roster))
         parts.append('<p class="note">Sorted by minutes. ORtg is '
-                     "approximate (no assist credit); RPR is our own "
+                     "approximate (no assist credit); RPR is v1.1, our own "
                      "rating, not KenPom\u2019s kPOY. Tier is the GM "
                      "board tier for that player.</p>")
     else:
@@ -851,6 +908,19 @@ input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
 .leaders td:nth-child(n+3) { text-align: right; }
 @media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
 .note { color: #656d76; font-size: 14px; }
+.skill-chart { max-width: 640px; margin: 8px 0 4px; }
+.skill-row { display: grid; grid-template-columns: 150px 1fr 36px;
+  align-items: center; gap: 10px; margin: 8px 0; }
+.skill-label { font-size: 15px; }
+.skill-track { position: relative; display: block; height: 16px;
+  background: #eaeef2; border-radius: 999px; overflow: visible; }
+.skill-fill { display: block; height: 100%; border-radius: 999px; }
+.skill-fill.below { background: #f59e0b; }
+.skill-fill.above { background: #38bdf8; }
+.skill-target { position: absolute; left: 60%; top: -3px; bottom: -3px;
+  width: 2px; background: #656d76; }
+.skill-value { text-align: right; font-variant-numeric: tabular-nums;
+  font-weight: 600; }
 .warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
   border-radius: 6px; }
 footer { margin-top: 48px; color: #656d76; font-size: 14px;
@@ -1053,7 +1123,8 @@ def main():
 built from free ESPN data. Adjusted offense and defense per 100
 possessions, solved properly (damped Gauss-Seidel), league-average
 prior. Same ORtg, %Poss, and RPR formulas as RonPom, adapted to
-48-minute games.</p>
+48-minute games; RPR is v1.1 (shrunk, opponent-adjusted, see
+How to read this).</p>
 
 <nav class="topnav">
 <a href="#team-ratings">Team ratings</a>
@@ -1063,6 +1134,7 @@ prior. Same ORtg, %Poss, and RPR formulas as RonPom, adapted to
 <a href="#gm-board">GM board</a>
 <a href="#team-needs">Team needs</a>
 <a href="#how-to-read">How to read this</a>
+<a href="rpr-research.html">RPR research</a>
 </nav>
 
 <section id="team-ratings"><h2>2026-27 team ratings</h2>
@@ -1096,7 +1168,9 @@ rookies, or the GM board. East / West tabs above the team table filter to one
 conference; the filter box searches team names. Click a team name
 anywhere to open that team's own page, with its ratings, game log,
 and roster. Click a team row to see its game log and roster for the
-season right here.</p>
+season right here. The <a href="rpr-research.html">RPR research</a> page
+ranks the free data sources that could improve RPR, with the proposed
+formulas, the validation gate, and what is not worth adding.</p>
 <p><strong>AdjO / AdjD</strong>: points scored and allowed per 100
 possessions, adjusted for opponent. The small number under each
 value is that team's rank in the metric; AdjD rank 1 is the best
@@ -1107,9 +1181,15 @@ the record in the games these ratings are built from, so W+L equals
 GP.</p>
 <p><strong>ORtg</strong> (players) is a simplified approximation:
 points per 100 possessions used, with no assist credit, so it
-underrates playmakers. Read it with %Poss. <strong>RPR</strong> is
-our own single-number player rating, not KenPom's proprietary
-kPOY. Leaderboards only include players with at least 40% of their
+underrates playmakers. Read it with %Poss. <strong>RPR v1.1</strong>
+is our own single-number player rating, not KenPom's proprietary
+kPOY: the same formula as before, but the ORtg that enters it is
+first shrunk toward the league-average ORtg (K = 200 possessions
+used) and adjusted for the defences the player faced (OppAdj,
+shrunk toward 0 with K = 500 possessions faced). The old value is
+kept as rpr_v1 in the CSVs. RPR_value = RPR v1.1 * GP / 82 is how
+much value a player has delivered so far; it is not part of the
+rating. Leaderboards only include players with at least 40% of their
 team's minutes, so a two-minute cameo cannot top the list.</p>
 <p><strong>Rookies</strong>: a rookie is a player in his first NBA
 season, from the ESPN roster entry (experience.years == 0).
@@ -1121,8 +1201,10 @@ pull; a player on no current roster has no experience or bio
 fields.</p>
 <p><strong>Honest limits</strong>: about 15 games per team, so the
 order is still noisy. League-average prior only, no last-season
-prior. Box-score only: no tracking, no on/off, no opponent
-adjustment at player level. No contracts or salaries. {DISCLAIMER} Full
+prior, so the shrinkage pulls every player toward the same league
+average, rookies and veterans alike. Box-score only: no tracking,
+no on/off. RPR v1.1 adjusts ORtg for opponent defence; ORtg_full
+does not. No contracts or salaries. {DISCLAIMER} Full
 method in the README.</p></section>
 
 <footer>

@@ -55,15 +55,15 @@ lineup-balance / archetype-interaction work):
    "realistic" and never "available".
 
    Star clarity: the star is the highest-RPR qualifying player,
-   but on scrambled ESPN data that can be a role player (e.g.
-   Tyler Herro, RPR 2.58, as Milwaukee's highest-RPR qualifier).
-   A team whose star's RPR is under 5.0 is labelled "No clear
-   star in this data" in the output and on the site; the star's
-   numbers are still used for the need weights, but no player
-   is presented as the star. Team assignments themselves are
-   as reported by ESPN's box scores and include known errors
-   (Giannis listed on Miami, LeBron on Philadelphia); profiles
-   are reported as fetched, not corrected.
+   but on a rebuilding team that can be a role player (e.g.
+   Tyler Herro, RPR 2.58, as Milwaukee's highest-RPR qualifier
+   after Milwaukee traded Giannis to Miami). A team whose star's
+   RPR is under 5.0 is labelled "No clear star in this data" in
+   the output and on the site; the star's numbers are still used
+   for the need weights, but no player is presented as the star.
+   Teams reflect the 2026-27 rosters after a busy 2026 offseason:
+   Giannis to Miami, LeBron to Philadelphia, Kessler to the
+   Lakers, and Davis to Washington, among others.
 
 Formulas (all weights are hand-set v1 choices, documented here,
 not fitted; v2 should fit them against post-trade Adj Net):
@@ -177,8 +177,9 @@ MAX_USAGE_TARGET = 26.0    # ... nor a featured offensive option
 MAX_PTS_TARGET = 20.0      # ... nor a 20-point scorer, on his own team
 TOP_N_OWN_TEAM = 3         # ... nor top-3 RPR on his own team
 STAR_RPR_MIN = 5.0         # a "star" under RPR 5.0 is a role player
-                           # on scrambled data, not a star: the team
-                           # is labelled "No clear star in this data"
+                           # on a rebuilding team that traded its
+                           # star away, not a star: the team is
+                           # labelled "No clear star in this data"
 
 # Tiers that would typically be available in a trade. Franchise
 # cornerstone and All-Star level are never suggested; Overvalued /
@@ -540,9 +541,9 @@ def build_profiles(teams_doc, players, tier_by_id, games):
 def star_display_name(profile):
     """Label for a team's star in output.
 
-    A star under RPR 5.0 is a role player on scrambled data, not
-    a star, so the team is labelled "No clear star in this data"
-    instead of naming him."""
+    A star under RPR 5.0 is a role player on a rebuilding team
+    that traded its star away, not a star, so the team is labelled
+    "No clear star in this data" instead of naming him."""
     star = profile.get("star") or {}
     if star.get("is_clear_star"):
         return star.get("name", "")
@@ -800,6 +801,10 @@ def main(argv=None):
                    "(Oliver) + minutes-weighted rotation skill "
                    "profile, star-anchored need weights, concave "
                    "FitGain, QualityGain vs the displaced player. "
+                   "RPR here is RPR v1.1 (Nov 20, 2026): ORtg "
+                   "shrunk toward the league average (K = 200 "
+                   "possessions used) and opponent-adjusted; "
+                   "rpr_v1 is the old value. "
                    "Availability filter: only Rotation / depth, "
                    "Elite role player, Undervalued / buy-low and "
                    "High-value starter tiers; top-3 RPR players on "
