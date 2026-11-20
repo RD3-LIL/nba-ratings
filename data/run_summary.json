@@ -1,0 +1,240 @@
+{
+ "generated_by": "generate_run_summary.py",
+ "data_through": "November 19, 2026",
+ "data_from": "October 20, 2026",
+ "n_games": 226,
+ "n_teams": 30,
+ "n_players": 475,
+ "n_players_with_rpr": 469,
+ "failed_fetches": 0,
+ "league_off_eff": 111.1,
+ "league_tempo": 102.3,
+ "team_solver": {
+  "converged": true,
+  "iterations": 73,
+  "margin_cap": 20.0,
+  "home_court": 0.5,
+  "prior_weight": 300.0
+ },
+ "top_teams_by_net": [
+  {
+   "team": "San Antonio Spurs",
+   "net": 7.1,
+   "adj_o": 114.4,
+   "adj_d": 107.3
+  },
+  {
+   "team": "Houston Rockets",
+   "net": 6.4,
+   "adj_o": 117.3,
+   "adj_d": 110.9
+  },
+  {
+   "team": "Minnesota Timberwolves",
+   "net": 6.1,
+   "adj_o": 109.9,
+   "adj_d": 103.8
+  },
+  {
+   "team": "Memphis Grizzlies",
+   "net": 5.5,
+   "adj_o": 116.5,
+   "adj_d": 111.0
+  },
+  {
+   "team": "Portland Trail Blazers",
+   "net": 5.0,
+   "adj_o": 113.9,
+   "adj_d": 108.9
+  }
+ ],
+ "bottom_teams_by_net": [
+  {
+   "team": "Sacramento Kings",
+   "net": -8.1
+  },
+  {
+   "team": "Milwaukee Bucks",
+   "net": -8.3
+  }
+ ],
+ "top_players_by_rpr": [
+  {
+   "name": "Victor Wembanyama",
+   "team": "San Antonio Spurs",
+   "rpr": 6.98,
+   "gp": 16,
+   "ppg": 28.62
+  },
+  {
+   "name": "Giannis Antetokounmpo",
+   "team": "Miami Heat",
+   "rpr": 4.37,
+   "gp": 15,
+   "ppg": 28.2
+  },
+  {
+   "name": "Nikola Jokic",
+   "team": "Denver Nuggets",
+   "rpr": 3.98,
+   "gp": 13,
+   "ppg": 24.08
+  },
+  {
+   "name": "Walker Kessler",
+   "team": "Los Angeles Lakers",
+   "rpr": 3.07,
+   "gp": 15,
+   "ppg": 14.2
+  },
+  {
+   "name": "Alperen Sengun",
+   "team": "Houston Rockets",
+   "rpr": 3.05,
+   "gp": 14,
+   "ppg": 21.64
+  },
+  {
+   "name": "Luka Doncic",
+   "team": "Los Angeles Lakers",
+   "rpr": 2.91,
+   "gp": 14,
+   "ppg": 38.07
+  },
+  {
+   "name": "Donovan Clingan",
+   "team": "Portland Trail Blazers",
+   "rpr": 2.69,
+   "gp": 15,
+   "ppg": 10.73
+  },
+  {
+   "name": "Dyson Daniels",
+   "team": "Atlanta Hawks",
+   "rpr": 2.64,
+   "gp": 15,
+   "ppg": 9.53
+  },
+  {
+   "name": "Jamal Murray",
+   "team": "Denver Nuggets",
+   "rpr": 2.52,
+   "gp": 13,
+   "ppg": 25.69
+  },
+  {
+   "name": "Bam Adebayo",
+   "team": "Miami Heat",
+   "rpr": 2.52,
+   "gp": 15,
+   "ppg": 18.87
+  }
+ ],
+ "best_rookie": {
+  "name": "Aday Mara",
+  "team": "Oklahoma City Thunder",
+  "rpr": 0.77,
+  "gp": 15,
+  "ppg": 9.2
+ },
+ "n_rookies_on_rosters": 75,
+ "n_rookie_profiles_played": 58,
+ "gm_tier_counts": {
+  "Franchise cornerstone": 3,
+  "Insufficient minutes": 185,
+  "All-Star level": 9,
+  "Undervalued / buy-low": 3,
+  "High-value starter": 15,
+  "Rotation / depth": 188,
+  "Elite role player": 37,
+  "Overvalued / avoid": 35
+ },
+ "team_needs": {
+  "top_slots": 240,
+  "distinct_top_players": 30,
+  "most_common_top1": [
+   [
+    "Paul Reed",
+    18
+   ],
+   [
+    "Ajay Mitchell",
+    3
+   ],
+   [
+    "Aday Mara",
+    2
+   ],
+   [
+    "Matisse Thybulle",
+    2
+   ]
+  ],
+  "no_clear_star_teams": [
+   "Boston Celtics",
+   "Charlotte Hornets",
+   "Indiana Pacers",
+   "LA Clippers",
+   "Milwaukee Bucks",
+   "Minnesota Timberwolves",
+   "Orlando Magic",
+   "Toronto Raptors"
+  ],
+  "n_no_clear_star": 8,
+  "unfilled_needs": [],
+  "trade_score_min": 0.024,
+  "trade_score_max": 0.552,
+  "distinct_top1_players": 9
+ },
+ "validation": {
+  "version": "v1.2",
+  "n_split_half": 216,
+  "split_half_r": {
+   "v1": 0.48,
+   "v1.1": 0.621,
+   "v1.2": 0.542
+  },
+  "mse_predict_own_2nd_half": {
+   "v1": 6.23,
+   "v1.1": 2.02,
+   "v1.2": 1.67
+  },
+  "team_aggregation_r": {
+   "v1.2": 0.747,
+   "v1.1": 0.683,
+   "v1": 0.718
+  },
+  "distribution": {
+   "v1.2": {
+    "median": -0.098,
+    "mean": 0.015,
+    "neg_share": 0.557,
+    "n": 469,
+    "min": -3.177,
+    "max": 6.983
+   },
+   "v1.1": {
+    "median": 2.193,
+    "mean": 2.419,
+    "neg_share": 0.017,
+    "n": 469,
+    "min": -1.018,
+    "max": 10.809
+   },
+   "v1": {
+    "median": 2.046,
+    "mean": 2.306,
+    "neg_share": 0.115,
+    "n": 469,
+    "min": -4.0,
+    "max": 11.803
+   }
+  },
+  "centers_per36": {
+   "play_per36": 0.878,
+   "defense_per36": 1.981,
+   "rebounding_per36": 1.628
+  },
+  "league_ortg": 100.25
+ }
+}
