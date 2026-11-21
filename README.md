@@ -16,6 +16,8 @@ Top teams by Net: San Antonio Spurs +7.1, Houston Rockets +6.4, Minnesota Timber
 
 Top players by RPR v1.2 (min 2 games, 40% of team minutes): Victor Wembanyama (San Antonio Spurs) 6.98, Giannis Antetokounmpo (Miami Heat) 4.37, Nikola Jokic (Denver Nuggets) 3.98, Walker Kessler (Los Angeles Lakers) 3.07, Alperen Sengun (Houston Rockets) 3.05, Luka Doncic (Los Angeles Lakers) 2.91, Donovan Clingan (Portland Trail Blazers) 2.69, Dyson Daniels (Atlanta Hawks) 2.64, Jamal Murray (Denver Nuggets) 2.52, Bam Adebayo (Miami Heat) 2.52.
 
+Top players by BUCK (same floor): Cam Spencer (Memphis Grizzlies) 0.676, Moussa Diabate (Charlotte Hornets) 0.432, Donovan Clingan (Portland Trail Blazers) 0.315, Cedric Coward (Memphis Grizzlies) 0.282, Matisse Thybulle (Los Angeles Lakers) 0.274.
+
 RPR v1.2 distribution (n = 469): median -0.10, mean 0.01, 56% negative, range -3.18 to 6.98. Split-half r (n = 216): v1 0.480, v1.1 0.621, v1.2 0.542. Team aggregation r: v1 0.718, v1.1 0.683, v1.2 0.747.
 
 Best rookie by RPR v1.2: Aday Mara (Oklahoma City Thunder), RPR 0.77, 9.2 PPG in 15 games. 75 rookies on rosters, 58 rookie profiles have played.
@@ -558,22 +560,39 @@ the remaining contract ($M)`, including this season, where
 average salary is (2026-27 salary + future listed salaries) /
 (1 + years left) and years left is the count of future seasons
 with a listed salary. `BUCK_NOW = RPR / salary 2026-27 ($M)` is
-kept alongside. No shift on RPR, so 0 is average and negative
-is below average however cheap: adding +3.5 to make every value
-positive was tested and rejected, it put Meleek Thomas (RPR
--0.14 on $1.36M) at the top of the qualified list. No invented
+kept alongside, with its own Top 25. `BUCK_TOTAL = RPR_value /
+average salary ($M)`, where RPR_value is RPR times GP / 82, is
+a total-value companion with a Top 10. No shift on RPR, so 0 is
+average and negative is below average however cheap: adding
++3.5 to make every value positive was tested and rejected. With
+this-season salary as the denominator it put Meleek Thomas (RPR
+-0.14 on $1.36M) at the top of the qualified list; with the
+average-salary denominator it put him 5th, behind Cam Spencer,
+Moussa Diabate, Matisse Thybulle and Mario Hezonja. No invented
 control multiplier: years left enter only through the average,
-ties broken by years left then RPR. Future salaries are taken
-as listed; options are not labelled in the source. The Top 25
+ties broken by years left then RPR. The average does not reward
+years of control, it only punishes pay rises, and the page says
+so. Future salaries are taken as listed; options are not
+labelled in the source, so `buck.html` shows total remaining
+next to guaranteed, with a cliff flag when 2027-28 is more than
+twice 2026-27. On the Nov 21 run 106 players have total
+remaining more than $10M above guaranteed, including
+Wembanyama ($269.17M total, $211.75M guaranteed). The Top 25
 on `buck.html` uses the same floor as the leaderboards (min 2
 games, 40% of team minutes). BUCK is also a stat on
-`distributions.html` (406 players). On the Nov 21 run the top
-qualified BUCKs are Cam Spencer 0.676, Moussa Diabate 0.432,
-Donovan Clingan 0.315, Cedric Coward 0.282, Matisse Thybulle
-0.274; Ajay Mitchell is 9th at 0.192 ($2.85M this season and
-$2.85M a year on average, 1 year left, RPR +0.55). Wembanyama
-is 0.414 on this season alone but 0.156 on the contract
-average ($16.87M now, $44.86M a year on average).
+`distributions.html`, qualified players only (183 of 406 with a
+matched salary). On the Nov 21 run the top qualified BUCKs are
+Cam Spencer 0.676, Moussa Diabate 0.432, Donovan Clingan 0.315,
+Cedric Coward 0.282, Matisse Thybulle 0.274; Ajay Mitchell is
+9th at 0.192 ($2.85M this season and $2.85M a year on average,
+1 year left, RPR +0.55). Wembanyama is 0.414 on this season
+alone but 0.156 on the contract average ($16.87M now, $44.86M
+a year on average). Quenton Jackson meets the Top 25 floor but
+has no matched salary, so he gets no BUCK, and is named on the
+page. Ranking is on full-precision BUCK, display rounded to 3
+decimals. `buck.py` validates the run: matched salaries at
+least 380, and Curry, Wembanyama and Ajay Mitchell BUCKs at
+their known values.
 
 ## Site (build_page.py, RonPom-style)
 
@@ -616,7 +635,10 @@ files above. No network, stdlib only.
   season line (totals, per game, per 36), shooting bars against
   the league average, a stacked bar for where the points come
   from (2s / 3s / FTs), the RPR v1.2 component breakdown as
-  diverging bars, playmaking / defense / rebounding, consistency
+  diverging bars, a Contract and BUCK section (salary now and
+  next year, average, total remaining, guaranteed, years left,
+  BUCK / BUCK now / BUCK total, or no BUCK if no matched
+  salary), playmaking / defense / rebounding, consistency
   and last-7-days trending, a full game log (most recent first),
   and teammates linking to their own profiles. Players under
   40% of team minutes or under 5 games carry a small-sample
@@ -629,9 +651,10 @@ files above. No network, stdlib only.
   as small samples. Best rookie so far: Aday Mara, RPR 0.77.
 - **GM board**: acquisition tiers, same as `gm_board.py`.
 - **BUCK**: `buck.html`, RPR per $1M of average salary over the
-  years left on the deal, Top 25 qualified plus lowest 10 and
-  the full qualified table, linked from the index topnav. BUCK
-  is also a stat on `distributions.html`.
+  years left on the deal, Top 25 qualified plus a Top 25 by
+  BUCK now, a Top 10 by BUCK total, lowest 10 and the full
+  qualified table, all sortable, linked from the index topnav.
+  BUCK is also a stat on `distributions.html`, qualified only.
 - **Best MVP**: `best-mvp.html`, every MVP winner ranked by combined
   PER, Win Shares, WS/48, BPM, and VORP, linked from the index
   topnav. The pick is Jordan 1987-88, ahead of LeBron 2008-09 and

@@ -3,7 +3,13 @@
 every player stat, with hover/tap to see players in a bin and a
 search box that marks one player on the distribution.
 
-Reads data/players_2026_27_eval.json and data/sharp_2026_27.json.
+Reads data/players_2026_27_eval.json, data/sharp_2026_27.json
+and data/buck_2026_27.json. BUCK is qualified only (min 2 games,
+40% of team minutes), like the BUCK page Top 25, so its Top 5
+is not small-sample players. Values are kept to 3 decimals in
+the page data, so BUCK does not collapse into false ties.
+The search marker uses the same 1st to 99th percentile chart
+range as the bars, not the full min/max range.
 Static page, vanilla JS only, no external libraries.
 """
 import json
@@ -37,6 +43,7 @@ STATS = [
     ("3P%", "3P%", 1, True),
     ("FT%", "FT%", 1, True),
     ("eFG%", "eFG%", 1, True),
+    ("BUCK", "BUCK", 3, False),
 ]
 
 TIPS = {
@@ -51,6 +58,7 @@ TIPS = {
     "3P%": "Share of three point attempts made.",
     "FT%": "Share of free throw attempts made.",
     "eFG%": "Field goal percentage adjusted so a three counts more than a two, since it is worth more points.",
+    "BUCK": "RPR per $1M of average salary over the years left on the deal, qualified players only (min 2 games, 40% of team minutes). 0 is an average player, positive is above average per dollar, negative is below average however cheap. See the BUCK page for the formula and the traps.",
 }
 
 
@@ -58,6 +66,9 @@ def build_players():
     eval_doc = json.loads((DATA / "players_2026_27_eval.json").read_text())
     sharp_doc = json.loads((DATA / "sharp_2026_27.json").read_text())
     sharp = {p["athlete_id"]: p["sharp"] for p in sharp_doc["players"]}
+    buck_doc = json.loads((DATA / "buck_2026_27.json").read_text())
+    buck = {(p["athlete_id"], p["team"]): p.get("buck_full", p["buck"])
+            for p in buck_doc["players"]}
     out = []
     for p in eval_doc["players"]:
         ev = p.get("eval", {})
@@ -76,12 +87,18 @@ def build_players():
             "3P%": (sh.get("fg3_pct") * 100) if sh.get("fg3_pct") is not None else None,
             "FT%": (sh.get("ft_pct") * 100) if sh.get("ft_pct") is not None else None,
             "eFG%": (sh.get("efg_pct") * 100) if sh.get("efg_pct") is not None else None,
+            "BUCK": buck.get((p["athlete_id"], p["team"])),
         }
-        vals = {k: (round(v, 2) if v is not None else None) for k, v in vals.items()}
+        vals = {k: (round(v, 3) if v is not None else None) for k, v in vals.items()}
+        gp = p["totals"]["gp"]
+        min_pct = rt.get("min_pct")
         out.append({
             "name": p["name"],
             "team": p["team"],
             "slug": player_slug(p["name"], p["athlete_id"], p["team"]),
+            "gp": gp,
+            "min_pct": round(min_pct, 1) if min_pct is not None else None,
+            "q": bool(gp >= 2 and min_pct is not None and min_pct >= 40),
             "v": vals,
         })
     return out
@@ -126,7 +143,7 @@ h1 { font-size: 28px; margin: 8px 0 4px; }
 </style>
 </head>
 <body>
-<p><a href="index.html">&larr; NBA Ratings</a> &middot; <a href="players/index.html">All players</a></p>
+<p><a href="index.html">&larr; NBA Ratings</a> &middot; <a href="buck.html">BUCK</a> &middot; <a href="best-mvp.html">Best MVP</a> &middot; <a href="players/index.html">All players</a></p>
 <h1>Stat distributions</h1>
 <p class="note">Pick a stat and the chart builds its distribution from every player with a value for that stat. The bars are the histogram, the smooth blue line follows the shape of the data, and the grey dashed line is the league average. Hover or tap a bar to see the players in that range. Search a name to mark where that player sits.</p>
 <div class="chips" id="chips"></div>
@@ -142,7 +159,7 @@ h1 { font-size: 28px; margin: 8px 0 4px; }
 <p class="summary" id="summary"></p>
 <h2>Top 5</h2>
 <ol class="top5" id="top5"></ol>
-<p class="note">Data through November 19, 2026 (226 games). SHARP has 211 qualified players (5+ games, 20+ minutes per game); every other stat uses all 475 players with a value.</p>
+<p class="note">Data through November 19, 2026 (226 games). SHARP has 211 qualified players (5+ games, 20+ minutes per game); BUCK has 183 qualified players (min 2 games, 40% of team minutes) out of 406 with a matched salary; every other stat uses all 475 players with a value.</p>
 <script>
 const PLAYERS = __DATA_JSON__;
 const STATS = __STATS_JSON__;
@@ -150,6 +167,7 @@ const TIPS = __TIPS_JSON__;
 let curStat = "PPG";
 let curBins = null;
 let curVals = null;
+let curLo = null, curHi = null;
 let marker = null;
 const W = 720, H = 380, ML = 52, MR = 16, MT = 28, MB = 48;
 const PW = W - ML - MR, PH = H - MT - MB;
@@ -180,7 +198,7 @@ function build(stat) {
   curStat = stat;
   document.querySelectorAll("#chips button").forEach(b => b.classList.toggle("on", b.dataset.stat === stat));
   document.getElementById("tip").textContent = TIPS[stat] || "";
-  const rows = PLAYERS.map(p => ({ p, v: p.v[stat] })).filter(r => r.v !== null && r.v !== undefined);
+  const rows = PLAYERS.map(p => ({ p, v: p.v[stat] })).filter(r => r.v !== null && r.v !== undefined && (stat !== "BUCK" || r.p.q));
   rows.sort((a, b) => a.v - b.v);
   curVals = rows;
   const vals = rows.map(r => r.v);
@@ -197,6 +215,7 @@ function build(stat) {
   const pad = (pHi - pLo) * 0.02 || 1;
   const lo = vals[0] >= 0 ? Math.max(0, pLo - pad) : pLo - pad;
   const hi = pHi + pad;
+  curLo = lo; curHi = hi;
   const NB = 20, bw = (hi - lo) / NB;
   const bins = Array.from({ length: NB }, (_, i) => ({ lo: lo + i * bw, hi: lo + (i + 1) * bw, count: 0, rows: [] }));
   for (const r of rows) {
@@ -271,7 +290,8 @@ function showBin(i) {
   const rows = b.rows;
   let html = "<h3>" + fmt(curStat, b.lo) + " to " + fmt(curStat, b.hi) + " (" + rows.length + " player" + (rows.length === 1 ? "" : "s") + ")</h3><ul>";
   for (const r of rows) {
-    html += '<li><a href="players/' + r.p.slug + '.html">' + r.p.name + '</a> (' + r.p.team + ') ' + fmt(curStat, r.v) + '</li>';
+    const extra = curStat === "BUCK" ? ', ' + r.p.gp + ' GP, ' + r.p.min_pct + '% min' : '';
+    html += '<li><a href="players/' + r.p.slug + '.html">' + r.p.name + '</a> (' + r.p.team + ') ' + fmt(curStat, r.v) + extra + '</li>';
   }
   html += "</ul>";
   document.getElementById("binpanel").innerHTML = html;
@@ -289,10 +309,10 @@ function drawMarker() {
   }
   const rank = [...curVals].sort((a, b) => b.v - a.v).findIndex(r => r.p.slug === marker) + 1;
   info.textContent = name + ": " + fmt(curStat, row.v) + ", #" + rank + " of " + curVals.length + " in the NBA";
-  const vals = curVals.map(r => r.v);
-  const lo0 = vals[0], hi0 = vals[vals.length - 1];
-  const pad = (hi0 - lo0) * 0.02 || 1;
-  const lo = lo0 - pad, hi = hi0 + pad;
+  // Marker uses the same capped chart range as build(), not the
+  // full min/max range, or it lands left of where the chart puts
+  // the same value, worst for BUCK where p99 is well below max.
+  const lo = curLo, hi = curHi;
   const X = v => ML + (v - lo) / (hi - lo) * PW;
   const kx = Math.min(Math.max(X(row.v), ML), ML + PW);
   const line = el("line", { "class": "marker", x1: kx, y1: MT, x2: kx, y2: MT + PH });

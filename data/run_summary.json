@@ -130,6 +130,39 @@
    "ppg": 18.87
   }
  ],
+ "top_players_by_buck": [
+  {
+   "name": "Cam Spencer",
+   "team": "Memphis Grizzlies",
+   "buck": 0.676,
+   "rpr": 1.77
+  },
+  {
+   "name": "Moussa Diabate",
+   "team": "Charlotte Hornets",
+   "buck": 0.432,
+   "rpr": 1.06
+  },
+  {
+   "name": "Donovan Clingan",
+   "team": "Portland Trail Blazers",
+   "buck": 0.315,
+   "rpr": 2.69
+  },
+  {
+   "name": "Cedric Coward",
+   "team": "Memphis Grizzlies",
+   "buck": 0.282,
+   "rpr": 1.94
+  },
+  {
+   "name": "Matisse Thybulle",
+   "team": "Los Angeles Lakers",
+   "buck": 0.274,
+   "rpr": 0.67
+  }
+ ],
+ "n_buck_qualified": 183,
  "best_rookie": {
   "name": "Aday Mara",
   "team": "Oklahoma City Thunder",

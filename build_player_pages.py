@@ -107,6 +107,12 @@ def _pct(v):
     return f"{100 * float(v):.1f}%"
 
 
+def _money(v):
+    if v is None:
+        return "-"
+    return f"${v / 1e6:.2f}M"
+
+
 def _height(height_in):
     if height_in is None:
         return "-"
@@ -260,6 +266,7 @@ TIPS = {
     "ORtg (full)": "Points the player produces per 100 possessions he uses, with credit for assists.",
     "TS%": "Points scored per shooting attempt, counting twos, threes, and free throws together.",
     "SHARP": "Extra points per game from threes and free throws above league average.",
+    "BUCK": "RPR per $1M of average salary over the years left on the deal. 0 is an average player, positive is above average per dollar, negative is below average however cheap.",
     "FG%": "Share of all field goal attempts made.",
     "3P%": "Share of three point attempts made.",
     "FT%": "Share of free throw attempts made.",
@@ -280,6 +287,7 @@ def rank_rows(p, ranks):
         ("ORtg (full)", ev.get("ortg_full"), "ortg_full", 1),
         ("TS%", p["shooting"].get("ts_pct"), "ts_pct", 1),
         ("SHARP", p.get("sharp"), "sharp", 2),
+        ("BUCK", p.get("buck"), "buck", 3),
     ]
     out = []
     for label, value, rank_key, nd in defs:
@@ -480,6 +488,33 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
                  f'floor for exactly this reason.</p>')
 
     rpr = r.get("rpr")
+    brow = p.get("buck_row") or {}
+    if not brow:
+        buck_html = "<p>No matched salary, so no BUCK value, never a guessed one. See the <a href=\"../buck.html\">BUCK page</a> for the players with a salary.</p>"
+    else:
+        buck_rank_map, buck_denom = ranks["buck"]
+        buck_rank = buck_rank_map.get((p["athlete_id"], p["team"]))
+        gap = brow.get("guaranteed_gap")
+        gap_s = f"${gap / 1e6:.2f}M" if gap is not None else "-"
+        next_s = brow.get("salary_2027_28")
+        next_s = f"${next_s / 1e6:.2f}M" if next_s is not None else "-"
+        if brow.get("cliff"):
+            next_s += " *"
+        buck_html = (
+            f"<p>BUCK <strong>{brow['buck']:+.3f}</strong>"
+            f"{f' (#{buck_rank} of {buck_denom} in the NBA)' if buck_rank else ''} &middot; "
+            f"BUCK now {brow['buck_now']:+.3f} &middot; "
+            f"BUCK total {brow['buck_total']:+.3f} (RPR_value "
+            f"{brow['rpr_value']:.2f}). Salary {_money(brow['salary_2026_27'])} this season, "
+            f"{next_s} next season, {_money(brow['avg_salary'])} a year on average, "
+            f"{_money(brow['total_remaining'])} total remaining against "
+            f"{_money(brow['guaranteed'])} guaranteed (gap {gap_s}), "
+            f"{brow['years_left']} years left after this one.</p>"
+            f"<p class=\"note\">BUCK is RPR per $1M of average salary over the remaining contract. "
+            f"Future salaries are taken as listed; options are not labelled in the source, "
+            f"so the average can move. A * means the 2027-28 salary is more than twice this "
+            f"season's. The average does not reward years of control, it only punishes pay "
+            f"rises. Full table: <a href=\"../buck.html\">BUCK</a>.</p>")
     body = f"""<h1>{html.escape(p["name"])}</h1>
 <p class="subtitle"><a href="../teams/{team_slug}.html">{html.escape(p["team"])}</a>
 &middot; Data through {through} ({n_games} games)
@@ -517,6 +552,9 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
 <div class="comp-chart">{''.join(comp_rows)}</div>
 <p>RPR v1.2 <strong>{_fmt(rpr, 2)}</strong> = scoring {_fmt(comp.get("scoring"), 2)} + playmaking {_fmt(comp.get("playmaking"), 2)} + defense {_fmt(comp.get("defense"), 2)} + rebounding {_fmt(comp.get("rebounding"), 2)}. Value delivered so far (RPR &times; GP / 82): {_fmt(r.get("rpr_value"), 2)}. RPR v1.1 was {_fmt(r.get("rpr_v1_1"), 2)}; v1.2 recenters the counting terms on league averages, so an average player scores about 0.</p>
 <p class="note">ORtg simple {_fmt(r.get("ortg"))} &rarr; shrunk {_fmt(r.get("ortg_shrunk"))} &rarr; opponent-adjusted {_fmt(r.get("ortg_adj"))} (OppAdj {_fmt(r.get("opp_adj"), 2)}, league ORtg {_fmt(r.get("league_ortg"))}). Usage {_fmt(r.get("poss_pct"))}% of team possessions. Quadrant: {html.escape(ev.get("quadrant") or "-")}.</p>
+
+<h2>Contract and BUCK</h2>
+{buck_html}
 
 <h2>Playmaking, defense, rebounding</h2>
 <p>AST/TO ratio {_fmt(play.get("ast_to_ratio"), 2)} &middot; AST per 100 possessions used {_fmt(play.get("ast_per_100_poss_used"))} &middot; STL+BLK per game {_fmt(defe.get("stl_blk_pg"))}, per 36 {_fmt(defe.get("stl_blk_per36"))} &middot; REB per 36 {_fmt(defe.get("reb_per36"))} (OREB {_fmt(defe.get("oreb_per36"))}, DREB {_fmt(defe.get("dreb_per36"))}) &middot; PF per 36 {_fmt(defe.get("pf_per36"))}.</p>
@@ -621,6 +659,21 @@ def main():
         for p in players:
             p["sharp"] = None
             p["sharp_detail"] = {}
+    buck_path = DATA / "buck_2026_27.json"
+    if buck_path.exists():
+        buck_doc = json.loads(buck_path.read_text())
+        buck_by_id = {(r["athlete_id"], r["team"]): r
+                      for r in buck_doc["players"]}
+        for p in players:
+            row = buck_by_id.get((p["athlete_id"], p["team"]))
+            p["buck"] = row["buck"] if row else None
+            p["buck_full"] = row["buck_full"] if row else None
+            p["buck_row"] = row or {}
+    else:
+        for p in players:
+            p["buck"] = None
+            p["buck_full"] = None
+            p["buck_row"] = {}
 
     # League shooting averages, from the totals themselves.
     tot = {k: sum(p["totals"][k] for p in players)
@@ -644,6 +697,7 @@ def main():
         "ortg_full": _rank_map(players, lambda p: p["eval"].get("ortg_full")),
         "ts_pct": _rank_map(players, lambda p: p["shooting"].get("ts_pct")),
         "sharp": _rank_map(players, lambda p: p.get("sharp")),
+        "buck": _rank_map(players, lambda p: p.get("buck_full")),
     }
 
     # Team Net ranks, from the solver output.

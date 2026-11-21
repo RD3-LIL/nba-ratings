@@ -57,6 +57,15 @@ def main():
     fetch_state = load_json("fetch_state.json")
     games = load_json("games_2026_27.json")
     rosters = load_json("rosters_2026_27.json")
+    try:
+        buck_doc = load_json("buck_2026_27.json")
+    except FileNotFoundError:
+        buck_doc = {"players": []}
+    buck_qual = [p for p in buck_doc.get("players", []) if p.get("qualified")]
+    buck_qual.sort(key=lambda p: p.get("buck_full", p["buck"]), reverse=True)
+    top_buck = [{"name": p["name"], "team": p["team"],
+                 "buck": round(p["buck"], 3), "rpr": p["rpr"]}
+                for p in buck_qual[:5]]
 
     first_date, last_date, n_games = data_through(games)
     teams = teams_doc["teams"]
@@ -131,6 +140,8 @@ def main():
         "top_teams_by_net": top_teams,
         "bottom_teams_by_net": bottom_teams,
         "top_players_by_rpr": top_players,
+        "top_players_by_buck": top_buck,
+        "n_buck_qualified": len(buck_qual),
         "best_rookie": best_rookie,
         "n_rookies_on_rosters": rosters.get("rookie_count"),
         "n_rookie_profiles_played": len(rookies),
@@ -182,6 +193,11 @@ def main():
         + ", ".join(
             f"{p['name']} ({p['team']}) {p['rpr']:.2f}"
             for p in top_players) + ".",
+        "",
+        "Top players by BUCK (same floor): "
+        + (", ".join(
+            f"{p['name']} ({p['team']}) {p['buck']:.3f}"
+            for p in top_buck) + "." if top_buck else "no BUCK data."),
         "",
         f"RPR v1.2 distribution (n = {dist['n']}): median "
         f"{dist['median']:.2f}, mean {dist['mean']:.2f}, "
