@@ -18,8 +18,8 @@ What a profile shows, and why:
 - Bio: headshot, team, position, jersey, age, height, weight,
   experience, rookie flag, GM tier. All from the roster pull
   or the box scores, never invented.
-- At a glance: RPR, PPG, RPG, APG, ORtg (full), TS%, each with
-  its NBA rank. Ranks are competition ranks (1, 2, 2, 4) among
+- At a glance: RPR, PPG, RPG, APG, ORtg (full), TS%, SPG, BPG,
+  each with its NBA rank. Ranks are competition ranks (1, 2, 2, 4) among
   all players with a value for that stat, denominator shown,
   so a rank is never presented without its pool. A small-sample
   note appears when a player is under 40% of team minutes or
@@ -271,6 +271,8 @@ TIPS = {
     "APG": "Assists per game.",
     "ORtg (full)": "Points the player produces per 100 possessions he uses, with credit for assists.",
     "TS%": "Points scored per shooting attempt, counting twos, threes, and free throws together.",
+    "SPG": "Steals per game.",
+    "BPG": "Blocks per game.",
     "SHARP": "Extra points per game from threes and free throws above league average.",
     "BUCK": "RPR per $1M of average salary over the years left on the deal. 0 is an average player, positive is above average per dollar, negative is below average however cheap.",
     "FG%": "Share of all field goal attempts made.",
@@ -292,6 +294,8 @@ def rank_rows(p, ranks):
         ("APG", p["per_game"]["ast"], "ast_pg", 1),
         ("ORtg (full)", ev.get("ortg_full"), "ortg_full", 1),
         ("TS%", p["shooting"].get("ts_pct"), "ts_pct", 1),
+        ("SPG", p["per_game"]["stl"], "stl_pg", 1),
+        ("BPG", p["per_game"]["blk"], "blk_pg", 1),
         ("SHARP", p.get("sharp"), "sharp", 2),
         ("BUCK", p.get("buck"), "buck", 3),
     ]
