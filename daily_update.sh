@@ -171,6 +171,7 @@ fi
 python3 player_profiles.py --season 2026-27 || exit 1
 python3 team_ratings.py || exit 1
 python3 player_eval.py || exit 1
+python3 sharp_rating.py || exit 1
 python3 gm_board.py || exit 1
 python3 team_needs.py || exit 1
 # Validator gate: stops the run (and the push) on a regression.
@@ -201,7 +202,7 @@ PLAYER_PAGES=(players/*.html)
 # the push below is much larger than before; if the single
 # push-files call fails with HTTP 413, split the player pages
 # into batches of about 90 files / 1.7 MB each, as RonPom does.
-printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html index.html "${TEAM_PAGES[@]}" "${PLAYER_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
+printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/sharp_2026_27.csv data/sharp_2026_27.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html index.html "${TEAM_PAGES[@]}" "${PLAYER_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
 
 # Sync-base check: the branch head must match the last sync
 # record entry, or someone else pushed since our last run.

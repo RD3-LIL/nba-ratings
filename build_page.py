@@ -403,6 +403,58 @@ def player_leaders(players, min_games=2):
     return "\n".join(out)
 
 
+def shooters_section():
+    """Top 25 shooters by SHARP in sharp_rating.py.
+
+    Reads data/sharp_2026_27.json if it exists, otherwise
+    returns an empty string so a build without the SHARP
+    step still works. SHARP is points per game added by
+    shooting above league average, from threes and free throws
+    only, so finishers do not top it the way they top TS%.
+    """
+    path = DATA / "sharp_2026_27.json"
+    if not path.exists():
+        return ""
+    data = json.loads(path.read_text())
+    top = data["players"][:25]
+    league = data["league"]
+    out = ["<section id=\"shooters\"><h2>Best shooters by SHARP</h2>",
+           "<p>Top 25 shooters of 2026-27 by SHARP: points "
+           "per game added by shooting above league average, from "
+           "threes and free throws only. SHARP is not a percent, "
+           "it is extra points per game. "
+           f"League 3P {league['fg3_pct'] * 100:.1f}%, FT "
+           f"{league['ft_pct'] * 100:.1f}%. 3P% is shrunk toward "
+           "league average (m = 100 attempts), FT% the same "
+           "(m = 50). Floor is 5 games and 20 minutes per game, "
+           "not the 40% minutes floor, so Curry qualifies. "
+           "TS% is shown for context only, it is not part of the "
+           "score, because TS% mixes dunks and layups in with jump "
+           "shots. Full list in "
+           "<a href=\"data/sharp_2026_27.csv\">sharp_2026_27.csv</a>.</p>",
+           "<div class=\"table-scroll\"><table class=\"ratings\" "
+           "id=\"shooters-top25\" data-renumber=\"1\"><thead><tr>"
+           "<th data-t=\"num\">Rk</th><th data-t=\"text\">Player</th>"
+           "<th data-t=\"text\">Team</th><th data-t=\"num\">SHARP</th>"
+           "<th data-t=\"num\">3P%</th><th data-t=\"num\">3PA/g</th>"
+           "<th data-t=\"num\">FT%</th><th data-t=\"num\">TS%</th>"
+           "</tr></thead><tbody>"]
+    for p in top:
+        fg3 = f"{p['fg3_pct'] * 100:.1f}%" if p.get("fg3_pct") is not None else "-"
+        ft = f"{p['ft_pct'] * 100:.1f}%" if p.get("ft_pct") is not None else "-"
+        ts = f"{p['ts_pct'] * 100:.1f}%" if p.get("ts_pct") is not None else "-"
+        out.append(f"<tr><td>{p['rank']}</td>"
+                   f"<td><a href=\"players/"
+                   f"{player_slug(p['name'], p['athlete_id'], p['team'])}"
+                   f".html\">{html.escape(p['name'])}</a></td>"
+                   f"<td>{html.escape(p['team'])}</td>"
+                   f"<td>{p['sharp']:+.2f}</td>"
+                   f"<td>{fg3}</td><td>{p['fg3a_pg']:.1f}</td>"
+                   f"<td>{ft}</td><td>{ts}</td></tr>")
+    out.append("</tbody></table></div></section>")
+    return "\n".join(out)
+
+
 def top_players_section(players):
     """Full top-100 players table for 2026-27, by RPR.
 
@@ -1387,6 +1439,7 @@ def main():
     n_games = sum(r["gp"] for r in rows) // 2
     table_html = team_table(rows, log_idx)
     leaders_html = player_leaders(players)
+    shooters_html = shooters_section()
     top_html = top_players_section(players)
     rookies_html = rookies_section(players)
     gm_html = gm_board_section()
@@ -1421,6 +1474,7 @@ How to read this).</p>
 <nav class="topnav">
 <a href="#team-ratings">Team ratings</a>
 <a href="#players">Player leaders</a>
+<a href="#shooters">SHARP shooters</a>
 <a href="#top-players">Top players</a>
 <a href="#rookies">Rookies</a>
 <a href="#gm-board">GM board</a>
@@ -1444,6 +1498,8 @@ page, or a team row to see its game log and roster here.</p>
 <section id="players"><h2>Player leaders</h2>
 {leaders_html}
 </section>
+
+{shooters_html}
 
 {top_html}
 

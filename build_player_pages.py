@@ -218,6 +218,10 @@ EXTRA_CSS = """
 .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 12px 0; }
 .stat-card { border: 1px solid #d0d7de; border-radius: 8px; padding: 10px 12px; }
 .stat-card .label { font-size: 12px; color: #656d76; text-transform: uppercase; letter-spacing: 0.04em; }
+.tip { cursor: help; border-bottom: 1px dotted #656d76; position: relative; }
+.tip::after { content: attr(data-tip); display: none; position: absolute; bottom: 125%; left: 0; width: 220px; background: #1f2328; color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; line-height: 1.4; text-transform: none; letter-spacing: normal; font-weight: 400; z-index: 10; white-space: normal; }
+.tip:hover::after, .tip:focus::after, .tip:active::after { display: block; }
+.shoot-row .tip { border-bottom: 1px dotted #656d76; }
 .stat-card .value { font-size: 26px; font-weight: 700; line-height: 1.2; }
 .stat-card .rank { font-size: 13px; color: #656d76; }
 .rank-bar { height: 6px; background: #eaeef2; border-radius: 999px; overflow: hidden; margin-top: 6px; }
@@ -248,6 +252,21 @@ table.gamelog { font-size: 13px; }
 """
 
 
+TIPS = {
+    "RPR": "Our single-number rating for how much a player helps his team, where an average player scores about 0 and a star scores about +3 to +7.",
+    "PPG": "Points scored per game.",
+    "RPG": "Rebounds grabbed per game.",
+    "APG": "Assists per game.",
+    "ORtg (full)": "Points the player produces per 100 possessions he uses, with credit for assists.",
+    "TS%": "Points scored per shooting attempt, counting twos, threes, and free throws together.",
+    "SHARP": "Extra points per game from threes and free throws above league average.",
+    "FG%": "Share of all field goal attempts made.",
+    "3P%": "Share of three point attempts made.",
+    "FT%": "Share of free throw attempts made.",
+    "eFG%": "Field goal percentage adjusted so a three counts more than a two, since it is worth more points.",
+}
+
+
 def rank_rows(p, ranks):
     """(label, value, rank, denominator) rows for the at-a-glance grid."""
     key = (p["athlete_id"], p["team"])
@@ -260,6 +279,7 @@ def rank_rows(p, ranks):
         ("APG", p["per_game"]["ast"], "ast_pg", 1),
         ("ORtg (full)", ev.get("ortg_full"), "ortg_full", 1),
         ("TS%", p["shooting"].get("ts_pct"), "ts_pct", 1),
+        ("SHARP", p.get("sharp"), "sharp", 2),
     ]
     out = []
     for label, value, rank_key, nd in defs:
@@ -317,9 +337,12 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
     # At-a-glance cards with ranks.
     cards = []
     for label, value, rank, denom, nd in rank_rows(p, ranks):
+        tip = html.escape(TIPS.get(label, ""), quote=True)
+        label_html = (f'<span class="tip" tabindex="0" data-tip="{tip}">{label}</span>'
+                      if tip else label)
         if value is None:
             cards.append(
-                f'<div class="stat-card"><div class="label">{label}</div>'
+                f'<div class="stat-card"><div class="label">{label_html}</div>'
                 f'<div class="value">-</div>'
                 f'<div class="rank">No value in this data</div></div>')
             continue
@@ -332,7 +355,7 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
             bar = (f'<div class="rank-bar"><span style="width:'
                    f'{pct_top:.0f}%"></span></div>')
         cards.append(
-            f'<div class="stat-card"><div class="label">{label}</div>'
+            f'<div class="stat-card"><div class="label">{label_html}</div>'
             f'<div class="value">{_fmt(value, nd) if label != "TS%" else _pct(value)}</div>'
             f'<div class="rank">{rank_s}</div>{bar}</div>')
 
@@ -344,16 +367,19 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
             ("FT%", s.get("ft_pct"), league["ft_pct"]),
             ("eFG%", s.get("efg_pct"), league["efg_pct"]),
             ("TS%", s.get("ts_pct"), league["ts_pct"])]:
+        tip = html.escape(TIPS.get(label, ""), quote=True)
+        label_html = (f'<span class="tip" tabindex="0" data-tip="{tip}">{label}</span>'
+                      if tip else label)
         if value is None:
             shoot_rows.append(
-                f'<div class="shoot-row"><span>{label}</span>'
+                f'<div class="shoot-row"><span>{label_html}</span>'
                 f'<span class="shoot-track"></span>'
                 f'<span>- (no attempts)</span></div>')
             continue
         width = max(0.0, min(100.0, 100 * float(value)))
         league_x = max(0.0, min(100.0, 100 * float(league_v)))
         shoot_rows.append(
-            f'<div class="shoot-row"><span>{label}</span>'
+            f'<div class="shoot-row"><span>{label_html}</span>'
             f'<span class="shoot-track"><span class="shoot-fill" '
             f'style="width:{width:.1f}%"></span>'
             f'<span class="shoot-league" style="left:{league_x:.1f}%"></span>'
@@ -387,6 +413,24 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
             f'<span class="comp-track"><span class="comp-center"></span>'
             f'<span class="comp-fill {cls}" style="width:{width:.1f}%"></span></span>'
             f'<span class="comp-value">{float(v):+.2f}</span></div>')
+
+    # SHARP diverging bar, scale +/-2.5, same style as the RPR
+    # component bars. Center is 0, league average. Positive goes
+    # right in blue, negative goes left in orange.
+    sharp_v = p.get("sharp")
+    sharp_tip = html.escape(TIPS.get("SHARP", ""), quote=True)
+    sharp_label = (f'<span class="tip" tabindex="0" data-tip="{sharp_tip}">SHARP</span>')
+    if sharp_v is None:
+        sharp_bar = (f'<div class="comp-row"><span>{sharp_label}</span>'
+                     f'<span class="comp-track"><span class="comp-center"></span></span>'
+                     f'<span class="comp-value">-</span></div>')
+    else:
+        sharp_w = min(50.0, abs(float(sharp_v)) / 2.5 * 50.0)
+        sharp_cls = "pos" if sharp_v >= 0 else "neg"
+        sharp_bar = (f'<div class="comp-row"><span>{sharp_label}</span>'
+                     f'<span class="comp-track"><span class="comp-center"></span>'
+                     f'<span class="comp-fill {sharp_cls}" style="width:{sharp_w:.1f}%"></span></span>'
+                     f'<span class="comp-value">{float(sharp_v):+.2f}</span></div>')
 
     # Game log rows.
     log_rows = []
@@ -448,7 +492,7 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
 {small}
 <h2>At a glance</h2>
 <div class="stat-grid">{''.join(cards)}</div>
-<p class="note">RPR is v1.2, our own single-number rating (average player about 0, star about +3 to +7), not KenPom's proprietary kPOY. ORtg (full) is the Oliver rating with assist credit. Ranks are among all players with a value for that stat; the bar shows the percentile (100% is best in the league).</p>
+<p class="note">RPR is v1.2, our own single-number rating (average player about 0, star about +3 to +7), not KenPom's proprietary kPOY. ORtg (full) is the Oliver rating with assist credit. SHARP is extra points per game from threes and free throws above league average, not a percent. Ranks are among all players with a value for that stat; the bar shows the percentile (100% is best in the league).</p>
 
 <h2>Season line</h2>
 <table class="profile"><thead><tr><th></th><th>PTS</th><th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>TO</th><th>PF</th></tr></thead><tbody>
@@ -461,6 +505,9 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
 <h2>Shooting</h2>
 {''.join(shoot_rows)}
 <p class="note">Bars are the player's rate; the grey tick is the league average. 3P% shrunk toward league average (m = 750 attempts) is {_pct(s.get("fg3_pct_shrunk"))} vs raw {_pct(s.get("fg3_pct"))}; TS% shrunk is {_pct(s.get("ts_pct_shrunk"))} vs raw {_pct(s.get("ts_pct"))}. Small samples shrink hard toward league average.</p>
+<div class="comp-chart">{sharp_bar}</div>
+<p class="note">SHARP bar is centered at 0, league average, on a scale of plus or minus 2.5 points per game.</p>
+<p>SHARP <strong>{f"{p.get('sharp'):+.2f}" if p.get("sharp") is not None else "-"}</strong>: {f"extra points per game from threes and free throws above league average ({_pct(s.get('fg3_pct'))} on {p.get('sharp_detail', {}).get('fg3a_pg', '-')} 3PA per game, {_pct(s.get('ft_pct'))} FT). It counts threes and free throws only, not midrange or layups, and it is not a percent." if p.get("sharp") is not None else "No SHARP value: below the floor of 5 games and 20 minutes per game."}</p>
 
 <h2>Where the points come from</h2>
 <div class="stacked">{stack}</div>
@@ -561,6 +608,19 @@ def main():
             gm_by_id[(row["athlete_id"], row["team"])] = row
     for p in players:
         p["gm"] = gm_by_id.get((p["athlete_id"], p["team"]), {})
+    sharp_path = DATA / "sharp_2026_27.json"
+    if sharp_path.exists():
+        sharp_doc = json.loads(sharp_path.read_text())
+        sharp_by_id = {(r["athlete_id"], r["team"]): r
+                       for r in sharp_doc["players"]}
+        for p in players:
+            row = sharp_by_id.get((p["athlete_id"], p["team"]))
+            p["sharp"] = row["sharp"] if row else None
+            p["sharp_detail"] = row or {}
+    else:
+        for p in players:
+            p["sharp"] = None
+            p["sharp_detail"] = {}
 
     # League shooting averages, from the totals themselves.
     tot = {k: sum(p["totals"][k] for p in players)
@@ -583,6 +643,7 @@ def main():
         "ast_pg": _rank_map(players, lambda p: p["per_game"]["ast"]),
         "ortg_full": _rank_map(players, lambda p: p["eval"].get("ortg_full")),
         "ts_pct": _rank_map(players, lambda p: p["shooting"].get("ts_pct")),
+        "sharp": _rank_map(players, lambda p: p.get("sharp")),
     }
 
     # Team Net ranks, from the solver output.
