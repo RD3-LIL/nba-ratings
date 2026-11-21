@@ -1134,9 +1134,13 @@ def _target_link(name, team):
 def target_table_html(targets, team):
     """A target table: fit and money in the same row.
 
-    Columns: player, fills, Q, F, TradeScore, displaces, target
-    salary, net change, payroll after. The displaced player is
-    on the acquiring team, so his link uses that team.
+    Columns: player, fills, Q, F, TradeScore, displaces, loses,
+    target salary, net change, payroll after. The displaced player
+    is on the acquiring team, so his link uses that team. Loses
+    lists skills where the target is materially worse than the
+    player he displaces (displaced percentile to target
+    percentile); it is display only, the loss is already netted
+    in QualityGain, so it is not subtracted again from FitGain.
     """
     if not targets:
         return ""
@@ -1144,6 +1148,11 @@ def target_table_html(targets, team):
     for s in targets:
         disp = s["displaced"]
         disp_link = _target_link(disp["name"], team)
+        loses = s.get("loses") or []
+        loses_s = ("<br>".join(
+            f"{html.escape(l['skill'])} "
+            f"{l['displaced_pct']:.0f} to {l['target_pct']:.0f}"
+            for l in loses) if loses else "none")
         pay_after = s.get("payroll_after")
         pay_line = _payroll_line(pay_after, CAP_LINES)
         pay_s = _money_m(pay_after)
@@ -1160,6 +1169,7 @@ def target_table_html(targets, team):
             f"<td class=\"num\">{s['trade_score']:.3f}</td>"
             f"<td>{disp_link}"
             f"<span class=\"sub\">RPR {disp['rpr']:.2f}</span></td>"
+            f"<td>{loses_s}</td>"
             f"<td class=\"num\">{_money_m(s.get('target_salary'))}"
             f"<span class=\"sub\">was {_money_m(s.get('displaced_salary'))}</span></td>"
             f"<td class=\"num\">{_signed_money_m(s.get('net_salary_change'))}</td>"
@@ -1168,7 +1178,8 @@ def target_table_html(targets, team):
     return (
         '<div class="table-scroll"><table class="targets"><thead><tr>'
         "<th>Player</th><th>Fills</th><th>Q</th><th>F</th>"
-        "<th>TradeScore</th><th>Displaces</th><th>Target salary</th>"
+        "<th>TradeScore</th><th>Displaces</th><th>Loses</th>"
+        "<th>Target salary</th>"
         "<th>Net change</th><th>Payroll after</th>"
         "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
 
@@ -1274,9 +1285,13 @@ def team_page_html(team, row, slug_by_team):
             "TradeScore is QualityGain plus FitGain minus the "
             "availability discount. QualityGain is how much better "
             "the target is than the player he displaces, scaled by "
-            "his minutes. FitGain is how much he lifts the skills "
+            "his minutes, so it already nets what you lose in the "
+            "swap. FitGain is how much he lifts the skills "
             "this team actually needs, with diminishing returns, so "
-            "the first rebounder counts more than the second. "
+            "the first rebounder counts more than the second, and "
+            "it only counts gains, so the same loss is not "
+            "subtracted twice. The Loses column shows where the "
+            "target is worse than the player he displaces. "
             + (f"On this run QualityGain averages {_mq:.2f} and "
                f"FitGain {_mf:.2f} across the top targets, so "
                f"QualityGain drives the score more than fit does "

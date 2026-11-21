@@ -103,6 +103,15 @@ not fitted; v2 should fit them against post-trade Adj Net):
     FitGain = sum_k w_k * (Need_k / 60)
               * sqrt(max(dS_k, 0) / 10), capped per skill at 2
     QualityGain = (RPR_target - RPR_out) * (MPG_target / 240)
+    Loses = skills where dS_k < -0.5 and the target is at least
+      10 percentile points below the displaced player, shown
+      for display only. FitGain counts gains only on purpose:
+      QualityGain already nets the loss (RPR includes defence
+      and rebounding), so a symmetric FitGain would double-count
+      the same loss. Nov 21, 2026: Ron spotted this on Caleb
+      Wilson (Mitchell gains playmaking but loses Wilson's
+      defence/rebounding); the fix was to show Loses, not to
+      change the score.
     AvailabilityDiscount = 0.10 * (QualityGain + FitGain)
       if GP < 10, plus another 0.10 if %Min < 40
     TradeScore = QualityGain + FitGain - AvailabilityDiscount
@@ -751,8 +760,18 @@ def score_target(target, target_pct, target_tier, team, profile,
         return None
     d_mpg = displaced["per_game"]["min"]
     # FitGain over all six skills, concave in the delta.
+    # FitGain only counts gains (max(d_s, 0)): it is the lift in
+    # needed skills, not the net swap. The loss is NOT ignored:
+    # QualityGain below is the net RPR change vs the displaced
+    # player, so a target who is worse on defence already pays
+    # for it there. Making FitGain symmetric as well would
+    # double-count the same loss. What was missing was showing
+    # the loss, so record it in `loses` for display: skills
+    # where the target is materially worse than the displaced
+    # player (at least 10 percentile points, and d_s < -0.5).
     fit_gain = 0.0
     per_skill = {}
+    loses = []
     for k in SKILLS:
         d_s = (target_mpg * target_pct.get(k, 0)
                - d_mpg * d_pct.get(k, 0)) / 240.0
@@ -760,6 +779,13 @@ def score_target(target, target_pct, target_tier, team, profile,
                    * min(2.0, math.sqrt(max(d_s, 0.0) / 10.0)))
         per_skill[k] = round(contrib, 4)
         fit_gain += contrib
+        if d_s < -0.5 and (d_pct.get(k, 0) - target_pct.get(k, 0)) >= 10:
+            loses.append({
+                "skill": k,
+                "target_pct": round(target_pct.get(k, 0), 1),
+                "displaced_pct": round(d_pct.get(k, 0), 1),
+                "d_s": round(d_s, 2),
+            })
     if fit_gain <= 0:
         return None
     quality_gain = (t_rpr - d_rpr) * (target_mpg / 240.0)
@@ -821,6 +847,7 @@ def score_target(target, target_pct, target_tier, team, profile,
         if target["totals"]["min"] else 0.0,
         "fills_need": best_skill,
         "per_skill_fit": per_skill,
+        "loses": loses,
         "displaced": {"name": displaced["name"],
                       "athlete_id": displaced["athlete_id"],
                       "rpr": round(d_rpr, 2),
@@ -1015,7 +1042,7 @@ def main(argv=None):
     (DATA / "team_needs_2026_27.json").write_text(json.dumps(payload))
     # Flat CSV: one row per suggested target.
     fields = ["team", "team_net", "star", "top_need", "target",
-              "target_team", "target_tier", "fills_need",
+              "target_team", "target_tier", "fills_need", "loses",
               "target_rpr", "displaced", "displaced_rpr",
               "quality_gain", "fit_gain", "usage_penalty",
               "availability_discount", "trade_score",
@@ -1034,6 +1061,10 @@ def main(argv=None):
                     "top_need": prof["ranked_needs"][0],
                     "target": s["name"], "target_team": s["team"],
                     "target_tier": s["tier"], "fills_need": s["fills_need"],
+                    "loses": ";".join(
+                        f"{l['skill']} {l['displaced_pct']:.0f} to "
+                        f"{l['target_pct']:.0f}"
+                        for l in s.get("loses") or []),
                     "target_rpr": s["rpr"],
                     "displaced": s["displaced"]["name"],
                     "displaced_rpr": s["displaced"]["rpr"],
