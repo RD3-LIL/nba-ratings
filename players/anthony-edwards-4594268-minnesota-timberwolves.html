@@ -66,7 +66,16 @@ input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
 .leaders { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .leaders table { font-size: 15px; }
 .leaders td:nth-child(n+3) { text-align: right; }
-@media (max-width: 700px) { .leaders { grid-template-columns: 1fr; } }
+@media (max-width: 700px) {
+  .leaders { grid-template-columns: 1fr; }
+  /* Phone: the sticky nav wraps to several lines tall (about 145px),
+     far more than the 40px the sticky table header assumes, so the
+     header sticks underneath the nav and covers the first row
+     (SHARP rank 1, Curry, was blanked out). Unstick both on phones;
+     nothing can overlap a row then. Desktop keeps sticky. */
+  nav.topnav { position: static; }
+  table.ratings thead th { position: static; }
+}
 .note { color: #656d76; font-size: 14px; }
 .skill-chart { max-width: 640px; margin: 8px 0 4px; }
 .skill-row { display: grid; grid-template-columns: 150px 1fr 36px;
@@ -196,7 +205,7 @@ table.gamelog { font-size: 13px; }
 <h2>RPR breakdown</h2>
 <div class="comp-chart"><div class="comp-row"><span>Scoring</span><span class="comp-track"><span class="comp-center"></span><span class="comp-fill pos" style="width:6.3%"></span></span><span class="comp-value">+0.51</span></div><div class="comp-row"><span>Playmaking</span><span class="comp-track"><span class="comp-center"></span><span class="comp-fill neg" style="width:10.3%"></span></span><span class="comp-value">-0.82</span></div><div class="comp-row"><span>Defense</span><span class="comp-track"><span class="comp-center"></span><span class="comp-fill pos" style="width:11.2%"></span></span><span class="comp-value">+0.89</span></div><div class="comp-row"><span>Rebounding</span><span class="comp-track"><span class="comp-center"></span><span class="comp-fill neg" style="width:4.2%"></span></span><span class="comp-value">-0.34</span></div></div>
 <p>RPR v1.2 <strong>0.24</strong> = scoring 0.51 + playmaking -0.82 + defense 0.89 + rebounding -0.34. Value delivered so far (RPR &times; GP / 82): 0.01. RPR v1.1 was 4.52; v1.2 recenters the counting terms on league averages, so an average player scores about 0.</p>
-<p class="note">ORtg simple 104.9 &rarr; shrunk 102.1 &rarr; opponent-adjusted 101.8 (OppAdj 0.20, league ORtg 100.3). Usage 38.9% of team possessions. Quadrant: high usage, inefficient.</p>
+<p class="note">ORtg simple 104.9 &rarr; shrunk 102.1 &rarr; opponent-adjusted 101.8 (OppAdj 0.20, league ORtg 100.3). Usage 38.9% of team possessions. Quadrant: high usage, efficient.</p>
 
 <h2>Defense</h2>
 <table class="profile"><thead><tr><th></th><th>STL</th><th>BLK</th><th>STL+BLK</th><th>DREB</th><th>PF</th></tr></thead><tbody>
