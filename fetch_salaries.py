@@ -84,12 +84,26 @@ TEAM_MAP = {
 
 # Known salaries, cross-checked against the BBRef table and
 # independent reporting. A mismatch means the parse is wrong.
+# LeBron James and the $2,449,421 cluster were added Nov 21,
+# 2026 after the audit that flagged them as looking like a
+# scrape error: both are verbatim in the cached raw BBRef
+# HTML (data/raw/salaries/bbref_contracts_2026-27.html).
+# LeBron is listed at $3,876,529 for Philadelphia in 2026-27
+# ($4,070,355 in 2027-28, guaranteed $3,876,529), and 32
+# BBRef rows list exactly $2,449,421 for 2026-27 (DeRozan,
+# Drummond, Conley among them), all single-year and fully
+# guaranteed as listed. Those are BBRef's figures, used as
+# listed; no salary is ever invented or adjusted here.
 KNOWN = {
     "Stephen Curry": 62587158,
     "Nikola Jokic": 59033114,
     "Jayson Tatum": 58456566,
     "Anthony Davis": 58456566,
     "Giannis Antetokounmpo": 58456566,
+    "LeBron James": 3876529,
+    "DeMar DeRozan": 2449421,
+    "Andre Drummond": 2449421,
+    "Mike Conley": 2449421,
 }
 
 
@@ -248,7 +262,8 @@ def main():
     if bad:
         raise SystemExit("known salary cross-check failed: " + "; ".join(bad))
     print("Known salary cross-checks passed: Curry $62,587,158, "
-          "Jokic $59,033,114, Tatum / Davis / Giannis $58,456,566")
+          "Jokic $59,033,114, Tatum / Davis / Giannis $58,456,566, "
+          "LeBron $3,876,529, DeRozan / Drummond / Conley $2,449,421")
 
     # Match to our players, by folded name plus team first.
     with open(DATA / "players_2026_27.csv", newline="") as f:

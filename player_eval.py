@@ -259,14 +259,31 @@ def build_game_logs(game_map):
     return logs
 
 
-def quadrant(poss_pct, ortg):
+def quadrant(poss_pct, ortg, league_ortg=100.25):
+    """Volume vs efficiency quadrant (%Poss vs ORtg_full).
+
+    "Efficient" means ORtg at or above the league average for
+    this season, not a fixed 115. The old 115 cut sat at about
+    the 90th percentile of high-usage players (qualified
+    high-usage median 103.7, SD 7.6, max 114.9), so no qualified
+    high-usage player cleared it and Wembanyama, Jokic,
+    Giannis and Luka all read "inefficient". A league+5 cut
+    was considered and rejected: it would still label Shai
+    Gilgeous-Alexander (ORtg_full 104.9, 4.6 above league,
+    31.1 PPG) "inefficient" by 0.35 points, reproducing the
+    same flaw for the league's second-leading scorer. At the
+    league-average cut, qualified high-usage players split
+    26 efficient / 17 inefficient, and all players split
+    36 / 34. league_ortg is passed in from the profile
+    (ratings.league_ortg); the default is this season's value.
+    """
     if poss_pct is None or ortg is None:
         return None
-    if poss_pct >= 25 and ortg >= 115:
+    if poss_pct >= 25 and ortg >= league_ortg:
         return "high usage, efficient"
     if poss_pct >= 25:
         return "high usage, inefficient"
-    if ortg >= 115:
+    if ortg >= league_ortg:
         return "low usage, efficient"
     return "low usage, inefficient"
 
@@ -405,7 +422,8 @@ def evaluate(profiles, game_map):
                 "dreb_per36": p36["dreb"],
                 "pf_per36": p36["pf"],
             },
-            "quadrant": quadrant(poss_pct, ortg_full if ortg_full is not None else ortg_simple),
+            "quadrant": quadrant(poss_pct, ortg_full if ortg_full is not None else ortg_simple,
+                               ratings.get("league_ortg", 100.25)),
             "rpr_components": {
                 "scoring": scoring, "playmaking": playmaking,
                 "defense": defense, "rebounding": rebounding,
