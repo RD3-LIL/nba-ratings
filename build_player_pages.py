@@ -34,7 +34,13 @@ What a profile shows, and why:
   playmaking, defense, rebounding) as diverging bars that sum
   to RPR, plus RPR value delivered so far, the v1.1 number for
   comparison, OppAdj, and the ORtg shrinkage chain.
-- Playmaking / defense / rebounding, consistency (points
+- Defense: its own section with STL, BLK, STL+BLK, DREB and
+  PF as totals, per game and per 36, each with its NBA rank,
+  bars against the league per-36 average, and the RPR
+  defense component. Box-score defense only: no DRtg,
+  opponent shooting or tracking exists in the ESPN box
+  scores, so none is invented.
+- Playmaking / rebounding, consistency (points
   std dev, games with 20+ / 30+), and trending (last-7-days
   PPG vs season PPG).
 - Game log: every game in the data, most recent first, with
@@ -297,8 +303,8 @@ def rank_rows(p, ranks):
     return out
 
 
-def profile_html(p, ranks, league, logs, teammates, other_profile,
-                 team_net_rank, through, n_games):
+def profile_html(p, ranks, league, league_def, logs, teammates,
+                 other_profile, team_net_rank, through, n_games):
     """One player's full profile page, as an HTML string."""
     t = p["totals"]
     pg = p["per_game"]
@@ -515,6 +521,41 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
             f"so the average can move. A * means the 2027-28 salary is more than twice this "
             f"season's. The average does not reward years of control, it only punishes pay "
             f"rises. Full table: <a href=\"../buck.html\">BUCK</a>.</p>")
+
+    # Defense section: totals / per game / per 36, NBA ranks, and
+    # bars against the league per-36 average. Scales are fixed
+    # per stat so the bar and the grey league tick mean the
+    # same thing on every profile: STL 0-3, BLK 0-5, DREB 0-12.
+    _key = (p["athlete_id"], p["team"])
+    def _def_rank(rank_key):
+        rank_map, denom = ranks[rank_key]
+        rank = rank_map.get(_key)
+        return f"#{rank} of {denom}" if rank else "Unranked"
+    _stl_blk_tot = t["stl"] + t["blk"]
+    _stl_blk_pg = pg["stl"] + pg["blk"]
+    _stl_blk_p36 = p36["stl"] + p36["blk"]
+    _def_bars = []
+    for _label, _val, _lg, _scale in [
+            ("STL /36", p36["stl"], league_def["stl_per36"], 3.0),
+            ("BLK /36", p36["blk"], league_def["blk_per36"], 5.0),
+            ("DREB /36", p36["dreb"], league_def["dreb_per36"], 12.0)]:
+        _w = max(0.0, min(100.0, 100 * float(_val) / _scale))
+        _lx = max(0.0, min(100.0, 100 * float(_lg) / _scale))
+        _def_bars.append(
+            f'<div class="shoot-row"><span>{_label}</span>'
+            f'<span class="shoot-track"><span class="shoot-fill" '
+            f'style="width:{_w:.1f}%"></span>'
+            f'<span class="shoot-league" style="left:{_lx:.1f}%"></span>'
+            f'</span><span>{_fmt(_val)} (league {_fmt(_lg)})</span></div>')
+    _defense = f"""<table class="profile"><thead><tr><th></th><th>STL</th><th>BLK</th><th>STL+BLK</th><th>DREB</th><th>PF</th></tr></thead><tbody>
+<tr><td>Totals</td><td>{t["stl"]}</td><td>{t["blk"]}</td><td>{_stl_blk_tot}</td><td>{t["dreb"]}</td><td>{t["pf"]}</td></tr>
+<tr><td>Per game</td><td>{_fmt(pg["stl"])}</td><td>{_fmt(pg["blk"])}</td><td>{_fmt(_stl_blk_pg)}</td><td>{_fmt(pg["dreb"])}</td><td>{_fmt(pg["pf"])}</td></tr>
+<tr><td>Per 36</td><td>{_fmt(p36["stl"])}</td><td>{_fmt(p36["blk"])}</td><td>{_fmt(_stl_blk_p36)}</td><td>{_fmt(p36["dreb"])}</td><td>{_fmt(p36["pf"])}</td></tr>
+</tbody></table>
+<p>STL {_fmt(pg["stl"])} per game ({_def_rank("stl_pg")} in the NBA) &middot; BLK {_fmt(pg["blk"])} per game ({_def_rank("blk_pg")}) &middot; STL+BLK {_fmt(_stl_blk_pg)} per game ({_def_rank("stlblk_pg")}) &middot; DREB {_fmt(pg["dreb"])} per game ({_def_rank("dreb_pg")}).</p>
+{''.join(_def_bars)}
+<p class="note">Bars are the player's per-36 rate; the grey tick is the league per-36 average. RPR defense component {_fmt(comp.get("defense"), 2)}: ((STL+BLK per 36) - league {_fmt(league_def["stlblk_per36"])}) &times; MPG / 36, so a league-average defender scores about 0 here and a plus defender scores positive.</p>
+<p class="note">Box-score defense only. Steals, blocks, defensive boards and fouls are what the ESPN box scores carry; there is no DRtg, opponent shooting or tracking in this data, so none is shown or invented.</p>"""
     body = f"""<h1>{html.escape(p["name"])}</h1>
 <p class="subtitle"><a href="../teams/{team_slug}.html">{html.escape(p["team"])}</a>
 &middot; Data through {through} ({n_games} games)
@@ -553,11 +594,14 @@ def profile_html(p, ranks, league, logs, teammates, other_profile,
 <p>RPR v1.2 <strong>{_fmt(rpr, 2)}</strong> = scoring {_fmt(comp.get("scoring"), 2)} + playmaking {_fmt(comp.get("playmaking"), 2)} + defense {_fmt(comp.get("defense"), 2)} + rebounding {_fmt(comp.get("rebounding"), 2)}. Value delivered so far (RPR &times; GP / 82): {_fmt(r.get("rpr_value"), 2)}. RPR v1.1 was {_fmt(r.get("rpr_v1_1"), 2)}; v1.2 recenters the counting terms on league averages, so an average player scores about 0.</p>
 <p class="note">ORtg simple {_fmt(r.get("ortg"))} &rarr; shrunk {_fmt(r.get("ortg_shrunk"))} &rarr; opponent-adjusted {_fmt(r.get("ortg_adj"))} (OppAdj {_fmt(r.get("opp_adj"), 2)}, league ORtg {_fmt(r.get("league_ortg"))}). Usage {_fmt(r.get("poss_pct"))}% of team possessions. Quadrant: {html.escape(ev.get("quadrant") or "-")}.</p>
 
+<h2>Defense</h2>
+{_defense}
+
 <h2>Contract and BUCK</h2>
 {buck_html}
 
-<h2>Playmaking, defense, rebounding</h2>
-<p>AST/TO ratio {_fmt(play.get("ast_to_ratio"), 2)} &middot; AST per 100 possessions used {_fmt(play.get("ast_per_100_poss_used"))} &middot; STL+BLK per game {_fmt(defe.get("stl_blk_pg"))}, per 36 {_fmt(defe.get("stl_blk_per36"))} &middot; REB per 36 {_fmt(defe.get("reb_per36"))} (OREB {_fmt(defe.get("oreb_per36"))}, DREB {_fmt(defe.get("dreb_per36"))}) &middot; PF per 36 {_fmt(defe.get("pf_per36"))}.</p>
+<h2>Playmaking and rebounding</h2>
+<p>AST/TO ratio {_fmt(play.get("ast_to_ratio"), 2)} &middot; AST per 100 possessions used {_fmt(play.get("ast_per_100_poss_used"))} &middot; REB per 36 {_fmt(defe.get("reb_per36"))} (OREB {_fmt(defe.get("oreb_per36"))}, DREB {_fmt(defe.get("dreb_per36"))}). Full defensive line is in the Defense section above.</p>
 <p class="note">GM board: {html.escape(tier or "-")}{f", {html.escape(archetype)}" if archetype else ""}. {html.escape(gm.get("value_signals") or "")}{(" Red flags: " + html.escape(gm["red_flags"])) if gm.get("red_flags") else ""}</p>
 
 <h2>Consistency and trending</h2>
@@ -688,7 +732,24 @@ def main():
                    if tot["fga"] + tot["fta"] else None),
     }
 
-    # NBA ranks for the at-a-glance stats.
+    # League defensive per-36 averages, from the totals themselves.
+    _tot_min = sum(p["totals"]["min"] for p in players)
+    league_def = {
+        "stl_per36": (sum(p["totals"]["stl"] for p in players) / _tot_min * 36
+                      if _tot_min else None),
+        "blk_per36": (sum(p["totals"]["blk"] for p in players) / _tot_min * 36
+                      if _tot_min else None),
+        "dreb_per36": (sum(p["totals"]["dreb"] for p in players) / _tot_min * 36
+                       if _tot_min else None),
+        "pf_per36": (sum(p["totals"]["pf"] for p in players) / _tot_min * 36
+                     if _tot_min else None),
+        "stlblk_per36": (sum(p["totals"]["stl"] + p["totals"]["blk"]
+                             for p in players) / _tot_min * 36
+                         if _tot_min else None),
+    }
+
+    # NBA ranks for the at-a-glance stats, plus the defensive ranks
+    # used in the Defense section.
     ranks = {
         "rpr": _rank_map(players, lambda p: (p.get("ratings") or {}).get("rpr")),
         "pts_pg": _rank_map(players, lambda p: p["per_game"]["pts"]),
@@ -698,6 +759,11 @@ def main():
         "ts_pct": _rank_map(players, lambda p: p["shooting"].get("ts_pct")),
         "sharp": _rank_map(players, lambda p: p.get("sharp")),
         "buck": _rank_map(players, lambda p: p.get("buck_full")),
+        "stl_pg": _rank_map(players, lambda p: p["per_game"]["stl"]),
+        "blk_pg": _rank_map(players, lambda p: p["per_game"]["blk"]),
+        "stlblk_pg": _rank_map(
+            players, lambda p: p["per_game"]["stl"] + p["per_game"]["blk"]),
+        "dreb_pg": _rank_map(players, lambda p: p["per_game"]["dreb"]),
     }
 
     # Team Net ranks, from the solver output.
@@ -730,7 +796,7 @@ def main():
                 other = cand
         mates = [m for m in by_team[p["team"]] if m is not p]
         text = profile_html(
-            p, ranks, league,
+            p, ranks, league, league_def,
             logs.get((p["athlete_id"], p["team_id"]), []),
             mates, other, team_net_rank.get(p["team"], 0),
             through, n_games)
