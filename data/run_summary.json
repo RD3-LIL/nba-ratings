@@ -184,23 +184,15 @@
  },
  "team_needs": {
   "top_slots": 240,
-  "distinct_top_players": 30,
+  "distinct_top_players": 19,
   "most_common_top1": [
    [
     "Paul Reed",
-    18
+    19
    ],
    [
-    "Ajay Mitchell",
-    3
-   ],
-   [
-    "Aday Mara",
-    2
-   ],
-   [
-    "Matisse Thybulle",
-    2
+    "Alex Caruso",
+    11
    ]
   ],
   "no_clear_star_teams": [
@@ -215,9 +207,9 @@
   ],
   "n_no_clear_star": 8,
   "unfilled_needs": [],
-  "trade_score_min": 0.024,
-  "trade_score_max": 0.552,
-  "distinct_top1_players": 9
+  "trade_score_min": 0.025,
+  "trade_score_max": 0.319,
+  "distinct_top1_players": 6
  },
  "validation": {
   "version": "v1.2",

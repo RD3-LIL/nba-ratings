@@ -25,8 +25,14 @@ lineup-balance / archetype-interaction work):
    facilitator.
 3. Score a trade as the change in the team skill profile,
    passed through a concave (diminishing-returns) need
-   function, plus the change in quality vs the player actually
-   displaced, not vs league average. Reported as three numbers:
+   function, plus the target's quality above what the team
+   already has in its rotation, on average. No displaced
+   player is named: Nov 21, 2026, Ron asked to remove the
+   displaced-player part, it picked the same weak rotation
+   player for almost every target on a team and the named swap
+   was arbitrary. The replacement compares the target to the
+   team's rotation average instead, which is team-specific
+   without naming anyone. Reported as three numbers:
    QualityGain, FitGain, TradeScore. A single merged number
    would hide whether a target is better, or just a better fit.
 4. REALISM / AVAILABILITY FILTER. The model must not suggest
@@ -43,11 +49,11 @@ lineup-balance / archetype-interaction work):
    target must look like a role player on his own team, not a
    featured option: under 55% of team minutes (not a full-time
    starter), under 26% usage, and under 20 points per game.
-   A target must also fill a real need (FitGain > 0) and the
-   upgrade over the displaced player must be modest
-   (RPR_target - RPR_displaced <= 5.0, MAX_RPR_JUMP below): a
-   huge jump implies a star-for-star swap, which is not a
-   realistic suggestion.
+   A target must also fill a real need (FitGain > 0). There is
+   no cap on the RPR jump any more: it was measured against
+   the displaced player, which no longer exists, and the tier
+   / top-3 / minutes / usage / scoring gates above are what
+   keep stars out, not a jump cap.
    Example: a team needing playmaking gets a backup PG with
    high assists per 36, not a star PG. These are data-only
    proxies for availability; without contracts or salaries
@@ -95,23 +101,24 @@ not fitted; v2 should fit them against post-trade Adj Net):
           bench_scoring .10
     star factor: 1.5 if star percentile <= 35 at k, 1.25 if
     <= 50, 0.5 if >= 75, else 1.0.
-  Trade delta, replacing the displaced player (the worst
-  rotation player at the target's best skill, star excluded)
-  with the target at the target's current MPG:
-    dS_k = (MPG_target * pct_target,k
-            - MPG_out * pct_out,k) / 240
+  Trade delta, vs the team's current skill level (no
+  displaced player, removed Nov 21, 2026 at Ron's request):
+    dS_k = MPG_target * (pct_target,k - S_k) / 240
+      where S_k is the team's minutes-weighted skill
+      percentile. A target only lifts a skill if he is above
+      where the team already is at it.
     FitGain = sum_k w_k * (Need_k / 60)
               * sqrt(max(dS_k, 0) / 10), capped per skill at 2
-    QualityGain = (RPR_target - RPR_out) * (MPG_target / 240)
-    Loses = skills where dS_k < -0.5 and the target is at least
-      10 percentile points below the displaced player, shown
-      for display only. FitGain counts gains only on purpose:
-      QualityGain already nets the loss (RPR includes defence
-      and rebounding), so a symmetric FitGain would double-count
-      the same loss. Nov 21, 2026: Ron spotted this on Caleb
-      Wilson (Mitchell gains playmaking but loses Wilson's
-      defence/rebounding); the fix was to show Loses, not to
-      change the score.
+    QualityGain = (RPR_target - RPR_rotation_avg)
+                    * (MPG_target / 240)
+      RPR_rotation_avg is the mean RPR of the team's top-9
+      rotation. A target only adds quality if he is above what
+      the team already has, on average. This is team-specific
+      without naming a displaced player: the old version used
+      the worst rotation player at the target's best skill, so
+      the same target's QualityGain swung from 0.05 to 0.37
+      across teams mostly on who the worst player happened to
+      be. RPR v1.2 is centered at 0, league average.
     AvailabilityDiscount = 0.10 * (QualityGain + FitGain)
       if GP < 10, plus another 0.10 if %Min < 40
     TradeScore = QualityGain + FitGain - AvailabilityDiscount
@@ -122,7 +129,7 @@ not fitted; v2 should fit them against post-trade Adj Net):
   The per-skill FitGain cap (2.0) is a tiebreaker and safety
   rail, not a calibrated driver, and is documented as such. On
   this run the largest per-skill FitGain contribution is about
-  0.16 and the theoretical maximum is about 0.4 (weight
+  0.12 and the theoretical maximum is about 0.4 (weight
   <= ~0.35, Need/60 <= 1, sqrt term <= ~1.12), so the 2.0 cap
   never binds on real data; it exists so a data error cannot
   blow up FitGain. A real redundancy cost would need a fitted
@@ -131,8 +138,9 @@ not fitted; v2 should fit them against post-trade Adj Net):
 
 Limits, stated plainly: salaries are display only in v1
 (fetch_salaries.py, Basketball-Reference contracts): a target
-shows its salary, the displaced player's salary, and the net
-change, but salary never changes the score or the ranking, and
+shows its salary only, no displaced salary and no net change
+(the displaced player was removed Nov 21, 2026), but salary
+never changes the score or the ranking, and
 a salary shown here does not prove a trade is legal under the
 cap rules. No lineup, on/off, tracking, or shot
 location data in v1, so this is a BOX-SCORE fit: a prior that
@@ -170,15 +178,10 @@ TARGET_LEVEL = 60.0        # percentile a team wants to reach per skill
 ROTATION_N = 9             # top N players by minutes define the profile
 MIN_MINUTES_PCT = 150      # minutes gate for percentile ranks
 MIN_GP_TARGET = 8          # a 2-4 game hot streak is not a target
-MAX_RPR_JUMP = 5.0         # bigger upgrade is a roster overhaul, not a
-                           # slight value add. Set at 5, not 3: with the
-                           # displaced player picked as the weakest
-                           # rotation player at the skill, a good role
-                           # player (RPR ~2 in v1.2) replacing a weak
-                           # spot (RPR ~-1) jumps ~3 and is exactly
-                           # the intended suggestion. Stars are kept
-                           # out by the tier / top-3 / minutes / usage
-                           # / scoring gates above, not by this cap.
+# MAX_RPR_JUMP removed Nov 21, 2026 with the displaced
+# player: it was measured against the displaced player, and
+# stars are kept out by the tier / top-3 / minutes / usage
+# / scoring gates, not by a jump cap.
 USAGE_BUDGET = 65.0         # retired in v1.1: the usage penalty it
                            # fed never bound (see score_target), so
                            # the penalty was removed, not retuned.
@@ -702,7 +705,6 @@ def score_target(target, target_pct, target_tier, team, profile,
         return None
     if target["per_game"]["pts"] >= MAX_PTS_TARGET:
         return None
-    rotation = profile["rotation"]
     star = profile["star"] or {}
     star_usage = star.get("poss_pct") or 0
     target_usage = (target.get("ratings") or {}).get("poss_pct") or 0
@@ -714,81 +716,36 @@ def score_target(target, target_pct, target_tier, team, profile,
         SKILLS,
         key=lambda k: needs[k]["weight"] * (needs[k]["need"] / 60.0)
         * target_pct.get(k, 0))
-    # Displaced player: worst rotation player at that skill, with
-    # the top 2 RPR players on the team excluded (you do not bench
-    # the star or the co-star for a role player: picking the worst
-    # shooter on Miami would displace Bam Adebayo, RPR 7.42, a
-    # top rotation player who happens to shoot few threes, and
-    # make every shooting target look worthless).
-    top2_names = {p["name"] for p in sorted(
-        players_by_team.get(team, []),
-        key=lambda p: ((p.get("ratings") or {}).get("rpr")
-                       if (p.get("ratings") or {}).get("rpr") is not None
-                       else -99), reverse=True)[:2]}
-    rot_players = []
-    for r in rotation:
-        p = next((x for x in players_by_team.get(team, [])
-                  if x["athlete_id"] == r.get("athlete_id")), None)
-        if p is None:
-            # Rotation entries written before athlete_id existed.
-            p = next((x for x in players_by_team.get(team, [])
-                      if x["name"] == r["name"]), None)
-        if p is None or p["name"] in top2_names:
-            continue
-        rot_players.append(p)
-    # A bench scorer takes bench minutes, not a starter's: every
-    # starter's bench-scoring rate is 0 by construction, so without
-    # this the displaced player for a bench-scoring target would
-    # always be a starter (e.g. P.J. Washington for Dallas).
-    if best_skill == "bench_scoring":
-        bench = [p for p in rot_players
-                 if ((p.get("ratings") or {}).get("min_pct") or 0) < 60]
-        if bench:
-            rot_players = bench
-    if not rot_players:
-        return None
-    displaced = min(
-        rot_players,
-        key=lambda p: pct_by_player[(p["athlete_id"], p["team"])]
-        .get(best_skill, 50.0))
-    d_pct = pct_by_player[(displaced["athlete_id"], displaced["team"])]
-    d_rpr = (displaced.get("ratings") or {}).get("rpr")
-    if d_rpr is None:
-        return None
-    # Modest upgrade only: a big RPR jump is a star-for-star swap.
-    if t_rpr - d_rpr > MAX_RPR_JUMP:
-        return None
-    d_mpg = displaced["per_game"]["min"]
-    # FitGain over all six skills, concave in the delta.
-    # FitGain only counts gains (max(d_s, 0)): it is the lift in
-    # needed skills, not the net swap. The loss is NOT ignored:
-    # QualityGain below is the net RPR change vs the displaced
-    # player, so a target who is worse on defence already pays
-    # for it there. Making FitGain symmetric as well would
-    # double-count the same loss. What was missing was showing
-    # the loss, so record it in `loses` for display: skills
-    # where the target is materially worse than the displaced
-    # player (at least 10 percentile points, and d_s < -0.5).
+    # No displaced player (removed Nov 21, 2026 at Ron's request).
+    # FitGain is measured against the team's current skill level
+    # instead: dS_k is how much the target, at his MPG, lifts a
+    # skill above where the team already is. A target below the
+    # team's level at a skill contributes 0 there, not a negative.
     fit_gain = 0.0
     per_skill = {}
-    loses = []
     for k in SKILLS:
-        d_s = (target_mpg * target_pct.get(k, 0)
-               - d_mpg * d_pct.get(k, 0)) / 240.0
+        team_skill = profile["skills"].get(k, 50.0)
+        d_s = (target_mpg * (target_pct.get(k, 0) - team_skill)) / 240.0
         contrib = (needs[k]["weight"] * (needs[k]["need"] / 60.0)
                    * min(2.0, math.sqrt(max(d_s, 0.0) / 10.0)))
         per_skill[k] = round(contrib, 4)
         fit_gain += contrib
-        if d_s < -0.5 and (d_pct.get(k, 0) - target_pct.get(k, 0)) >= 10:
-            loses.append({
-                "skill": k,
-                "target_pct": round(target_pct.get(k, 0), 1),
-                "displaced_pct": round(d_pct.get(k, 0), 1),
-                "d_s": round(d_s, 2),
-            })
     if fit_gain <= 0:
         return None
-    quality_gain = (t_rpr - d_rpr) * (target_mpg / 240.0)
+    # QualityGain vs the team's rotation average, not vs a
+    # displaced player and not vs league average: a target's
+    # quality gain is team-specific (a 1.0 RPR player adds more
+    # to a weak rotation than to a strong one) without naming
+    # anyone as displaced. Rotation average is the mean RPR of
+    # the top-9 rotation in the profile. It can be negative:
+    # a target below the team's rotation average is a quality
+    # downgrade, and only a strong fit can still make him a
+    # positive TradeScore.
+    _rot_rprs = [r["rpr"] for r in profile.get("rotation", [])
+                 if r.get("rpr") is not None]
+    rot_avg_rpr = (sum(_rot_rprs) / len(_rot_rprs)
+                   if _rot_rprs else 0.0)
+    quality_gain = (t_rpr - rot_avg_rpr) * (target_mpg / 240.0)
     # Usage penalty: removed in v1.1. It never bound on real data
     # (0.0 for every target on the Nov 20 run: the target-usage
     # gate caps targets under 26% and the highest star usage was
@@ -801,31 +758,28 @@ def score_target(target, target_pct, target_tier, team, profile,
     # fitted coefficient.
     usage_penalty = 0.0
     avail = 0.0
+    # Discount is on the positive gain only: QualityGain can now
+    # be negative (target below the rotation average), and a
+    # discount on a negative sum would be a bonus.
+    _gain_sum = max(quality_gain + fit_gain, 0.0)
     if target["totals"]["gp"] < 10:
-        avail += 0.10 * (quality_gain + fit_gain)
+        avail += 0.10 * _gain_sum
     if ((target.get("ratings") or {}).get("min_pct") or 0) < 40:
-        avail += 0.10 * (quality_gain + fit_gain)
+        avail += 0.10 * _gain_sum
     trade_score = quality_gain + fit_gain - avail
     if trade_score <= 0:
         return None
-    # Salary context, display only. Target and displaced salaries
-    # come from Basketball-Reference (fetch_salaries.py); a null
-    # means no contract row matched, never a guessed salary.
-    # Net change is what the acquiring team adds to its payroll
-    # if it swaps the displaced player for the target, one for
-    # one. Payroll before is the BBRef team total for the
-    # acquiring team, which covers players who have not played
-    # yet this season as well as the rotation.
+    # Salary context, display only. Target salary comes from
+    # Basketball-Reference (fetch_salaries.py); a null means no
+    # contract row matched, never a guessed salary. No displaced
+    # salary, no net change, no payroll after: there is no
+    # displaced player any more. Payroll before is the BBRef
+    # team total for the acquiring team, which covers players
+    # who have not played yet this season as well as the rotation.
     sal = salaries or {}
     by_id = sal.get("by_id", {})
     t_sal = by_id.get((target["athlete_id"], target["team"]))
-    d_sal = by_id.get((displaced["athlete_id"], displaced["team"]))
-    net_sal = (t_sal - d_sal if t_sal is not None and d_sal is not None
-               else None)
     payroll_before = sal.get("payrolls", {}).get(team)
-    payroll_after = (payroll_before + net_sal
-                     if payroll_before is not None and net_sal is not None
-                     else None)
     sal_m = t_sal / 1e6 if t_sal else None
     return {
         "athlete_id": target["athlete_id"],
@@ -847,21 +801,13 @@ def score_target(target, target_pct, target_tier, team, profile,
         if target["totals"]["min"] else 0.0,
         "fills_need": best_skill,
         "per_skill_fit": per_skill,
-        "loses": loses,
-        "displaced": {"name": displaced["name"],
-                      "athlete_id": displaced["athlete_id"],
-                      "rpr": round(d_rpr, 2),
-                      "mpg": round(d_mpg, 1)},
         "quality_gain": round(quality_gain, 3),
         "fit_gain": round(fit_gain, 3),
         "usage_penalty": round(usage_penalty, 3),
         "availability_discount": round(avail, 3),
         "trade_score": round(trade_score, 3),
         "target_salary": t_sal,
-        "displaced_salary": d_sal,
-        "net_salary_change": net_sal,
         "payroll_before": payroll_before,
-        "payroll_after": payroll_after,
         "rpr_per_million": (round(t_rpr / sal_m, 3) if sal_m else None),
         "trade_score_per_million": (round(trade_score / sal_m, 3)
                                     if sal_m else None),
@@ -984,8 +930,7 @@ def main(argv=None):
                     f"{salaries['fetch_date']}, "
                     f"{salaries['matched']} of {salaries['player_count']} "
                     f"players matched, never invented): each target shows "
-                    f"its 2026-27 salary, the displaced player's salary, "
-                    f"the net change, and RPR and TradeScore per $1M. "
+                    f"its 2026-27 salary, and RPR and TradeScore per $1M. "
                     f"They do not change TradeScore or the ranking. "
                     f"Team payrolls are BBRef team totals. The NBA is a "
                     f"soft cap and matching rules are complex (a team over "
@@ -1004,10 +949,13 @@ def main(argv=None):
         "salary_fetch_date": salaries["fetch_date"],
         "salary_matched": salaries["matched"],
         "cap_lines": salaries["cap_lines"],
-        "method": ("Team needs v1.1, box-score only. Four Factors "
+        "method": ("Team needs v1.2, box-score only. Four Factors "
                    "(Oliver) + minutes-weighted rotation skill "
                    "profile, star-anchored need weights, concave "
-                   "FitGain, QualityGain vs the displaced player. "
+                   "FitGain vs the team's current skill level, "
+                   "QualityGain vs the team's rotation-average RPR. "
+                   "No displaced player: removed Nov 21, 2026 at "
+                   "Ron's request. "
                    "RPR here is RPR v1.2 (Nov 20, 2026): ORtg "
                    "shrunk toward the league average (K = 200 "
                    "possessions used) and opponent-adjusted, with "
@@ -1025,8 +973,7 @@ def main(argv=None):
                    "Elite role player, Undervalued / buy-low and "
                    "High-value starter tiers; top-3 RPR players on "
                    "their own team excluded; target under 55% Min, "
-                   "under 30 MPG, under 26% usage, under 20 PPG; "
-                   "RPR jump over the displaced player capped at 5.0. "
+                   "under 30 MPG, under 26% usage, under 20 PPG. "
                    "Teams whose highest-RPR qualifying player is under "
                    "RPR 1.5 are labelled no clear star in this data. "
                    + sal_note + " "
@@ -1042,12 +989,12 @@ def main(argv=None):
     (DATA / "team_needs_2026_27.json").write_text(json.dumps(payload))
     # Flat CSV: one row per suggested target.
     fields = ["team", "team_net", "star", "top_need", "target",
-              "target_team", "target_tier", "fills_need", "loses",
-              "target_rpr", "displaced", "displaced_rpr",
+              "target_team", "target_tier", "fills_need",
+              "target_rpr",
               "quality_gain", "fit_gain", "usage_penalty",
               "availability_discount", "trade_score",
-              "target_salary", "displaced_salary", "net_salary_change",
-              "payroll_before", "payroll_after",
+              "target_salary",
+              "payroll_before",
               "rpr_per_million", "trade_score_per_million"]
     with open(DATA / "team_needs_2026_27.csv", "w", newline="") as h:
         w = csv.DictWriter(h, fieldnames=fields)
@@ -1061,23 +1008,14 @@ def main(argv=None):
                     "top_need": prof["ranked_needs"][0],
                     "target": s["name"], "target_team": s["team"],
                     "target_tier": s["tier"], "fills_need": s["fills_need"],
-                    "loses": ";".join(
-                        f"{l['skill']} {l['displaced_pct']:.0f} to "
-                        f"{l['target_pct']:.0f}"
-                        for l in s.get("loses") or []),
                     "target_rpr": s["rpr"],
-                    "displaced": s["displaced"]["name"],
-                    "displaced_rpr": s["displaced"]["rpr"],
                     "quality_gain": s["quality_gain"],
                     "fit_gain": s["fit_gain"],
                     "usage_penalty": s["usage_penalty"],
                     "availability_discount": s["availability_discount"],
                     "trade_score": s["trade_score"],
                     "target_salary": s.get("target_salary", "") or "",
-                    "displaced_salary": s.get("displaced_salary", "") or "",
-                    "net_salary_change": s.get("net_salary_change", "") or "",
                     "payroll_before": s.get("payroll_before", "") or "",
-                    "payroll_after": s.get("payroll_after", "") or "",
                     "rpr_per_million": s.get("rpr_per_million", "") or "",
                     "trade_score_per_million": s.get("trade_score_per_million", "") or "",
                 })
@@ -1114,14 +1052,10 @@ def main(argv=None):
         for s in lst[:8]:
             _sal = (f"${s['target_salary']:,} "
                     if s.get("target_salary") is not None else "salary unknown")
-            _net = (f", net {s['net_salary_change']:+,} "
-                    if s.get("net_salary_change") is not None else "")
             print(f"  {s['name']} ({s['team']}, {s['tier']}, "
                   f"RPR {s['rpr']}) fills {s['fills_need']}, "
-                  f"displaces {s['displaced']['name']} "
-                  f"(RPR {s['displaced']['rpr']}), "
                   f"Q {s['quality_gain']:+.3f} F {s['fit_gain']:+.3f} "
-                  f"-> {s['trade_score']:.3f}, {_sal}{_net}")
+                  f"-> {s['trade_score']:.3f}, {_sal}")
         return 0
     if args.need:
         all_targets = []

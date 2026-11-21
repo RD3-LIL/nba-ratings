@@ -829,14 +829,13 @@ def team_needs_section():
                if prof["targets"]["top_overall"] else None)
         if top:
             _sal = _money_m(top.get("target_salary"))
-            _net = _signed_money_m(top.get("net_salary_change"))
             target = (f"{html.escape(top['name'])} "
                       f"({html.escape(top['team'])}, "
                       f"{html.escape(top['tier'])}, fills "
                       f"{html.escape(top['fills_need'])}, "
                       f"Q {top['quality_gain']:+.3f} "
                       f"F {top['fit_gain']:+.3f}, "
-                      f"{_sal}, net {_net})")
+                      f"{_sal})")
             score = f"{top['trade_score']:.3f}"
         else:
             target, score = "-", "-"
@@ -1134,30 +1133,15 @@ def _target_link(name, team):
 def target_table_html(targets, team):
     """A target table: fit and money in the same row.
 
-    Columns: player, fills, Q, F, TradeScore, displaces, loses,
-    target salary, net change, payroll after. The displaced player
-    is on the acquiring team, so his link uses that team. Loses
-    lists skills where the target is materially worse than the
-    player he displaces (displaced percentile to target
-    percentile); it is display only, the loss is already netted
-    in QualityGain, so it is not subtracted again from FitGain.
+    Columns: player, fills, Q, F, TradeScore, target salary.
+    No Displaces or Loses column: the displaced player was
+    removed Nov 21, 2026 at Ron's request. No net change or
+    payroll after either, both needed a displaced salary.
     """
     if not targets:
         return ""
     rows = []
     for s in targets:
-        disp = s["displaced"]
-        disp_link = _target_link(disp["name"], team)
-        loses = s.get("loses") or []
-        loses_s = ("<br>".join(
-            f"{html.escape(l['skill'])} "
-            f"{l['displaced_pct']:.0f} to {l['target_pct']:.0f}"
-            for l in loses) if loses else "none")
-        pay_after = s.get("payroll_after")
-        pay_line = _payroll_line(pay_after, CAP_LINES)
-        pay_s = _money_m(pay_after)
-        if pay_after is not None and pay_line:
-            pay_s += f'<span class="sub">{html.escape(pay_line)}</span>'
         rows.append(
             "<tr>"
             f"<td>{_target_link(s['name'], s['team'])}"
@@ -1167,20 +1151,13 @@ def target_table_html(targets, team):
             f"<td class=\"num\">{s['quality_gain']:+.3f}</td>"
             f"<td class=\"num\">{s['fit_gain']:+.3f}</td>"
             f"<td class=\"num\">{s['trade_score']:.3f}</td>"
-            f"<td>{disp_link}"
-            f"<span class=\"sub\">RPR {disp['rpr']:.2f}</span></td>"
-            f"<td>{loses_s}</td>"
-            f"<td class=\"num\">{_money_m(s.get('target_salary'))}"
-            f"<span class=\"sub\">was {_money_m(s.get('displaced_salary'))}</span></td>"
-            f"<td class=\"num\">{_signed_money_m(s.get('net_salary_change'))}</td>"
-            f"<td class=\"num\">{pay_s}</td>"
+            f"<td class=\"num\">{_money_m(s.get('target_salary'))}</td>"
             "</tr>")
     return (
         '<div class="table-scroll"><table class="targets"><thead><tr>'
         "<th>Player</th><th>Fills</th><th>Q</th><th>F</th>"
-        "<th>TradeScore</th><th>Displaces</th><th>Loses</th>"
+        "<th>TradeScore</th>"
         "<th>Target salary</th>"
-        "<th>Net change</th><th>Payroll after</th>"
         "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
 
 
@@ -1283,19 +1260,20 @@ def team_page_html(team, row, slug_by_team):
         _mq, _mf = _trade_means()
         _trade_note = (
             "TradeScore is QualityGain plus FitGain minus the "
-            "availability discount. QualityGain is how much better "
-            "the target is than the player he displaces, scaled by "
-            "his minutes, so it already nets what you lose in the "
-            "swap. FitGain is how much he lifts the skills "
-            "this team actually needs, with diminishing returns, so "
-            "the first rebounder counts more than the second, and "
-            "it only counts gains, so the same loss is not "
-            "subtracted twice. The Loses column shows where the "
-            "target is worse than the player he displaces. "
+            "availability discount. QualityGain is the target's "
+            "RPR above the team's rotation-average RPR, scaled "
+            "by his minutes, so he adds more to a weak rotation "
+            "than to a strong one. FitGain is how much he lifts the skills "
+            "this team actually needs above where the team already "
+            "is, with diminishing returns, so the first rebounder "
+            "counts more than the second, and it only counts gains. "
+            "No player is named as displaced: that part was removed "
+            "Nov 21, 2026. "
             + (f"On this run QualityGain averages {_mq:.2f} and "
                f"FitGain {_mf:.2f} across the top targets, so "
-               f"QualityGain drives the score more than fit does "
-               f"here. " if _mq is not None else "")
+               f"{'QualityGain drives the score more than fit does' if _mq >= _mf else 'fit drives the score more than quality does'} "
+               f"here. "
+               if _mq is not None else "")
             + "TradeScore is a fit ranking, not a prediction and not "
             "a pick. Salaries are shown with the fit and do not "
             "change TradeScore.")
@@ -1305,9 +1283,8 @@ def team_page_html(team, row, slug_by_team):
             parts.append("<h4>Best realistic fits</h4>")
             parts.append(target_table_html(top, team))
             # Payroll context for the team, from the top target's
-            # payroll fields (the same payroll before the swap for
-            # every target on this team). The per-row payroll after
-            # is in the table; this line names the lines.
+            # payroll field (the same team payroll for every target
+            # on this team).
             _pb = top[0].get("payroll_before")
             if _pb is not None and CAP_LINES:
                 parts.append(

@@ -24,7 +24,7 @@ Best rookie by RPR v1.2: Aday Mara (Oklahoma City Thunder), RPR 0.77, 9.2 PPG in
 
 GM board tiers (RPR v1.2, 475 players): Rotation / depth 188, Insufficient minutes 185, Elite role player 37, Overvalued / avoid 35, High-value starter 15, All-Star level 9, Franchise cornerstone 3, Undervalued / buy-low 3.
 
-Team needs: 240 top-overall slots filled by 30 distinct players; most often #1: Paul Reed (18), Ajay Mitchell (3), Aday Mara (2), Matisse Thybulle (2). 8 teams with no clear star (Boston Celtics, Charlotte Hornets, Indiana Pacers, LA Clippers, Milwaukee Bucks, Minnesota Timberwolves, Orlando Magic, Toronto Raptors). TradeScore range 0.024 to 0.552. Unfilled needs: none.
+Team needs: 240 top-overall slots filled by 19 distinct players; most often #1: Paul Reed (19), Alex Caruso (11). 8 teams with no clear star (Boston Celtics, Charlotte Hornets, Indiana Pacers, LA Clippers, Milwaukee Bucks, Minnesota Timberwolves, Orlando Magic, Toronto Raptors). TradeScore range 0.025 to 0.319. Unfilled needs: none.
 
 <!-- RUN-SUMMARY-END -->
 ## Source
@@ -351,24 +351,29 @@ needs, and the *realistic* players who would fill them. Method follows
   another facilitator; a team whose star cannot defend needs a POA
   defender. Bench scoring is not a star skill (a starter's rate is
   0 by construction), so it never counts as a star gap.
-- **A trade is scored as three numbers, not one.** The displaced
-  player is the worst rotation player at the target's best skill,
-  excluding the top 2 RPR players on the team (you do not bench the
-  star or co-star for a role player), matched by athlete_id; a
-  bench scorer displaces a bench player, not a starter.
-  QualityGain = (RPR target - RPR displaced) x (target MPG / 240).
+- **A trade is scored as three numbers, not one.** No displaced
+  player is named: that part was removed Nov 21, 2026 at Ron's
+  request, it picked the same weak rotation player for almost
+  every target on a team. QualityGain = (RPR target - RPR
+  rotation average) x (target MPG / 240), where the rotation
+  average is the mean RPR of the team's top-9 rotation, so a
+  target adds more quality to a weak rotation than to a strong
+  one, and can be negative if he is below the team's rotation
+  average. RPR v1.2 is centered at 0, league average.
   FitGain = sum over skills of weight x (Need / 60) x
   sqrt(max(dSkill, 0) / 10), where dSkill is the minutes-weighted
-  percentile change: concave, so the first rebounder or playmaker
+  percentile lift above the team's current skill level:
+  dSkill = target MPG x (target percentile - team skill
+  percentile) / 240. Concave, so the first rebounder or playmaker
   counts far more than the second. TradeScore = QualityGain +
   FitGain - availability discount. The usage penalty is gone: it
   was 0.0 for every target on the Nov 20 run, so it never bound
   and was removed rather than kept as decoration (the output field
   stays at 0.0 for backward compatibility). Availability discount
   is 10% of (QualityGain + FitGain) if GP under 10, plus 10% if
-  %Min under 40. A few targets have a slightly negative
-  QualityGain (minimum -0.02): worse on quality but positive on
-  fit, and TradeScore stays positive via FitGain.
+  %Min under 40. QualityGain can be negative now, when a target
+  is below the team's rotation-average RPR, and TradeScore can
+  still stay positive via FitGain.
 - **Realism / availability filter: no stars, ever.** Targets must be
   Rotation / depth, Elite role player, Undervalued / buy-low, or
   High-value starter; never Franchise cornerstone, All-Star level,
@@ -382,8 +387,9 @@ needs, and the *realistic* players who would fill them. Method follows
   the work. A target must fill a real need (FitGain > 0), must
   have RPR at or above 0.0 (league average in v1.2; the old 0.5
   floor was set on the v1.1 scale and left only 10 eligible
-  targets league-wide), and the RPR jump over the displaced
-  player is capped at 5.0. This run: 240 top targets across 30
+  targets league-wide). There is no RPR jump cap any more: it
+  was measured against the displaced player, which was removed
+  Nov 21, 2026. This run: 240 top targets across 30
   teams, 8 per team, and no suggested target is a Franchise
   cornerstone or All-Star player. There are no unfilled needs on
   this run (0, down from Detroit rebounding in the v1.1 run).
@@ -405,21 +411,21 @@ needs, and the *realistic* players who would fill them. Method follows
   natural gap in the team-top distribution.
 - **Calibration honesty.** The per-skill FitGain cap (2.0) is a
   tiebreaker and safety rail, not a fitted effect. On this run
-  the largest per-skill FitGain contribution is 0.164 and the
+  the largest per-skill FitGain contribution is 0.121 and the
   theoretical maximum is about 0.4, so the cap never binds on
   real data. It only separates near-tied targets. v2 should fit
   it against post-trade Adj Net.
-- **The lists barely differentiate.** Only 30 distinct players
-  fill the 240 top-overall slots; Paul Reed tops 18 teams' lists
-  as #1, and across the top 8 slots Paul Reed appears on 28
-  teams, Ajay Mitchell on 20, Alex Caruso and Matisse Thybulle
-  on 19 each. That is expected, the best available role
+- **The lists barely differentiate.** Only 19 distinct players
+  fill the 240 top-overall slots; Paul Reed tops 19 teams' lists
+  as #1, Alex Caruso 11, and across the top 8 slots Alex Caruso
+  and Paul Reed appear on 29 teams each, Matisse Thybulle on 28.
+  That is expected, the best available role
   players are the best fit for every needy team, but the
   per-team lists read as nearly the same list. Salaries help tell
   them apart on the team pages: the same fit at $2.85M (Ajay
   Mitchell) is a different suggestion than the same fit at $19.55M
-  (Alex Caruso), and each target shows its salary, the displaced
-  player's salary, the net change, and the payroll after the swap.
+  (Alex Caruso), and each target shows its salary only, no
+  displaced salary, no net change, no payroll after the swap.
   A cap on
   how many teams one player can top was considered and rejected
   because it would hide the true best fit for the later teams.
@@ -437,19 +443,20 @@ python3 team_needs.py --team "LA Clippers" --need playmaking
 ```
 
 This run, spot checks: Lakers top need is playmaking, star Walker
-Kessler (RPR 3.07), top targets Precious Achiuwa, Zaccharie
-Risacher, and Bilal Coulibaly. Spurs top need is shooting, top
-targets Paul Reed, Alex Caruso, and Aday Mara. A playmaking-needy
-team (the Lakers) gets Paul Reed (Detroit Pistons) as its top
+Kessler (RPR 3.07), top targets Alex Caruso, Paul Reed, and Tyrese
+Proctor. Spurs top need is shooting, top
+targets Alex Caruso, Paul Reed, and Tyrese Proctor. A playmaking-needy
+team (the Lakers) gets Alex Caruso (Oklahoma City Thunder) as its top
 playmaking target, not a star PG.
 
 Limits: salaries are display only in v1 (fetch_salaries.py,
 Basketball-Reference contracts, 406 of 475 players matched on Nov
 21, 2026, 69 unmatched and left blank, never guessed). Each target
-shows its 2026-27 salary, the displaced player's salary, the net
-change, RPR and TradeScore per $1M, and the team payroll before and
-after the swap against the cap ($164.96M), tax ($200.43M), first
-apron ($209.02M), and second apron ($221.69M) lines. Salary never
+shows its 2026-27 salary, RPR and TradeScore per $1M, and the team
+payroll before against the cap ($164.96M), tax ($200.43M), first
+apron ($209.02M), and second apron ($221.69M) lines. No displaced
+salary, net change, or payroll after: the displaced player was
+removed Nov 21, 2026. Salary never
 changes TradeScore or the ranking, and a salary shown here does not
 prove a trade is legal: the NBA is a soft cap and matching rules are
 complex. No lineup, on/off, tracking, or shot-location data in v1,
@@ -673,9 +680,10 @@ files above. No network, stdlib only.
   skill chart, needs ranked with their gaps from the 60th
   percentile target and from league average, SHARP context for
   shooting, a best realistic fits table and a targets by need
-  table (each row shows fit and money together: target salary,
-  displaced player salary, net change, payroll after the swap
-  with its line against the cap, tax, and aprons), plus
+  table (each row shows fit and money together: target salary
+  only, no displaced player, no net change), plus the team
+  payroll before with its line against the cap, tax, and aprons,
+  plus
   less-common alternatives and the raw per-36 rates behind the
   skill chart.
 - **Data through**: the header of the index and every team page
