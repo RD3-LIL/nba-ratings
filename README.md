@@ -53,6 +53,11 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
 - `player_eval.py` - deeper evaluation layer (see below).
 - `gm_board.py` - GM acquisition board (see below).
 - `team_needs.py` - team needs and realistic trade-fit evaluator (see below).
+- `fetch_salaries.py` - pulls 2026-27 player salaries from the
+  Basketball-Reference contracts page (free to view, one polite
+  fetch, raw HTML cached under `data/raw/salaries/`) and writes
+  `data/salaries_2026_27.json` / `.csv`. Weekly at most, like the
+  roster pull: contracts move on trade timescales, not daily.
 - `build_page.py` - builds `index.html` plus `teams/` (one page per team).
 - `build_player_pages.py` - builds `players/` (one profile page per
   player, plus `players/index.html`, a filterable directory of all
@@ -72,6 +77,8 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
 - `data/players_2026_27_eval.json` / `.csv` - eval layer.
 - `data/gm_board_2026_27.json` / `.csv` - GM board.
 - `data/team_needs_2026_27.json` / `.csv` - team needs and trade targets.
+- `data/salaries_2026_27.json` / `.csv` - 2026-27 salaries, 406 of
+  475 players matched (Nov 21, 2026), plus BBRef team payroll totals.
 - `data/rosters_2026_27.json` - roster pull: 528 athletes, 75 rookies.
 - `data/validation.json` - RPR validation numbers (split-half,
   team aggregation, distribution, centers).
@@ -406,8 +413,12 @@ needs, and the *realistic* players who would fill them. Method follows
   teams, Ajay Mitchell on 20, Alex Caruso and Matisse Thybulle
   on 19 each. That is expected, the best available role
   players are the best fit for every needy team, but the
-  per-team lists read as nearly the same list. There is no
-  asking-price or salary data to differentiate them; a cap on
+  per-team lists read as nearly the same list. Salaries help tell
+  them apart on the team pages: the same fit at $2.85M (Ajay
+  Mitchell) is a different suggestion than the same fit at $19.55M
+  (Alex Caruso), and each target shows its salary, the displaced
+  player's salary, the net change, and the payroll after the swap.
+  A cap on
   how many teams one player can top was considered and rejected
   because it would hide the true best fit for the later teams.
   Each team page also lists less-common alternatives: its best
@@ -430,9 +441,16 @@ targets Paul Reed, Alex Caruso, and Aday Mara. A playmaking-needy
 team (the Lakers) gets Paul Reed (Detroit Pistons) as its top
 playmaking target, not a star PG.
 
-Limits: no contracts or salaries exist in the inputs, so none are
-used and none are invented; whether a target's salary fits is
-unknown. No lineup, on/off, tracking, or shot-location data in v1,
+Limits: salaries are display only in v1 (fetch_salaries.py,
+Basketball-Reference contracts, 406 of 475 players matched on Nov
+21, 2026, 69 unmatched and left blank, never guessed). Each target
+shows its 2026-27 salary, the displaced player's salary, the net
+change, RPR and TradeScore per $1M, and the team payroll before and
+after the swap against the cap ($164.96M), tax ($200.43M), first
+apron ($209.02M), and second apron ($221.69M) lines. Salary never
+changes TradeScore or the ranking, and a salary shown here does not
+prove a trade is legal: the NBA is a soft cap and matching rules are
+complex. No lineup, on/off, tracking, or shot-location data in v1,
 so this is a box-score fit, a prior that lineup data should update,
 not a lineup prediction. Early season, about 15 games per team, so
 percentiles are noisy and 3P% is the noisiest stat. Regular-season,
@@ -495,10 +513,43 @@ days it clears the raw roster cache and re-pulls).
 
 ## Known gaps (not invented)
 
-- Contracts and salaries: there is no free source. Spotrac and
-  similar are paywalled and are not scraped. Any trade-value or
-  salary-cap work needs a contract source added first.
+- Contracts and salaries: salaries are in as display only in v1
+  (see Salaries below), but contract structure beyond the yearly
+  amounts (options, guarantees beyond the guaranteed total,
+  trade kickers, no-trade clauses) is not in the data, and no
+  salary-matching check is run. A salary shown on a team page
+  does not prove a trade is legal.
 - No tracking or on/off data in v1.
+
+## Salaries (fetch_salaries.py)
+
+Player salaries for 2026-27 come from the Basketball-Reference
+contracts page, free to view, no key: one polite fetch with a
+Mozilla user agent, raw HTML cached under `data/raw/salaries/`,
+parsed with the standard library. The earlier claim in this README
+that there was no free salary source was wrong: the contracts
+table lists 464 contracts for 2026-27, with each season's salary
+and the guaranteed total. Spotrac adds contract structure and
+was not used; BallDontLie contracts need a paid plan and were
+not used.
+
+Coverage on the Nov 21, 2026 fetch: 406 of 475 players matched
+by name plus team, 69 unmatched and left blank (mostly minimum
+and two-way players with no contract row, including Quenton
+Jackson, who appears on 18 teams' top-8 lists). 7 team
+mismatches where BBRef lists a different team than our box-score
+team; the salary is still used and the mismatch is recorded in
+`data/salaries_2026_27.json`. Known salaries cross-checked before
+the file is written: Curry $62,587,158, Jokic $59,033,114,
+Tatum / Davis / Giannis $58,456,566. Team payrolls are BBRef team
+totals (every contract row for the team, including players who
+have not played yet), so they run higher than a sum over our
+475 players: highest are Orlando $228.57M and Philadelphia
+$224.39M, both over the second apron, lowest are Brooklyn
+$160.11M and Memphis $164.53M. Cap lines for 2026-27: cap
+$164,961,000, tax $200,428,000, first apron $209,015,000, second
+apron $221,686,000, floor $148,465,000. Salaries are refreshed
+weekly at most by `daily_update.sh`, like rosters.
 
 ## Site (build_page.py, RonPom-style)
 
@@ -554,11 +605,23 @@ files above. No network, stdlib only.
   as small samples. Best rookie so far: Aday Mara, RPR 0.77.
 - **GM board**: acquisition tiers, same as `gm_board.py`.
 - **Team needs**: one row per team with its star, top need, and top
-  realistic target with QualityGain / FitGain / TradeScore, plus the
-  needs with no realistic target and why. Team pages carry the same
-  block (strengths, weaknesses, top 3 needs, top 3 targets, plus
+  realistic target with QualityGain / FitGain / TradeScore and its
+  salary, plus the
+  needs with no realistic target and why. Team pages carry the full
+  block: at-a-glance AdjO / AdjD / Net / AdjT cards with ranks
+  (player profile style), a vs league average diverging bar graph
+  for the team ratings, the 6 rotation skills, and the 8 Four
+  Factors (blue above average, orange below, center line at the
+  50th percentile, dark tick at the 60th percentile target on the
+  skill rows), strengths and weaknesses tied to that graph, the
+  skill chart, needs ranked with their gaps from the 60th
+  percentile target and from league average, SHARP context for
+  shooting, a best realistic fits table and a targets by need
+  table (each row shows fit and money together: target salary,
+  displaced player salary, net change, payroll after the swap
+  with its line against the cap, tax, and aprons), plus
   less-common alternatives and the raw per-36 rates behind the
-  skill chart).
+  skill chart.
 - **Data through**: the header of the index and every team page
   shows "Data through November 19, 2026 (226 games)", read from
   the games file by the builder, never hardcoded.
@@ -594,6 +657,7 @@ Manual rebuild (same steps the script runs):
 cd ~/workspace/nba-ratings
 python3 fetch_nba.py --season 2026-27   # resumes per date; season end is 2027-04-11 in fetch_nba.py
 python3 fetch_rosters.py                # weekly by the daily update, not daily
+python3 fetch_salaries.py               # weekly by the daily update, not daily (cached raw, reuses cache under 7 days)
 python3 player_profiles.py
 python3 team_ratings.py
 python3 player_eval.py

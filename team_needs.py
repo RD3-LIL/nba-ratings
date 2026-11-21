@@ -120,9 +120,12 @@ not fitted; v2 should fit them against post-trade Adj Net):
   coefficient, which is v2 work (see README). Neither number
   is presented as a measured effect.
 
-Limits, stated plainly: no contracts or salaries exist in the
-inputs, so none are used and none are invented; a target's
-salary fit is unknown. No lineup, on/off, tracking, or shot
+Limits, stated plainly: salaries are display only in v1
+(fetch_salaries.py, Basketball-Reference contracts): a target
+shows its salary, the displaced player's salary, and the net
+change, but salary never changes the score or the ranking, and
+a salary shown here does not prove a trade is legal under the
+cap rules. No lineup, on/off, tracking, or shot
 location data in v1, so this is a BOX-SCORE fit: a prior that
 lineup data should update, never a lineup prediction. Early
 season, about 15 games per team, so every percentile is noisy
@@ -360,6 +363,34 @@ def load_inputs():
     tier_by_id = {(b["athlete_id"], b["team"]): b["tier"]
                   for b in board_doc["players"]}
     return teams_doc, eval_doc["players"], tier_by_id, games
+
+
+def load_salaries():
+    """Salary lookup from fetch_salaries.py, if it has been run.
+
+    Returns a dict with salary_by_id (athlete_id, team) to
+    2026-27 salary, payrolls (BBRef team totals), cap_lines, and
+    coverage counts. Missing file is not an error: team_needs
+    still builds, with every salary field null and a note in
+    the method string. Salaries are display only, never used
+    in scoring or ranking.
+    """
+    path = DATA / "salaries_2026_27.json"
+    if not path.exists():
+        return {"by_id": {}, "payrolls": {}, "cap_lines": {},
+                "fetch_date": None, "matched": 0, "player_count": 0}
+    doc = json.loads(path.read_text())
+    by_id = {}
+    for p in doc.get("players", []):
+        if p.get("salary_2026_27") is not None:
+            by_id[(p["athlete_id"], p["team"])] = p["salary_2026_27"]
+    payrolls = {t: v["payroll_2026_27"]
+                for t, v in doc.get("team_payrolls", {}).items()}
+    return {"by_id": by_id, "payrolls": payrolls,
+            "cap_lines": doc.get("cap_lines", {}),
+            "fetch_date": doc.get("fetch_date"),
+            "matched": doc.get("matched", 0),
+            "player_count": doc.get("player_count", 0)}
 
 
 def build_profiles(teams_doc, players, tier_by_id, games):
@@ -620,9 +651,12 @@ def _pct_of(vals, value):
 
 
 def score_target(target, target_pct, target_tier, team, profile,
-                 pct_by_player, players_by_team):
+                 pct_by_player, players_by_team, salaries=None):
     """QualityGain / FitGain / TradeScore for one target vs one team.
-    Returns None if the target is not a realistic suggestion."""
+    Returns None if the target is not a realistic suggestion.
+    Salary fields are display only: they never change the score,
+    the ranking, or eligibility. salaries is the load_salaries()
+    dict, or None, in which case every salary field is null."""
     if target["team"] == team:
         return None
     if target_tier not in ELIGIBLE_TIERS:
@@ -748,7 +782,27 @@ def score_target(target, target_pct, target_tier, team, profile,
     trade_score = quality_gain + fit_gain - avail
     if trade_score <= 0:
         return None
+    # Salary context, display only. Target and displaced salaries
+    # come from Basketball-Reference (fetch_salaries.py); a null
+    # means no contract row matched, never a guessed salary.
+    # Net change is what the acquiring team adds to its payroll
+    # if it swaps the displaced player for the target, one for
+    # one. Payroll before is the BBRef team total for the
+    # acquiring team, which covers players who have not played
+    # yet this season as well as the rotation.
+    sal = salaries or {}
+    by_id = sal.get("by_id", {})
+    t_sal = by_id.get((target["athlete_id"], target["team"]))
+    d_sal = by_id.get((displaced["athlete_id"], displaced["team"]))
+    net_sal = (t_sal - d_sal if t_sal is not None and d_sal is not None
+               else None)
+    payroll_before = sal.get("payrolls", {}).get(team)
+    payroll_after = (payroll_before + net_sal
+                     if payroll_before is not None and net_sal is not None
+                     else None)
+    sal_m = t_sal / 1e6 if t_sal else None
     return {
+        "athlete_id": target["athlete_id"],
         "name": target["name"], "team": target["team"],
         "position": target["position"], "tier": target_tier,
         "gp": target["totals"]["gp"],
@@ -767,13 +821,23 @@ def score_target(target, target_pct, target_tier, team, profile,
         if target["totals"]["min"] else 0.0,
         "fills_need": best_skill,
         "per_skill_fit": per_skill,
-        "displaced": {"name": displaced["name"], "rpr": round(d_rpr, 2),
+        "displaced": {"name": displaced["name"],
+                      "athlete_id": displaced["athlete_id"],
+                      "rpr": round(d_rpr, 2),
                       "mpg": round(d_mpg, 1)},
         "quality_gain": round(quality_gain, 3),
         "fit_gain": round(fit_gain, 3),
         "usage_penalty": round(usage_penalty, 3),
         "availability_discount": round(avail, 3),
         "trade_score": round(trade_score, 3),
+        "target_salary": t_sal,
+        "displaced_salary": d_sal,
+        "net_salary_change": net_sal,
+        "payroll_before": payroll_before,
+        "payroll_after": payroll_after,
+        "rpr_per_million": (round(t_rpr / sal_m, 3) if sal_m else None),
+        "trade_score_per_million": (round(trade_score / sal_m, 3)
+                                    if sal_m else None),
     }
 
 
@@ -802,7 +866,8 @@ def blocking_reason(target, tier, players_by_team):
     return "scored but fills another need better"
 
 
-def build_targets(profiles, players, tier_by_id, pct_by_player):
+def build_targets(profiles, players, tier_by_id, pct_by_player,
+                  salaries=None):
     players_by_team = defaultdict(list)
     for p in players:
         players_by_team[p["team"]].append(p)
@@ -815,7 +880,7 @@ def build_targets(profiles, players, tier_by_id, pct_by_player):
             t_pct = pct_by_player[(target["athlete_id"], target["team"])]
             tier = tier_by_id.get((target["athlete_id"], target["team"]), "Rotation / depth")
             s = score_target(target, t_pct, tier, team, profile,
-                             pct_by_player, players_by_team)
+                             pct_by_player, players_by_team, salaries)
             if s is not None:
                 scored.append(s)
         scored.sort(key=lambda s: s["trade_score"], reverse=True)
@@ -881,13 +946,37 @@ def main(argv=None):
     if args.need and args.need not in SKILLS:
         raise SystemExit(f"unknown need {args.need!r}; try {SKILLS}")
     teams_doc, players, tier_by_id, games = load_inputs()
+    salaries = load_salaries()
     profiles, pct_by_player = build_profiles(teams_doc, players,
                                              tier_by_id, games)
-    targets = build_targets(profiles, players, tier_by_id, pct_by_player)
+    targets = build_targets(profiles, players, tier_by_id, pct_by_player,
+                            salaries)
+    if salaries["fetch_date"]:
+        sal_note = (f"Salaries are display only in v1 (fetch_salaries.py, "
+                    f"Basketball-Reference contracts, fetched "
+                    f"{salaries['fetch_date']}, "
+                    f"{salaries['matched']} of {salaries['player_count']} "
+                    f"players matched, never invented): each target shows "
+                    f"its 2026-27 salary, the displaced player's salary, "
+                    f"the net change, and RPR and TradeScore per $1M. "
+                    f"They do not change TradeScore or the ranking. "
+                    f"Team payrolls are BBRef team totals. The NBA is a "
+                    f"soft cap and matching rules are complex (a team over "
+                    f"the first apron can generally only take back 100% of "
+                    f"the salary it sends out, a team over the second "
+                    f"apron cannot aggregate salaries in a trade), so a "
+                    f"salary shown here does not prove a trade is legal.")
+    else:
+        sal_note = ("No salary file found (run python3 fetch_salaries.py "
+                    "first): every salary field is null in this run.")
     payload = {
         "season": SEASON,
         "games_included": teams_doc.get("info", {}).get("n_games"),
         "player_count": len(players),
+        "salary_source": "basketball-reference.com/contracts/players.html",
+        "salary_fetch_date": salaries["fetch_date"],
+        "salary_matched": salaries["matched"],
+        "cap_lines": salaries["cap_lines"],
         "method": ("Team needs v1.1, box-score only. Four Factors "
                    "(Oliver) + minutes-weighted rotation skill "
                    "profile, star-anchored need weights, concave "
@@ -913,9 +1002,8 @@ def main(argv=None):
                    "RPR jump over the displaced player capped at 5.0. "
                    "Teams whose highest-RPR qualifying player is under "
                    "RPR 1.5 are labelled no clear star in this data. "
-                   "No contracts "
-                   "or salaries: none exist in the inputs and none "
-                   "are invented. No lineup/tracking data: this is "
+                   + sal_note + " "
+                   "No lineup/tracking data: this is "
                    "a box-score fit, a prior for lineup data, not "
                    "a lineup prediction."),
         "skills": SKILLS,
@@ -930,7 +1018,10 @@ def main(argv=None):
               "target_team", "target_tier", "fills_need",
               "target_rpr", "displaced", "displaced_rpr",
               "quality_gain", "fit_gain", "usage_penalty",
-              "availability_discount", "trade_score"]
+              "availability_discount", "trade_score",
+              "target_salary", "displaced_salary", "net_salary_change",
+              "payroll_before", "payroll_after",
+              "rpr_per_million", "trade_score_per_million"]
     with open(DATA / "team_needs_2026_27.csv", "w", newline="") as h:
         w = csv.DictWriter(h, fieldnames=fields)
         w.writeheader()
@@ -950,7 +1041,15 @@ def main(argv=None):
                     "fit_gain": s["fit_gain"],
                     "usage_penalty": s["usage_penalty"],
                     "availability_discount": s["availability_discount"],
-                    "trade_score": s["trade_score"]})
+                    "trade_score": s["trade_score"],
+                    "target_salary": s.get("target_salary", "") or "",
+                    "displaced_salary": s.get("displaced_salary", "") or "",
+                    "net_salary_change": s.get("net_salary_change", "") or "",
+                    "payroll_before": s.get("payroll_before", "") or "",
+                    "payroll_after": s.get("payroll_after", "") or "",
+                    "rpr_per_million": s.get("rpr_per_million", "") or "",
+                    "trade_score_per_million": s.get("trade_score_per_million", "") or "",
+                })
     print(f"Wrote data/team_needs_2026_27.json + .csv: "
           f"{len(profiles)} teams, "
           f"{sum(len(targets[t]['top_overall']) for t in targets)} "
@@ -982,12 +1081,16 @@ def main(argv=None):
         else:
             print("\nTop realistic targets:")
         for s in lst[:8]:
+            _sal = (f"${s['target_salary']:,} "
+                    if s.get("target_salary") is not None else "salary unknown")
+            _net = (f", net {s['net_salary_change']:+,} "
+                    if s.get("net_salary_change") is not None else "")
             print(f"  {s['name']} ({s['team']}, {s['tier']}, "
                   f"RPR {s['rpr']}) fills {s['fills_need']}, "
                   f"displaces {s['displaced']['name']} "
                   f"(RPR {s['displaced']['rpr']}), "
                   f"Q {s['quality_gain']:+.3f} F {s['fit_gain']:+.3f} "
-                  f"-> {s['trade_score']:.3f}")
+                  f"-> {s['trade_score']:.3f}, {_sal}{_net}")
         return 0
     if args.need:
         all_targets = []

@@ -139,6 +139,31 @@ if [ ! -f data/rosters_2026_27.json ] || [ -n "$(find data/rosters_2026_27.json 
   fi
 fi
 
+# Salaries weekly: same pattern as rosters, but best effort,
+# not fatal. Salaries are display only on the team pages and
+# team_needs.py builds cleanly without them (every salary field
+# null), so a blocked Basketball-Reference fetch must not stop
+# the daily game update. fetch_salaries.py reuses its raw cache
+# when it is under 7 days old, so this is cheap on a daily run.
+SALARY_HASH_BEFORE=""
+if [ -f data/salaries_2026_27.json ]; then
+  SALARY_HASH_BEFORE=$(sha256sum data/salaries_2026_27.json | cut -d' ' -f1)
+fi
+SALARIES_CHANGED=0
+if [ ! -f data/salaries_2026_27.json ] || [ -n "$(find data/salaries_2026_27.json -mtime +7 -print 2>/dev/null)" ]; then
+  echo "salaries older than 7 days (or missing), re-fetching"
+  python3 fetch_salaries.py || {
+    echo "salary fetch failed, continuing without fresh salaries (display only)"
+  }
+  if [ -f data/salaries_2026_27.json ]; then
+    SALARY_HASH_AFTER=$(sha256sum data/salaries_2026_27.json | cut -d' ' -f1)
+    if [ "$SALARY_HASH_AFTER" != "$SALARY_HASH_BEFORE" ]; then
+      SALARIES_CHANGED=1
+      echo "salaries changed, rebuild will run even with no new games"
+    fi
+  fi
+fi
+
 # Fetch failures are logged, not fatal, to fetch_nba.py, so a
 # partial fetch would otherwise rebuild and push a partial day.
 # Record the failure count before the fetch and stop if it grew.
@@ -163,8 +188,8 @@ fi
 
 GAMES_AFTER=$(python3 -c "import json; print(len(json.load(open('data/games_2026_27.json'))))")
 echo "games: $GAMES_BEFORE -> $GAMES_AFTER"
-if [ "$GAMES_AFTER" -eq "$GAMES_BEFORE" ] && [ "$ROSTERS_CHANGED" -eq 0 ]; then
-  echo "no new games and no roster change, nothing to rebuild or push"
+if [ "$GAMES_AFTER" -eq "$GAMES_BEFORE" ] && [ "$ROSTERS_CHANGED" -eq 0 ] && [ "$SALARIES_CHANGED" -eq 0 ]; then
+  echo "no new games, no roster change, and no salary change, nothing to rebuild or push"
   exit 0
 fi
 
@@ -203,7 +228,7 @@ PLAYER_PAGES=(players/*.html)
 # the push below is much larger than before; if the single
 # push-files call fails with HTTP 413, split the player pages
 # into batches of about 90 files / 1.7 MB each, as RonPom does.
-printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/sharp_2026_27.csv data/sharp_2026_27.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html distributions.html index.html "${TEAM_PAGES[@]}" "${PLAYER_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
+printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/sharp_2026_27.csv data/sharp_2026_27.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/salaries_2026_27.csv data/salaries_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html distributions.html index.html "${TEAM_PAGES[@]}" "${PLAYER_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
 
 # Sync-base check: the branch head must match the last sync
 # record entry, or someone else pushed since our last run.

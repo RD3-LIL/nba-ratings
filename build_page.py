@@ -129,6 +129,58 @@ def player_slug(name, athlete_id, team):
     return f"{s}-{athlete_id}-{team_slug(team)}"
 
 
+def _money_m(value):
+    """Salary in dollars to '$5.48M', None to 'unknown' (never a guess)."""
+    if value is None:
+        return "unknown"
+    return f"${value / 1e6:.2f}M"
+
+
+def _signed_money_m(value):
+    """Signed net salary change in dollars to '-$3.89M', None to '-'."""
+    if value is None:
+        return "-"
+    sign = "+" if value >= 0 else "-"
+    return f"{sign}${abs(value) / 1e6:.2f}M"
+
+
+def _payroll_line(payroll, cap_lines):
+    """'over the tax line' style label for a payroll, or ''.
+
+    cap_lines comes from the team_needs payload (Basketball-
+    Reference fetch): cap, tax, first apron, second apron.
+    """
+    if payroll is None or not cap_lines:
+        return ""
+    if payroll >= cap_lines.get("second_apron", float("inf")):
+        return "over the second apron"
+    if payroll >= cap_lines.get("first_apron", float("inf")):
+        return "over the first apron"
+    if payroll >= cap_lines.get("luxury_tax", float("inf")):
+        return "over the tax line"
+    if payroll >= cap_lines.get("salary_cap", float("inf")):
+        return "over the cap"
+    return "under the cap"
+
+
+def _pct_of(vals, value):
+    """Percentile of value within a list of numbers, same formula
+    as team_needs.py: 100 * (below + 0.5 * equal) / n."""
+    below = sum(1 for x in vals if x < value)
+    equal = sum(1 for x in vals if x == value)
+    return 100.0 * (below + 0.5 * equal) / len(vals) if vals else 50.0
+
+
+def _ord(n):
+    """1st, 2nd, 3rd, 4th... for a percentile value."""
+    n = int(round(n))
+    if 10 <= n % 100 <= 20:
+        suf = "th"
+    else:
+        suf = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suf}"
+
+
 def _rank_map(rows, key, reverse):
     """Competition ranks (1, 2, 2, 4) for one metric column.
     reverse=True means rank 1 is the highest value (AdjO, AdjT);
@@ -715,6 +767,11 @@ def team_needs_section():
     _scores = [s["trade_score"] for s in _all_top]
     _score_max = max(_scores) if _scores else 0.0
     _score_min = min(_scores) if _scores else 0.0
+    _qs = [s["quality_gain"] for s in _all_top]
+    _fs = [s["fit_gain"] for s in _all_top]
+    _q_mean = sum(_qs) / len(_qs) if _qs else 0.0
+    _f_mean = sum(_fs) / len(_fs) if _fs else 0.0
+    _driver = ("QualityGain" if _q_mean >= _f_mean else "FitGain")
     out = ["<section id=\"team-needs\"><h2>Team needs and trade fit</h2>",
            "<p>Each team's strengths and weaknesses, its star, and the "
            "realistic players who would fill its biggest holes. "
@@ -722,12 +779,16 @@ def team_needs_section():
            "Rotation / depth, Elite role player, Undervalued / buy-low, "
            "or High-value starter players, never a top-3 player on "
            "their own team, never a 20-point scorer or a 30-minute-a-"
-           "night player on their own team. No contracts or salaries "
-           "exist in the data, so none are used. This is a box-score "
+           "night player on their own team. Salaries are shown with "
+           "the fit on each team page (Basketball-Reference "
+           "contracts, display only), but they do not change the "
+           "score. This is a box-score "
            "fit, a prior for lineup data, not a lineup prediction. "
            "TradeScore is QualityGain plus FitGain minus the "
            "availability discount, on this run from "
-           f"{_score_min:.2f} to {_score_max:.2f}, mostly FitGain; "
+           f"{_score_min:.2f} to {_score_max:.2f}, "
+           f"with QualityGain averaging {_q_mean:.2f} and FitGain "
+           f"{_f_mean:.2f}, so {_driver} drives the score more here; "
            "it is a fit ranking, "
            "not a prediction and not a pick. Each team page also "
            "lists less-common alternatives: its best targets who do "
@@ -741,8 +802,9 @@ def team_needs_section():
            f"teams' lists (most often {_common}). That is expected, "
            f"the best available role players are the best fit for "
            f"every needy team, but it means the lists read as nearly "
-           f"the same list. There is no asking-price or salary data "
-           f"to differentiate them.</p>",
+           f"the same list. Salaries help tell them apart on the team "
+           f"pages: the same fit at $2.85M is a different suggestion "
+           f"than the same fit at $19.55M.</p>",
            f"<p class=\"warn\">{html.escape(DISCLAIMER)}</p>",
            "<div class=\"table-scroll\">"
            "<table class=\"ratings\"><thead><tr>"
@@ -766,12 +828,15 @@ def team_needs_section():
         top = (prof["targets"]["top_overall"][0]
                if prof["targets"]["top_overall"] else None)
         if top:
+            _sal = _money_m(top.get("target_salary"))
+            _net = _signed_money_m(top.get("net_salary_change"))
             target = (f"{html.escape(top['name'])} "
                       f"({html.escape(top['team'])}, "
                       f"{html.escape(top['tier'])}, fills "
                       f"{html.escape(top['fills_need'])}, "
                       f"Q {top['quality_gain']:+.3f} "
-                      f"F {top['fit_gain']:+.3f})")
+                      f"F {top['fit_gain']:+.3f}, "
+                      f"{_sal}, net {_net})")
             score = f"{top['trade_score']:.3f}"
         else:
             target, score = "-", "-"
@@ -911,6 +976,220 @@ def skill_chart_html(skills, raw=None):
         + raw_note)
 
 
+# Vs league average, team level, in the player profile visual
+# language (build_player_pages.py): at-a-glance cards with a rank
+# and a rank bar, and diverging bars centered at league average.
+# Blue is above average, orange is below, the grey center line is
+# league average, and the dark tick on the skill rows is the 60th
+# percentile target from the skill chart. The value shown is the
+# percentile (AdjO/AdjD/Net/AdjT use rank percentiles across the
+# 30 teams), the raw value sits in the row title and the note
+# underneath, so a percentile is never presented without the
+# number it came from. Strengths in team_needs.py are pct >= 65
+# and weaknesses pct <= 35, so a strength always lands on the
+# blue side here and a weakness on the orange side.
+FF_LABELS = [
+    ("efg_pct", "Shooting (eFG%)", "Team effective field goal percentage"),
+    ("tov_pct", "Ball security (TOV%)", "Team turnovers per possession"),
+    ("oreb_pct", "Offensive rebounding (OREB%)", "Share of available offensive rebounds the team grabs"),
+    ("ft_rate", "Getting to the line (FT rate)", "Free throw attempts per field goal attempt"),
+    ("opp_efg_pct", "Opponent shooting (opp eFG%)", "Effective field goal percentage the team allows"),
+    ("opp_tov_pct", "Forcing turnovers (opp TOV%)", "Opponent turnovers per possession"),
+    ("dreb_pct", "Defensive rebounding (DREB%)", "Share of available defensive rebounds the team grabs"),
+    ("opp_ft_rate", "Opponent FT rate", "Opponent free throw attempts per field goal attempt"),
+]
+
+
+def _comp_row(label, pct, raw_text, target60=False, tip=""):
+    """One diverging bar row: pct is a percentile, 50 is average.
+
+    Bar width is |pct - 50| on a 0 to 50 scale, so a 50th
+    percentile team has no bar at all, which is the point.
+    """
+    pct = max(0.0, min(100.0, float(pct)))
+    width = abs(pct - 50.0)
+    cls = "pos" if pct >= 50 else "neg"
+    target = ('<span class="comp-target" title="60th percentile target"></span>'
+              if target60 else "")
+    label_html = html.escape(label)
+    if tip:
+        label_html = (f'<span class="tip" tabindex="0" data-tip="'
+                      f'{html.escape(tip, quote=True)}">{label_html}</span>')
+    return (
+        f'<div class="comp-row" title="{html.escape(raw_text)}">'
+        f'<span class="comp-label">{label_html}</span>'
+        f'<span class="comp-track"><span class="comp-center"></span>{target}'
+        f'<span class="comp-fill {cls}" style="width:{width:.1f}%"></span></span>'
+        f'<span class="comp-value">{_ord(pct)}</span></div>')
+
+
+def _glance_card(label, value, rank, denom=30, nd=1):
+    """At-a-glance card, player profile style: big value, rank,
+    rank bar. Rank 1 fills the bar, rank 30 leaves it near empty."""
+    if value is None or rank is None:
+        return (f'<div class="stat-card"><div class="label">{html.escape(label)}</div>'
+                f'<div class="value">-</div>'
+                f'<div class="rank">No value in this data</div></div>')
+    pct_top = 100 * (1 - (rank - 1) / denom) if denom else 0
+    return (
+        f'<div class="stat-card"><div class="label">{html.escape(label)}</div>'
+        f'<div class="value">{value:.{nd}f}</div>'
+        f'<div class="rank">#{rank} of {denom} in the NBA</div>'
+        f'<div class="rank-bar"><span style="width:{pct_top:.0f}%"></span></div></div>')
+
+
+def vs_average_html(needs, row):
+    """At-a-glance cards plus the vs league average diverging bars.
+
+    Groups: team ratings (AdjO, AdjD, Net, AdjT as rank
+    percentiles), the 6 rotation skills, and the 8 Four Factors
+    as percentiles. Returns "" when the team_needs data is
+    missing, so a team page never breaks on a missing run.
+    """
+    if not needs:
+        return ""
+    team = row["team"]
+    cards = [
+        _glance_card("AdjO", row["adj_o"], RANKS.get("adj_o", {}).get(team)),
+        _glance_card("AdjD", row["adj_d"], RANKS.get("adj_d", {}).get(team)),
+        _glance_card("Net", row["net"], row["rank"]),
+        _glance_card("AdjT", row["adj_t"], RANKS.get("adj_t", {}).get(team)),
+    ]
+    parts = ["<h4>At a glance</h4>",
+             '<div class="stat-grid">' + "".join(cards) + "</div>",
+             '<p class="note">AdjO and AdjD are points per 100 '
+             "possessions, adjusted for opponent. Net is AdjO minus "
+             "AdjD, AdjT is adjusted tempo. The rank is out of 30 "
+             "teams; the bar shows how close the rank is to the top "
+             "(100% is best in the league). AdjD rank 1 is the best "
+             "defense.</p>",
+             "<h4>Vs league average</h4>",
+             '<p class="note">Every bar is a percentile, centered at '
+             "the 50th percentile, league average. Blue bars to the "
+             "right are above average, orange bars to the left are "
+             "below average, and a team exactly at average has no "
+             "bar. The dark tick on the skill rows is the 60th "
+             "percentile target from the skill chart below. Hover or "
+             "tap a row for the raw number behind the percentile.</p>"]
+    pcts = TEAM_PCT.get(team, {})
+    groups = [("Team ratings", [
+        ("AdjO", pcts.get("adj_o"), f"AdjO {row['adj_o']:.1f}"),
+        ("AdjD", pcts.get("adj_d"), f"AdjD {row['adj_d']:.1f}"),
+        ("Net", pcts.get("net"), f"Net {row['net']:.1f}"),
+        ("AdjT", pcts.get("adj_t"), f"AdjT {row['adj_t']:.1f}"),
+    ])]
+    skills = needs.get("skills") or {}
+    raw = needs.get("skill_raw") or {}
+    skill_rows = []
+    for key, label, definition in SKILL_LABELS:
+        if skills.get(key) is None:
+            continue
+        raw_v = raw.get(key)
+        raw_s = (f"{label}: {raw_v:.2f} per 36, {skills[key]:.0f}th percentile"
+                 if raw_v is not None else f"{label}: {skills[key]:.0f}th percentile")
+        skill_rows.append((label, skills[key], raw_s, definition))
+    groups.append(("Rotation skills", skill_rows))
+    ff = needs.get("four_factor_pct") or {}
+    ff_raw = needs.get("four_factors") or {}
+    ff_rows = []
+    for key, label, tip in FF_LABELS:
+        if ff.get(key) is None:
+            continue
+        raw_v = ff_raw.get(key)
+        raw_s = (f"{label}: {raw_v * 100:.1f}%, {ff[key]:.0f}th percentile"
+                 if raw_v is not None else f"{label}: {ff[key]:.0f}th percentile")
+        ff_rows.append((label, ff[key], raw_s, tip))
+    groups.append(("Four Factors", ff_rows))
+    rows_html = []
+    raw_lines = []
+    for gname, grows in groups:
+        if not grows:
+            continue
+        rows_html.append(f'<div class="comp-group">{html.escape(gname)}</div>')
+        for item in grows:
+            label, pct, raw_s = item[0], item[1], item[2]
+            tip = item[3] if len(item) > 3 else ""
+            target60 = (gname == "Rotation skills")
+            if pct is None:
+                continue
+            rows_html.append(_comp_row(label, pct, raw_s, target60, tip))
+            raw_lines.append(raw_s)
+    if not rows_html:
+        return ""
+    parts.append('<div class="comp-chart">' + "".join(rows_html) + "</div>")
+    if raw_lines:
+        parts.append('<p class="note">Raw numbers behind the bars: '
+                     + html.escape("; ".join(raw_lines)) + ".</p>")
+    return "\n".join(parts)
+
+
+def _target_link(name, team):
+    """Link a player name to ../players/<slug>.html, or plain text
+    when no profile slug is known for that name and team."""
+    slug = SLUG_BY_NAME_TEAM.get((name, team))
+    if slug:
+        return (f'<a href="../players/{slug}.html">'
+                f"{html.escape(name)}</a>")
+    return html.escape(name)
+
+
+def target_table_html(targets, team):
+    """A target table: fit and money in the same row.
+
+    Columns: player, fills, Q, F, TradeScore, displaces, target
+    salary, net change, payroll after. The displaced player is
+    on the acquiring team, so his link uses that team.
+    """
+    if not targets:
+        return ""
+    rows = []
+    for s in targets:
+        disp = s["displaced"]
+        disp_link = _target_link(disp["name"], team)
+        pay_after = s.get("payroll_after")
+        pay_line = _payroll_line(pay_after, CAP_LINES)
+        pay_s = _money_m(pay_after)
+        if pay_after is not None and pay_line:
+            pay_s += f'<span class="sub">{html.escape(pay_line)}</span>'
+        rows.append(
+            "<tr>"
+            f"<td>{_target_link(s['name'], s['team'])}"
+            f"<span class=\"sub\">{html.escape(s['team'])}, "
+            f"{html.escape(s['tier'])}, RPR {s['rpr']:.2f}</span></td>"
+            f"<td>{html.escape(s['fills_need'])}</td>"
+            f"<td class=\"num\">{s['quality_gain']:+.3f}</td>"
+            f"<td class=\"num\">{s['fit_gain']:+.3f}</td>"
+            f"<td class=\"num\">{s['trade_score']:.3f}</td>"
+            f"<td>{disp_link}"
+            f"<span class=\"sub\">RPR {disp['rpr']:.2f}</span></td>"
+            f"<td class=\"num\">{_money_m(s.get('target_salary'))}"
+            f"<span class=\"sub\">was {_money_m(s.get('displaced_salary'))}</span></td>"
+            f"<td class=\"num\">{_signed_money_m(s.get('net_salary_change'))}</td>"
+            f"<td class=\"num\">{pay_s}</td>"
+            "</tr>")
+    return (
+        '<div class="table-scroll"><table class="targets"><thead><tr>'
+        "<th>Player</th><th>Fills</th><th>Q</th><th>F</th>"
+        "<th>TradeScore</th><th>Displaces</th><th>Target salary</th>"
+        "<th>Net change</th><th>Payroll after</th>"
+        "</tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
+
+
+def _trade_means():
+    """Mean QualityGain and FitGain across every top-overall
+    target on this run, for the TradeScore explanation. Computed
+    from the data, never hardcoded, so the sentence stays true
+    when the run changes."""
+    qs, fs = [], []
+    for prof in NEEDS.values():
+        for s in prof.get("targets", {}).get("top_overall", []):
+            qs.append(s["quality_gain"])
+            fs.append(s["fit_gain"])
+    if not qs:
+        return None, None
+    return sum(qs) / len(qs), sum(fs) / len(fs)
+
+
 def team_page_html(team, row, slug_by_team):
     """One team's full page, as an HTML string."""
     conf = row["conf"]
@@ -920,7 +1199,10 @@ def team_page_html(team, row, slug_by_team):
              f"{html.escape(conf)}ern Conference"
              f" &middot; Data through {_through} ({_n_games} games)"
              f" &middot; <a href=\"../index.html\">&larr; NBA "
-             f"Ratings</a></p>",
+             f"Ratings</a> &middot; "
+             f"<a href=\"../distributions.html\">Distributions</a> "
+             f"&middot; <a href=\"../index.html#shooters\">SHARP "
+             f"shooters</a></p>",
              f"<p class=\"warn\">{html.escape(DISCLAIMER)}</p>"]
     parts.append(
         f"<p>Net rank #{row['rank']} &middot; AdjO {row['adj_o']}"
@@ -941,30 +1223,125 @@ def team_page_html(team, row, slug_by_team):
         parts.append("<h3>Team needs</h3>")
         parts.append(
             f"<p>Star: {html.escape(star_label)} "
-            f"(RPR {_star_rpr_s}) &middot; Top needs: "
+            f"(RPR {_star_rpr_s}). Star here means the highest-RPR "
+            f"qualifying player on the team, not the most famous "
+            f"player. &middot; Top needs: "
             f"{', '.join(html.escape(n) for n in needs['ranked_needs'][:3])}</p>")
+        parts.append(vs_average_html(needs, row))
         parts.append(
-            f"<p>Strengths: "
+            f"<p><strong>Strengths</strong> (above average, blue bars "
+            f"above): "
             f"{html.escape('; '.join(needs['strengths'])) or 'none flagged'}"
-            f"<br>Weaknesses: "
+            f"<br><strong>Weaknesses</strong> (below average, orange "
+            f"bars above): "
             f"{html.escape('; '.join(needs['weaknesses'])) or 'none flagged'}</p>")
         parts.append(skill_chart_html(needs.get("skills") or {},
                                       needs.get("skill_raw") or {}))
+        # Needs as gaps: from the 60th percentile target and from
+        # league average (50th). A skill at 54 is barely below
+        # average, a skill at 41 is a real hole, and the old text
+        # hid that difference. Almost every team sits below 60 on
+        # most skills, since the average team is near 50.
+        _gap_lines = []
+        for k in needs["ranked_needs"][:3]:
+            _nd = needs["needs"][k]
+            _sk = _nd["team_skill_pct"]
+            _gap_lines.append(
+                f"{html.escape(k)}: {_sk:.0f}th percentile, "
+                f"{max(0.0, 60 - _sk):.0f} points below the 60th "
+                f"percentile target and "
+                f"{abs(50 - _sk):.0f} points "
+                f"{'below' if _sk < 50 else 'above'} league average")
+        parts.append("<h4>Needs, ranked</h4><p>"
+                     + "<br>".join(_gap_lines) + "</p>")
+        # SHARP context for the shooting skill: the skill bar uses
+        # made threes per 36, which is why it can disagree with
+        # team shooting (eFG%). SHARP is extra points per game from
+        # threes and free throws above league average.
+        _sh = TEAM_SHARP.get(team)
+        if _sh and _sh.get("best_name"):
+            parts.append(
+                f"<p>Shooting, by SHARP: this team is "
+                f"{_sh['mean']:+.2f} points per game above league "
+                f"average from threes and free throws, from its "
+                f"{_sh['n']} qualifying shooters (best: "
+                f"{_target_link(_sh['best_name'], team)} "
+                f"{_sh['best_sharp']:+.2f}). SHARP counts threes and "
+                f"free throws only, not layups or dunks, so it does "
+                f"not reward finishers the way TS% does. "
+                f"<a href=\"../index.html#shooters\">SHARP shooters</a> "
+                f"&middot; <a href=\"../distributions.html\">Distributions</a></p>")
+        _mq, _mf = _trade_means()
+        _trade_note = (
+            "TradeScore is QualityGain plus FitGain minus the "
+            "availability discount. QualityGain is how much better "
+            "the target is than the player he displaces, scaled by "
+            "his minutes. FitGain is how much he lifts the skills "
+            "this team actually needs, with diminishing returns, so "
+            "the first rebounder counts more than the second. "
+            + (f"On this run QualityGain averages {_mq:.2f} and "
+               f"FitGain {_mf:.2f} across the top targets, so "
+               f"QualityGain drives the score more than fit does "
+               f"here. " if _mq is not None else "")
+            + "TradeScore is a fit ranking, not a prediction and not "
+            "a pick. Salaries are shown with the fit and do not "
+            "change TradeScore.")
+        parts.append(f"<p class=\"note\">{_trade_note}</p>")
         top = needs["targets"]["top_overall"][:3]
         if top:
-            parts.append("<p>Top realistic targets: " + "; ".join(
-                f"{html.escape(s['name'])} "
-                f"({html.escape(s['team'])}, {html.escape(s['tier'])}, "
-                f"fills {html.escape(s['fills_need'])}, "
-                f"TradeScore {s['trade_score']:.3f})" for s in top) + "</p>")
+            parts.append("<h4>Best realistic fits</h4>")
+            parts.append(target_table_html(top, team))
+            # Payroll context for the team, from the top target's
+            # payroll fields (the same payroll before the swap for
+            # every target on this team). The per-row payroll after
+            # is in the table; this line names the lines.
+            _pb = top[0].get("payroll_before")
+            if _pb is not None and CAP_LINES:
+                parts.append(
+                    f"<p class=\"note\">Team payroll (Basketball-Reference "
+                    f"team total): {_money_m(_pb)}, "
+                    f"{_payroll_line(_pb, CAP_LINES)}. Cap "
+                    f"{_money_m(CAP_LINES.get('salary_cap'))}, tax "
+                    f"{_money_m(CAP_LINES.get('luxury_tax'))}, first "
+                    f"apron {_money_m(CAP_LINES.get('first_apron'))}, "
+                    f"second apron {_money_m(CAP_LINES.get('second_apron'))}. "
+                    f"A salary shown here does not prove a trade is "
+                    f"legal: the NBA is a soft cap and matching rules "
+                    f"are complex.</p>")
+        # Targets grouped by need, so the connection between a need
+        # and its targets is visible. The top overall list mixes
+        # needs, which is why the top target often fills a
+        # different need than the top need. Thin lists are shown
+        # honestly, never padded with non-fits.
+        parts.append("<h4>Targets by need</h4>")
+        for need in needs["ranked_needs"][:3]:
+            _sel = needs["targets"].get("by_need", {}).get(need, [])
+            _nd = needs["needs"][need]
+            parts.append(
+                f"<p><strong>{html.escape(need)}</strong> "
+                f"({_nd['team_skill_pct']:.0f}th percentile, "
+                f"{_nd['need']:.0f} points below the 60th percentile "
+                f"target)</p>")
+            if _sel:
+                parts.append(target_table_html(_sel, team))
+                if len(_sel) < 3:
+                    parts.append(
+                        f"<p class=\"note\">Only {len(_sel)} realistic "
+                        f"target{'s' if len(_sel) > 1 else ''} fill{'s' if len(_sel) == 1 else ''} "
+                        f"this need in this data.</p>")
+            else:
+                parts.append(
+                    "<p class=\"note\">No realistic target fills this "
+                    "need in this data.</p>")
         distinct = [s for s in needs["targets"].get("top_distinct", [])
                     if s["name"] not in {t["name"] for t in top}]
         if distinct:
             parts.append("<p>Less-common alternatives (best targets "
                          "who do not top many other teams' lists): "
                          + "; ".join(
-                             f"{html.escape(s['name'])} "
+                             f"{_target_link(s['name'], s['team'])} "
                              f"({html.escape(s['team'])}, "
+                             f"{_money_m(s.get('target_salary'))}, "
                              f"TradeScore {s['trade_score']:.3f})"
                              for s in distinct) + "</p>")
         elif needs["targets"].get("top_distinct"):
@@ -1151,6 +1528,37 @@ input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
   width: 2px; background: #656d76; }
 .skill-value { text-align: right; font-variant-numeric: tabular-nums;
   font-weight: 600; }
+/* At-a-glance cards and diverging bars, same visual language as
+  the player profiles in build_player_pages.py: big value, rank
+  underneath with a rank bar, and diverging bars centered at
+  league average. Blue is above average, orange is below. */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 12px 0; }
+.stat-card { border: 1px solid #d0d7de; border-radius: 8px; padding: 10px 12px; }
+.stat-card .label { font-size: 12px; color: #656d76; text-transform: uppercase; letter-spacing: 0.04em; }
+.stat-card .value { font-size: 26px; font-weight: 700; line-height: 1.2; }
+.stat-card .rank { font-size: 13px; color: #656d76; }
+.rank-bar { height: 6px; background: #eaeef2; border-radius: 999px; overflow: hidden; margin-top: 6px; }
+.rank-bar span { display: block; height: 100%; background: #38bdf8; }
+.comp-chart { max-width: 640px; margin: 8px 0; }
+.comp-row { display: grid; grid-template-columns: 150px 1fr 52px;
+  align-items: center; gap: 10px; margin: 8px 0; }
+.comp-row .comp-label { font-size: 15px; }
+.comp-track { position: relative; height: 16px; background: #eaeef2; border-radius: 999px; }
+.comp-center { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: #656d76; }
+.comp-target { position: absolute; left: 60%; top: -3px; bottom: -3px; width: 2px; background: #1f2328; }
+.comp-fill { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
+.comp-fill.pos { background: #38bdf8; left: 50%; }
+.comp-fill.neg { background: #f59e0b; right: 50%; }
+.comp-value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.comp-group { font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: #656d76; margin: 16px 0 4px; }
+.tip { cursor: help; border-bottom: 1px dotted #656d76; position: relative; }
+.tip::after { content: attr(data-tip); display: none; position: absolute; bottom: 125%; left: 0; width: 220px; background: #1f2328; color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; line-height: 1.4; text-transform: none; letter-spacing: normal; font-weight: 400; z-index: 10; white-space: normal; }
+.tip:hover::after, .tip:focus::after, .tip:active::after { display: block; }
+table.targets { font-size: 13px; }
+table.targets th, table.targets td { padding: 4px 10px; }
+table.targets td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.targets td .sub { display: block; font-size: 11px; color: #656d76; font-weight: 400; }
 .warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
   border-radius: 6px; }
 footer { margin-top: 48px; color: #656d76; font-size: 14px;
@@ -1393,6 +1801,15 @@ ROSTERS = {}
 LOG_IDX = {}
 NEEDS = {}
 PLAYER_DETAIL = {}
+# Team SHARP (minutes-weighted mean and best shooter per team),
+# cap lines from the team_needs payload, player slug by
+# (name, team) for target links, and AdjO/AdjD/Net/AdjT
+# percentiles per team. Populated in main() before the pages
+# are built; team_page_html reads them, never recomputes a rating.
+TEAM_SHARP = {}
+CAP_LINES = {}
+SLUG_BY_NAME_TEAM = {}
+TEAM_PCT = {}
 BUILT = datetime.now(ZoneInfo("America/Chicago")).strftime("%B %-d, %Y")
 DATA_THROUGH = ("unknown", 0)
 
@@ -1445,7 +1862,44 @@ def main():
     gm_html = gm_board_section()
     needs_path = DATA / "team_needs_2026_27.json"
     if needs_path.exists():
-        NEEDS.update(json.loads(needs_path.read_text())["teams"])
+        _needs_doc = json.loads(needs_path.read_text())
+        NEEDS.update(_needs_doc["teams"])
+        CAP_LINES.update(_needs_doc.get("cap_lines", {}))
+    # Player slug by (name, team), for target links on team pages.
+    for p in players:
+        SLUG_BY_NAME_TEAM[(p["name"], p["team"])] = player_slug(
+            p["name"], p["athlete_id"], p["team"])
+    # AdjO/AdjD/Net/AdjT percentiles per team, same formula as
+    # team_needs.py, for the vs league average graph. AdjD is
+    # reversed (lower is better), so a good defense scores high.
+    for key, rev in (("adj_o", False), ("adj_d", True),
+                     ("net", False), ("adj_t", False)):
+        vals = [r[key] for r in rows]
+        for r in rows:
+            v = -r[key] if rev else r[key]
+            TEAM_PCT.setdefault(r["team"], {})[key] = _pct_of(
+                [-x if rev else x for x in vals], v)
+    # Team SHARP: minutes-weighted mean among qualifying shooters
+    # plus the best shooter per team, from sharp_2026_27.json.
+    # Missing file means no SHARP line on the team pages, not a
+    # failed build.
+    _sharp_path = DATA / "sharp_2026_27.json"
+    if _sharp_path.exists():
+        _sharp_doc = json.loads(_sharp_path.read_text())
+        _by_team = {}
+        for sp in _sharp_doc.get("players", []):
+            _by_team.setdefault(sp["team"], []).append(sp)
+        for _team, _lst in _by_team.items():
+            _wsum = sum(sp["mpg"] * sp["gp"] for sp in _lst)
+            _mean = (sum(sp["sharp"] * sp["mpg"] * sp["gp"] for sp in _lst)
+                     / _wsum) if _wsum else 0.0
+            _best = max(_lst, key=lambda sp: sp["sharp"])
+            TEAM_SHARP[_team] = {
+                "mean": round(_mean, 2),
+                "best_name": _best["name"],
+                "best_sharp": _best["sharp"],
+                "n": len(_lst),
+            }
     needs_html = team_needs_section()
     logs_json = json.dumps(LOGS, separators=(",", ":"))
     rosters_json = json.dumps(ROSTERS, separators=(",", ":"))
@@ -1563,7 +2017,10 @@ order is still noisy. League-average prior only, no last-season
 prior, so the shrinkage pulls every player toward the same league
 average, rookies and veterans alike. Box-score only: no tracking,
 no on/off. RPR v1.2 adjusts ORtg for opponent defence; ORtg_full
-does not. No contracts or salaries. {DISCLAIMER} Full
+does not. Salaries on the team pages come from Basketball-Reference
+contracts and are display only: they do not change any rating or
+TradeScore, and a salary shown there does not prove a trade is
+legal. {DISCLAIMER} Full
 method in the README.</p></section>
 
 <footer>

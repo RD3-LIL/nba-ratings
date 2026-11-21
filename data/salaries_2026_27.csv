@@ -1,0 +1,476 @@
+athlete_id,name,team,bbref_team,bbref_id,salary_2026_27,salary_2027_28,salary_2028_29,salary_2029_30,salary_2030_31,salary_2031_32,guaranteed,source
+3945274,Luka Doncic,Los Angeles Lakers,Los Angeles Lakers,doncilu01,49800000,53784000,57768000,,,,103584000,basketball-reference.com/contracts/players.html
+4278073,Shai Gilgeous-Alexander,Oklahoma City Thunder,Oklahoma City Thunder,gilgesh01,40806150,61005000,65885400,70765800,75646200,,238462350,basketball-reference.com/contracts/players.html
+5104157,Victor Wembanyama,San Antonio Spurs,San Antonio Spurs,wembavi01,16868246,43500000,46980000,50460000,53940000,57420000,211748246,basketball-reference.com/contracts/players.html
+3032977,Giannis Antetokounmpo,Miami Heat,Miami Heat,antetgi01,58456566,62786682,,,,,58456566,basketball-reference.com/contracts/players.html
+3934672,Jalen Brunson,New York Knicks,New York Knicks,brunsja01,37739521,40535041,43330561,,,,78274562,basketball-reference.com/contracts/players.html
+4431678,Tyrese Maxey,Philadelphia 76ers,Philadelphia 76ers,maxeyty01,40770520,43582280,46394040,,,,130746840,basketball-reference.com/contracts/players.html
+3908809,Donovan Mitchell,Cleveland Cavaliers,Cleveland Cavaliers,mitchdo01,50105628,60911900,65784852,70657804,75530756,,247460184,basketball-reference.com/contracts/players.html
+4065648,Jayson Tatum,Boston Celtics,Boston Celtics,tatumja01,58456566,62786682,67116798,71446914,,,188360046,basketball-reference.com/contracts/players.html
+5142620,Darius Acuff Jr.,Sacramento Kings,Sacramento Kings,acuffda01,8021640,8422920,8823600,11205972,,,16444560,basketball-reference.com/contracts/players.html
+3136193,Devin Booker,Phoenix Suns,Phoenix Suns,bookede01,57078728,61015192,64065952,69191228,,,182159872,basketball-reference.com/contracts/players.html
+6583,Anthony Davis,Washington Wizards,Washington Wizards,davisan02,58456566,62786682,,,,,58456566,basketball-reference.com/contracts/players.html
+3202,Kevin Durant,Houston Rockets,Houston Rockets,duranke01,43902439,46097561,,,,,43902439,basketball-reference.com/contracts/players.html
+4566434,Franz Wagner,Orlando Magic,Orlando Magic,wagnefr01,41754690,44847630,47940570,51033510,,,185576400,basketball-reference.com/contracts/players.html
+5041939,Cooper Flagg,Dallas Mavericks,Dallas Mavericks,flaggco01,14517480,15208680,19178146,,,,29726160,basketball-reference.com/contracts/players.html
+4432166,Cade Cunningham,Detroit Pistons,Detroit Pistons,cunnica01,50105628,53817156,57528684,61240212,,,222691680,basketball-reference.com/contracts/players.html
+3936299,Jamal Murray,Denver Nuggets,Denver Nuggets,murraja01,50105628,53817156,57528684,,,,161451468,basketball-reference.com/contracts/players.html
+4395628,Zion Williamson,New Orleans Pelicans,New Orleans Pelicans,willizi01,42166510,44886930,,,,,87053440,basketball-reference.com/contracts/players.html
+4433627,Keyonte George,Utah Jazz,Utah Jazz,georgke01,6563925,28700000,29848000,31041920,32283597,33574941,162012383,basketball-reference.com/contracts/players.html
+3149673,Pascal Siakam,Indiana Pacers,Indiana Pacers,siakapa01,48924624,52298736,,,,,101223360,basketball-reference.com/contracts/players.html
+3136195,Karl-Anthony Towns,New York Knicks,New York Knicks,townska01,57078728,61015192,,,,,57078728,basketball-reference.com/contracts/players.html
+4278039,Nickeil Alexander-Walker,Atlanta Hawks,Atlanta Hawks,alexani01,14403710,15161800,15919890,,,,29565510,basketball-reference.com/contracts/players.html
+3917376,Jaylen Brown,Philadelphia 76ers,Philadelphia 76ers,brownja02,57078728,61015192,64951656,,,,183045576,basketball-reference.com/contracts/players.html
+5175737,Yaxel Lendeborg,Golden State Warriors,Golden State Warriors,lendeya01,6096240,6401280,6706200,8899128,,,12497520,basketball-reference.com/contracts/players.html
+6606,Damian Lillard,Portland Trail Blazers,Portland Trail Blazers,lillada01,35915403,36620603,22516603,22516603,,,13398800,basketball-reference.com/contracts/players.html
+4683021,Deni Avdija,Portland Trail Blazers,Portland Trail Blazers,avdijde01,13125000,11875000,,,,,25000000,basketball-reference.com/contracts/players.html
+3112335,Nikola Jokic,Denver Nuggets,Denver Nuggets,jokicni01,59033114,62841702,,,,,59033114,basketball-reference.com/contracts/players.html
+4871144,Alperen Sengun,Houston Rockets,Houston Rockets,sengual01,35642202,37339450,39036697,39036697,,,112018349,basketball-reference.com/contracts/players.html
+4396907,Darius Garland,LA Clippers,LA Clippers,garlada01,42166510,44886930,,,,,87053440,basketball-reference.com/contracts/players.html
+4066457,Austin Reaves,Los Angeles Lakers,Los Angeles Lakers,reaveau01,41240250,44539470,47838690,51137910,,,133618410,basketball-reference.com/contracts/players.html
+4395625,RJ Barrett,Toronto Raptors,Toronto Raptors,barrerj01,29616071,,,,,,29616071,basketball-reference.com/contracts/players.html
+4395725,Tyler Herro,Milwaukee Bucks,Milwaukee Bucks,herroty01,33000000,,,,,,33000000,basketball-reference.com/contracts/players.html
+3064514,Julius Randle,Brooklyn Nets,Brooklyn Nets,randlju01,33333334,35802468,,,,,33333334,basketball-reference.com/contracts/players.html
+5174563,Kyshawn George,Washington Wizards,Washington Wizards,georgky01,3108000,5435892,,,,,8543892,basketball-reference.com/contracts/players.html
+4397002,Ayo Dosunmu,Minnesota Timberwolves,Minnesota Timberwolves,dosunay01,19310345,20855173,22400001,23944829,25489652,,86510348,basketball-reference.com/contracts/players.html
+4066261,Bam Adebayo,Miami Heat,Miami Heat,adebaba01,49800000,53784000,57768000,,,,103584000,basketball-reference.com/contracts/players.html
+4432816,LaMelo Ball,Minnesota Timberwolves,Minnesota Timberwolves,ballla01,40770520,43582280,46394040,,,,130746840,basketball-reference.com/contracts/players.html
+4277905,Trae Young,Washington Wizards,Washington Wizards,youngtr01,49488300,50478066,54437130,58396194,,,154403496,basketball-reference.com/contracts/players.html
+4065733,Ty Jerome,Memphis Grizzlies,Memphis Grizzlies,jeromty01,9220050,9659100,,,,,9220050,basketball-reference.com/contracts/players.html
+3975,Stephen Curry,Golden State Warriors,Golden State Warriors,curryst01,62587158,55700000,60156000,,,,118287158,basketball-reference.com/contracts/players.html
+5037871,Dylan Harper,San Antonio Spurs,San Antonio Spurs,harpedy01,12989040,13607760,17172994,,,,26596800,basketball-reference.com/contracts/players.html
+3064440,Zach LaVine,Sacramento Kings,Sacramento Kings,lavinza01,48967380,,,,,,48967380,basketball-reference.com/contracts/players.html
+4431671,Jaden McDaniels,Minnesota Timberwolves,Minnesota Timberwolves,mcdanja02,26200001,28006898,29813790,40000000,,,124020689,basketball-reference.com/contracts/players.html
+4278104,Michael Porter Jr.,Brooklyn Nets,Brooklyn Nets,portemi01,40806150,,,,,,12000000,basketball-reference.com/contracts/players.html
+6442,Kyrie Irving,Dallas Mavericks,Dallas Mavericks,irvinky01,39491282,42416562,,,,,39491282,basketball-reference.com/contracts/players.html
+5041935,Cameron Boozer,Memphis Grizzlies,Memphis Grizzlies,boozeca02,11849760,12441840,13034880,16476089,,,24291600,basketball-reference.com/contracts/players.html
+5041955,Darryn Peterson,Utah Jazz,Utah Jazz,peterda02,13195320,13855320,14515320,18318335,,,27050640,basketball-reference.com/contracts/players.html
+4397136,Saddiq Bey,New Orleans Pelicans,New Orleans Pelicans,beysa01,6440678,17129630,18500000,19870370,,,61940678,basketball-reference.com/contracts/players.html
+3059318,Joel Embiid,Philadelphia 76ers,Philadelphia 76ers,embiijo01,58100000,62748000,67396000,,,,120848000,basketball-reference.com/contracts/players.html
+4251,Paul George,Boston Celtics,Boston Celtics,georgpa01,54126380,56586670,,,,,54126380,basketball-reference.com/contracts/players.html
+4278053,Davion Mitchell,Miami Heat,Miami Heat,mitchda01,12400000,,,,,,12400000,basketball-reference.com/contracts/players.html
+2595516,Norman Powell,Chicago Bulls,Chicago Bulls,powelno01,21500000,22575000,,,,,21500000,basketball-reference.com/contracts/players.html
+4845367,Stephon Castle,San Antonio Spurs,San Antonio Spurs,castlst01,10015920,12670139,,,,,22686059,basketball-reference.com/contracts/players.html
+5144091,Jeremiah Fears,New Orleans Pelicans,New Orleans Pelicans,fearsje01,7896240,8271960,10505389,,,,16168200,basketball-reference.com/contracts/players.html
+4396971,Naz Reid,Charlotte Hornets,Charlotte Hornets,reidna01,23275862,25000000,26724138,28448276,,,75000000,basketball-reference.com/contracts/players.html
+4432639,Jabari Smith Jr.,Houston Rockets,Houston Rockets,smithja05,23643411,21751940,23643411,25534883,27426355,,122000000,basketball-reference.com/contracts/players.html
+3934719,OG Anunoby,New York Knicks,New York Knicks,anunoog01,42500000,45431034,48362068,,,,87931034,basketball-reference.com/contracts/players.html
+3992,James Harden,Cleveland Cavaliers,Cleveland Cavaliers,hardeja01,30647619,32180000,33712381,,,,62827619,basketball-reference.com/contracts/players.html
+4066320,Desmond Bane,Orlando Magic,Orlando Magic,banede01,39446090,42166510,44886930,,,,126499530,basketball-reference.com/contracts/players.html
+4432848,Jaime Jaquez Jr.,Milwaukee Bucks,Milwaukee Bucks,jaqueja01,5939141,,,,,,5939141,basketball-reference.com/contracts/players.html
+4433287,Brandon Miller,Charlotte Hornets,Charlotte Hornets,millebr02,15104626,36034483,38917241,41800000,44682759,47565517,224104626,basketball-reference.com/contracts/players.html
+4433134,Scottie Barnes,Toronto Raptors,Toronto Raptors,barnesc01,41754690,44847630,47940570,51033510,,,185576400,basketball-reference.com/contracts/players.html
+4684740,Amen Thompson,Houston Rockets,Houston Rockets,thompam01,12258609,35862069,38731034,41600000,44468966,47337931,220258609,basketball-reference.com/contracts/players.html
+4395724,Immanuel Quickley,Toronto Raptors,Toronto Raptors,quickim01,32500000,32500000,32500000,,,,97500000,basketball-reference.com/contracts/players.html
+4701230,Jalen Johnson,Atlanta Hawks,Atlanta Hawks,johnsja05,30000000,30000000,30000000,30000000,,,120000000,basketball-reference.com/contracts/players.html
+4900671,Ajay Mitchell,Oklahoma City Thunder,Oklahoma City Thunder,mitchaj01,2850000,2850000,,,,,,basketball-reference.com/contracts/players.html
+4431680,Onyeka Okongwu,Atlanta Hawks,Atlanta Hawks,okongon01,16120000,16880000,,,,,33000000,basketball-reference.com/contracts/players.html
+4903027,Cedric Coward,Memphis Grizzlies,Memphis Grizzlies,cowarce01,6001080,6286920,8342743,,,,12288000,basketball-reference.com/contracts/players.html
+4709138,Brandin Podziemski,Golden State Warriors,Golden State Warriors,podzibr01,5679459,18965517,20482759,22000000,23517241,25034483,90644976,basketball-reference.com/contracts/players.html
+3448,Brook Lopez,LA Clippers,LA Clippers,lopezbr01,9187500,,,,,,9187500,basketball-reference.com/contracts/players.html
+6475,Klay Thompson,Miami Heat,Miami Heat,thompkl01,13260317,5880000,,,,,5600000,basketball-reference.com/contracts/players.html
+4433136,Walker Kessler,Los Angeles Lakers,Los Angeles Lakers,kesslwa01,30232558,31744186,33255814,34767442,,,95232558,basketball-reference.com/contracts/players.html
+4873138,Ace Bailey,Utah Jazz,Utah Jazz,baileac01,9523080,9976560,12640302,,,,19499640,basketball-reference.com/contracts/players.html
+4711294,Matas Buzelis,Chicago Bulls,Chicago Bulls,buzelma01,5715360,7584283,,,,,13299643,basketball-reference.com/contracts/players.html
+4278078,P.J. Washington,Dallas Mavericks,Dallas Mavericks,washipj01,19813044,21398088,22983132,24568176,,,88762440,basketball-reference.com/contracts/players.html
+3155526,Dillon Brooks,Phoenix Suns,Phoenix Suns,brookdi01,19992727,22530864,24333333,26135802,,,92992726,basketball-reference.com/contracts/players.html
+4397183,Aaron Wiggins,Atlanta Hawks,Atlanta Hawks,wiggiaa01,9224300,8345797,8345797,,,,17570097,basketball-reference.com/contracts/players.html
+3157465,Duncan Robinson,Detroit Pistons,Detroit Pistons,robindu01,15992957,15151222,,,,,,basketball-reference.com/contracts/players.html
+3995,Jrue Holiday,Portland Trail Blazers,Portland Trail Blazers,holidjr01,34800000,37200000,,,,,34800000,basketball-reference.com/contracts/players.html
+4066354,Payton Pritchard,Boston Celtics,Boston Celtics,pritcpa01,7767857,8303571,21228200,22926456,,,37299628,basketball-reference.com/contracts/players.html
+4683778,Jared McCain,Oklahoma City Thunder,Oklahoma City Thunder,mccaija01,4422600,6784268,,,,,11206868,basketball-reference.com/contracts/players.html
+5124612,VJ Edgecombe,Philadelphia 76ers,Philadelphia 76ers,edgecvj01,11663880,12219720,15445727,,,,23883600,basketball-reference.com/contracts/players.html
+4066383,Miles Bridges,Phoenix Suns,Phoenix Suns,bridgmi02,22826087,,,,,,22826087,basketball-reference.com/contracts/players.html
+4432158,Evan Mobley,Cleveland Cavaliers,Cleveland Cavaliers,mobleev01,50105628,53817156,57528684,61240212,,,222691680,basketball-reference.com/contracts/players.html
+2490149,CJ McCollum,Atlanta Hawks,Atlanta Hawks,mccolcj01,21000000,,,,,,21000000,basketball-reference.com/contracts/players.html
+5107199,Daniss Jenkins,Detroit Pistons,Detroit Pistons,jenkida01,4000000,,,,,,4000000,basketball-reference.com/contracts/players.html
+4433247,Jonathan Kuminga,Minnesota Timberwolves,Minnesota Timberwolves,kuminjo01,6064000,6367200,,,,,6064000,basketball-reference.com/contracts/players.html
+5142718,AJ Dybantsa,Washington Wizards,Washington Wizards,dybanaj01,14748000,15485760,16223040,20457254,,,30233760,basketball-reference.com/contracts/players.html
+3135045,Grayson Allen,Charlotte Hornets,Charlotte Hornets,allengr01,18125000,19375000,,,,,18125000,basketball-reference.com/contracts/players.html
+4066259,De'Aaron Fox,San Antonio Spurs,San Antonio Spurs,foxde01,49800000,53784000,57768000,61752000,,,223104000,basketball-reference.com/contracts/players.html
+4869780,Derik Queen,New Orleans Pelicans,New Orleans Pelicans,queende01,5416080,5673840,8107918,,,,11089920,basketball-reference.com/contracts/players.html
+3078576,Derrick White,Boston Celtics,Boston Celtics,whitede01,30348000,32596000,34844000,,,,62944000,basketball-reference.com/contracts/players.html
+4431736,Toumani Camara,Portland Trail Blazers,Portland Trail Blazers,camarto01,18080358,19526786,20973214,22419642,,,81000000,basketball-reference.com/contracts/players.html
+5095151,Caleb Wilson,Chicago Bulls,Chicago Bulls,wilsoca01,10683720,11217960,11752320,14866685,,,21901680,basketball-reference.com/contracts/players.html
+1966,LeBron James,Philadelphia 76ers,Philadelphia 76ers,jamesle01,3876529,4070355,,,,,3876529,basketball-reference.com/contracts/players.html
+4277847,Wendell Carter Jr.,Orlando Magic,Orlando Magic,cartewe01,18102000,19550160,20998320,,,,37652160,basketball-reference.com/contracts/players.html
+3134907,Kyle Kuzma,Milwaukee Bucks,Milwaukee Bucks,kuzmaky01,20345152,,,,,,20345152,basketball-reference.com/contracts/players.html
+4684272,Ja'Kobe Walter,Toronto Raptors,Toronto Raptors,walteja01,3811800,5870172,,,,,9681972,basketball-reference.com/contracts/players.html
+5112087,Jaylen Wells,Memphis Grizzlies,Memphis Grizzlies,wellsja01,2296271,2486995,,,,,,basketball-reference.com/contracts/players.html
+4395712,Andrew Nembhard,Indiana Pacers,Indiana Pacers,nembhan01,19550160,20998320,,,,,40548480,basketball-reference.com/contracts/players.html
+4712849,Anthony Black,Orlando Magic,Orlando Magic,blackan01,10106316,,,,,,10106316,basketball-reference.com/contracts/players.html
+4433083,Cam Spencer,Memphis Grizzlies,Memphis Grizzlies,spencca01,2411090,2616754,2830685,,,,5027844,basketball-reference.com/contracts/players.html
+3155942,Domantas Sabonis,Sacramento Kings,Sacramento Kings,sabondo01,45472000,48608000,,,,,94080000,basketball-reference.com/contracts/players.html
+5160992,Alex Sarr,Washington Wizards,Washington Wizards,sarral01,12370680,15611798,,,,,27982478,basketball-reference.com/contracts/players.html
+4397014,Quentin Grimes,Los Angeles Lakers,Los Angeles Lakers,grimequ01,13953489,14651163,15348837,16046511,,,43953489,basketball-reference.com/contracts/players.html
+2991230,Fred VanVleet,Houston Rockets,Houston Rockets,vanvlfr01,25000000,,,,,,25000000,basketball-reference.com/contracts/players.html
+5279130,Nolan Traore,Brooklyn Nets,Brooklyn Nets,traorno01,4002000,4193040,6457282,,,,8195040,basketball-reference.com/contracts/players.html
+4397189,Jalen Smith,Chicago Bulls,Chicago Bulls,smithja04,9428571,,,,,,9428571,basketball-reference.com/contracts/players.html
+5041951,Meleek Thomas,Cleveland Cavaliers,Cleveland Cavaliers,thomame01,1357763,2294370,2694363,2918152,,,6346496,basketball-reference.com/contracts/players.html
+4437244,Jalen Green,Phoenix Suns,Phoenix Suns,greenja05,36251166,36000000,,,,,36251166,basketball-reference.com/contracts/players.html
+4702382,Tristan da Silva,Orlando Magic,Orlando Magic,dasiltr01,3991200,6138466,,,,,10129666,basketball-reference.com/contracts/players.html
+4351851,Anfernee Simons,Philadelphia 76ers,Philadelphia 76ers,simonan01,6000000,6300000,,,,,6000000,basketball-reference.com/contracts/players.html
+4066328,Jarrett Allen,Cleveland Cavaliers,Cleveland Cavaliers,allenja01,28000000,30240000,32480000,,,,90720000,basketball-reference.com/contracts/players.html
+5254165,Keaton Wagler,LA Clippers,LA Clippers,wagleke01,9674760,10158240,10641960,13483364,,,19833000,basketball-reference.com/contracts/players.html
+4433192,Tari Eason,Houston Rockets,Houston Rockets,easonta01,14051724,15175862,16300000,17424138,18548276,,62951724,basketball-reference.com/contracts/players.html
+4592479,Julian Champagnie,San Antonio Spurs,San Antonio Spurs,champju02,13888889,15000000,16111111,,,,45000000,basketball-reference.com/contracts/players.html
+4431767,Christian Braun,Denver Nuggets,Denver Nuggets,braunch01,21551726,23275863,25000000,26724137,28448274,,125000000,basketball-reference.com/contracts/players.html
+5082206,Brayden Burries,Milwaukee Bucks,Milwaukee Bucks,burribr01,6417360,6738000,7058520,8999614,,,13155360,basketball-reference.com/contracts/players.html
+5105839,Brice Sensabaugh,Utah Jazz,Utah Jazz,sensabr01,4862237,,,,,,4862237,basketball-reference.com/contracts/players.html
+4432847,Terrence Shannon Jr.,Minnesota Timberwolves,Minnesota Timberwolves,shannte01,2801640,5054159,,,,,7855799,basketball-reference.com/contracts/players.html
+4065732,De'Andre Hunter,Sacramento Kings,Sacramento Kings,huntede01,24910714,,,,,,24910714,basketball-reference.com/contracts/players.html
+4278562,Paul Reed,Detroit Pistons,Detroit Pistons,reedpa01,5602689,,,,,,,basketball-reference.com/contracts/players.html
+4066648,Rui Hachimura,LA Clippers,LA Clippers,hachiru01,14000000,14000000,,,,,14000000,basketball-reference.com/contracts/players.html
+5105565,Donovan Clingan,Portland Trail Blazers,Portland Trail Blazers,clingdo01,7519920,9550298,,,,,17070218,basketball-reference.com/contracts/players.html
+4277811,Collin Sexton,Los Angeles Lakers,Los Angeles Lakers,sextoco01,9366000,9834300,,,,,19200300,basketball-reference.com/contracts/players.html
+4395630,Devin Vassell,San Antonio Spurs,San Antonio Spurs,vassede01,27000000,24652174,27000000,,,,78652174,basketball-reference.com/contracts/players.html
+2991070,Jerami Grant,Memphis Grizzlies,Memphis Grizzlies,grantje01,34206898,36413790,,,,,34206898,basketball-reference.com/contracts/players.html
+3914044,Landry Shamet,New York Knicks,New York Knicks,shamela01,5357143,5785714,6214286,6642857,,,24000000,basketball-reference.com/contracts/players.html
+3908845,John Collins,Detroit Pistons,Detroit Pistons,collijo01,17000000,17000000,17000000,,,,17000000,basketball-reference.com/contracts/players.html
+4278580,Sandro Mamukelashvili,Los Angeles Lakers,Los Angeles Lakers,mamuksa01,13000000,12350000,13000000,13650000,,,38350000,basketball-reference.com/contracts/players.html
+4592492,Bones Hyland,Minnesota Timberwolves,Minnesota Timberwolves,hylanbo01,2845883,,,,,,2845883,basketball-reference.com/contracts/players.html
+4591725,Ryan Rollins,Milwaukee Bucks,Milwaukee Bucks,rolliry01,4000000,4000000,,,,,4000000,basketball-reference.com/contracts/players.html
+4395626,Tre Jones,Chicago Bulls,Chicago Bulls,jonestr01,8000000,8000000,,,,,8000000,basketball-reference.com/contracts/players.html
+4396909,Aaron Nesmith,Indiana Pacers,Indiana Pacers,nesmiaa01,11000000,19418000,20971440,,,,51389440,basketball-reference.com/contracts/players.html
+4683678,Scoot Henderson,Portland Trail Blazers,Portland Trail Blazers,hendesc01,13585523,,,,,,13585523,basketball-reference.com/contracts/players.html
+4871145,Josh Giddey,Chicago Bulls,Chicago Bulls,giddejo01,25000000,25000000,25000000,,,,75000000,basketball-reference.com/contracts/players.html
+4066436,De'Anthony Melton,Golden State Warriors,Golden State Warriors,meltode01,5477000,5750850,,,,,5477000,basketball-reference.com/contracts/players.html
+5023693,Tyrese Proctor,Cleveland Cavaliers,Cleveland Cavaliers,proctty01,2150917,2525901,2735698,,,,2150917,basketball-reference.com/contracts/players.html
+3064290,Aaron Gordon,Denver Nuggets,Denver Nuggets,gordoaa01,33658037,36350680,39043323,,,,70008717,basketball-reference.com/contracts/players.html
+3133603,Kelly Oubre Jr.,Indiana Pacers,Indiana Pacers,oubreke01,8050000,8450000,,,,,16500000,basketball-reference.com/contracts/players.html
+2995706,Mario Hezonja,Cleveland Cavaliers,Cleveland Cavaliers,hezonma01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+3150844,Moritz Wagner,Brooklyn Nets,Brooklyn Nets,wagnemo01,9268293,9731707,,,,,9268293,basketball-reference.com/contracts/players.html
+4066336,Lauri Markkanen,Utah Jazz,Utah Jazz,markkla01,46113154,49824681,53536209,,,,149474044,basketball-reference.com/contracts/players.html
+4869342,Dyson Daniels,Atlanta Hawks,Atlanta Hawks,daniedy01,25000000,25000000,25000000,25000000,,,100000000,basketball-reference.com/contracts/players.html
+3059319,Andrew Wiggins,Miami Heat,Miami Heat,wiggian01,30169644,16346154,17653846,,,,46515798,basketball-reference.com/contracts/players.html
+5105623,Kel'el Ware,Milwaukee Bucks,Milwaukee Bucks,wareke01,4654920,7135992,,,,,11790912,basketball-reference.com/contracts/players.html
+5214640,Kasparas Jakucionis,Milwaukee Bucks,Milwaukee Bucks,jakucka01,3841680,4024440,6205687,,,,7866120,basketball-reference.com/contracts/players.html
+4397020,Luguentz Dort,Atlanta Hawks,Atlanta Hawks,dortlu01,18222222,,,,,,18222222,basketball-reference.com/contracts/players.html
+3936099,Derrick Jones Jr.,LA Clippers,LA Clippers,jonesde02,10476190,,,,,,10476190,basketball-reference.com/contracts/players.html
+4397688,Trey Murphy III,New Orleans Pelicans,New Orleans Pelicans,murphtr02,27000000,29000000,31000000,,,,87000000,basketball-reference.com/contracts/players.html
+4395723,Keldon Johnson,San Antonio Spurs,San Antonio Spurs,johnske04,17500000,,,,,,17500000,basketball-reference.com/contracts/players.html
+4066372,Kevin Huerter,Detroit Pistons,Detroit Pistons,huertke01,8333333,9000000,9666667,,,,27000000,basketball-reference.com/contracts/players.html
+4278594,Naji Marshall,Dallas Mavericks,Dallas Mavericks,marshna01,9428571,18195600,17285820,16376040,,,61286031,basketball-reference.com/contracts/players.html
+5174983,Aday Mara,Oklahoma City Thunder,Oklahoma City Thunder,maraad01,5791680,6081480,6371160,8779459,,,11873160,basketball-reference.com/contracts/players.html
+4684742,Ausar Thompson,Detroit Pistons,Detroit Pistons,thompau01,11117925,26724138,28862069,31000000,33137931,35275862,166117925,basketball-reference.com/contracts/players.html
+4397424,Neemias Queta,Boston Celtics,Boston Celtics,quetane01,2667944,12500000,13500000,14500000,15500000,,58667944,basketball-reference.com/contracts/players.html
+4431893,Jamison Battle,Toronto Raptors,Toronto Raptors,battlja01,2296271,,,,,,,basketball-reference.com/contracts/players.html
+4278355,Obi Toppin,Indiana Pacers,Indiana Pacers,toppiob01,15000000,16025000,,,,,31025000,basketball-reference.com/contracts/players.html
+4594268,Anthony Edwards,Minnesota Timberwolves,Minnesota Timberwolves,edwaran01,48924624,52298736,55672848,,,,156896208,basketball-reference.com/contracts/players.html
+4278585,Collin Gillespie,Phoenix Suns,Phoenix Suns,gilleco01,10714286,11571429,12428571,13285714,,,48000000,basketball-reference.com/contracts/players.html
+5093267,Collin Murray-Boyles,Toronto Raptors,Toronto Raptors,murraco01,6649560,6966000,8874684,,,,13615560,basketball-reference.com/contracts/players.html
+4601025,Pelle Larsson,Miami Heat,Miami Heat,larsspe01,2296271,13392857,14464286,15535714,16607143,,45689128,basketball-reference.com/contracts/players.html
+4576087,Peyton Watson,Cleveland Cavaliers,Cleveland Cavaliers,watsope01,20465116,21488372,22511628,23534884,,,64465116,basketball-reference.com/contracts/players.html
+4278049,Daniel Gafford,Dallas Mavericks,Dallas Mavericks,gaffoda01,17263584,18126763,18989942,,,,54380289,basketball-reference.com/contracts/players.html
+4711272,Reed Sheppard,Houston Rockets,Houston Rockets,sheppre01,11108880,14041625,,,,,25150505,basketball-reference.com/contracts/players.html
+4222252,Isaiah Hartenstein,Oklahoma City Thunder,Oklahoma City Thunder,harteis01,23148148,25000000,26851852,,,,48148148,basketball-reference.com/contracts/players.html
+5211175,Zaccharie Risacher,Dallas Mavericks,Dallas Mavericks,risacza01,13826040,17434637,,,,,31260677,basketball-reference.com/contracts/players.html
+4065804,Sam Hauser,Boston Celtics,Boston Celtics,hausesa01,10848215,11651785,12455356,,,,34955356,basketball-reference.com/contracts/players.html
+5238230,Tre Johnson,Washington Wizards,Washington Wizards,johnstr03,8649600,9061680,11490211,,,,17711280,basketball-reference.com/contracts/players.html
+4432241,Jamal Shead,Toronto Raptors,Toronto Raptors,sheadja01,2296271,7407407,8000000,8592593,,,26296271,basketball-reference.com/contracts/players.html
+4433137,Ziaire Williams,Los Angeles Lakers,Los Angeles Lakers,willizi02,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+3907497,Dejounte Murray,New Orleans Pelicans,New Orleans Pelicans,murrade01,32785071,30751504,,,,,32785071,basketball-reference.com/contracts/players.html
+3978,DeMar DeRozan,Denver Nuggets,Denver Nuggets,derozde01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5081727,Sidy Cissoko,Portland Trail Blazers,Portland Trail Blazers,cissosi01,2497812,,,,,,,basketball-reference.com/contracts/players.html
+4432194,Day'Ron Sharpe,Brooklyn Nets,Brooklyn Nets,sharpda01,10000000,10000000,,,,,10000000,basketball-reference.com/contracts/players.html
+2990969,Georges Niang,Golden State Warriors,Golden State Warriors,niangge01,2449421,,,,,,,basketball-reference.com/contracts/players.html
+4397886,Charles Bassey,Golden State Warriors,Golden State Warriors,bassech01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4432810,Isaiah Stewart,Memphis Grizzlies,Memphis Grizzlies,stewais01,15000000,15000000,,,,,15000000,basketball-reference.com/contracts/players.html
+3913174,Luke Kennard,Phoenix Suns,Phoenix Suns,kennalu01,6064000,6367200,,,,,6064000,basketball-reference.com/contracts/players.html
+3032976,Rudy Gobert,Minnesota Timberwolves,Minnesota Timberwolves,goberru01,36500000,38000000,,,,,36500000,basketball-reference.com/contracts/players.html
+4431679,Precious Achiuwa,Sacramento Kings,Sacramento Kings,achiupr01,5477000,5750850,,,,,11227850,basketball-reference.com/contracts/players.html
+3138196,Cameron Johnson,Denver Nuggets,Denver Nuggets,johnsca02,23062500,,,,,,23062500,basketball-reference.com/contracts/players.html
+4277919,Mo Bamba,Utah Jazz,Utah Jazz,bambamo01,3286399,3681991,,,,,6968390,basketball-reference.com/contracts/players.html
+5101761,Mikel Brown Jr.,Brooklyn Nets,Brooklyn Nets,brownmi02,8787000,9226440,9666000,12256488,,,18013440,basketball-reference.com/contracts/players.html
+3907498,Matisse Thybulle,Los Angeles Lakers,Los Angeles Lakers,thybuma01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+3147657,Mikal Bridges,New York Knicks,New York Knicks,bridgmi01,33482145,36160714,38839285,41517856,,,108482144,basketball-reference.com/contracts/players.html
+4897262,Will Richard,Golden State Warriors,Golden State Warriors,richawi02,2150917,2525901,2735698,,,,2150917,basketball-reference.com/contracts/players.html
+5164559,Nate Ament,Milwaukee Bucks,Milwaukee Bucks,amentna01,5502000,5777280,6052200,8648594,,,11279280,basketball-reference.com/contracts/players.html
+4397077,Jaxson Hayes,Utah Jazz,Utah Jazz,hayesja02,6000000,6000000,,,,,6000000,basketball-reference.com/contracts/players.html
+3064482,Bobby Portis,Miami Heat,Miami Heat,portibo01,14521414,15597074,,,,,14521414,basketball-reference.com/contracts/players.html
+4702352,Kobe Sanders,LA Clippers,LA Clippers,sandeko01,2622139,2753246,2884353,3019474,,,5375385,basketball-reference.com/contracts/players.html
+3133626,Kenrich Williams,Oklahoma City Thunder,Oklahoma City Thunder,willike04,5000000,,,,,,5000000,basketball-reference.com/contracts/players.html
+4600663,Zach Edey,Memphis Grizzlies,Memphis Grizzlies,edeyza01,6332760,8067937,,,,,14400697,basketball-reference.com/contracts/players.html
+4066262,Malik Monk,Sacramento Kings,Sacramento Kings,monkma01,20190035,21582451,,,,,20190035,basketball-reference.com/contracts/players.html
+5241364,Bennett Stirtz,Oklahoma City Thunder,Oklahoma City Thunder,stirtbe01,4717320,4953240,5189400,7960540,,,9670560,basketball-reference.com/contracts/players.html
+5203685,Khaman Maluach,Phoenix Suns,Phoenix Suns,maluakh01,6316680,6617160,8436880,,,,12933840,basketball-reference.com/contracts/players.html
+3134908,Jakob Poeltl,Toronto Raptors,Toronto Raptors,poeltja01,19500000,27300000,29484000,27300000,,,76284000,basketball-reference.com/contracts/players.html
+4431823,Miles McBride,New York Knicks,New York Knicks,mcbrimi01,3956523,,,,,,3956523,basketball-reference.com/contracts/players.html
+4432170,Isaiah Jackson,LA Clippers,LA Clippers,jacksis01,7000000,6400000,,,,,13400000,basketball-reference.com/contracts/players.html
+4277956,Jordan Poole,New Orleans Pelicans,New Orleans Pelicans,poolejo01,34044642,,,,,,34044642,basketball-reference.com/contracts/players.html
+5104155,Bilal Coulibaly,Washington Wizards,Washington Wizards,coulibi01,9240012,,,,,,9240012,basketball-reference.com/contracts/players.html
+4433249,Moussa Diabate,Charlotte Hornets,Charlotte Hornets,diabamo01,2461462,,,,,,,basketball-reference.com/contracts/players.html
+4397040,Brandon Williams,Golden State Warriors,Golden State Warriors,willibr03,2449421,,,,,,,basketball-reference.com/contracts/players.html
+4277813,Herbert Jones,New Orleans Pelicans,New Orleans Pelicans,joneshe01,14898786,20858300,22526964,24195628,,,58284050,basketball-reference.com/contracts/players.html
+4997538,Karlo Matkovic,New Orleans Pelicans,New Orleans Pelicans,matkoka01,2296271,,,,,,2296271,basketball-reference.com/contracts/players.html
+2991139,Kris Dunn,LA Clippers,LA Clippers,dunnkr01,5684800,,,,,,,basketball-reference.com/contracts/players.html
+3136196,Trey Lyles,Minnesota Timberwolves,Minnesota Timberwolves,lylestr01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4432822,Isaac Okoro,Chicago Bulls,Chicago Bulls,okorois01,11814814,,,,,,11814814,basketball-reference.com/contracts/players.html
+3133628,Myles Turner,Milwaukee Bucks,Milwaukee Bucks,turnemy01,26584164,27850077,29115990,,,,54434241,basketball-reference.com/contracts/players.html
+5106258,Gradey Dick,LA Clippers,LA Clippers,dickgr01,7131511,,,,,,7131511,basketball-reference.com/contracts/players.html
+4017837,Ivica Zubac,Indiana Pacers,Indiana Pacers,zubaciv01,20342140,21790300,,,,,42132440,basketball-reference.com/contracts/players.html
+4712896,Noah Clowney,Brooklyn Nets,Brooklyn Nets,clownno01,5414034,,,,,,5414034,basketball-reference.com/contracts/players.html
+2596112,Javonte Green,Detroit Pistons,Detroit Pistons,greenja02,3943679,,,,,,3943679,basketball-reference.com/contracts/players.html
+4684806,Taylor Hendricks,Memphis Grizzlies,Memphis Grizzlies,hendrta01,7805900,,,,,,7805900,basketball-reference.com/contracts/players.html
+5175643,Egor Demin,Brooklyn Nets,Brooklyn Nets,demineg01,7233720,7578240,9639522,,,,14811960,basketball-reference.com/contracts/players.html
+5107157,Ryan Conwell,Miami Heat,Miami Heat,conwery01,1357763,2294370,2694363,,,,3652133,basketball-reference.com/contracts/players.html
+4065731,Jay Huff,Indiana Pacers,Indiana Pacers,huffja01,2667944,3005085,,,,,,basketball-reference.com/contracts/players.html
+3934723,Thomas Bryant,Cleveland Cavaliers,Cleveland Cavaliers,bryanth01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5149077,Kingston Flemings,Atlanta Hawks,Atlanta Hawks,flemiki01,7348680,7716120,8083680,10282441,,,15064800,basketball-reference.com/contracts/players.html
+3032979,Dennis Schroder,Charlotte Hornets,Charlotte Hornets,schrode01,14809200,15514400,,,,,14809200,basketball-reference.com/contracts/players.html
+2581018,Kentavious Caldwell-Pope,Philadelphia 76ers,Philadelphia 76ers,caldwke01,20194392,,,,,,2449421,basketball-reference.com/contracts/players.html
+4278402,Jordan Goodwin,Phoenix Suns,Phoenix Suns,goodwjo01,5864198,6333333,6802469,,,,12197531,basketball-reference.com/contracts/players.html
+2990984,Buddy Hield,Chicago Bulls,Chicago Bulls,hieldbu01,9658536,10097560,,,,,9658536,basketball-reference.com/contracts/players.html
+4397475,AJ Green,Milwaukee Bucks,Milwaukee Bucks,greenaj01,10044644,10848215,11651786,12455355,,,45000000,basketball-reference.com/contracts/players.html
+2991350,Alex Caruso,Oklahoma City Thunder,Oklahoma City Thunder,carusal01,19550160,20998320,22446480,,,,62994960,basketball-reference.com/contracts/players.html
+4683766,Isaiah Collier,Utah Jazz,Utah Jazz,colliis01,2763960,4988948,,,,,2763960,basketball-reference.com/contracts/players.html
+4395651,Coby White,Charlotte Hornets,Charlotte Hornets,whiteco01,22839506,24666667,26493827,,,,74000000,basketball-reference.com/contracts/players.html
+3037789,Bogdan Bogdanovic,Houston Rockets,Houston Rockets,bogdabo01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4592691,Jake LaRavia,Los Angeles Lakers,Los Angeles Lakers,laravja01,6000000,,,,,,6000000,basketball-reference.com/contracts/players.html
+4396993,Tyrese Haliburton,Indiana Pacers,Indiana Pacers,halibty01,48924624,52298736,55672848,,,,156896208,basketball-reference.com/contracts/players.html
+4593841,Baylor Scheierman,Boston Celtics,Boston Celtics,scheiba01,2744040,4952993,,,,,7697033,basketball-reference.com/contracts/players.html
+5106060,Jarace Walker,Indiana Pacers,Indiana Pacers,walkeja02,8478542,,,,,,8478542,basketball-reference.com/contracts/players.html
+5279133,Joan Beringer,Minnesota Timberwolves,Minnesota Timberwolves,berinjo01,4411200,4621200,7098163,,,,9032400,basketball-reference.com/contracts/players.html
+4698719,Trevon Brazile,Denver Nuggets,Denver Nuggets,brazitr01,1357763,,,,,,1357763,basketball-reference.com/contracts/players.html
+4873153,Morez Johnson Jr.,Dallas Mavericks,Dallas Mavericks,johnsmo01,6754800,7093080,7430640,9466636,,,13847880,basketball-reference.com/contracts/players.html
+3062679,Josh Hart,New York Knicks,New York Knicks,hartjo01,20923760,22375280,,,,,20923760,basketball-reference.com/contracts/players.html
+4997536,Gui Santos,Golden State Warriors,Golden State Warriors,santogu01,4629630,5000000,5370370,,,,9629630,basketball-reference.com/contracts/players.html
+5107173,Danny Wolf,Brooklyn Nets,Brooklyn Nets,wolfda01,2941440,3081840,5559640,,,,6023280,basketball-reference.com/contracts/players.html
+4277951,Luka Garza,Boston Celtics,Boston Celtics,garzalu01,2801346,,,,,,2801346,basketball-reference.com/contracts/players.html
+2583632,Royce O'Neale,Charlotte Hornets,Charlotte Hornets,onealro01,10875000,11625000,,,,,22500000,basketball-reference.com/contracts/players.html
+2990992,Marcus Smart,Houston Rockets,Houston Rockets,smartma01,6064000,6367200,,,,,6064000,basketball-reference.com/contracts/players.html
+4602025,Sion James,Charlotte Hornets,Charlotte Hornets,jamessi01,2411090,2525901,2735698,,,,2411090,basketball-reference.com/contracts/players.html
+4065778,Max Strus,LA Clippers,LA Clippers,strusma01,16660836,,,,,,16660836,basketball-reference.com/contracts/players.html
+4432446,Jabari Walker,Philadelphia 76ers,Philadelphia 76ers,walkeja01,2584539,,,,,,,basketball-reference.com/contracts/players.html
+4066757,Sam Merrill,Cleveland Cavaliers,Cleveland Cavaliers,merrisa01,9160715,9839285,10517856,,,,29517856,basketball-reference.com/contracts/players.html
+4683747,Jaylon Tyson,Cleveland Cavaliers,Cleveland Cavaliers,tysonja01,3658560,5641500,,,,,9300060,basketball-reference.com/contracts/players.html
+6578,Harrison Barnes,San Antonio Spurs,San Antonio Spurs,barneha02,8000000,,,,,,8000000,basketball-reference.com/contracts/players.html
+4702656,Alijah Martin,Toronto Raptors,Toronto Raptors,martial01,2185116,2571895,,,,,2185116,basketball-reference.com/contracts/players.html
+4845374,Bub Carrington,Washington Wizards,Washington Wizards,carrica01,4900560,7257730,,,,,12158290,basketball-reference.com/contracts/players.html
+4601023,Oso Ighodaro,Phoenix Suns,Phoenix Suns,ighodos01,2296271,2486995,8950617,9666667,10382716,,33783266,basketball-reference.com/contracts/players.html
+4277848,Marvin Bagley III,Denver Nuggets,Denver Nuggets,baglema01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+3133602,Svi Mykhailiuk,Utah Jazz,Utah Jazz,mykhasv01,3850000,4025000,,,,,,basketball-reference.com/contracts/players.html
+4351852,Mitchell Robinson,Boston Celtics,Boston Celtics,robinmi01,15044000,15796200,16548400,,,,47388600,basketball-reference.com/contracts/players.html
+4888725,Ryan Dunn,Phoenix Suns,Phoenix Suns,dunnry01,2784240,5025553,,,,,7809793,basketball-reference.com/contracts/players.html
+4278572,Jamal Cain,Orlando Magic,Orlando Magic,cainja01,2584539,,,,,,2584539,basketball-reference.com/contracts/players.html
+4683689,Jordan Walsh,Boston Celtics,Boston Celtics,walshjo01,2406205,4629630,5000000,5370370,,,17406205,basketball-reference.com/contracts/players.html
+5211176,Tidjane Salaun,Charlotte Hornets,Charlotte Hornets,salauti01,8237880,10445633,,,,,8237880,basketball-reference.com/contracts/players.html
+4065663,Josh Okogie,Utah Jazz,Utah Jazz,okogijo01,6000000,6000000,,,,,6000000,basketball-reference.com/contracts/players.html
+5106058,Emanuel Sharp,Sacramento Kings,Sacramento Kings,sharpem01,1357763,2294370,2694363,,,,3652133,basketball-reference.com/contracts/players.html
+5149115,Allen Graves,Toronto Raptors,Toronto Raptors,graveal01,4065720,4268880,4472640,6887866,,,8334600,basketball-reference.com/contracts/players.html
+4594327,Keegan Murray,Sacramento Kings,Sacramento Kings,murrake02,24137936,26068965,27999999,29931033,31862067,,140000000,basketball-reference.com/contracts/players.html
+4280151,Corey Kispert,Atlanta Hawks,Atlanta Hawks,kispeco01,13975000,13050000,13050000,,,,27025000,basketball-reference.com/contracts/players.html
+3138160,Caleb Martin,Dallas Mavericks,Dallas Mavericks,martica02,10001493,9371351,,,,,10001493,basketball-reference.com/contracts/players.html
+4576060,Ryan Kalkbrenner,Charlotte Hornets,Charlotte Hornets,kalkbry01,2411090,2525901,2735698,,,,2411090,basketball-reference.com/contracts/players.html
+4683634,Bennedict Mathurin,New Orleans Pelicans,New Orleans Pelicans,mathube01,7804878,8195122,,,,,7804878,basketball-reference.com/contracts/players.html
+5239561,Jase Richardson,Orlando Magic,Orlando Magic,richaja02,3132360,3282000,5910882,,,,6414360,basketball-reference.com/contracts/players.html
+4278129,Deandre Ayton,Washington Wizards,Washington Wizards,aytonde01,8104000,,,,,,8104000,basketball-reference.com/contracts/players.html
+5044385,Leonard Miller,Chicago Bulls,Chicago Bulls,millele01,2406205,,,,,,2406205,basketball-reference.com/contracts/players.html
+4277961,Jaren Jackson Jr.,Utah Jazz,Utah Jazz,jacksja02,49000000,50500000,52000000,53500000,,,151500000,basketball-reference.com/contracts/players.html
+4432811,Josh Green,Utah Jazz,Utah Jazz,greenjo02,14679012,,,,,,14679012,basketball-reference.com/contracts/players.html
+3134903,Gary Payton II,Golden State Warriors,Golden State Warriors,paytoga02,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+3912848,Dean Wade,Philadelphia 76ers,Philadelphia 76ers,wadede01,9000000,9450000,9900000,10350000,,,30000000,basketball-reference.com/contracts/players.html
+4432582,Max Christie,Dallas Mavericks,Dallas Mavericks,chrisma02,8285714,8857143,,,,,8285714,basketball-reference.com/contracts/players.html
+4279888,Ja Morant,Portland Trail Blazers,Portland Trail Blazers,moranja01,42166510,44886930,,,,,87053440,basketball-reference.com/contracts/players.html
+4348700,Goga Bitadze,Orlando Magic,Orlando Magic,bitadgo01,7608696,,,,,,7608696,basketball-reference.com/contracts/players.html
+4595400,Olivier-Maxence Prosper,Memphis Grizzlies,Memphis Grizzlies,prospol01,3500172,1002360,,,,,2497812,basketball-reference.com/contracts/players.html
+4702177,Keon Ellis,Brooklyn Nets,Brooklyn Nets,elliske01,8780488,9219512,,,,,8780488,basketball-reference.com/contracts/players.html
+4432107,Marcus Sasser,Dallas Mavericks,Dallas Mavericks,sassema01,5198983,,,,,,5198983,basketball-reference.com/contracts/players.html
+5242496,Noa Essengue,Chicago Bulls,Chicago Bulls,essenno01,5701200,5972760,8230464,,,,11673960,basketball-reference.com/contracts/players.html
+3146557,Jock Landale,Atlanta Hawks,Atlanta Hawks,landajo01,14100000,,,,,,14100000,basketball-reference.com/contracts/players.html
+2580365,Larry Nance Jr.,Indiana Pacers,Indiana Pacers,nancela02,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5175647,Hugo Gonzalez,Boston Celtics,Boston Celtics,gonzahu01,2923560,3062640,5528065,,,,5986200,basketball-reference.com/contracts/players.html
+2528426,Jordan Clarkson,New York Knicks,New York Knicks,clarkjo01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4432165,Jalen Suggs,Orlando Magic,Orlando Magic,suggsja01,32400000,29600000,26800000,26700000,,,88800000,basketball-reference.com/contracts/players.html
+3064560,Luke Kornet,San Antonio Spurs,San Antonio Spurs,kornelu01,10450000,9900000,9350000,,,,13000000,basketball-reference.com/contracts/players.html
+6585,Andre Drummond,New York Knicks,New York Knicks,drumman01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4432247,Jaylen Clark,Minnesota Timberwolves,Minnesota Timberwolves,clarkja02,3086420,3333334,3580246,,,,10000000,basketball-reference.com/contracts/players.html
+4593016,Quinten Post,Memphis Grizzlies,Memphis Grizzlies,postqu01,8285714,8700000,9114286,,,,8285714,basketball-reference.com/contracts/players.html
+5061568,Carter Bryant,San Antonio Spurs,San Antonio Spurs,bryanca01,5145360,5390640,7983539,,,,10536000,basketball-reference.com/contracts/players.html
+3213,Al Horford,Golden State Warriors,Golden State Warriors,horfoal01,6822000,7163100,,,,,13985100,basketball-reference.com/contracts/players.html
+2528210,Tim Hardaway Jr.,Miami Heat,Miami Heat,hardati02,6500000,,,,,,6500000,basketball-reference.com/contracts/players.html
+4431687,Patrick Williams,Chicago Bulls,Chicago Bulls,willipa01,18000000,18000000,18000000,,,,36000000,basketball-reference.com/contracts/players.html
+4432573,Paolo Banchero,Orlando Magic,Orlando Magic,banchpa01,41500000,44820000,48140000,51460000,54780000,,185920000,basketball-reference.com/contracts/players.html
+2530530,T.J. McConnell,Indiana Pacers,Indiana Pacers,mccontj01,11000000,11800000,11800000,,,,22800000,basketball-reference.com/contracts/players.html
+4433225,Tyler Kolek,New York Knicks,New York Knicks,kolekty01,2296271,2486995,,,,,2296271,basketball-reference.com/contracts/players.html
+5075626,Baba Miller,LA Clippers,LA Clippers,milleba01,1705630,2294370,2694363,2918152,,,4000000,basketball-reference.com/contracts/players.html
+3133635,Jevon Carter,Orlando Magic,Orlando Magic,carteje01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4278067,Nic Claxton,Chicago Bulls,Chicago Bulls,claxtni01,23147727,20943184,,,,,44090911,basketball-reference.com/contracts/players.html
+4431675,Trendon Watford,New Orleans Pelicans,New Orleans Pelicans,watfotr01,2449421,,,,,,,basketball-reference.com/contracts/players.html
+6589,Draymond Green,Golden State Warriors,Golden State Warriors,greendr01,27678571,,,,,,27678571,basketball-reference.com/contracts/players.html
+5106262,Zuby Ejiofor,Atlanta Hawks,Atlanta Hawks,ejiofzu01,3453360,3626160,3798360,6445818,,,7079520,basketball-reference.com/contracts/players.html
+4593803,Jalen Williams,Oklahoma City Thunder,Oklahoma City Thunder,willija06,41500000,44820000,48140000,51460000,54780000,,240700000,basketball-reference.com/contracts/players.html
+4593125,Santi Aldama,Dallas Mavericks,Dallas Mavericks,aldamsa01,17007043,17007043,,,,,17007043,basketball-reference.com/contracts/players.html
+4997526,Ousmane Dieng,Milwaukee Bucks,Milwaukee Bucks,diengou01,5750000,5750000,5750000,,,,11500000,basketball-reference.com/contracts/players.html
+6450,Kawhi Leonard,Toronto Raptors,Toronto Raptors,leonaka01,50300000,56097561,58902439,,,,106397561,basketball-reference.com/contracts/players.html
+4279318,Daeqwon Plowden,Sacramento Kings,Sacramento Kings,plowdda01,2449421,2664401,,,,,5113822,basketball-reference.com/contracts/players.html
+6609,Khris Middleton,Washington Wizards,Washington Wizards,middlkh01,5591122,5870678,6150234,,,,6499000,basketball-reference.com/contracts/players.html
+4277843,Gary Trent Jr.,Milwaukee Bucks,Milwaukee Bucks,trentga02,15200000,16400000,16400000,16000000,,,64000000,basketball-reference.com/contracts/players.html
+4433255,Chet Holmgren,Oklahoma City Thunder,Oklahoma City Thunder,holmgch01,41500000,44820000,48140000,51460000,54780000,,240700000,basketball-reference.com/contracts/players.html
+5144126,Will Riley,Washington Wizards,Washington Wizards,rileywi01,3688320,3864000,6155352,,,,7552320,basketball-reference.com/contracts/players.html
+4066218,Grant Williams,Charlotte Hornets,Charlotte Hornets,willigr01,14265750,,,,,,14265750,basketball-reference.com/contracts/players.html
+4395702,Isaiah Joe,Detroit Pistons,Detroit Pistons,joeis01,11323006,11323006,,,,,11323006,basketball-reference.com/contracts/players.html
+6478,Nikola Vucevic,Orlando Magic,Orlando Magic,vucevni01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5061589,Yves Missi,New Orleans Pelicans,New Orleans Pelicans,missiyv01,3512760,5595827,,,,,9108587,basketball-reference.com/contracts/players.html
+4431785,Scotty Pippen Jr.,Memphis Grizzlies,Memphis Grizzlies,pippesc02,2461462,2789215,,,,,,basketball-reference.com/contracts/players.html
+4432185,Micah Peavy,Oklahoma City Thunder,Memphis Grizzlies,peavymi01,2150917,,,,,,2150917,basketball-reference.com/contracts/players.html
+4431684,Trayce Jackson-Davis,Toronto Raptors,Toronto Raptors,jackstr02,2406205,,,,,,2406205,basketball-reference.com/contracts/players.html
+4687718,Josh Minott,Brooklyn Nets,Brooklyn Nets,minotjo01,4500000,4500000,,,,,4500000,basketball-reference.com/contracts/players.html
+5217746,Yang Hansen,Portland Trail Blazers,Portland Trail Blazers,yangha01,4643520,4864920,7462788,,,,9508440,basketball-reference.com/contracts/players.html
+4873090,Labaron Philon Jr.,Philadelphia 76ers,Philadelphia 76ers,philola01,3597120,3776760,3956760,6508871,,,7373880,basketball-reference.com/contracts/players.html
+3899664,Simone Fontecchio,Miami Heat,Miami Heat,fontesi01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4432907,Justin Champagnie,Washington Wizards,Washington Wizards,champju01,2667944,3005085,,,,,2667944,basketball-reference.com/contracts/players.html
+4592857,Isaiah Crawford,Houston Rockets,Houston Rockets,crawfis01,2449421,2664401,,,,,5113822,basketball-reference.com/contracts/players.html
+4701233,Craig Porter Jr.,Cleveland Cavaliers,Cleveland Cavaliers,portecr01,2406205,,,,,,2406205,basketball-reference.com/contracts/players.html
+3135046,Tyus Jones,Denver Nuggets,Denver Nuggets,jonesty01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+3134916,Jordan McLaughlin,San Antonio Spurs,San Antonio Spurs,mclaujo01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4431772,Myron Gardner,Miami Heat,Miami Heat,gardnmy01,2150917,2525901,,,,,,basketball-reference.com/contracts/players.html
+4684793,Kyle Filipowski,Utah Jazz,Utah Jazz,filipky01,3000000,3000000,,,,,,basketball-reference.com/contracts/players.html
+5041953,Koa Peat,Phoenix Suns,Phoenix Suns,peatko01,2926800,3073080,3219840,5811811,,,5999880,basketball-reference.com/contracts/players.html
+4592427,Spencer Jones,Denver Nuggets,Denver Nuggets,jonessp01,6000000,5750000,,,,,11750000,basketball-reference.com/contracts/players.html
+4592435,Branden Carlson,Portland Trail Blazers,Portland Trail Blazers,carlsbr01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4576086,Bryce McGowens,New Orleans Pelicans,New Orleans Pelicans,mcgowbr01,2584539,2934742,,,,,2584539,basketball-reference.com/contracts/players.html
+3442,DeAndre Jordan,New Orleans Pelicans,New Orleans Pelicans,jordade01,3876529,4070355,,,,,7946884,basketball-reference.com/contracts/players.html
+4433621,Jalen Duren,Detroit Pistons,Detroit Pistons,durenja01,40160643,36947792,38955824,40963856,42971885,,200000000,basketball-reference.com/contracts/players.html
+4702384,Nique Clifford,Oklahoma City Thunder,Oklahoma City Thunder,cliffni01,3263400,3418800,5979481,,,,6682200,basketball-reference.com/contracts/players.html
+4700852,Chaz Lanier,Detroit Pistons,Detroit Pistons,laniech01,2150917,2525901,2735698,,,,2150917,basketball-reference.com/contracts/players.html
+4683750,Jordan Hawkins,Chicago Bulls,Memphis Grizzlies,hawkijo01,7021895,,,,,,7021895,basketball-reference.com/contracts/players.html
+5142621,Chris Cenac Jr.,Boston Celtics,Boston Celtics,cenacch01,2988120,3137640,3287400,5930470,,,6125760,basketball-reference.com/contracts/players.html
+4432823,Jaylin Williams,Oklahoma City Thunder,Oklahoma City Thunder,willija07,7774648,7774648,,,,,7774648,basketball-reference.com/contracts/players.html
+4997528,Nikola Jovic,Miami Heat,Miami Heat,jovicni01,16200000,14904000,15096000,16200000,,,62400000,basketball-reference.com/contracts/players.html
+5239590,Liam McNeeley,Charlotte Hornets,Charlotte Hornets,mcneeli01,2902080,3040320,5487778,,,,5942400,basketball-reference.com/contracts/players.html
+4278077,Jarred Vanderbilt,Los Angeles Lakers,Los Angeles Lakers,vandeja01,12428571,13285714,,,,,12428571,basketball-reference.com/contracts/players.html
+4066650,Zach Collins,Chicago Bulls,Chicago Bulls,colliza01,8292683,8707317,,,,,17000000,basketball-reference.com/contracts/players.html
+5279129,Sergio de Larrea,Dallas Mavericks,Dallas Mavericks,delarse01,3182280,3341280,3500880,6305086,,,6523560,basketball-reference.com/contracts/players.html
+5105837,Bruce Thornton,Houston Rockets,Houston Rockets,thornbr01,1357763,2294370,2694363,2918152,,,1357763,basketball-reference.com/contracts/players.html
+4066399,Micah Potter,Portland Trail Blazers,Portland Trail Blazers,pottemi01,2801346,,,,,,2801346,basketball-reference.com/contracts/players.html
+5105637,Adem Bona,Philadelphia 76ers,Philadelphia 76ers,bonaad01,2296271,2486995,,,,,,basketball-reference.com/contracts/players.html
+3102529,Clint Capela,Houston Rockets,Houston Rockets,capelca01,7035000,7370000,,,,,14405000,basketball-reference.com/contracts/players.html
+4578893,Vit Krejci,Portland Trail Blazers,Portland Trail Blazers,krejcvi01,2667944,3005085,,,,,,basketball-reference.com/contracts/players.html
+4683692,Cason Wallace,Oklahoma City Thunder,Oklahoma City Thunder,wallaca01,7420806,23965517,25882759,27800000,29717241,31634483,146420806,basketball-reference.com/contracts/players.html
+4280245,Jamaree Bouyea,Phoenix Suns,Phoenix Suns,bouyeja01,2584539,,,,,,2584539,basketball-reference.com/contracts/players.html
+4873201,Asa Newell,Atlanta Hawks,Atlanta Hawks,newelas01,3399480,3560880,6042814,,,,6960360,basketball-reference.com/contracts/players.html
+5105809,Tarris Reed Jr.,San Antonio Spurs,San Antonio Spurs,reedjta01,3076920,3230520,3384480,6102218,,,6307440,basketball-reference.com/contracts/players.html
+4397251,Ron Harper Jr.,Boston Celtics,Boston Celtics,harpero02,3150752,3308290,3465828,3779359,,,6459042,basketball-reference.com/contracts/players.html
+4594326,Kris Murray,Memphis Grizzlies,Memphis Grizzlies,murrakr01,5315004,,,,,,5315004,basketball-reference.com/contracts/players.html
+5289900,Mohamed Diawara,New York Knicks,New York Knicks,diawamo01,2232143,2410714,2589286,2767857,,,10000000,basketball-reference.com/contracts/players.html
+4066993,Dru Smith,Miami Heat,Miami Heat,smithdr01,2584539,2934742,,,,,,basketball-reference.com/contracts/players.html
+4432737,Jaden Bradley,Toronto Raptors,Toronto Raptors,bradlja02,1357763,2294370,2694363,2918152,,,1357763,basketball-reference.com/contracts/players.html
+4277869,Jose Alvarado,New York Knicks,New York Knicks,alvarjo01,4500000,4860000,5220000,,,,14580000,basketball-reference.com/contracts/players.html
+2993874,Kyle Anderson,Toronto Raptors,Toronto Raptors,anderky01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5281370,Hannes Steinbach,Charlotte Hornets,Charlotte Hornets,steinha02,5227200,5488560,5750160,8515987,,,10715760,basketball-reference.com/contracts/players.html
+2991235,Steven Adams,Houston Rockets,Houston Rockets,adamsst01,13000000,11869566,,,,,24869566,basketball-reference.com/contracts/players.html
+4702384,Nique Clifford,Sacramento Kings,Oklahoma City Thunder,cliffni01,3263400,3418800,5979481,,,,6682200,basketball-reference.com/contracts/players.html
+4701208,Moussa Cisse,Dallas Mavericks,Dallas Mavericks,cissemo01,2185116,2571895,,,,,2185116,basketball-reference.com/contracts/players.html
+4897943,Dalton Knecht,New York Knicks,Los Angeles Lakers,knechda01,4201080,,,,,,4201080,basketball-reference.com/contracts/players.html
+4277922,Jericho Sims,Milwaukee Bucks,Milwaukee Bucks,simsje01,2801346,,,,,,2801346,basketball-reference.com/contracts/players.html
+3155535,Kevon Looney,Los Angeles Lakers,Los Angeles Lakers,looneke01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4397882,Tolu Smith,Detroit Pistons,Detroit Pistons,smithto05,2411090,,,,,,2411090,basketball-reference.com/contracts/players.html
+3195,Mike Conley,Boston Celtics,Boston Celtics,conlemi01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5211983,Pacome Dadiet,New York Knicks,New York Knicks,dadiepa01,2983680,5373608,,,,,2983680,basketball-reference.com/contracts/players.html
+4868423,Jaden Hardy,Los Angeles Lakers,Los Angeles Lakers,hardyja02,6000000,6000000,,,,,6000000,basketball-reference.com/contracts/players.html
+5258459,Ebuka Okorie,Detroit Pistons,Detroit Pistons,okorieb01,4481280,4705440,4929360,7571497,,,9186720,basketball-reference.com/contracts/players.html
+2991043,Caris LeVert,Milwaukee Bucks,Milwaukee Bucks,leverca01,14809200,,,,,,14809200,basketball-reference.com/contracts/players.html
+3907823,Terance Mann,Brooklyn Nets,Brooklyn Nets,mannte01,15500000,16000000,,,,,31500000,basketball-reference.com/contracts/players.html
+5060631,Adou Thiero,Los Angeles Lakers,Los Angeles Lakers,thierad01,2150917,2525901,,,,,2150917,basketball-reference.com/contracts/players.html
+4432819,Tre Mann,Washington Wizards,Washington Wizards,manntr01,8000000,8000000,,,,,8000000,basketball-reference.com/contracts/players.html
+5037873,Drake Powell,Brooklyn Nets,Brooklyn Nets,poweldr01,3540600,3709320,6101832,,,,7249920,basketball-reference.com/contracts/players.html
+4397233,Pete Nance,Milwaukee Bucks,Milwaukee Bucks,nancepe01,2537526,,,,,,2537526,basketball-reference.com/contracts/players.html
+4433629,Ryan Nembhard,Denver Nuggets,Charlotte Hornets,nembhry01,2150917,,,,,,2150917,basketball-reference.com/contracts/players.html
+5159925,Nikola Topic,Oklahoma City Thunder,Oklahoma City Thunder,topicni01,5429760,,,,,,5429760,basketball-reference.com/contracts/players.html
+4432808,James Wiseman,New York Knicks,New York Knicks,wisemja01,2449421,,,,,,,basketball-reference.com/contracts/players.html
+2581184,Anthony Gill,Washington Wizards,Washington Wizards,gillan01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4683774,Bronny James,Los Angeles Lakers,Los Angeles Lakers,jamesbr02,2296271,2486995,,,,,,basketball-reference.com/contracts/players.html
+5105592,Cam Whitmore,Denver Nuggets,Cleveland Cavaliers,whitmca01,1819437,1819437,1819437,,,,5458311,basketball-reference.com/contracts/players.html
+4917149,Alex Karaban,Sacramento Kings,Sacramento Kings,karabal01,2948280,3095640,3243120,5853832,,,6043920,basketball-reference.com/contracts/players.html
+5105977,Rasheer Fleming,Phoenix Suns,Phoenix Suns,flemira01,2150917,2525901,2735698,,,,4676818,basketball-reference.com/contracts/players.html
+3136777,Jae'Sean Tate,Houston Rockets,Houston Rockets,tateja01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+5170947,AJ Johnson,New Orleans Pelicans,New Orleans Pelicans,johnsaj01,3237120,5493394,,,,,3237120,basketball-reference.com/contracts/players.html
+4711297,Justin Edwards,Philadelphia 76ers,Philadelphia 76ers,edwarju01,2411090,2616754,,,,,2411090,basketball-reference.com/contracts/players.html
+4848625,Dailyn Swain,Chicago Bulls,Chicago Bulls,swainda01,4965480,5213760,5461920,8373124,,,10179240,basketball-reference.com/contracts/players.html
+5113969,Cameron Carr,Los Angeles Lakers,Los Angeles Lakers,carrca01,3315360,3481080,3646800,6378253,,,6796440,basketball-reference.com/contracts/players.html
+5231919,Karim Lopez,Memphis Grizzlies,Memphis Grizzlies,lopezka01,3746760,3934320,4121760,6565964,,,7681080,basketball-reference.com/contracts/players.html
+4278076,Nick Richards,Miami Heat,Miami Heat,richani01,2449421,,,,,,2449421,basketball-reference.com/contracts/players.html
+4431690,Zeke Nnaji,Denver Nuggets,Denver Nuggets,nnajize01,7466667,7466667,,,,,7466667,basketball-reference.com/contracts/players.html
+2990962,Taurean Prince,Detroit Pistons,Detroit Pistons,princta02,3815861,,,,,,3815861,basketball-reference.com/contracts/players.html
+4065813,Alpha Diallo,Denver Nuggets,Denver Nuggets,diallal01,1357763,,,,,,,basketball-reference.com/contracts/players.html
+2578185,Dorian Finney-Smith,Atlanta Hawks,Atlanta Hawks,finnedo01,13335000,13335000,13335000,,,,26670000,basketball-reference.com/contracts/players.html
+4433076,Ben Sheppard,Indiana Pacers,Indiana Pacers,sheppbe01,5031669,,,,,,5031669,basketball-reference.com/contracts/players.html
+5061575,Kon Knueppel,Charlotte Hornets,Charlotte Hornets,knuepko01,10516560,11017560,13937214,,,,21534120,basketball-reference.com/contracts/players.html
+5061585,Isaiah Evans,Minnesota Timberwolves,Minnesota Timberwolves,evansis01,1357763,2294370,2694363,2918152,,,6346496,basketball-reference.com/contracts/players.html
+5214989,Bogoljub Markovic,Milwaukee Bucks,Milwaukee Bucks,markobo01,1357763,2294370,2694363,2918152,,,6346496,basketball-reference.com/contracts/players.html
+5108024,Yanic Konan Niederhauser,LA Clippers,LA Clippers,konanya01,2880960,3018480,5448356,,,,5899440,basketball-reference.com/contracts/players.html
+2488653,Mason Plumlee,Sacramento Kings,Sacramento Kings,plumlma01,2139724,,,,,,2139724,basketball-reference.com/contracts/players.html
+5242502,Ben Saraf,Brooklyn Nets,Brooklyn Nets,sarafbe01,3028560,3172920,5720776,,,,6201480,basketball-reference.com/contracts/players.html
+4895758,Cody Williams,Minnesota Timberwolves,Minnesota Timberwolves,willico04,6015600,7669890,,,,,6015600,basketball-reference.com/contracts/players.html
+4433188,Devin Carter,Boston Celtics,Atlanta Hawks,cartede02,5158080,,,,,,5158080,basketball-reference.com/contracts/players.html
+4870564,Joshua Jefferson,Brooklyn Nets,Brooklyn Nets,jeffejo01,2969520,3118560,3266880,5896718,,,6088080,basketball-reference.com/contracts/players.html
+4592829,Quenton Jackson,Indiana Pacers,,,,,,,,,,
+4896372,Walter Clayton Jr.,Dallas Mavericks,,,,,,,,,,
+4781746,Javon Small,Memphis Grizzlies,,,,,,,,,,
+4433149,LJ Cryer,Golden State Warriors,,,,,,,,,,
+5105550,GG Jackson,Memphis Grizzlies,,,,,,,,,,
+4066211,Robert Williams III,Portland Trail Blazers,,,,,,,,,,
+5060701,Christian Anderson,Charlotte Hornets,,,,,,,,,,
+4683771,Ronald Holland II,Detroit Pistons,,,,,,,,,,
+4703396,Graham Ike,Golden State Warriors,,,,,,,,,,
+5174655,Chaney Johnson,Brooklyn Nets,,,,,,,,,,
+4395650,Leaky Black,Sacramento Kings,,,,,,,,,,
+4398207,Jalen Slawson,Indiana Pacers,,,,,,,,,,
+4433174,Dylan Cardwell,Sacramento Kings,,,,,,,,,,
+5105854,Braden Smith,Indiana Pacers,,,,,,,,,,
+4565698,Bryce Hopkins,Denver Nuggets,,,,,,,,,,
+4706557,Chris Youngblood,Portland Trail Blazers,,,,,,,,,,
+4703115,Jaron Pierre Jr.,New Orleans Pelicans,,,,,,,,,,
+4432827,Oscar Tshiebwe,Houston Rockets,,,,,,,,,,
+4431752,Kobe Brown,Indiana Pacers,,,,,,,,,,
+4898010,Jaylin Sellers,Chicago Bulls,,,,,,,,,,
+4703889,Jayson Kent,Portland Trail Blazers,,,,,,,,,,
+4702134,Norchad Omier,Cleveland Cavaliers,,,,,,,,,,
+4066268,Duop Reath,Phoenix Suns,,,,,,,,,,
+4593034,Alex Morales,Orlando Magic,,,,,,,,,,
+4065673,Tony Bradley,Utah Jazz,,,,,,,,,,
+5105832,Nick Martinelli,LA Clippers,,,,,,,,,,
+5105800,Josh Dix,Oklahoma City Thunder,,,,,,,,,,
+5107897,Jonathan Mogbo,Sacramento Kings,,,,,,,,,,
+5105806,Jett Howard,Dallas Mavericks,,,,,,,,,,
+4431941,RayJ Dennis,Atlanta Hawks,,,,,,,,,,
+5177362,Riley Minix,Cleveland Cavaliers,,,,,,,,,,
+4593043,John Tonje,Portland Trail Blazers,,,,,,,,,,
+4897449,Malevy Leons,Golden State Warriors,,,,,,,,,,
+5106040,Tobi Lawal,Dallas Mavericks,,,,,,,,,,
+4684208,Brooks Barnhizer,Oklahoma City Thunder,,,,,,,,,,
+4845363,Cam Christie,LA Clippers,,,,,,,,,,
+4398390,Jalen Pickett,LA Clippers,,,,,,,,,,
+4397204,Colin Castleton,Orlando Magic,,,,,,,,,,
+5105555,Tobe Awaka,Chicago Bulls,,,,,,,,,,
+4397449,Elijah Harkless,Detroit Pistons,,,,,,,,,,
+4431734,Tristan Enaruna,Cleveland Cavaliers,,,,,,,,,,
+4683742,Julian Reese,New Orleans Pelicans,,,,,,,,,,
+4683934,Jahmai Mashack,Memphis Grizzlies,,,,,,,,,,
+5105817,Carson Cooper,Los Angeles Lakers,,,,,,,,,,
+4592714,Pat Spencer,Phoenix Suns,,,,,,,,,,
+5107968,Ja'Kobi Gillespie,San Antonio Spurs,,,,,,,,,,
+4713010,David Jones Garcia,San Antonio Spurs,,,,,,,,,,
+4592979,Zyon Pullin,Minnesota Timberwolves,,,,,,,,,,
+4712862,Malik Dia,New Orleans Pelicans,,,,,,,,,,
+4433607,DaRon Holmes II,Denver Nuggets,,,,,,,,,,
+4433144,Caleb Love,Philadelphia 76ers,,,,,,,,,,
+5105841,Felix Okpara,Washington Wizards,,,,,,,,,,
+3904625,Tacko Fall,Philadelphia 76ers,,,,,,,,,,
+5107818,Isaac Jones,Detroit Pistons,,,,,,,,,,
+4433159,Dalen Terry,Oklahoma City Thunder,,,,,,,,,,
+4683935,Blake Wesley,LA Clippers,,,,,,,,,,
+5099752,Rayan Rupert,Philadelphia 76ers,,,,,,,,,,
+4702972,Chris Manon,Los Angeles Lakers,,,,,,,,,,
+4837356,Tre Donaldson,Miami Heat,,,,,,,,,,
+5105817,Carson Cooper,Memphis Grizzlies,,,,,,,,,,
+4701225,PJ Hall,Charlotte Hornets,,,,,,,,,,
+4397784,Malachi Smith,Toronto Raptors,,,,,,,,,,
+4431786,Keshad Johnson,Miami Heat,,,,,,,,,,
+4683730,Jaden Akins,New York Knicks,,,,,,,,,,
+5106283,Dillon Mitchell,Boston Celtics,,,,,,,,,,
+4596528,Lawson Lovering,Los Angeles Lakers,,,,,,,,,,
+5157587,Rocco Zikarsky,Minnesota Timberwolves,,,,,,,,,,
+5105337,Maliq Brown,San Antonio Spurs,,,,,,,,,,
+4432187,Reece Beekman,Washington Wizards,,,,,,,,,,
