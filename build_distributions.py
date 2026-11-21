@@ -189,9 +189,14 @@ function build(stat) {
   const median = quantile(vals, 0.5);
   const sd = Math.sqrt(vals.reduce((a, b) => a + (b - mean) * (b - mean), 0) / n);
   const iqr = quantile(vals, 0.75) - quantile(vals, 0.25);
-  const lo0 = vals[0], hi0 = vals[n - 1];
-  const pad = (hi0 - lo0) * 0.02 || 1;
-  const lo = lo0 - pad, hi = hi0 + pad;
+  // Chart range is capped at the 1st and 99th percentiles so a handful of
+  // tiny-sample outliers do not squash the bulk of players into a spike.
+  // Summary, top 5, and ranks still use all players.
+  const pLo = quantile(vals, 0.01), pHi = quantile(vals, 0.99);
+  const outside = vals.filter(v => v < pLo || v > pHi).length;
+  const pad = (pHi - pLo) * 0.02 || 1;
+  const lo = vals[0] >= 0 ? Math.max(0, pLo - pad) : pLo - pad;
+  const hi = pHi + pad;
   const NB = 20, bw = (hi - lo) / NB;
   const bins = Array.from({ length: NB }, (_, i) => ({ lo: lo + i * bw, hi: lo + (i + 1) * bw, count: 0, rows: [] }));
   for (const r of rows) {
@@ -252,6 +257,8 @@ function build(stat) {
   document.getElementById("summary").textContent =
     "Players: " + n + "  \u00b7  Average: " + fmt(stat, mean) + "  \u00b7  Median: " + fmt(stat, median) +
     "  \u00b7  Lowest: " + fmt(stat, vals[0]) + "  \u00b7  Highest: " + fmt(stat, vals[n - 1]);
+  if (outside) document.getElementById("summary").textContent +=
+    "  \u00b7  Chart shows the 1st to 99th percentile (" + fmt(stat, pLo) + " to " + fmt(stat, pHi) + "); " + outside + " players outside that range are grouped in the end bins.";
   const top = [...rows].sort((a, b) => b.v - a.v).slice(0, 5);
   document.getElementById("top5").innerHTML = top.map(r =>
     '<li><a href="players/' + r.p.slug + '.html">' + r.p.name + '</a> (' + r.p.team + ') ' + fmt(stat, r.v) + '</li>').join("");
@@ -287,7 +294,7 @@ function drawMarker() {
   const pad = (hi0 - lo0) * 0.02 || 1;
   const lo = lo0 - pad, hi = hi0 + pad;
   const X = v => ML + (v - lo) / (hi - lo) * PW;
-  const kx = X(row.v);
+  const kx = Math.min(Math.max(X(row.v), ML), ML + PW);
   const line = el("line", { "class": "marker", x1: kx, y1: MT, x2: kx, y2: MT + PH });
   svg.appendChild(line);
   const dot = el("circle", { "class": "markerdot", cx: kx, cy: MT + 8, r: 5, fill: "#f59e0b" });
