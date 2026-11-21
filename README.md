@@ -207,8 +207,17 @@ On top of the base ORtg / %Poss / RPR, per player:
 - Defense/rebounding: STL+BLK per game and per 36, REB per 36 split
   OREB/DREB, PF per 36.
 - Volume vs efficiency quadrant: %Poss vs ORtg_full. High usage is
-  25%+, efficient is ORtg_full 115+. The high-usage efficient
-  quadrant is the rare and valuable one.
+  25%+, efficient is ORtg_full at or above the league average
+  (100.25 this season, read from the data, not a fixed bar).
+  The old 115 cut sat at about the 90th percentile of
+  high-usage players, so no qualified high-usage player cleared
+  it and Wembanyama, Jokic, Giannis and Luka all read
+  "inefficient"; a league+5 cut was rejected because it would
+  still label Shai Gilgeous-Alexander (ORtg_full 104.9)
+  "inefficient" by 0.35 points. At the league-average cut,
+  qualified high-usage players split 26 efficient / 17
+  inefficient. The high-usage efficient quadrant is the
+  valuable one, but it is no longer rare by construction.
 - RPR component breakdown: scoring term, playmaking term, defense
   term, rebounding term. They sum to RPR, so any RPR can be explained.
 - Per-36 for all counting stats.
@@ -582,7 +591,13 @@ years of control, it only punishes pay rises, and the page says
 so. Future salaries are taken as listed; options are not
 labelled in the source, so `buck.html` shows total remaining
 next to guaranteed, with a cliff flag when 2027-28 is more than
-twice 2026-27. On the Nov 21 run 106 players have total
+twice 2026-27. Some salaries look surprisingly low, and they
+are as listed, not a parse error: LeBron James is $3,876,529
+for Philadelphia in 2026-27, and 32 players are listed at
+exactly $2,449,421. Both were checked against the cached
+Basketball-Reference page on Nov 21, 2026, and the known
+salary cross-checks in `fetch_salaries.py` now cover LeBron
+plus DeRozan, Drummond and Conley. On the Nov 21 run 106 players have total
 remaining more than $10M above guaranteed, including
 Wembanyama ($269.17M total, $211.75M guaranteed). The Top 25
 on `buck.html` uses the same floor as the leaderboards (min 2
