@@ -44,6 +44,10 @@ STATS = [
     ("FT%", "FT%", 1, True),
     ("eFG%", "eFG%", 1, True),
     ("BUCK", "BUCK", 3, False),
+    ("SPG", "SPG", 1, False),
+    ("BPG", "BPG", 1, False),
+    ("STL+BLK", "STL+BLK", 1, False),
+    ("DREB", "DREB", 1, False),
 ]
 
 TIPS = {
@@ -59,6 +63,10 @@ TIPS = {
     "FT%": "Share of free throw attempts made.",
     "eFG%": "Field goal percentage adjusted so a three counts more than a two, since it is worth more points.",
     "BUCK": "RPR per $1M of average salary over the years left on the deal, qualified players only (min 2 games, 40% of team minutes). 0 is an average player, positive is above average per dollar, negative is below average however cheap. See the BUCK page for the formula and the traps.",
+    "SPG": "Steals per game.",
+    "BPG": "Blocks per game.",
+    "STL+BLK": "Steals plus blocks per game.",
+    "DREB": "Defensive rebounds per game.",
 }
 
 
@@ -88,6 +96,10 @@ def build_players():
             "FT%": (sh.get("ft_pct") * 100) if sh.get("ft_pct") is not None else None,
             "eFG%": (sh.get("efg_pct") * 100) if sh.get("efg_pct") is not None else None,
             "BUCK": buck.get((p["athlete_id"], p["team"])),
+            "SPG": pg.get("stl"),
+            "BPG": pg.get("blk"),
+            "STL+BLK": (pg.get("stl") + pg.get("blk")) if pg.get("stl") is not None and pg.get("blk") is not None else None,
+            "DREB": pg.get("dreb"),
         }
         vals = {k: (round(v, 3) if v is not None else None) for k, v in vals.items()}
         gp = p["totals"]["gp"]
