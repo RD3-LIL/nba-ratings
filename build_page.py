@@ -944,10 +944,8 @@ def skill_chart_html(skills, raw=None):
         title = definition
         if raw_v is not None:
             title = f"{definition}; raw rate {raw_v:.2f} per 36"
-            _suf = ("th" if 11 <= pct % 100 <= 13 else
-                    {1: "st", 2: "nd", 3: "rd"}.get(pct % 10, "th"))
             raw_lines.append(f"{label}: {raw_v:.2f} per 36 "
-                             f"({pct}{_suf} percentile)")
+                             f"({_ord(pct)} percentile)")
         rows.append(
             f'<div class="skill-row" title="{html.escape(title)}">'
             f'<span class="skill-label">{html.escape(label)}</span>'
@@ -1085,8 +1083,8 @@ def vs_average_html(needs, row):
         if skills.get(key) is None:
             continue
         raw_v = raw.get(key)
-        raw_s = (f"{label}: {raw_v:.2f} per 36, {skills[key]:.0f}th percentile"
-                 if raw_v is not None else f"{label}: {skills[key]:.0f}th percentile")
+        raw_s = (f"{label}: {raw_v:.2f} per 36, {_ord(skills[key])} percentile"
+                 if raw_v is not None else f"{label}: {_ord(skills[key])} percentile")
         skill_rows.append((label, skills[key], raw_s, definition))
     groups.append(("Rotation skills", skill_rows))
     ff = needs.get("four_factor_pct") or {}
@@ -1096,8 +1094,8 @@ def vs_average_html(needs, row):
         if ff.get(key) is None:
             continue
         raw_v = ff_raw.get(key)
-        raw_s = (f"{label}: {raw_v * 100:.1f}%, {ff[key]:.0f}th percentile"
-                 if raw_v is not None else f"{label}: {ff[key]:.0f}th percentile")
+        raw_s = (f"{label}: {raw_v * 100:.1f}%, {_ord(ff[key])} percentile"
+                 if raw_v is not None else f"{label}: {_ord(ff[key])} percentile")
         ff_rows.append((label, ff[key], raw_s, tip))
     groups.append(("Four Factors", ff_rows))
     rows_html = []
@@ -1247,7 +1245,7 @@ def team_page_html(team, row, slug_by_team):
             _nd = needs["needs"][k]
             _sk = _nd["team_skill_pct"]
             _gap_lines.append(
-                f"{html.escape(k)}: {_sk:.0f}th percentile, "
+                f"{html.escape(k)}: {_ord(_sk)} percentile, "
                 f"{max(0.0, 60 - _sk):.0f} points below the 60th "
                 f"percentile target and "
                 f"{abs(50 - _sk):.0f} points "
@@ -1319,7 +1317,7 @@ def team_page_html(team, row, slug_by_team):
             _nd = needs["needs"][need]
             parts.append(
                 f"<p><strong>{html.escape(need)}</strong> "
-                f"({_nd['team_skill_pct']:.0f}th percentile, "
+                f"({_ord(_nd['team_skill_pct'])} percentile, "
                 f"{_nd['need']:.0f} points below the 60th percentile "
                 f"target)</p>")
             if _sel:
@@ -1936,6 +1934,8 @@ How to read this).</p>
 <a href="#how-to-read">How to read this</a>
 <a href="rpr-research.html">RPR research</a>
 <a href="distributions.html">Distributions</a>
+<a href="buck.html">BUCK</a>
+<a href="best-mvp.html">Best MVP</a>
 </nav>
 
 <section id="team-ratings"><h2>2026-27 team ratings</h2>
@@ -2012,6 +2012,21 @@ Rookies only button on the top-100 table filters it to rookies.
 Age, height, and weight in the CSVs also come from the roster
 pull; a player on no current roster has no experience or bio
 fields.</p>
+<p><strong>BUCK</strong>: best bang for your buck, on the
+<a href="buck.html">BUCK page</a> and as a stat on the
+<a href="distributions.html">Distributions</a> page. BUCK is RPR
+divided by the average salary over the years left on the deal,
+in $M, including this season, so years left enter through the
+average, not through an invented weight. 0 is average production
+per dollar, positive is above average per dollar, negative is
+below average however cheap. The Top 25 uses the same 40%
+minutes floor as the leaderboards.</p>
+<p><strong>Best MVP</strong>: the best MVP season in history, on the
+<a href="best-mvp.html">Best MVP page</a>. Every MVP winner ranked by
+combined PER, Win Shares, WS/48, BPM, and VORP from
+Basketball-Reference. The pick is Jordan 1987-88, ahead of LeBron
+2008-09 and Jokic 2021-22. It is a historical page, separate from
+the 2026-27 ratings, and the daily update does not rebuild it.</p>
 <p><strong>Honest limits</strong>: about 15 games per team, so the
 order is still noisy. League-average prior only, no last-season
 prior, so the shrinkage pulls every player toward the same league

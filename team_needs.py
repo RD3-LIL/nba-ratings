@@ -1068,7 +1068,7 @@ def main(argv=None):
         print(f"Strengths: {'; '.join(prof['strengths']) or 'none flagged'}")
         print(f"Weaknesses: {'; '.join(prof['weaknesses']) or 'none flagged'}")
         print("Needs (ranked): " + ", ".join(
-            f"{k} (skill {prof['needs'][k]['team_skill_pct']:.0f}th, "
+            f"{k} (skill {_ord(prof['needs'][k]['team_skill_pct'])}, "
             f"need {prof['needs'][k]['need']:.0f}, "
             f"w {prof['needs'][k]['weight']})"
             for k in prof["ranked_needs"]))
