@@ -183,25 +183,29 @@ function showBin(i) {
 function drawMarker() {
   const svg = document.getElementById("chart");
   svg.querySelectorAll(".marker, .markerdot, .markerlab").forEach(e => e.remove());
-  const row = curVals.find(r => r.p.name === marker);
+  const pl = PLAYERS.find(p => p.slug === marker);
+  const name = pl ? pl.name : marker;
+  const row = curVals.find(r => r.p.slug === marker);
   const info = document.getElementById("markerinfo");
   if (!row) {
-    info.textContent = marker + " has no value for " + curStat + ".";
+    info.textContent = name + " has no value for " + curStat + ".";
     return;
   }
-  const rank = [...curVals].sort((a, b) => b.v - a.v).findIndex(r => r.p.name === marker) + 1;
-  info.textContent = marker + ": " + fmt(curStat, row.v) + ", #" + rank + " of " + curVals.length + " in the NBA";
+  const rank = [...curVals].sort((a, b) => b.v - a.v).findIndex(r => r.p.slug === marker) + 1;
+  info.textContent = name + ": " + fmt(curStat, row.v) + ", #" + rank + " of " + curVals.length + " in the NBA";
   const vals = curVals.map(r => r.v);
   const lo0 = vals[0], hi0 = vals[vals.length - 1];
   const pad = (hi0 - lo0) * 0.02 || 1;
   const lo = lo0 - pad, hi = hi0 + pad;
   const X = v => ML + (v - lo) / (hi - lo) * PW;
-  const line = el("line", { "class": "marker", x1: X(row.v), y1: MT, x2: X(row.v), y2: MT + PH });
+  const kx = X(row.v);
+  const line = el("line", { "class": "marker", x1: kx, y1: MT, x2: kx, y2: MT + PH });
   svg.appendChild(line);
-  const dot = el("circle", { "class": "markerdot", cx: X(row.v), cy: MT + 8, r: 5, fill: "#f59e0b" });
+  const dot = el("circle", { "class": "markerdot", cx: kx, cy: MT + 8, r: 5, fill: "#f59e0b" });
   svg.appendChild(dot);
-  const lab = el("text", { "class": "markerlab", x: Math.min(Math.max(X(row.v) + 6, ML), W - 140), y: MT + 26, fill: "#92400e" });
-  lab.textContent = marker;
+  const nearRight = kx > ML + PW - 220;
+  const lab = el("text", { "class": "markerlab", x: nearRight ? kx - 8 : kx + 8, y: MT + 26, fill: "#92400e", "text-anchor": nearRight ? "end" : "start" });
+  lab.textContent = name;
   svg.appendChild(lab);
 }
 const chips = document.getElementById("chips");
@@ -226,7 +230,7 @@ search.addEventListener("input", () => {
     d.addEventListener("click", () => {
       search.value = p.name;
       suggest.style.display = "none";
-      marker = p.name;
+      marker = p.slug;
       drawMarker();
     });
     suggest.appendChild(d);
