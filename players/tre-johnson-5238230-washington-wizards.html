@@ -81,6 +81,37 @@ input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
   width: 2px; background: #656d76; }
 .skill-value { text-align: right; font-variant-numeric: tabular-nums;
   font-weight: 600; }
+/* At-a-glance cards and diverging bars, same visual language as
+  the player profiles in build_player_pages.py: big value, rank
+  underneath with a rank bar, and diverging bars centered at
+  league average. Blue is above average, orange is below. */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 12px 0; }
+.stat-card { border: 1px solid #d0d7de; border-radius: 8px; padding: 10px 12px; }
+.stat-card .label { font-size: 12px; color: #656d76; text-transform: uppercase; letter-spacing: 0.04em; }
+.stat-card .value { font-size: 26px; font-weight: 700; line-height: 1.2; }
+.stat-card .rank { font-size: 13px; color: #656d76; }
+.rank-bar { height: 6px; background: #eaeef2; border-radius: 999px; overflow: hidden; margin-top: 6px; }
+.rank-bar span { display: block; height: 100%; background: #38bdf8; }
+.comp-chart { max-width: 640px; margin: 8px 0; }
+.comp-row { display: grid; grid-template-columns: 150px 1fr 52px;
+  align-items: center; gap: 10px; margin: 8px 0; }
+.comp-row .comp-label { font-size: 15px; }
+.comp-track { position: relative; height: 16px; background: #eaeef2; border-radius: 999px; }
+.comp-center { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: #656d76; }
+.comp-target { position: absolute; left: 60%; top: -3px; bottom: -3px; width: 2px; background: #1f2328; }
+.comp-fill { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
+.comp-fill.pos { background: #38bdf8; left: 50%; }
+.comp-fill.neg { background: #f59e0b; right: 50%; }
+.comp-value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.comp-group { font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: #656d76; margin: 16px 0 4px; }
+.tip { cursor: help; border-bottom: 1px dotted #656d76; position: relative; }
+.tip::after { content: attr(data-tip); display: none; position: absolute; bottom: 125%; left: 0; width: 220px; background: #1f2328; color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; line-height: 1.4; text-transform: none; letter-spacing: normal; font-weight: 400; z-index: 10; white-space: normal; }
+.tip:hover::after, .tip:focus::after, .tip:active::after { display: block; }
+table.targets { font-size: 13px; }
+table.targets th, table.targets td { padding: 4px 10px; }
+table.targets td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.targets td .sub { display: block; font-size: 11px; color: #656d76; font-weight: 400; }
 .warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
   border-radius: 6px; }
 footer { margin-top: 48px; color: #656d76; font-size: 14px;
@@ -140,7 +171,7 @@ table.gamelog { font-size: 13px; }
 
 
 <h2>At a glance</h2>
-<div class="stat-grid"><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Our single-number rating for how much a player helps his team, where an average player scores about 0 and a star scores about +3 to +7.">RPR</span></div><div class="value">-2.15</div><div class="rank">#462 of 469 in the NBA</div><div class="rank-bar"><span style="width:2%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Points scored per game.">PPG</span></div><div class="value">8.9</div><div class="rank">#196 of 475 in the NBA</div><div class="rank-bar"><span style="width:59%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Rebounds grabbed per game.">RPG</span></div><div class="value">2.0</div><div class="rank">#317 of 475 in the NBA</div><div class="rank-bar"><span style="width:33%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Assists per game.">APG</span></div><div class="value">1.0</div><div class="rank">#299 of 475 in the NBA</div><div class="rank-bar"><span style="width:37%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Points the player produces per 100 possessions he uses, with credit for assists.">ORtg (full)</span></div><div class="value">85.4</div><div class="rank">#396 of 469 in the NBA</div><div class="rank-bar"><span style="width:16%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Points scored per shooting attempt, counting twos, threes, and free throws together.">TS%</span></div><div class="value">45.6%</div><div class="rank">#400 of 468 in the NBA</div><div class="rank-bar"><span style="width:15%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Extra points per game from threes and free throws above league average.">SHARP</span></div><div class="value">-0.64</div><div class="rank">#202 of 211 in the NBA</div><div class="rank-bar"><span style="width:5%"></span></div></div></div>
+<div class="stat-grid"><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Our single-number rating for how much a player helps his team, where an average player scores about 0 and a star scores about +3 to +7.">RPR</span></div><div class="value">-2.15</div><div class="rank">#462 of 469 in the NBA</div><div class="rank-bar"><span style="width:2%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Points scored per game.">PPG</span></div><div class="value">8.9</div><div class="rank">#196 of 475 in the NBA</div><div class="rank-bar"><span style="width:59%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Rebounds grabbed per game.">RPG</span></div><div class="value">2.0</div><div class="rank">#317 of 475 in the NBA</div><div class="rank-bar"><span style="width:33%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Assists per game.">APG</span></div><div class="value">1.0</div><div class="rank">#299 of 475 in the NBA</div><div class="rank-bar"><span style="width:37%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Points the player produces per 100 possessions he uses, with credit for assists.">ORtg (full)</span></div><div class="value">85.4</div><div class="rank">#396 of 469 in the NBA</div><div class="rank-bar"><span style="width:16%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Points scored per shooting attempt, counting twos, threes, and free throws together.">TS%</span></div><div class="value">45.6%</div><div class="rank">#400 of 468 in the NBA</div><div class="rank-bar"><span style="width:15%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="Extra points per game from threes and free throws above league average.">SHARP</span></div><div class="value">-0.64</div><div class="rank">#202 of 211 in the NBA</div><div class="rank-bar"><span style="width:5%"></span></div></div><div class="stat-card"><div class="label"><span class="tip" tabindex="0" data-tip="RPR per $1M of average salary over the years left on the deal. 0 is an average player, positive is above average per dollar, negative is below average however cheap.">BUCK</span></div><div class="value">-0.221</div><div class="rank">#380 of 406 in the NBA</div><div class="rank-bar"><span style="width:7%"></span></div></div></div>
 <p class="note">RPR is v1.2, our own single-number rating (average player about 0, star about +3 to +7), not KenPom's proprietary kPOY. ORtg (full) is the Oliver rating with assist credit. SHARP is extra points per game from threes and free throws above league average, not a percent. Ranks are among all players with a value for that stat; the bar shows the percentile (100% is best in the league).</p>
 
 <h2>Season line</h2>
@@ -167,8 +198,22 @@ table.gamelog { font-size: 13px; }
 <p>RPR v1.2 <strong>-2.15</strong> = scoring -0.70 + playmaking -0.44 + defense -0.51 + rebounding -0.51. Value delivered so far (RPR &times; GP / 82): -0.37. RPR v1.1 was 0.65; v1.2 recenters the counting terms on league averages, so an average player scores about 0.</p>
 <p class="note">ORtg simple 84.4 &rarr; shrunk 93.5 &rarr; opponent-adjusted 93.7 (OppAdj -0.16, league ORtg 100.3). Usage 20.5% of team possessions. Quadrant: low usage, inefficient.</p>
 
-<h2>Playmaking, defense, rebounding</h2>
-<p>AST/TO ratio 1.27 &middot; AST per 100 possessions used 9.4 &middot; STL+BLK per game 0.7, per 36 1.2 &middot; REB per 36 3.2 (OREB 1.3, DREB 2.0) &middot; PF per 36 3.2.</p>
+<h2>Defense</h2>
+<table class="profile"><thead><tr><th></th><th>STL</th><th>BLK</th><th>STL+BLK</th><th>DREB</th><th>PF</th></tr></thead><tbody>
+<tr><td>Totals</td><td>9</td><td>1</td><td>10</td><td>17</td><td>28</td></tr>
+<tr><td>Per game</td><td>0.6</td><td>0.1</td><td>0.7</td><td>1.2</td><td>2.0</td></tr>
+<tr><td>Per 36</td><td>1.0</td><td>0.1</td><td>1.2</td><td>2.0</td><td>3.2</td></tr>
+</tbody></table>
+<p>STL 0.6 per game (#220 of 475 in the NBA) &middot; BLK 0.1 per game (#371 of 475) &middot; STL+BLK 0.7 per game (#293 of 475) &middot; DREB 1.2 per game (#341 of 475).</p>
+<div class="shoot-row"><span>STL /36</span><span class="shoot-track"><span class="shoot-fill" style="width:34.6%"></span><span class="shoot-league" style="left:41.1%"></span></span><span>1.0 (league 1.2)</span></div><div class="shoot-row"><span>BLK /36</span><span class="shoot-track"><span class="shoot-fill" style="width:2.3%"></span><span class="shoot-league" style="left:14.9%"></span></span><span>0.1 (league 0.7)</span></div><div class="shoot-row"><span>DREB /36</span><span class="shoot-track"><span class="shoot-fill" style="width:16.3%"></span><span class="shoot-league" style="left:39.4%"></span></span><span>2.0 (league 4.7)</span></div>
+<p class="note">Bars are the player's per-36 rate; the grey tick is the league per-36 average. RPR defense component -0.51: ((STL+BLK per 36) - league 2.0) &times; MPG / 36, so a league-average defender scores about 0 here and a plus defender scores positive.</p>
+<p class="note">Box-score defense only. Steals, blocks, defensive boards and fouls are what the ESPN box scores carry; there is no DRtg, opponent shooting or tracking in this data, so none is shown or invented.</p>
+
+<h2>Contract and BUCK</h2>
+<p>BUCK <strong>-0.221</strong> (#380 of 406 in the NBA) &middot; BUCK now -0.249 &middot; BUCK total -0.038 (RPR_value -0.37). Salary $8.65M this season, $9.06M next season, $9.73M a year on average, $29.20M total remaining against $17.71M guaranteed (gap $11.49M), 2 years left after this one.</p><p class="note">BUCK is RPR per $1M of average salary over the remaining contract. Future salaries are taken as listed; options are not labelled in the source, so the average can move. A * means the 2027-28 salary is more than twice this season's. The average does not reward years of control, it only punishes pay rises. Full table: <a href="../buck.html">BUCK</a>.</p>
+
+<h2>Playmaking and rebounding</h2>
+<p>AST/TO ratio 1.27 &middot; AST per 100 possessions used 9.4 &middot; REB per 36 3.2 (OREB 1.3, DREB 2.0). Full defensive line is in the Defense section above.</p>
 <p class="note">GM board: Overvalued / avoid, rotation / depth. </p>
 
 <h2>Consistency and trending</h2>
