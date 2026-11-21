@@ -1481,6 +1481,7 @@ How to read this).</p>
 <a href="#team-needs">Team needs</a>
 <a href="#how-to-read">How to read this</a>
 <a href="rpr-research.html">RPR research</a>
+<a href="distributions.html">Distributions</a>
 </nav>
 
 <section id="team-ratings"><h2>2026-27 team ratings</h2>
