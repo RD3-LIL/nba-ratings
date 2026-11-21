@@ -551,6 +551,30 @@ $164,961,000, tax $200,428,000, first apron $209,015,000, second
 apron $221,686,000, floor $148,465,000. Salaries are refreshed
 weekly at most by `daily_update.sh`, like rosters.
 
+## BUCK (buck.py)
+
+Best bang for your buck: `BUCK = RPR v1.2 / average salary over
+the remaining contract ($M)`, including this season, where
+average salary is (2026-27 salary + future listed salaries) /
+(1 + years left) and years left is the count of future seasons
+with a listed salary. `BUCK_NOW = RPR / salary 2026-27 ($M)` is
+kept alongside. No shift on RPR, so 0 is average and negative
+is below average however cheap: adding +3.5 to make every value
+positive was tested and rejected, it put Meleek Thomas (RPR
+-0.14 on $1.36M) at the top of the qualified list. No invented
+control multiplier: years left enter only through the average,
+ties broken by years left then RPR. Future salaries are taken
+as listed; options are not labelled in the source. The Top 25
+on `buck.html` uses the same floor as the leaderboards (min 2
+games, 40% of team minutes). BUCK is also a stat on
+`distributions.html` (406 players). On the Nov 21 run the top
+qualified BUCKs are Cam Spencer 0.676, Moussa Diabate 0.432,
+Donovan Clingan 0.315, Cedric Coward 0.282, Matisse Thybulle
+0.274; Ajay Mitchell is 9th at 0.192 ($2.85M this season and
+$2.85M a year on average, 1 year left, RPR +0.55). Wembanyama
+is 0.414 on this season alone but 0.156 on the contract
+average ($16.87M now, $44.86M a year on average).
+
 ## Site (build_page.py, RonPom-style)
 
 `python3 build_page.py` writes `index.html` at the repo root plus
@@ -604,6 +628,15 @@ files above. No network, stdlib only.
   minutes floor), plus notable rookies below the floor, labelled
   as small samples. Best rookie so far: Aday Mara, RPR 0.77.
 - **GM board**: acquisition tiers, same as `gm_board.py`.
+- **BUCK**: `buck.html`, RPR per $1M of average salary over the
+  years left on the deal, Top 25 qualified plus lowest 10 and
+  the full qualified table, linked from the index topnav. BUCK
+  is also a stat on `distributions.html`.
+- **Best MVP**: `best-mvp.html`, every MVP winner ranked by combined
+  PER, Win Shares, WS/48, BPM, and VORP, linked from the index
+  topnav. The pick is Jordan 1987-88, ahead of LeBron 2008-09 and
+  Jokic 2021-22. A static historical page, not rebuilt by the
+  daily update.
 - **Team needs**: one row per team with its star, top need, and top
   realistic target with QualityGain / FitGain / TradeScore and its
   salary, plus the
