@@ -198,11 +198,22 @@ table.gamelog { font-size: 13px; }
 <p>RPR v1.2 <strong>-0.65</strong> = scoring -0.02 + playmaking -0.33 + defense -0.69 + rebounding 0.39. Value delivered so far (RPR &times; GP / 82): -0.07. RPR v1.1 was 2.20; v1.2 recenters the counting terms on league averages, so an average player scores about 0.</p>
 <p class="note">ORtg simple 99.7 &rarr; shrunk 100.1 &rarr; opponent-adjusted 100.1 (OppAdj 0.03, league ORtg 100.3). Usage 17.1% of team possessions. Quadrant: low usage, inefficient.</p>
 
+<h2>Defense</h2>
+<table class="profile"><thead><tr><th></th><th>STL</th><th>BLK</th><th>STL+BLK</th><th>DREB</th><th>PF</th></tr></thead><tbody>
+<tr><td>Totals</td><td>2</td><td>3</td><td>5</td><td>38</td><td>22</td></tr>
+<tr><td>Per game</td><td>0.2</td><td>0.3</td><td>0.6</td><td>4.2</td><td>2.4</td></tr>
+<tr><td>Per 36</td><td>0.4</td><td>0.5</td><td>0.9</td><td>6.7</td><td>3.9</td></tr>
+</tbody></table>
+<p>STL 0.2 per game (#367 of 475 in the NBA) &middot; BLK 0.3 per game (#196 of 475) &middot; STL+BLK 0.6 per game (#342 of 475) &middot; DREB 4.2 per game (#78 of 475).</p>
+<div class="shoot-row"><span>STL /36</span><span class="shoot-track"><span class="shoot-fill" style="width:11.8%"></span><span class="shoot-league" style="left:41.1%"></span></span><span>0.4 (league 1.2)</span></div><div class="shoot-row"><span>BLK /36</span><span class="shoot-track"><span class="shoot-fill" style="width:10.6%"></span><span class="shoot-league" style="left:14.9%"></span></span><span>0.5 (league 0.7)</span></div><div class="shoot-row"><span>DREB /36</span><span class="shoot-track"><span class="shoot-fill" style="width:55.9%"></span><span class="shoot-league" style="left:39.4%"></span></span><span>6.7 (league 4.7)</span></div>
+<p class="note">Bars are the player's per-36 rate; the grey tick is the league per-36 average. RPR defense component -0.69: ((STL+BLK per 36) - league 2.0) &times; MPG / 36, so a league-average defender scores about 0 here and a plus defender scores positive.</p>
+<p class="note">Box-score defense only. Steals, blocks, defensive boards and fouls are what the ESPN box scores carry; there is no DRtg, opponent shooting or tracking in this data, so none is shown or invented.</p>
+
 <h2>Contract and BUCK</h2>
 <p>BUCK <strong>-0.168</strong> (#360 of 406 in the NBA) &middot; BUCK now -0.220 &middot; BUCK total -0.018 (RPR_value -0.07). Salary $2.94M this season, $3.08M next season, $3.86M a year on average, $11.58M total remaining against $6.02M guaranteed (gap $5.56M), 2 years left after this one.</p><p class="note">BUCK is RPR per $1M of average salary over the remaining contract. Future salaries are taken as listed; options are not labelled in the source, so the average can move. A * means the 2027-28 salary is more than twice this season's. The average does not reward years of control, it only punishes pay rises. Full table: <a href="../buck.html">BUCK</a>.</p>
 
-<h2>Playmaking, defense, rebounding</h2>
-<p>AST/TO ratio 1.31 &middot; AST per 100 possessions used 20.7 &middot; STL+BLK per game 0.6, per 36 0.9 &middot; REB per 36 9.0 (OREB 2.3, DREB 6.7) &middot; PF per 36 3.9.</p>
+<h2>Playmaking and rebounding</h2>
+<p>AST/TO ratio 1.31 &middot; AST per 100 possessions used 20.7 &middot; REB per 36 9.0 (OREB 2.3, DREB 6.7). Full defensive line is in the Defense section above.</p>
 <p class="note">GM board: Rotation / depth, specialist shooter. shooting gravity (3PA per 36 &gt;= 6, 3P% &gt;= 0.37) Red flags: low minutes / availability risk (%Min 30.4); early-season sample: under 13 games</p>
 
 <h2>Consistency and trending</h2>
