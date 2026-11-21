@@ -112,6 +112,23 @@ def team_slug(name):
     return s.strip("-")
 
 
+def player_slug(name, athlete_id, team):
+    """Player name -> stable, unique URL slug for players/<slug>.html.
+
+    Name slug + athlete id + team slug, same formula as
+    build_player_pages.player_slug (duplicated here so
+    build_page.py does not import the player builder, which
+    imports this module). The team is in there because two
+    players have one profile per team after changing teams
+    mid-season; name + id alone would collide for them.
+    """
+    norm = unicodedata.normalize("NFKD", name)
+    ascii_name = norm.encode("ascii", "ignore").decode("ascii")
+    s = ascii_name.lower().replace("'", "")
+    s = re.sub(r"[^a-z0-9]+", "-", s).strip("-")
+    return f"{s}-{athlete_id}-{team_slug(team)}"
+
+
 def _rank_map(rows, key, reverse):
     """Competition ranks (1, 2, 2, 4) for one metric column.
     reverse=True means rank 1 is the highest value (AdjO, AdjT);
@@ -239,6 +256,7 @@ def rosters():
             float(p["min_pct"]) if p["min_pct"] else None,
             float(p["rpr"]) if p["rpr"] else None,
             tier_by_id.get((p["athlete_id"], p["team"]), ""),
+            player_slug(p["name"], p["athlete_id"], p["team"]),
         ] for p in lst]
     return out
 
@@ -339,7 +357,9 @@ def _leader_table(title, players, key, extra_key, extra_label):
            f"<th>Player</th><th>Team</th><th>{title.split(' by ')[-1]}</th>"
            f"<th>{extra_label}</th></tr></thead><tbody>"]
     for p in top:
-        out.append(f"<tr><td>{html.escape(p['name'])}</td>"
+        out.append(f"<tr><td><a href=\"players/"
+                   f"{player_slug(p['name'], p['athlete_id'], p['team'])}"
+                   f".html\">{html.escape(p['name'])}</a></td>"
                    f"<td>{html.escape(p['team'])}</td>"
                    f"<td>{p[key]}</td><td>{p[extra_key]}</td>"
                    f"</tr>")
@@ -409,9 +429,12 @@ def top_players_section(players):
            "Click a column header to sort (the rank renumbers to "
            "the sorted order); the filter box searches "
            "player names. Click a team name to open that team's "
-           "own page, or click a player row to see that player's "
-           "RPR components, ORtg (full) vs simple, shooting, and "
-           "trend. The Rookies only button filters this table "
+           "own page, click a player name to open that player's "
+           "full profile (season line, shooting, RPR breakdown, "
+           "game log, and NBA ranks), or click a player row to see "
+           "that player's RPR components, ORtg (full) vs simple, "
+           "shooting, and trend. The Rookies only button filters "
+           "this table "
            "to first-year players (experience.years == 0).</p>",
            "<input class=\"filter\" type=\"search\" "
            "placeholder=\"Filter players...\" data-table=\"top-players\"> "
@@ -439,7 +462,8 @@ def top_players_section(players):
             f"data-pid=\"{html.escape(p['name'])}|{html.escape(p['team'])}\">"
             f"<td data-v=\"{rank}\">{rank}</td>"
             f"<td data-v=\"{html.escape(p['name'].lower())}\">"
-            f"{html.escape(p['name'])}</td>"
+            f"<a href=\"players/{player_slug(p['name'], p['athlete_id'], p['team'])}.html\">"
+            f"{html.escape(p['name'])}</a></td>"
             f"<td data-v=\"{html.escape(p['team'].lower())}\">"
             f"<a href=\"teams/{team_slug(p['team'])}.html\">"
             f"{html.escape(p['team'])}</a></td>"
@@ -495,7 +519,8 @@ def _rookie_table(table_id, title, players):
             f"data-pid=\"{html.escape(p['name'])}|{html.escape(p['team'])}\">"
             f"<td data-v=\"{rank}\">{rank}</td>"
             f"<td data-v=\"{html.escape(p['name'].lower())}\">"
-            f"{html.escape(p['name'])}</td>"
+            f"<a href=\"players/{player_slug(p['name'], p['athlete_id'], p['team'])}.html\">"
+            f"{html.escape(p['name'])}</a></td>"
             f"<td data-v=\"{html.escape(p['team'].lower())}\">"
             f"<a href=\"teams/{team_slug(p['team'])}.html\">"
             f"{html.escape(p['team'])}</a></td>"
@@ -738,7 +763,13 @@ def _roster_table(roster, team=""):
              "</tr></thead><tbody>"]
     for p in roster:
         pos = p[1] if p[1] not in ("", "NA", None) else "-"
-        cells = [html.escape(p[0]), pos, str(p[2])]
+        # p[9] is the player-profile slug (see rosters()); team
+        # pages live in teams/, so the profile link is ../players/.
+        _slug = p[9] if len(p) > 9 else ""
+        _name = (f"<a href=\"../players/{_slug}.html\">"
+                 f"{html.escape(p[0])}</a>" if _slug
+                 else html.escape(p[0]))
+        cells = [_name, pos, str(p[2])]
         for v in p[3:8]:
             cells.append("-" if v is None else f"{v:.1f}")
         cells.append(html.escape(p[8]) if p[8] else "-")
@@ -1196,7 +1227,10 @@ function openDetail(table, row) {
       + "<th>%Min</th><th>RPR</th><th>Tier</th></tr></thead><tbody>";
     roster.forEach(function (p) {
       var pid = esc(p[0]) + "|" + esc(c[1].textContent);
-      html += '<tr class="player" data-pid="' + pid + '"><td>' + esc(p[0]) + "</td><td>"
+      // p[9] is the player-profile slug (see rosters()); this
+      // panel only renders on index.html, so players/ is local.
+      var pname = p[9] ? '<a href="players/' + p[9] + '.html">' + esc(p[0]) + '</a>' : esc(p[0]);
+      html += '<tr class="player" data-pid="' + pid + '"><td>' + pname + "</td><td>"
         + ((p[1] && p[1] !== "NA") ? esc(p[1]) : "-")
         + "</td><td>" + p[2] + "</td><td>" + fmt1(p[3]) + "</td><td>"
         + fmt1(p[4]) + "</td><td>" + fmt1(p[5]) + "</td><td>"

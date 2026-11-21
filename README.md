@@ -54,6 +54,11 @@ This run: Oct 20 to Nov 20, 2026. 226 games, 30 teams, 475 players,
 - `gm_board.py` - GM acquisition board (see below).
 - `team_needs.py` - team needs and realistic trade-fit evaluator (see below).
 - `build_page.py` - builds `index.html` plus `teams/` (one page per team).
+- `build_player_pages.py` - builds `players/` (one profile page per
+  player, plus `players/index.html`, a filterable directory of all
+  475 profiles). Run after `build_page.py`; `build_page.py` links
+  player names to these profiles from the leader, top-100, rookie,
+  and roster tables.
 - `validate_rpr_v11.py` - validates RPR v1.2 against v1.1 and v1
   (split-half, team aggregation, distribution gates); writes
   `data/validation.json` and exits 1 on a failed gate.
@@ -528,6 +533,22 @@ files above. No network, stdlib only.
   ORtg (full) vs simple, TS%, GP, and the 3P% shrinkage applied.
   Sorting renumbers the Rk column. A Rookies only button filters
   the table to first-year players.
+- **Player profiles** (`players/<slug>.html`, one per player,
+  475 pages): headshot, bio (position, jersey, age, height,
+  weight, experience, GM tier), at-a-glance cards for RPR, PPG,
+  RPG, APG, ORtg (full), and TS% each with its NBA rank (among
+  all players with a value for that stat, denominator shown),
+  season line (totals, per game, per 36), shooting bars against
+  the league average, a stacked bar for where the points come
+  from (2s / 3s / FTs), the RPR v1.2 component breakdown as
+  diverging bars, playmaking / defense / rebounding, consistency
+  and last-7-days trending, a full game log (most recent first),
+  and teammates linking to their own profiles. Players under
+  40% of team minutes or under 5 games carry a small-sample
+  note, since their ranks are among every player who appeared.
+  `players/index.html` lists all profiles by RPR with a filter
+  box. Player names link to their profile from the leader,
+  top-100, rookie, and roster tables, and from team pages.
 - **Rookies**: top 10 rookies by RPR (same min 2 games and 40%
   minutes floor), plus notable rookies below the floor, labelled
   as small samples. Best rookie so far: Aday Mara, RPR 0.77.

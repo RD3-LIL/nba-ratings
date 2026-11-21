@@ -8,7 +8,8 @@
 # (index.html plus one page per team under teams/), then
 # pushes all of those files to GitHub: the rebuilt CSVs and
 # JSONs, the validation and run-summary outputs, the README and
-# the research page, the index, and every teams/*.html page. The
+# the research page, the index, every teams/*.html page, and
+# every players/*.html profile page. The
 # sync record lists exactly the paths in the manifest, so it never
 # lies about what a push contained.
 #
@@ -180,6 +181,7 @@ python3 validate_rpr_v11.py || {
 }
 python3 generate_run_summary.py || exit 1
 python3 build_page.py || exit 1
+python3 build_player_pages.py || exit 1
 
 if [ "$NO_PUSH" -eq 1 ]; then
   echo "push skipped (--no-push), files rebuilt locally"
@@ -194,7 +196,12 @@ fi
 # instead of a literal "teams/*.html".
 shopt -s nullglob
 TEAM_PAGES=(teams/*.html)
-printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html index.html "${TEAM_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
+PLAYER_PAGES=(players/*.html)
+# Player pages are ~8.6 MB across 476 files on the Nov 20 run, so
+# the push below is much larger than before; if the single
+# push-files call fails with HTTP 413, split the player pages
+# into batches of about 90 files / 1.7 MB each, as RonPom does.
+printf '%s\0' data/players_2026_27.csv data/players_2026_27.json data/players_2026_27_eval.csv data/players_2026_27_eval.json data/gm_board_2026_27.csv data/gm_board_2026_27.json data/team_needs_2026_27.csv data/team_needs_2026_27.json data/teams_2026_27.json data/games_2026_27.json data/rosters_2026_27.json data/fetch_state.json data/run_summary.json data/validation.json README.md rpr-research.html index.html "${TEAM_PAGES[@]}" "${PLAYER_PAGES[@]}" > /home/hatch/workspace/nba-ratings-push-manifest.bin
 
 # Sync-base check: the branch head must match the last sync
 # record entry, or someone else pushed since our last run.
