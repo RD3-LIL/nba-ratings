@@ -81,6 +81,37 @@ input.filter { padding: 6px 10px; font-size: 14px; width: 240px;
   width: 2px; background: #656d76; }
 .skill-value { text-align: right; font-variant-numeric: tabular-nums;
   font-weight: 600; }
+/* At-a-glance cards and diverging bars, same visual language as
+  the player profiles in build_player_pages.py: big value, rank
+  underneath with a rank bar, and diverging bars centered at
+  league average. Blue is above average, orange is below. */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 12px 0; }
+.stat-card { border: 1px solid #d0d7de; border-radius: 8px; padding: 10px 12px; }
+.stat-card .label { font-size: 12px; color: #656d76; text-transform: uppercase; letter-spacing: 0.04em; }
+.stat-card .value { font-size: 26px; font-weight: 700; line-height: 1.2; }
+.stat-card .rank { font-size: 13px; color: #656d76; }
+.rank-bar { height: 6px; background: #eaeef2; border-radius: 999px; overflow: hidden; margin-top: 6px; }
+.rank-bar span { display: block; height: 100%; background: #38bdf8; }
+.comp-chart { max-width: 640px; margin: 8px 0; }
+.comp-row { display: grid; grid-template-columns: 150px 1fr 52px;
+  align-items: center; gap: 10px; margin: 8px 0; }
+.comp-row .comp-label { font-size: 15px; }
+.comp-track { position: relative; height: 16px; background: #eaeef2; border-radius: 999px; }
+.comp-center { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: #656d76; }
+.comp-target { position: absolute; left: 60%; top: -3px; bottom: -3px; width: 2px; background: #1f2328; }
+.comp-fill { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
+.comp-fill.pos { background: #38bdf8; left: 50%; }
+.comp-fill.neg { background: #f59e0b; right: 50%; }
+.comp-value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.comp-group { font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: #656d76; margin: 16px 0 4px; }
+.tip { cursor: help; border-bottom: 1px dotted #656d76; position: relative; }
+.tip::after { content: attr(data-tip); display: none; position: absolute; bottom: 125%; left: 0; width: 220px; background: #1f2328; color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; line-height: 1.4; text-transform: none; letter-spacing: normal; font-weight: 400; z-index: 10; white-space: normal; }
+.tip:hover::after, .tip:focus::after, .tip:active::after { display: block; }
+table.targets { font-size: 13px; }
+table.targets th, table.targets td { padding: 4px 10px; }
+table.targets td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.targets td .sub { display: block; font-size: 11px; color: #656d76; font-weight: 400; }
 .warn { background: #fff8e6; border: 1px solid #e3b341; padding: 10px 14px;
   border-radius: 6px; }
 footer { margin-top: 48px; color: #656d76; font-size: 14px;
