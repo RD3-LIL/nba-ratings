@@ -4,9 +4,10 @@ every player stat, with hover/tap to see players in a bin and a
 search box that marks one player on the distribution.
 
 Reads data/players_2026_27_eval.json, data/sharp_2026_27.json
-and data/buck_2026_27.json. BUCK is qualified only (min 2 games,
-40% of team minutes), like the BUCK page Top 25, so its Top 5
-is not small-sample players. Values are kept to 3 decimals in
+and data/buck_2026_27.json. BUCK and the per-36 stats are
+qualified only (min 2 games, 40% of team minutes), like the
+BUCK page Top 25, so their Top 5 is not small-sample players.
+Values are kept to 3 decimals in
 the page data, so BUCK does not collapse into false ties.
 The search marker uses the same 1st to 99th percentile chart
 range as the bars, not the full min/max range.
@@ -48,6 +49,13 @@ STATS = [
     ("BPG", "BPG", 1, False),
     ("STL+BLK", "STL+BLK", 1, False),
     ("DREB", "DREB", 1, False),
+    ("PTS/36", "PTS/36", 1, False),
+    ("REB/36", "REB/36", 1, False),
+    ("AST/36", "AST/36", 1, False),
+    ("STL/36", "STL/36", 1, False),
+    ("BLK/36", "BLK/36", 1, False),
+    ("STL+BLK/36", "STL+BLK/36", 1, False),
+    ("DREB/36", "DREB/36", 1, False),
 ]
 
 TIPS = {
@@ -67,6 +75,13 @@ TIPS = {
     "BPG": "Blocks per game.",
     "STL+BLK": "Steals plus blocks per game.",
     "DREB": "Defensive rebounds per game.",
+    "PTS/36": "Points per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
+    "REB/36": "Rebounds per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
+    "AST/36": "Assists per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
+    "STL/36": "Steals per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
+    "BLK/36": "Blocks per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
+    "STL+BLK/36": "Steals plus blocks per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
+    "DREB/36": "Defensive rebounds per 36 minutes, qualified players only (min 2 games, 40% of team minutes).",
 }
 
 
@@ -83,6 +98,7 @@ def build_players():
         rt = p.get("ratings", {})
         sh = p.get("shooting", {})
         pg = p.get("per_game", {})
+        p36 = p.get("per_36", {})
         vals = {
             "RPR": rt.get("rpr"),
             "PPG": pg.get("pts"),
@@ -100,6 +116,13 @@ def build_players():
             "BPG": pg.get("blk"),
             "STL+BLK": (pg.get("stl") + pg.get("blk")) if pg.get("stl") is not None and pg.get("blk") is not None else None,
             "DREB": pg.get("dreb"),
+            "PTS/36": p36.get("pts"),
+            "REB/36": p36.get("reb"),
+            "AST/36": p36.get("ast"),
+            "STL/36": p36.get("stl"),
+            "BLK/36": p36.get("blk"),
+            "STL+BLK/36": (p36.get("stl") + p36.get("blk")) if p36.get("stl") is not None and p36.get("blk") is not None else None,
+            "DREB/36": p36.get("dreb"),
         }
         vals = {k: (round(v, 3) if v is not None else None) for k, v in vals.items()}
         gp = p["totals"]["gp"]
@@ -157,7 +180,7 @@ h1 { font-size: 28px; margin: 8px 0 4px; }
 <body>
 <p><a href="index.html">&larr; NBA Ratings</a> &middot; <a href="buck.html">BUCK</a> &middot; <a href="best-mvp.html">Best MVP</a> &middot; <a href="players/index.html">All players</a></p>
 <h1>Stat distributions</h1>
-<p class="note">Pick a stat and the chart builds its distribution from every player with a value for that stat. The bars are the histogram, the smooth blue line follows the shape of the data, and the grey dashed line is the league average. Hover or tap a bar to see the players in that range. Search a name to mark where that player sits.</p>
+<p class="note">Pick a stat and the chart builds its distribution from every player with a value for that stat. The bars are the histogram, the smooth blue line follows the shape of the data, and the grey dashed line is the league average. Hover or tap a bar to see the players in that range. Search a name to mark where that player sits. Per-36 stats use qualified players only (min 2 games, 40% of team minutes), so a few minutes of hot shooting cannot top the chart.</p>
 <div class="chips" id="chips"></div>
 <p class="note" id="tip"></p>
 <div class="searchrow">
@@ -171,7 +194,7 @@ h1 { font-size: 28px; margin: 8px 0 4px; }
 <p class="summary" id="summary"></p>
 <h2>Top 5</h2>
 <ol class="top5" id="top5"></ol>
-<p class="note">Data through November 19, 2026 (226 games). SHARP has 211 qualified players (5+ games, 20+ minutes per game); BUCK has 183 qualified players (min 2 games, 40% of team minutes) out of 406 with a matched salary; every other stat uses all 475 players with a value.</p>
+<p class="note">Data through November 19, 2026 (226 games). SHARP has 211 qualified players (5+ games, 20+ minutes per game); BUCK has 183 qualified players (min 2 games, 40% of team minutes) out of 406 with a matched salary; per-36 stats have 184 qualified players (min 2 games, 40% of team minutes); every other stat uses all 475 players with a value.</p>
 <script>
 const PLAYERS = __DATA_JSON__;
 const STATS = __STATS_JSON__;
@@ -210,7 +233,8 @@ function build(stat) {
   curStat = stat;
   document.querySelectorAll("#chips button").forEach(b => b.classList.toggle("on", b.dataset.stat === stat));
   document.getElementById("tip").textContent = TIPS[stat] || "";
-  const rows = PLAYERS.map(p => ({ p, v: p.v[stat] })).filter(r => r.v !== null && r.v !== undefined && (stat !== "BUCK" || r.p.q));
+  const qualifiedOnly = stat === "BUCK" || stat.endsWith("/36");
+  const rows = PLAYERS.map(p => ({ p, v: p.v[stat] })).filter(r => r.v !== null && r.v !== undefined && (!qualifiedOnly || r.p.q));
   rows.sort((a, b) => a.v - b.v);
   curVals = rows;
   const vals = rows.map(r => r.v);
@@ -302,7 +326,7 @@ function showBin(i) {
   const rows = b.rows;
   let html = "<h3>" + fmt(curStat, b.lo) + " to " + fmt(curStat, b.hi) + " (" + rows.length + " player" + (rows.length === 1 ? "" : "s") + ")</h3><ul>";
   for (const r of rows) {
-    const extra = curStat === "BUCK" ? ', ' + r.p.gp + ' GP, ' + r.p.min_pct + '% min' : '';
+    const extra = (curStat === "BUCK" || curStat.endsWith("/36")) ? ', ' + r.p.gp + ' GP, ' + r.p.min_pct + '% min' : '';
     html += '<li><a href="players/' + r.p.slug + '.html">' + r.p.name + '</a> (' + r.p.team + ') ' + fmt(curStat, r.v) + extra + '</li>';
   }
   html += "</ul>";
