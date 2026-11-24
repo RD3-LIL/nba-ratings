@@ -94,6 +94,15 @@ button { padding: 5px 12px; font-size: 14px; border: 1px solid #d0d7de;
 15 games per team). The rule throughout: only add a source if the benefit
 clearly outweighs the cost, complexity, fragility, and noise. &larr;
 <a href="index.html">Back to NBA Ratings</a></p>
+<p class="warn"><strong>Snapshot, not updated daily.</strong> This page
+was written 20 Nov 2026 and is not rebuilt by the daily updater. The
+current formula is RPR v1.3 (see the "Where RPR stands now" section
+below, updated 23 Nov 2026): defense half-weighted, counting terms
+shrunk by minutes, OppAdj K = 150, no RPR under 5 games or 50 total
+minutes. The validation table in the "Where this project is" section
+is the Nov 20 run; the current run's numbers are in the
+<a href="README.md">README run summary</a>. The source rankings
+above are still the research as read on 20 Nov 2026.</p>
 
 <p><strong>Short answer: do not buy or bolt on a black-box metric.</strong>
 The worthwhile work is (1) shrinkage and opponent adjustment using data the
@@ -111,20 +120,27 @@ mostly prior; pretending otherwise is the main way this project would get
 worse while looking more sophisticated.</p>
 
 <section id="current-rpr"><h2>Where RPR stands now</h2>
-<p>The current formula (RPR v1.2 in this repo, see the note at the bottom):</p>
-<pre>RPR v1.2 = (ORtg_adj &minus; league ORtg) &times; PossUsed/G / 100
-    + (0.5 &times; (AST36 &minus; TO36) &minus; 0.88) &times; MPG / 36
-    + ((STL36 + BLK36) &minus; 1.98) &times; MPG / 36
-    + (0.25 &times; REB36 &minus; 1.63) &times; MPG / 36</pre>
+<p>The current formula (RPR v1.3, updated 23 Nov 2026; v1.2 is kept
+in the section at the bottom for history):</p>
+<pre>RPR v1.3 = (ORtg_adj &minus; league ORtg) &times; PossUsed/G / 100
+    + shrink &times; (0.5 &times; (AST36 &minus; TO36) &minus; 0.88) &times; MPG / 36
+    + shrink &times; 0.5 &times; ((STL36 + BLK36) &minus; 1.98) &times; MPG / 36
+    + shrink &times; (0.25 &times; REB36 &minus; 1.63) &times; MPG / 36
+    where shrink = MIN / (MIN + 150), and no RPR under 5 GP or 50 MIN</pre>
 <p>ORtg_adj is the <em>simple</em> ORtg (points per 100 possessions
 used, no assist credit), first shrunk toward the league-average
 ORtg (K = 200 possessions used) and then adjusted for the defences
-faced (OppAdj, shrunk toward 0 with K = 500 possessions faced).
-The fuller Oliver ORtg with assist credit is a separate column,
-ORtg_full, shown on the site next to the simple ORtg; it does not
-enter RPR. The counting terms are centered on their
-minutes-weighted league-average per-36 rates (0.88, 1.98, 1.63 on
-the Nov 20 run), so an average player scores about 0 from them.
+faced (OppAdj, shrunk toward 0 with K = 150 possessions faced).
+K = 500 was for a full season and crushed the adjustment to about
+0.1 points in November, when players have faced only about 100-230
+possessions; K = 150 is re-checked at mid-season. The fuller Oliver
+ORtg with assist credit is a separate column, ORtg_full, shown on
+the site next to the simple ORtg; it does not enter RPR. The counting
+terms are centered on their minutes-weighted league-average per-36
+rates (0.88, 1.98, 1.63 on the Nov 20 run), so an average player
+scores about 0 from them, and are then shrunk by total minutes.
+Defense is half-weighted in v1.3 because at full weight it was 46%
+of Wembanyama's RPR and put Dyson Daniels 9th on steals alone.
 PossUsed/G is possessions used per game. Verified weaknesses:
 defence is STL+BLK only (misses positional defence, rim
 deterrence, point-of-attack defence); playmaking is AST&minus;TO
@@ -133,7 +149,12 @@ tracking; no shot location; per-game volume leans on minutes;
 and about 15-game samples are noisy. Opponent adjustment at
 player level now exists (it did not in v1); the minutes
 correlation is gone as a free-credit problem, because the
-centering removes it.</p>
+centering removes it. Tradeoff, stated honestly: v1.2 split-half
+was 0.625 on the Nov 22 run, below v1.1's 0.691, while its team
+aggregation was 0.729 vs 0.67, so v1.2 was more honest at team
+level and less stable player to player; v1.3 is judged on both
+numbers in the run summary, not called an improvement on one
+alone.</p>
 <p class="note">Formula changes in the proposals below are labelled
 <strong>PROPOSAL</strong> where a coefficient is a choice, not a fact.
 Coefficients must be calibrated by the validation protocol in the
@@ -972,7 +993,19 @@ examined.</li>
 </ul>
 </section>
 
-<section id="v12"><h2>Where this project is: RPR v1.2 is steps 1 and 2 of the fix</h2>
+<section id="v12"><h2>Where this project is: RPR v1.2 was steps 1 and 2 of the fix; v1.3 (23 Nov 2026) is step 3</h2>
+<p><strong>RPR v1.3 (23 Nov 2026), the current version.</strong> Three
+changes on top of v1.2, from a fresh-eyes audit of the Nov 22 run:
+(1) defense half-weighted, 0.5 not 1.0, because at full weight it
+was 46% of Wembanyama's RPR and put Dyson Daniels 9th on steals
+alone; (2) the counting terms are shrunk by total minutes,
+MIN / (MIN + 150), so a 1-block-in-2-minutes cameo cannot fabricate
+a per-36 rate; (3) no RPR under 5 games or 50 total minutes, and
+OppAdj K re-calibrated from 500 to 150 for November possession
+counts. On the Nov 22 data Wembanyama goes 7.76 to 5.23 with a
+26.5% defense share, Daniels falls from 9th to 22nd, and Curry
+rises to 4th. The v1.3 numbers for the current run are in the
+README run summary, not in this snapshot page.</p>
 <p>Step 1 of the sequence above, shrinkage + opponent adjustment, is
 already built in this repo as RPR v1.1. As implemented in
 <code>player_profiles.py</code>: ORtg is shrunk toward the league-average
@@ -994,7 +1027,8 @@ rate (playmaking 0.88, defense 1.98, rebounding 1.63 on the Nov 20
 run; total 4.49 per 36), so an average player scores about 0 from
 those terms. The weights (0.5, 1, 0.25) are unchanged: the fix is
 centering, not re-weighting. The scoring center is the season
-league ORtg on the player scale (100.25), not 100 and not the
+league ORtg on the player scale (100.25 on the Nov 20 run, 100.18
+on the Nov 22 run), not 100 and not the
 team-scale 111.1; the two scales are never mixed. Position-specific
 centers were tested and rejected: a rebound is worth the same
 whoever gets it, and centering by position erased the real
@@ -1002,7 +1036,9 @@ difference between a center who rebounds and a guard who does not
 (it dropped Jokic to 8th). Old values are kept as
 <code>rpr_v1</code> and <code>rpr_v1_1</code> in the CSVs and JSON.</p>
 <p>Validation, Nov 20 run (226 games, 469 players with an RPR,
-split-half n = 216):</p>
+split-half n = 216). This table is the Nov 20 snapshot, kept for
+history; the current run's numbers are in the README run
+summary.</p>
 <table>
 <thead><tr><th>Check</th><th>v1</th><th>v1.1</th><th>v1.2</th></tr></thead>
 <tbody>
