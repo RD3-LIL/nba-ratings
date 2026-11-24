@@ -1,51 +1,51 @@
 {
   "version": "v1.2",
-  "n_split_half": 216,
+  "n_split_half": 235,
   "split_half_r": {
-    "v1": 0.48,
-    "v1.1": 0.621,
-    "v1.2": 0.542
+    "v1": 0.553,
+    "v1.1": 0.691,
+    "v1.2": 0.625
   },
   "mse_predict_own_2nd_half": {
-    "v1": 6.23,
-    "v1.1": 2.02,
-    "v1.2": 1.67
+    "v1": 5.33,
+    "v1.1": 1.66,
+    "v1.2": 1.32
   },
   "team_aggregation_r": {
-    "v1.2": 0.747,
-    "v1.1": 0.683,
-    "v1": 0.718
+    "v1.2": 0.729,
+    "v1.1": 0.67,
+    "v1": 0.692
   },
   "distribution": {
     "v1.2": {
-      "median": -0.098,
-      "mean": 0.015,
-      "neg_share": 0.557,
-      "n": 469,
-      "min": -3.177,
-      "max": 6.983
+      "median": -0.108,
+      "mean": 0.018,
+      "neg_share": 0.561,
+      "n": 476,
+      "min": -3.396,
+      "max": 7.757
     },
     "v1.1": {
-      "median": 2.193,
-      "mean": 2.419,
-      "neg_share": 0.017,
-      "n": 469,
-      "min": -1.018,
-      "max": 10.809
+      "median": 2.199,
+      "mean": 2.394,
+      "neg_share": 0.015,
+      "n": 476,
+      "min": -1.021,
+      "max": 11.571
     },
     "v1": {
-      "median": 2.046,
-      "mean": 2.306,
-      "neg_share": 0.115,
-      "n": 469,
+      "median": 2.02,
+      "mean": 2.303,
+      "neg_share": 0.097,
+      "n": 476,
       "min": -4.0,
-      "max": 11.803
+      "max": 12.762
     }
   },
   "centers_per36": {
-    "play_per36": 0.878,
-    "defense_per36": 1.981,
-    "rebounding_per36": 1.628
+    "play_per36": 0.883,
+    "defense_per36": 1.964,
+    "rebounding_per36": 1.631
   },
-  "league_ortg": 100.25
+  "league_ortg": 100.18
 }

@@ -1,198 +1,198 @@
 {
  "generated_by": "generate_run_summary.py",
- "data_through": "November 19, 2026",
+ "data_through": "November 22, 2026",
  "data_from": "October 20, 2026",
- "n_games": 226,
+ "n_games": 248,
  "n_teams": 30,
- "n_players": 475,
- "n_players_with_rpr": 469,
+ "n_players": 476,
+ "n_players_with_rpr": 476,
  "failed_fetches": 0,
  "league_off_eff": 111.1,
- "league_tempo": 102.3,
+ "league_tempo": 102.0,
  "team_solver": {
   "converged": true,
-  "iterations": 73,
+  "iterations": 77,
   "margin_cap": 20.0,
-  "home_court": 0.5,
+  "home_court": 0.68,
   "prior_weight": 300.0
  },
  "top_teams_by_net": [
   {
    "team": "San Antonio Spurs",
-   "net": 7.1,
-   "adj_o": 114.4,
-   "adj_d": 107.3
-  },
-  {
-   "team": "Houston Rockets",
-   "net": 6.4,
-   "adj_o": 117.3,
-   "adj_d": 110.9
+   "net": 7.4,
+   "adj_o": 114.0,
+   "adj_d": 106.6
   },
   {
    "team": "Minnesota Timberwolves",
-   "net": 6.1,
-   "adj_o": 109.9,
-   "adj_d": 103.8
+   "net": 6.4,
+   "adj_o": 109.6,
+   "adj_d": 103.2
+  },
+  {
+   "team": "Houston Rockets",
+   "net": 6.0,
+   "adj_o": 117.5,
+   "adj_d": 111.5
   },
   {
    "team": "Memphis Grizzlies",
-   "net": 5.5,
-   "adj_o": 116.5,
-   "adj_d": 111.0
+   "net": 5.3,
+   "adj_o": 116.0,
+   "adj_d": 110.7
   },
   {
    "team": "Portland Trail Blazers",
-   "net": 5.0,
-   "adj_o": 113.9,
-   "adj_d": 108.9
+   "net": 5.2,
+   "adj_o": 113.8,
+   "adj_d": 108.6
   }
  ],
  "bottom_teams_by_net": [
   {
    "team": "Sacramento Kings",
-   "net": -8.1
+   "net": -7.0
   },
   {
    "team": "Milwaukee Bucks",
-   "net": -8.3
+   "net": -8.0
   }
  ],
  "top_players_by_rpr": [
   {
    "name": "Victor Wembanyama",
    "team": "San Antonio Spurs",
-   "rpr": 6.98,
-   "gp": 16,
-   "ppg": 28.62
-  },
-  {
-   "name": "Giannis Antetokounmpo",
-   "team": "Miami Heat",
-   "rpr": 4.37,
-   "gp": 15,
-   "ppg": 28.2
+   "rpr": 7.76,
+   "gp": 17,
+   "ppg": 29.88
   },
   {
    "name": "Nikola Jokic",
    "team": "Denver Nuggets",
-   "rpr": 3.98,
-   "gp": 13,
-   "ppg": 24.08
+   "rpr": 4.4,
+   "gp": 15,
+   "ppg": 25.07
   },
   {
-   "name": "Walker Kessler",
-   "team": "Los Angeles Lakers",
-   "rpr": 3.07,
+   "name": "Giannis Antetokounmpo",
+   "team": "Miami Heat",
+   "rpr": 4.39,
    "gp": 15,
-   "ppg": 14.2
+   "ppg": 28.2
   },
   {
    "name": "Alperen Sengun",
    "team": "Houston Rockets",
-   "rpr": 3.05,
-   "gp": 14,
-   "ppg": 21.64
-  },
-  {
-   "name": "Luka Doncic",
-   "team": "Los Angeles Lakers",
-   "rpr": 2.91,
-   "gp": 14,
-   "ppg": 38.07
-  },
-  {
-   "name": "Donovan Clingan",
-   "team": "Portland Trail Blazers",
-   "rpr": 2.69,
+   "rpr": 3.36,
    "gp": 15,
-   "ppg": 10.73
-  },
-  {
-   "name": "Dyson Daniels",
-   "team": "Atlanta Hawks",
-   "rpr": 2.64,
-   "gp": 15,
-   "ppg": 9.53
-  },
-  {
-   "name": "Jamal Murray",
-   "team": "Denver Nuggets",
-   "rpr": 2.52,
-   "gp": 13,
-   "ppg": 25.69
+   "ppg": 22.07
   },
   {
    "name": "Bam Adebayo",
    "team": "Miami Heat",
-   "rpr": 2.52,
+   "rpr": 3.31,
+   "gp": 16,
+   "ppg": 19.19
+  },
+  {
+   "name": "Walker Kessler",
+   "team": "Los Angeles Lakers",
+   "rpr": 3.08,
+   "gp": 16,
+   "ppg": 14.25
+  },
+  {
+   "name": "Donovan Clingan",
+   "team": "Portland Trail Blazers",
+   "rpr": 3.0,
+   "gp": 16,
+   "ppg": 11.44
+  },
+  {
+   "name": "Jamal Murray",
+   "team": "Denver Nuggets",
+   "rpr": 2.99,
    "gp": 15,
-   "ppg": 18.87
+   "ppg": 26.2
+  },
+  {
+   "name": "Dyson Daniels",
+   "team": "Atlanta Hawks",
+   "rpr": 2.93,
+   "gp": 17,
+   "ppg": 9.35
+  },
+  {
+   "name": "Karl-Anthony Towns",
+   "team": "New York Knicks",
+   "rpr": 2.8,
+   "gp": 16,
+   "ppg": 21.81
   }
  ],
  "top_players_by_buck": [
   {
    "name": "Cam Spencer",
    "team": "Memphis Grizzlies",
-   "buck": 0.676,
-   "rpr": 1.77
+   "buck": 0.706,
+   "rpr": 1.85
   },
   {
    "name": "Moussa Diabate",
    "team": "Charlotte Hornets",
-   "buck": 0.432,
-   "rpr": 1.06
+   "buck": 0.436,
+   "rpr": 1.07
   },
   {
    "name": "Donovan Clingan",
    "team": "Portland Trail Blazers",
-   "buck": 0.315,
-   "rpr": 2.69
-  },
-  {
-   "name": "Cedric Coward",
-   "team": "Memphis Grizzlies",
-   "buck": 0.282,
-   "rpr": 1.94
+   "buck": 0.352,
+   "rpr": 3.0
   },
   {
    "name": "Matisse Thybulle",
    "team": "Los Angeles Lakers",
-   "buck": 0.274,
-   "rpr": 0.67
+   "buck": 0.299,
+   "rpr": 0.73
+  },
+  {
+   "name": "LeBron James",
+   "team": "Philadelphia 76ers",
+   "buck": 0.269,
+   "rpr": 1.07
   }
  ],
- "n_buck_qualified": 183,
+ "n_buck_qualified": 182,
  "best_rookie": {
   "name": "Aday Mara",
   "team": "Oklahoma City Thunder",
-  "rpr": 0.77,
-  "gp": 15,
-  "ppg": 9.2
+  "rpr": 1.08,
+  "gp": 16,
+  "ppg": 10.0
  },
  "n_rookies_on_rosters": 75,
  "n_rookie_profiles_played": 58,
  "gm_tier_counts": {
   "Franchise cornerstone": 3,
-  "Insufficient minutes": 185,
-  "All-Star level": 9,
-  "Undervalued / buy-low": 3,
-  "High-value starter": 15,
-  "Rotation / depth": 188,
-  "Elite role player": 37,
-  "Overvalued / avoid": 35
+  "All-Star level": 8,
+  "Insufficient minutes": 172,
+  "High-value starter": 17,
+  "Undervalued / buy-low": 2,
+  "Elite role player": 34,
+  "Rotation / depth": 208,
+  "Overvalued / avoid": 32
  },
  "team_needs": {
   "top_slots": 240,
-  "distinct_top_players": 19,
+  "distinct_top_players": 23,
   "most_common_top1": [
    [
-    "Paul Reed",
-    19
+    "Brook Lopez",
+    15
    ],
    [
-    "Alex Caruso",
-    11
+    "Paul Reed",
+    15
    ]
   ],
   "no_clear_star_teams": [
@@ -203,63 +203,64 @@
    "Milwaukee Bucks",
    "Minnesota Timberwolves",
    "Orlando Magic",
+   "Sacramento Kings",
    "Toronto Raptors"
   ],
-  "n_no_clear_star": 8,
+  "n_no_clear_star": 9,
   "unfilled_needs": [],
-  "trade_score_min": 0.025,
-  "trade_score_max": 0.319,
-  "distinct_top1_players": 6
+  "trade_score_min": 0.007,
+  "trade_score_max": 0.344,
+  "distinct_top1_players": 3
  },
  "validation": {
   "version": "v1.2",
-  "n_split_half": 216,
+  "n_split_half": 235,
   "split_half_r": {
-   "v1": 0.48,
-   "v1.1": 0.621,
-   "v1.2": 0.542
+   "v1": 0.553,
+   "v1.1": 0.691,
+   "v1.2": 0.625
   },
   "mse_predict_own_2nd_half": {
-   "v1": 6.23,
-   "v1.1": 2.02,
-   "v1.2": 1.67
+   "v1": 5.33,
+   "v1.1": 1.66,
+   "v1.2": 1.32
   },
   "team_aggregation_r": {
-   "v1.2": 0.747,
-   "v1.1": 0.683,
-   "v1": 0.718
+   "v1.2": 0.729,
+   "v1.1": 0.67,
+   "v1": 0.692
   },
   "distribution": {
    "v1.2": {
-    "median": -0.098,
-    "mean": 0.015,
-    "neg_share": 0.557,
-    "n": 469,
-    "min": -3.177,
-    "max": 6.983
+    "median": -0.108,
+    "mean": 0.018,
+    "neg_share": 0.561,
+    "n": 476,
+    "min": -3.396,
+    "max": 7.757
    },
    "v1.1": {
-    "median": 2.193,
-    "mean": 2.419,
-    "neg_share": 0.017,
-    "n": 469,
-    "min": -1.018,
-    "max": 10.809
+    "median": 2.199,
+    "mean": 2.394,
+    "neg_share": 0.015,
+    "n": 476,
+    "min": -1.021,
+    "max": 11.571
    },
    "v1": {
-    "median": 2.046,
-    "mean": 2.306,
-    "neg_share": 0.115,
-    "n": 469,
+    "median": 2.02,
+    "mean": 2.303,
+    "neg_share": 0.097,
+    "n": 476,
     "min": -4.0,
-    "max": 11.803
+    "max": 12.762
    }
   },
   "centers_per36": {
-   "play_per36": 0.878,
-   "defense_per36": 1.981,
-   "rebounding_per36": 1.628
+   "play_per36": 0.883,
+   "defense_per36": 1.964,
+   "rebounding_per36": 1.631
   },
-  "league_ortg": 100.25
+  "league_ortg": 100.18
  }
 }
