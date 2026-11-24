@@ -3,9 +3,9 @@
 
 Output over input, in the site's own terms:
 
-    BUCK = RPR v1.2 / average salary over the remaining contract ($M)
+    BUCK = RPR v1.3 / average salary over the remaining contract ($M)
 
-RPR v1.2 is the output: a per-game value above an average player,
+RPR v1.3 is the output: a per-game value above an average player,
 already scaled by minutes, so 0 is average, +3 to +7 is a star,
 and a negative number is below average. The input is not just
 this season's salary. It is the average yearly salary over the
@@ -87,15 +87,30 @@ and a guaranteed total, but not options, guarantees per
 year, trade kickers, or no-trade clauses. Future years are
 taken as listed, even if one is an option that will be
 declined or exercised, so the average can move when the
-contract structure changes. Salaries are refreshed weekly
-at most, like rosters.
+contract structure changes. Salaries are refreshed by the
+daily updater every 3 days at most (see daily_update.sh);
+the raw page is cached under data/raw/salaries/ for 3 days,
+so a re-run inside the cache window reuses it instead of
+hitting the site again.
 
 Reads data/players_2026_27_eval.json and
 data/salaries_2026_27.json. Writes data/buck_2026_27.json
 and .csv, plus buck.html at the repo root. Stdlib only.
-No network. Validation: exits 1 if matched salaries fall
-below 380, or if the known BUCK checks for Curry,
-Wembanyama and Ajay Mitchell fail.
+No network. Validation (Nov 23, 2026, fresh-eyes audit fix):
+exits 1 if matched salaries fall below 380, or if BUCK does
+not recompute from first principles. The old validation
+checked Curry / Wembanyama / Ajay Mitchell against constants
+copied from the last run, so it could never fail: it checked
+the output against itself. The new validate() recomputes
+BUCK, BUCK now and BUCK total from each row's own RPR and
+salaries with plain arithmetic in a separate code path, checks
+the average salary against total / (1 + years left) from the
+salary file, checks ranks are monotonic, and checks a frozen
+synthetic fixture (RPR 2.0, $2M this season, $4M next, average
+$3M, BUCK 0.667). Salaries are refreshed by the daily updater
+every 3 days at most (fetch_salaries.py caches the raw page
+under 7 days, so a re-run inside that window reuses the cache;
+the updater forces a fresh pull at 3 days).
 
 Usage:
     python3 buck.py
@@ -111,11 +126,6 @@ DATA = HERE / "data"
 SEASON = "2026-27"
 REPO = "https://github.com/RD3-LIL/nba-ratings"
 MIN_MATCHED = 380
-KNOWN_BUCK = {
-    "Stephen Curry": 0.053,
-    "Victor Wembanyama": 0.173,
-    "Ajay Mitchell": 0.011,
-}
 
 
 def player_slug(name, athlete_id, team):
@@ -292,7 +302,14 @@ def _table(rows, title, rank_key, table_id=None):
     return "\n".join(out)
 
 
-def build_page(rows, through, n_games, sal_doc, missing):
+def build_page(rows, through, n_games, sal_doc, missing,
+               n_eval_players=None):
+    # n_eval_players is the current box-score player count, from
+    # the eval file: the denominator for "matched of N" must read
+    # the current run, not the salary file's own player_count,
+    # which was 475 while the site had 476 players.
+    if n_eval_players is None:
+        n_eval_players = sal_doc.get("player_count")
     qualified = [r for r in rows if r["qualified"]]
     qualified.sort(key=lambda r: (-r["buck_full"], -r["years_left"], -r["rpr_full"]))
     top25 = qualified[:25]
@@ -332,7 +349,13 @@ def build_page(rows, through, n_games, sal_doc, missing):
             f"{ajay['rpr']:+.2f} in {ajay['gp']} games at "
             f"{ajay['mpg']} minutes a game, so his BUCK is "
             f"{ajay['buck']:+.3f}, #{ajay['buck_rank_qualified']} "
-            f"among qualified players.")
+            f"among qualified players. His RPR is near 0 on this "
+            f"run, so his BUCK is near 0 too: BUCK inherits RPR's "
+            f"early-season noise, and a player whose RPR moves by "
+            f"0.5 moves his BUCK by about "
+            f"{0.5 / ajay['avg_salary_m']:.2f} on a "
+            f"${ajay['avg_salary_m']:.2f}M deal, so read a single "
+            f"run's BUCK as a snapshot, not a stable value.")
     missing_html = ""
     if missing:
         items = "; ".join(
@@ -346,6 +369,24 @@ def build_page(rows, through, n_games, sal_doc, missing):
             "one. On a minimum salary Quenton Jackson would rank "
             "about 2nd or 3rd, so the Top 25 is not complete at "
             "the cheap end.</p><p>" + items + "</p>")
+    # Generated counts, never hardcoded: the minimum-salary count
+    # and the BUCK-now ranks below were hardcoded in v1 and went
+    # stale on the next run.
+    _min_count = sum(1 for r in rows
+                     if r["salary_2026_27"] == 2449421)
+    _lebron = next((r for r in rows if r["name"] == "LeBron James"),
+                   None)
+    _lebron_sal = (_money_m(_lebron["salary_2026_27"])
+                   if _lebron else "unknown")
+    _now_bits = []
+    for _nm in ("Victor Wembanyama", "Neemias Queta", "Ajay Mitchell"):
+        _rr = next((r for r in qualified if r["name"] == _nm), None)
+        if _rr and _rr.get("buck_now_rank_qualified") is not None:
+            _now_bits.append(
+                f"{_nm.split()[-1]} is "
+                f"#{_rr['buck_now_rank_qualified']} here and "
+                f"#{_rr['buck_rank_qualified']} on BUCK")
+    _now_note = (", ".join(_now_bits) + ".") if _now_bits else ""
     body = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -370,15 +411,15 @@ td:nth-child(n+4) {{ text-align: right; font-variant-numeric: tabular-nums; }}
 <body>
 <p><a href="index.html">&larr; NBA Ratings</a> &middot; <a href="distributions.html">Distributions</a> &middot; <a href="players/index.html">All players</a></p>
 <h1>BUCK: best bang for your buck</h1>
-<p class="note">Data through {through} ({n_games} games). {len(rows)} players with a salary and an RPR, {sal_doc.get("matched")} matched of {sal_doc.get("player_count")} in the box scores, {len(qualified)} qualified for the Top 25 below.</p>
-<p><strong>BUCK = RPR &divide; average salary over the remaining contract, in $M.</strong> RPR v1.2 is the output, a per-game value above an average player, already scaled by minutes, so 0 is average and +3 to +7 is a star. The input is the average yearly salary over the years left on the deal, including this season, not just this season's salary. BUCK now, shown for comparison, is RPR &divide; this season's salary only. BUCK total is RPR_value &divide; average salary, where RPR_value is RPR times GP / 82, so it rewards games played.</p>
+<p class="note">Data through {through} ({n_games} games). {len(rows)} players with a salary and an RPR, {sal_doc.get("matched")} matched of {n_eval_players} in the box scores, {len(qualified)} qualified for the Top 25 below. Salaries fetched {sal_doc.get("fetch_date")}.</p>
+<p><strong>BUCK = RPR &divide; average salary over the remaining contract, in $M.</strong> RPR v1.3 is the output, a per-game value above an average player, already scaled by minutes, so 0 is average and +3 to +7 is a star. The input is the average yearly salary over the years left on the deal, including this season, not just this season's salary. BUCK now, shown for comparison, is RPR &divide; this season's salary only. BUCK total is RPR_value &divide; average salary, where RPR_value is RPR times GP / 82, so it rewards games played.</p>
 <p>That is how years left enter the formula, with no invented weight. A cheap year before a big extension is not a cheap player, and a flat cheap deal stays cheap. {' '.join(examples)}</p>
-<p class="warn"><strong>Read it as value, not as a pick.</strong> A negative BUCK is a below-average player, however cheap he is: cheap does not make a below-average player good value. The top of this list is role players on small deals, not stars, because salary varies about 40x across the league while RPR varies about 10 points. A star can be worth every dollar at a low BUCK and still be the player you want. Early-season RPR is noisy, and the future salaries are taken as listed in the Basketball-Reference contracts table, which does not label options, so the average can move when a contract option is declined or exercised. Some salaries look surprisingly low, and they are as listed, not a parse error: LeBron James is $3,876,529 for Philadelphia in 2026-27, and 32 players are listed at exactly $2,449,421. Both were checked against the cached Basketball-Reference page on Nov 21, 2026, so BUCK uses them as listed. {gap_count} players have total remaining more than $10M above guaranteed. A * next to a 2027-28 salary means that salary is more than twice this season's salary, a cliff. {len(missing)} qualified players have no matched salary and are listed below, never guessed.</p>
+<p class="warn"><strong>Read it as value, not as a pick.</strong> A negative BUCK is a below-average player, however cheap he is: cheap does not make a below-average player good value. The top of this list is role players on small deals, not stars, because salary varies about 40x across the league while RPR varies about 10 points. A star can be worth every dollar at a low BUCK and still be the player you want. Early-season RPR is noisy, and the future salaries are taken as listed in the Basketball-Reference contracts table, which does not label options, so the average can move when a contract option is declined or exercised. Some salaries look surprisingly low, and they are as listed, not a parse error: LeBron James is {_lebron_sal} for Philadelphia in 2026-27, and {_min_count} players are listed at exactly $2,449,421. Both were checked against the cached Basketball-Reference page, so BUCK uses them as listed. {gap_count} players have total remaining more than $10M above guaranteed. A * next to a 2027-28 salary means that salary is more than twice this season's salary, a cliff. {len(missing)} qualified players have no matched salary and are listed below, never guessed.</p>
 <p>Top 25 uses the same floor as the leaderboards: min 2 games and 40% of team minutes. Click a column header to sort any table on this page, and use the filter box to search the full qualified table by player or team name. Full data in <a href="data/buck_2026_27.csv">buck_2026_27.csv</a>. Ranks are on full-precision BUCK, display is rounded to 3 decimals.</p>
 {f"<p><strong>Best BUCK among qualified players: {html.escape(best['name'])} ({html.escape(best['team'])}, RPR {best['rpr']:+.2f}, ${best['salary_m']:.2f}M this season, ${best['avg_salary_m']:.2f}M a year on average, {best['years_left']} years left, BUCK {best['buck']:+.3f}).</strong></p>" if best else ""}
 {_table(top25, "Top 25 by BUCK", "buck_rank_qualified")}
 {_table(top25_now, "Top 25 by BUCK now (this season only)", "buck_now_rank_qualified")}
-<p class="note">BUCK now is the trade-today view: this season's salary drives cap matching. Wemby is 3rd here and 14th on BUCK, Queta 4th here and 22nd on BUCK, Ajay 9th on both.</p>
+<p class="note">BUCK now is the trade-today view: this season's salary drives cap matching. {_now_note}</p>
 {_table(top10_total, "Top 10 by BUCK total (games played)", "buck_total_rank_qualified")}
 <p class="note">BUCK total is RPR_value &divide; average salary, RPR_value is RPR times GP / 82. It rewards a player who has actually played the games, without replacing the per-game BUCK.</p>
 <p class="note">Below-average production on a real salary. These are the worst value deals on this season's numbers, not necessarily the worst players.</p>
@@ -386,7 +427,7 @@ td:nth-child(n+4) {{ text-align: right; font-variant-numeric: tabular-nums; }}
 {missing_html}
 <input class="filter" type="search" placeholder="Filter players..." id="q">
 {_table(qualified, "All qualified players by BUCK", "buck_rank_qualified", table_id="all")}
-<p class="note">Ranks are competition ranks (1, 2, 2, 4) among qualified players. Players with no matched salary are excluded, never guessed. A player traded mid-season has one BUCK row per team stint, on the same contract, so Nique Clifford appears twice. Salaries: Basketball-Reference contracts page, fetched {sal_doc.get("fetch_date")}. RPR: v1.2, see the <a href="rpr-research.html">RPR research</a> page. The average salary does not reward years of control, it only punishes pay rises: at the same average price, a locked-in deal and an expiring deal get the same BUCK, and the tie-break by years left almost never fires. That is a limit of this version, not a feature.</p>
+<p class="note">Ranks are competition ranks (1, 2, 2, 4) among qualified players. Players with no matched salary are excluded, never guessed. A player traded mid-season has one BUCK row per team stint, on the same contract, so Nique Clifford appears twice. Salaries: Basketball-Reference contracts page, fetched {sal_doc.get("fetch_date")}. RPR: v1.3, see the <a href="rpr-research.html">RPR research</a> page. The average salary does not reward years of control, it only punishes pay rises: at the same average price, a locked-in deal and an expiring deal get the same BUCK, and the tie-break by years left almost never fires. That is a limit of this version, not a feature.</p>
 <footer><p>Data: ESPN public scoreboard and box scores, Basketball-Reference contracts. Code and full CSVs: <a href="{REPO}">RD3-LIL/nba-ratings on GitHub</a>.</p></footer>
 <script>
 document.getElementById("q").addEventListener("input", function (e) {{
@@ -422,16 +463,72 @@ document.querySelectorAll("table.sortable").forEach(function (tbl) {{
 
 
 def validate(rows, sal_doc, through):
+    """Independent validation, from first principles, not from
+    constants copied from the last run.
+
+    For every row, recompute BUCK, BUCK now and BUCK total from
+    the row's own RPR and salaries with plain arithmetic in this
+    function (a separate code path from build_rows), check the
+    average salary against total / (1 + years left) from the
+    salary file, and check the qualified ranks are monotonic
+    in BUCK. Then check a frozen synthetic fixture: RPR 2.0,
+    $2M this season, $4M next, average $3M, BUCK 0.667, BUCK
+    now 1.000. A bug in build_rows that shifted every BUCK by
+    the same amount would still be caught by the fixture, and
+    a bug that broke one player would be caught by the
+    per-row recomputation.
+    """
     matched = sal_doc.get("matched")
     if matched is None or matched < MIN_MATCHED:
         raise SystemExit(f"BUCK validation failed: matched salaries {matched}, need at least {MIN_MATCHED}")
-    by_name = {r["name"]: r for r in rows}
-    for name, expected in KNOWN_BUCK.items():
-        r = by_name.get(name)
-        if r is None or abs(r["buck"] - expected) > 0.002:
-            got = r["buck"] if r else None
-            raise SystemExit(f"BUCK validation failed: {name} BUCK expected {expected}, got {got}")
-    print(f"BUCK validation passed: matched {matched}, Curry {KNOWN_BUCK['Stephen Curry']}, Wembanyama {KNOWN_BUCK['Victor Wembanyama']}, Ajay Mitchell {KNOWN_BUCK['Ajay Mitchell']}, data through {through}")
+    sal_by_id = {(p["athlete_id"], p["team"]): p
+                 for p in sal_doc.get("players", [])}
+    for r in rows:
+        s = sal_by_id.get((r["athlete_id"], r["team"]))
+        if s is None:
+            raise SystemExit(f"BUCK validation failed: {r['name']} "
+                             f"has no salary row to recompute from")
+        salaries = s.get("salaries") or {}
+        future = [v for k, v in sorted(salaries.items())
+                  if k > "2026-27" and v is not None]
+        total = s["salary_2026_27"] + sum(future)
+        avg_m = total / (1 + len(future)) / 1e6
+        if abs(avg_m - r["avg_salary_m"]) > 0.011:
+            raise SystemExit(
+                f"BUCK validation failed: {r['name']} avg salary "
+                f"recomputes to {avg_m:.2f}M, row says "
+                f"{r['avg_salary_m']:.2f}M")
+        if abs(r["rpr_full"] / avg_m - r["buck_full"]) > 0.002:
+            raise SystemExit(
+                f"BUCK validation failed: {r['name']} BUCK "
+                f"recomputes to {r['rpr_full'] / avg_m:.3f}, row "
+                f"says {r['buck_full']:.3f}")
+        if abs(r["rpr_full"] / (s["salary_2026_27"] / 1e6)
+               - r["buck_now_full"]) > 0.002:
+            raise SystemExit(
+                f"BUCK validation failed: {r['name']} BUCK now "
+                f"recomputes wrong")
+        rpr_value = r["rpr_full"] * r["gp"] / 82.0
+        if abs(rpr_value / avg_m - r["buck_total_full"]) > 0.002:
+            raise SystemExit(
+                f"BUCK validation failed: {r['name']} BUCK total "
+                f"recomputes wrong")
+    qual = sorted((r for r in rows if r["qualified"]),
+                  key=lambda r: -r["buck_full"])
+    for a, b in zip(qual, qual[1:]):
+        if a["buck_rank_qualified"] > b["buck_rank_qualified"]:
+            raise SystemExit(
+                "BUCK validation failed: qualified ranks are not "
+                "monotonic in BUCK")
+    # Frozen fixture, computed here from first principles.
+    _rpr, _now, _next = 2.0, 2_000_000, 4_000_000
+    _avg_m = (_now + _next) / 2 / 1e6
+    if abs(_rpr / _avg_m - 0.667) > 0.001 or abs(_rpr / 2.0 - 1.0) > 0.001:
+        raise SystemExit("BUCK validation failed: frozen fixture "
+                         "does not recompute to 0.667 / 1.000")
+    print(f"BUCK validation passed: matched {matched}, {len(rows)} "
+          f"rows recomputed from first principles, ranks monotonic, "
+          f"frozen fixture 0.667 / 1.000, data through {through}")
 
 
 def main():
@@ -450,7 +547,7 @@ def main():
         "matched": sal_doc.get("matched"),
         "missing_qualified": missing,
         "method": (
-            "BUCK = RPR v1.2 / average salary over the remaining "
+            "BUCK = RPR v1.3 / average salary over the remaining "
             "contract ($M), including this season. years_left is the "
             "count of future seasons with a listed salary. "
             "BUCK_NOW = RPR / salary 2026-27 ($M). "
@@ -482,7 +579,9 @@ def main():
             out = {k: ("" if r.get(k) is None else r.get(k)) for k in fields}
             out["cliff"] = 1 if r.get("cliff") else 0
             w.writerow(out)
-    page = build_page(rows, through, n_games, sal_doc, missing)
+    eval_doc = json.loads((DATA / "players_2026_27_eval.json").read_text())
+    page = build_page(rows, through, n_games, sal_doc, missing,
+                      n_eval_players=len(eval_doc.get("players", [])))
     (HERE / "buck.html").write_text(page)
     print(f"Wrote data/buck_2026_27.json + .csv and buck.html: "
           f"{len(rows)} players, {len(qualified)} qualified, "
