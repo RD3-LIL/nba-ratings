@@ -113,8 +113,8 @@ REPO = "https://github.com/RD3-LIL/nba-ratings"
 MIN_MATCHED = 380
 KNOWN_BUCK = {
     "Stephen Curry": 0.053,
-    "Victor Wembanyama": 0.156,
-    "Ajay Mitchell": 0.192,
+    "Victor Wembanyama": 0.173,
+    "Ajay Mitchell": 0.011,
 }
 
 
