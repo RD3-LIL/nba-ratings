@@ -1,241 +1,241 @@
-team,team_net,star,top_need,target,target_team,target_tier,fills_need,target_rpr,quality_gain,fit_gain,usage_penalty,availability_discount,trade_score,target_salary,payroll_before,rpr_per_million,trade_score_per_million
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.103,0.056,0.0,0.0,0.159,9187500,198503800,0.116,0.017
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.114,0.031,0.0,0.0,0.145,5602689,198503800,0.198,0.026
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.095,0.034,0.0,0.0,0.129,5791680,198503800,0.186,0.022
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.086,0.044,0.0,0.013,0.117,19550160,198503800,0.058,0.006
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.036,0.038,0.0,0.007,0.067,2449421,198503800,0.265,0.027
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,0.002,0.064,0.0,0.0,0.066,13260317,198503800,0.006,0.005
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Julian Champagnie,San Antonio Spurs,Rotation / depth,shooting,0.13,0.007,0.057,0.0,0.0,0.064,13888889,198503800,0.009,0.005
-Atlanta Hawks,0.2,Dyson Daniels,shooting,Mitchell Robinson,Boston Celtics,Rotation / depth,rim_protection,0.62,0.041,0.028,0.0,0.007,0.062,15044000,198503800,0.041,0.004
-Boston Celtics,3.7,No clear star in this data,rim_protection,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.112,0.059,0.0,0.0,0.171,5602689,198722406,0.198,0.031
-Boston Celtics,3.7,No clear star in this data,rim_protection,Brook Lopez,LA Clippers,Elite role player,rim_protection,1.07,0.101,0.052,0.0,0.0,0.152,9187500,198722406,0.116,0.017
-Boston Celtics,3.7,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.093,0.054,0.0,0.0,0.146,5791680,198722406,0.186,0.025
-Boston Celtics,3.7,No clear star in this data,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,rim_protection,1.14,0.084,0.043,0.0,0.013,0.114,19550160,198722406,0.058,0.006
-Boston Celtics,3.7,No clear star in this data,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.34,0.026,0.052,0.0,0.0,0.078,5477000,198722406,0.062,0.014
-Boston Celtics,3.7,No clear star in this data,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,rim_protection,0.27,0.017,0.059,0.0,0.0,0.076,5416080,198722406,0.05,0.014
-Boston Celtics,3.7,No clear star in this data,rim_protection,Dean Wade,Philadelphia 76ers,Rotation / depth,rim_protection,0.42,0.038,0.031,0.0,0.0,0.069,9000000,198722406,0.047,0.008
-Boston Celtics,3.7,No clear star in this data,rim_protection,Braden Smith,Indiana Pacers,Rotation / depth,rim_protection,0.79,0.041,0.029,0.0,0.007,0.063,,198722406,,
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.138,0.032,0.0,0.0,0.17,5602689,160105139,0.198,0.03
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.125,0.037,0.0,0.0,0.162,9187500,160105139,0.116,0.018
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.115,0.024,0.0,0.0,0.139,5791680,160105139,0.186,0.024
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.104,0.039,0.0,0.014,0.128,19550160,160105139,0.058,0.007
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.61,0.069,0.017,0.0,0.0,0.085,,160105139,,
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,0.064,0.017,0.0,0.0,0.081,9000000,160105139,0.047,0.009
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.34,0.05,0.027,0.0,0.0,0.077,5477000,160105139,0.062,0.014
-Brooklyn Nets,-5.9,Day'Ron Sharpe,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.048,0.026,0.0,0.0,0.074,2150917,160105139,0.189,0.034
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.255,0.059,0.0,0.0,0.313,5602689,170575884,0.198,0.056
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Brook Lopez,LA Clippers,Elite role player,bench_scoring,1.07,0.235,0.065,0.0,0.0,0.299,9187500,170575884,0.116,0.033
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.215,0.041,0.0,0.0,0.256,5791680,170575884,0.186,0.044
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.14,0.189,0.083,0.0,0.027,0.245,19550160,170575884,0.058,0.013
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Nolan Traore,Brooklyn Nets,Rotation / depth,playmaking,0.25,0.136,0.091,0.0,0.0,0.227,4002000,170575884,0.062,0.057
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.61,0.165,0.062,0.0,0.0,0.227,,170575884,,
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Ajay Mitchell,Oklahoma City Thunder,Rotation / depth,playmaking,0.03,0.144,0.079,0.0,0.0,0.223,2850000,170575884,0.011,0.078
-Charlotte Hornets,-5.8,No clear star in this data,playmaking,Collin Gillespie,Phoenix Suns,Rotation / depth,playmaking,0.02,0.127,0.095,0.0,0.0,0.221,10714286,170575884,0.002,0.021
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.126,0.028,0.0,0.0,0.153,5602689,166439943,0.198,0.027
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Brook Lopez,LA Clippers,Elite role player,playmaking,1.07,0.114,0.017,0.0,0.0,0.131,9187500,166439943,0.116,0.014
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.14,0.095,0.05,0.0,0.014,0.13,19550160,166439943,0.058,0.007
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.105,0.017,0.0,0.0,0.122,5791680,166439943,0.186,0.021
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.61,0.058,0.037,0.0,0.0,0.096,,166439943,,
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Braden Smith,Indiana Pacers,Rotation / depth,playmaking,0.79,0.048,0.039,0.0,0.009,0.079,,166439943,,
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Oso Ighodaro,Phoenix Suns,Rotation / depth,playmaking,0.23,0.026,0.042,0.0,0.0,0.068,2296271,166439943,0.101,0.03
-Chicago Bulls,-3.7,Jalen Smith,playmaking,Dean Wade,Philadelphia 76ers,Rotation / depth,playmaking,0.42,0.052,0.017,0.0,0.0,0.068,9000000,166439943,0.047,0.008
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.071,0.029,0.0,0.0,0.1,5602689,208969955,0.198,0.018
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Brook Lopez,LA Clippers,Elite role player,perimeter_defense,1.07,0.063,0.01,0.0,0.0,0.072,9187500,208969955,0.116,0.008
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.14,0.055,0.024,0.0,0.008,0.071,19550160,208969955,0.058,0.004
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,perimeter_defense,1.08,0.058,0.012,0.0,0.0,0.07,5791680,208969955,0.186,0.012
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Braden Smith,Indiana Pacers,Rotation / depth,perimeter_defense,0.79,0.02,0.018,0.0,0.004,0.034,,208969955,,
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Mitchell Robinson,Boston Celtics,Rotation / depth,perimeter_defense,0.62,0.012,0.025,0.0,0.004,0.033,15044000,208969955,0.041,0.002
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.61,0.014,0.018,0.0,0.0,0.032,,208969955,,
-Cleveland Cavaliers,1.1,Jarrett Allen,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,-0.004,0.021,0.0,0.0,0.017,9000000,208969955,0.047,0.002
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.063,0.058,0.0,0.0,0.121,9187500,196163906,0.116,0.013
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.072,0.019,0.0,0.0,0.091,5602689,196163906,0.198,0.016
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.055,0.044,0.0,0.01,0.089,19550160,196163906,0.058,0.005
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.058,0.021,0.0,0.0,0.079,5791680,196163906,0.186,0.014
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.012,0.044,0.0,0.006,0.051,2449421,196163906,0.265,0.021
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,-0.004,0.047,0.0,0.0,0.043,2150917,196163906,0.189,0.02
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,-0.038,0.07,0.0,0.0,0.032,13260317,196163906,0.006,0.002
-Dallas Mavericks,1.1,Cooper Flagg,shooting,Ziaire Williams,Los Angeles Lakers,Rotation / depth,shooting,0.41,-0.005,0.03,0.0,0.0,0.026,2449421,196163906,0.166,0.011
-Denver Nuggets,2.1,Nikola Jokic,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.048,0.119,0.0,0.0,0.167,9187500,219140512,0.116,0.018
-Denver Nuggets,2.1,Nikola Jokic,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.043,0.095,0.0,0.014,0.124,19550160,219140512,0.058,0.006
-Denver Nuggets,2.1,Nikola Jokic,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.056,0.035,0.0,0.0,0.091,5602689,219140512,0.198,0.016
-Denver Nuggets,2.1,Nikola Jokic,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.003,0.095,0.0,0.01,0.088,2449421,219140512,0.265,0.036
-Denver Nuggets,2.1,Nikola Jokic,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,-0.052,0.139,0.0,0.0,0.087,13260317,219140512,0.006,0.007
-Denver Nuggets,2.1,Nikola Jokic,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,-0.016,0.101,0.0,0.0,0.085,2150917,219140512,0.189,0.039
-Denver Nuggets,2.1,Nikola Jokic,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.045,0.035,0.0,0.0,0.08,5791680,219140512,0.186,0.014
-Denver Nuggets,2.1,Nikola Jokic,shooting,Julian Champagnie,San Antonio Spurs,Rotation / depth,shooting,0.13,-0.052,0.118,0.0,0.0,0.066,13888889,219140512,0.009,0.005
-Detroit Pistons,3.2,Ausar Thompson,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.065,0.066,0.0,0.0,0.132,9187500,193324469,0.116,0.014
-Detroit Pistons,3.2,Ausar Thompson,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.057,0.054,0.0,0.011,0.1,19550160,193324469,0.058,0.005
-Detroit Pistons,3.2,Ausar Thompson,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,1.08,0.061,0.016,0.0,0.0,0.076,5791680,193324469,0.186,0.013
-Detroit Pistons,3.2,Ausar Thompson,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.014,0.057,0.0,0.007,0.064,2449421,193324469,0.265,0.026
-Detroit Pistons,3.2,Ausar Thompson,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,-0.002,0.063,0.0,0.0,0.061,2150917,193324469,0.189,0.029
-Detroit Pistons,3.2,Ausar Thompson,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,-0.035,0.08,0.0,0.0,0.045,13260317,193324469,0.006,0.003
-Detroit Pistons,3.2,Ausar Thompson,shooting,Ziaire Williams,Los Angeles Lakers,Rotation / depth,shooting,0.41,-0.002,0.04,0.0,0.0,0.038,2449421,193324469,0.166,0.015
-Detroit Pistons,3.2,Ausar Thompson,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,-0.017,0.053,0.0,0.0,0.036,4002000,193324469,0.062,0.009
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.11,0.059,0.0,0.0,0.169,5602689,219763627,0.198,0.03
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Brook Lopez,LA Clippers,Elite role player,bench_scoring,1.07,0.099,0.044,0.0,0.0,0.143,9187500,219763627,0.116,0.016
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.091,0.039,0.0,0.0,0.131,5791680,219763627,0.186,0.023
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.14,0.083,0.036,0.0,0.012,0.107,19550160,219763627,0.058,0.005
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.61,0.046,0.029,0.0,0.0,0.075,,219763627,,
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.27,0.015,0.059,0.0,0.0,0.074,5416080,219763627,0.05,0.014
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Mitchell Robinson,Boston Celtics,Rotation / depth,perimeter_defense,0.62,0.038,0.039,0.0,0.008,0.069,15044000,219763627,0.041,0.005
-Golden State Warriors,0.9,Stephen Curry,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.34,0.024,0.044,0.0,0.0,0.068,5477000,219763627,0.062,0.012
-Houston Rockets,6.0,Alperen Sengun,shooting,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.065,0.028,0.0,0.0,0.093,5602689,200412291,0.198,0.017
-Houston Rockets,6.0,Alperen Sengun,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.056,0.036,0.0,0.0,0.092,9187500,200412291,0.116,0.01
-Houston Rockets,6.0,Alperen Sengun,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.05,0.05,0.0,0.01,0.089,19550160,200412291,0.058,0.005
-Houston Rockets,6.0,Alperen Sengun,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,perimeter_defense,1.08,0.052,0.008,0.0,0.0,0.061,5791680,200412291,0.186,0.01
-Houston Rockets,6.0,Alperen Sengun,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.008,0.032,0.0,0.004,0.036,2449421,200412291,0.265,0.015
-Houston Rockets,6.0,Alperen Sengun,shooting,Braden Smith,Indiana Pacers,Rotation / depth,perimeter_defense,0.79,0.016,0.019,0.0,0.003,0.031,,200412291,,
-Houston Rockets,6.0,Alperen Sengun,shooting,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.61,0.008,0.022,0.0,0.0,0.03,,200412291,,
-Houston Rockets,6.0,Alperen Sengun,shooting,Ziaire Williams,Los Angeles Lakers,Rotation / depth,shooting,0.41,-0.011,0.04,0.0,0.0,0.029,2449421,200412291,0.166,0.012
-Indiana Pacers,-3.4,No clear star in this data,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.142,0.099,0.0,0.0,0.241,9187500,203715395,0.116,0.026
-Indiana Pacers,-3.4,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.156,0.078,0.0,0.0,0.234,5602689,203715395,0.198,0.042
-Indiana Pacers,-3.4,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.117,0.108,0.0,0.022,0.202,19550160,203715395,0.058,0.01
-Indiana Pacers,-3.4,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.131,0.068,0.0,0.0,0.199,5791680,203715395,0.186,0.034
-Indiana Pacers,-3.4,No clear star in this data,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.34,0.067,0.076,0.0,0.0,0.143,5477000,203715395,0.062,0.026
-Indiana Pacers,-3.4,No clear star in this data,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,0.053,0.089,0.0,0.0,0.142,4002000,203715395,0.062,0.035
-Indiana Pacers,-3.4,No clear star in this data,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,shooting,0.0,0.03,0.109,0.0,0.0,0.139,5477000,203715395,0.001,0.025
-Indiana Pacers,-3.4,No clear star in this data,shooting,Julian Champagnie,San Antonio Spurs,Rotation / depth,shooting,0.13,0.049,0.089,0.0,0.0,0.138,13888889,203715395,0.009,0.01
-LA Clippers,-4.4,No clear star in this data,rebounding,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.11,0.144,0.055,0.0,0.0,0.2,5602689,208331243,0.198,0.036
-LA Clippers,-4.4,No clear star in this data,rebounding,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,1.08,0.121,0.049,0.0,0.0,0.17,5791680,208331243,0.186,0.029
-LA Clippers,-4.4,No clear star in this data,rebounding,Alex Caruso,Oklahoma City Thunder,Rotation / depth,rebounding,1.14,0.108,0.049,0.0,0.016,0.142,19550160,208331243,0.058,0.007
-LA Clippers,-4.4,No clear star in this data,rebounding,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,0.34,0.056,0.049,0.0,0.0,0.106,5477000,208331243,0.062,0.019
-LA Clippers,-4.4,No clear star in this data,rebounding,Derik Queen,New Orleans Pelicans,Rotation / depth,rebounding,0.27,0.044,0.056,0.0,0.0,0.101,5416080,208331243,0.05,0.019
-LA Clippers,-4.4,No clear star in this data,rebounding,Dean Wade,Philadelphia 76ers,Rotation / depth,rebounding,0.42,0.071,0.03,0.0,0.0,0.1,9000000,208331243,0.047,0.011
-LA Clippers,-4.4,No clear star in this data,rebounding,Mitchell Robinson,Boston Celtics,Rotation / depth,rebounding,0.62,0.061,0.046,0.0,0.011,0.096,15044000,208331243,0.041,0.006
-LA Clippers,-4.4,No clear star in this data,rebounding,Quenton Jackson,Indiana Pacers,Elite role player,rebounding,0.61,0.074,0.02,0.0,0.0,0.094,,208331243,,
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.051,0.044,0.0,0.0,0.094,9187500,201332759,0.116,0.01
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.14,0.045,0.055,0.0,0.01,0.09,19550160,201332759,0.058,0.005
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.059,0.026,0.0,0.0,0.085,5602689,201332759,0.198,0.015
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.047,0.026,0.0,0.0,0.073,5791680,201332759,0.186,0.013
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,playmaking,0.41,-0.014,0.054,0.0,0.0,0.04,2150917,201332759,0.189,0.019
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Braden Smith,Indiana Pacers,Rotation / depth,playmaking,0.79,0.013,0.03,0.0,0.004,0.038,,201332759,,
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.61,0.003,0.033,0.0,0.0,0.036,,201332759,,
-Los Angeles Lakers,3.5,Walker Kessler,playmaking,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.005,0.036,0.0,0.004,0.036,2449421,201332759,0.265,0.015
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.068,0.101,0.0,0.0,0.169,5602689,164530150,0.198,0.03
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.055,0.075,0.0,0.0,0.13,5791680,164530150,0.186,0.022
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Brook Lopez,LA Clippers,Elite role player,rim_protection,1.07,0.06,0.06,0.0,0.0,0.12,9187500,164530150,0.116,0.013
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.14,0.052,0.08,0.0,0.013,0.119,19550160,164530150,0.058,0.006
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Mitchell Robinson,Boston Celtics,Rotation / depth,perimeter_defense,0.62,0.01,0.088,0.0,0.01,0.088,15044000,164530150,0.041,0.006
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.34,-0.015,0.1,0.0,0.0,0.084,5477000,164530150,0.062,0.015
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.27,-0.02,0.093,0.0,0.0,0.073,5416080,164530150,0.05,0.013
-Memphis Grizzlies,5.3,Cam Spencer,perimeter_defense,Braden Smith,Indiana Pacers,Rotation / depth,perimeter_defense,0.79,0.018,0.057,0.0,0.007,0.067,,164530150,,
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.038,0.067,0.0,0.0,0.105,9187500,214596273,0.116,0.011
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.11,0.045,0.036,0.0,0.0,0.082,5602689,214596273,0.198,0.015
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.035,0.055,0.0,0.009,0.082,19550160,214596273,0.058,0.004
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,1.08,0.036,0.026,0.0,0.0,0.062,5791680,214596273,0.186,0.011
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,-0.003,0.058,0.0,0.005,0.049,2449421,214596273,0.265,0.02
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,-0.025,0.057,0.0,0.0,0.032,2150917,214596273,0.189,0.015
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Mitchell Robinson,Boston Celtics,Rotation / depth,rebounding,0.62,-0.006,0.024,0.0,0.002,0.017,15044000,214596273,0.041,0.001
-Miami Heat,0.9,Giannis Antetokounmpo,shooting,Luka Garza,Boston Celtics,Rotation / depth,shooting,0.21,-0.026,0.042,0.0,0.002,0.014,2801346,214596273,0.075,0.005
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.161,0.032,0.0,0.0,0.194,5602689,204757666,0.198,0.035
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Brook Lopez,LA Clippers,Elite role player,rim_protection,1.07,0.147,0.033,0.0,0.0,0.18,9187500,204757666,0.116,0.02
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.135,0.022,0.0,0.0,0.157,5791680,204757666,0.186,0.027
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.121,0.047,0.0,0.017,0.151,19550160,204757666,0.058,0.008
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Dean Wade,Philadelphia 76ers,Rotation / depth,rim_protection,0.42,0.088,0.026,0.0,0.0,0.113,9000000,204757666,0.047,0.013
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.61,0.088,0.02,0.0,0.0,0.108,,204757666,,
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rim_protection,0.34,0.072,0.033,0.0,0.0,0.105,5477000,204757666,0.062,0.019
-Milwaukee Bucks,-8.0,No clear star in this data,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,0.057,0.04,0.0,0.0,0.097,4002000,204757666,0.062,0.024
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.105,0.045,0.0,0.0,0.15,9187500,215327417,0.116,0.016
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.116,0.019,0.0,0.0,0.136,5602689,215327417,0.198,0.024
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.088,0.049,0.0,0.014,0.123,19550160,215327417,0.058,0.006
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.097,0.014,0.0,0.0,0.11,5791680,215327417,0.186,0.019
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.031,0.047,0.0,0.0,0.078,2150917,215327417,0.189,0.036
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.61,0.051,0.017,0.0,0.0,0.068,,215327417,,
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,0.019,0.047,0.0,0.0,0.066,4002000,215327417,0.062,0.017
-Minnesota Timberwolves,6.4,No clear star in this data,shooting,Ziaire Williams,Los Angeles Lakers,Rotation / depth,shooting,0.41,0.035,0.03,0.0,0.0,0.066,2449421,215327417,0.166,0.027
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.12,0.093,0.0,0.0,0.213,9187500,196558353,0.116,0.023
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.1,0.086,0.0,0.019,0.167,19550160,196558353,0.058,0.009
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.11,0.133,0.032,0.0,0.0,0.165,5602689,196558353,0.198,0.029
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,1.08,0.111,0.032,0.0,0.0,0.142,5791680,196558353,0.186,0.025
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.044,0.081,0.0,0.0,0.125,2150917,196558353,0.189,0.058
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,0.018,0.1,0.0,0.0,0.118,13260317,196558353,0.006,0.009
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Julian Champagnie,San Antonio Spurs,Rotation / depth,shooting,0.13,0.025,0.092,0.0,0.0,0.118,13888889,196558353,0.009,0.008
-New Orleans Pelicans,-4.1,Zion Williamson,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.047,0.075,0.0,0.012,0.109,2449421,196558353,0.265,0.045
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.111,0.101,0.0,0.0,0.212,5602689,220398177,0.198,0.038
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Brook Lopez,LA Clippers,Elite role player,bench_scoring,1.07,0.1,0.084,0.0,0.0,0.184,9187500,220398177,0.116,0.02
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Aday Mara,Oklahoma City Thunder,Elite role player,bench_scoring,1.08,0.092,0.075,0.0,0.0,0.168,5791680,220398177,0.186,0.029
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.14,0.084,0.087,0.0,0.017,0.154,19550160,220398177,0.058,0.008
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Quenton Jackson,Indiana Pacers,Elite role player,perimeter_defense,0.61,0.046,0.073,0.0,0.0,0.119,,220398177,,
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Derik Queen,New Orleans Pelicans,Rotation / depth,bench_scoring,0.27,0.016,0.101,0.0,0.0,0.117,5416080,220398177,0.05,0.022
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Nolan Traore,Brooklyn Nets,Rotation / depth,bench_scoring,0.25,0.014,0.096,0.0,0.0,0.11,4002000,220398177,0.062,0.027
-New York Knicks,3.1,Karl-Anthony Towns,bench_scoring,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.34,0.025,0.082,0.0,0.0,0.107,5477000,220398177,0.062,0.019
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.077,0.06,0.0,0.0,0.137,9187500,218062392,0.116,0.015
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.087,0.033,0.0,0.0,0.12,5602689,218062392,0.198,0.021
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.021,0.047,0.0,0.007,0.061,2449421,218062392,0.265,0.025
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.008,0.05,0.0,0.0,0.058,2150917,218062392,0.189,0.027
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,-0.006,0.056,0.0,0.0,0.05,4002000,218062392,0.062,0.012
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Ziaire Williams,Los Angeles Lakers,Rotation / depth,shooting,0.41,0.009,0.041,0.0,0.0,0.05,2449421,218062392,0.166,0.021
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,-0.024,0.07,0.0,0.0,0.046,13260317,218062392,0.006,0.003
-Oklahoma City Thunder,2.5,Isaiah Hartenstein,shooting,Quenton Jackson,Indiana Pacers,Elite role player,shooting,0.61,0.027,0.017,0.0,0.0,0.044,,218062392,,
-Orlando Magic,-3.3,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.16,0.05,0.0,0.0,0.21,5602689,228574492,0.198,0.037
-Orlando Magic,-3.3,No clear star in this data,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.145,0.059,0.0,0.0,0.204,9187500,228574492,0.116,0.022
-Orlando Magic,-3.3,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.119,0.084,0.0,0.02,0.183,19550160,228574492,0.058,0.009
-Orlando Magic,-3.3,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.134,0.029,0.0,0.0,0.163,5791680,228574492,0.186,0.028
-Orlando Magic,-3.3,No clear star in this data,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,0.056,0.082,0.0,0.0,0.138,4002000,228574492,0.062,0.035
-Orlando Magic,-3.3,No clear star in this data,shooting,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.61,0.086,0.051,0.0,0.0,0.137,,228574492,,
-Orlando Magic,-3.3,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.02,0.038,0.091,0.0,0.0,0.129,10714286,228574492,0.002,0.012
-Orlando Magic,-3.3,No clear star in this data,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.065,0.061,0.0,0.0,0.126,2150917,228574492,0.189,0.059
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.072,0.067,0.0,0.0,0.139,9187500,224388069,0.116,0.015
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Paul Reed,Detroit Pistons,Elite role player,rebounding,1.11,0.081,0.057,0.0,0.0,0.138,5602689,224388069,0.198,0.025
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.062,0.072,0.0,0.013,0.12,19550160,224388069,0.058,0.006
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rebounding,1.08,0.066,0.043,0.0,0.0,0.109,5791680,224388069,0.186,0.019
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,0.017,0.052,0.0,0.007,0.062,2449421,224388069,0.265,0.025
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Mitchell Robinson,Boston Celtics,Rotation / depth,rebounding,0.62,0.018,0.05,0.0,0.007,0.061,15044000,224388069,0.041,0.004
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,rebounding,0.34,-0.003,0.054,0.0,0.0,0.051,5477000,224388069,0.062,0.009
-Philadelphia 76ers,1.3,Tyrese Maxey,shooting,Ziaire Williams,Los Angeles Lakers,Rotation / depth,shooting,0.41,0.004,0.042,0.0,0.0,0.046,2449421,224388069,0.166,0.019
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.125,0.088,0.0,0.0,0.213,5602689,220200885,0.198,0.038
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Brook Lopez,LA Clippers,Elite role player,rim_protection,1.07,0.113,0.083,0.0,0.0,0.196,9187500,220200885,0.116,0.021
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.104,0.067,0.0,0.0,0.171,5791680,220200885,0.186,0.03
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.14,0.094,0.081,0.0,0.017,0.157,19550160,220200885,0.058,0.008
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,perimeter_defense,0.34,0.038,0.075,0.0,0.0,0.114,5477000,220200885,0.062,0.021
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.27,0.028,0.085,0.0,0.0,0.113,5416080,220200885,0.05,0.021
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Nolan Traore,Brooklyn Nets,Rotation / depth,perimeter_defense,0.25,0.026,0.081,0.0,0.0,0.108,4002000,220200885,0.062,0.027
-Phoenix Suns,0.9,Miles Bridges,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,0.051,0.057,0.0,0.0,0.108,9000000,220200885,0.047,0.012
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.093,0.036,0.0,0.0,0.129,5602689,214578330,0.198,0.023
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.14,0.07,0.045,0.0,0.012,0.104,19550160,214578330,0.058,0.005
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.076,0.027,0.0,0.0,0.103,5791680,214578330,0.186,0.018
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Brook Lopez,LA Clippers,Elite role player,playmaking,1.07,0.082,0.02,0.0,0.0,0.102,9187500,214578330,0.116,0.011
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.61,0.031,0.034,0.0,0.0,0.065,,214578330,,
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Braden Smith,Indiana Pacers,Rotation / depth,playmaking,0.79,0.031,0.035,0.0,0.007,0.059,,214578330,,
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Mitchell Robinson,Boston Celtics,Rotation / depth,perimeter_defense,0.62,0.026,0.031,0.0,0.006,0.052,15044000,214578330,0.041,0.003
-Portland Trail Blazers,5.2,Donovan Clingan,playmaking,Al Horford,Golden State Warriors,Rotation / depth,playmaking,0.43,0.012,0.036,0.0,0.005,0.043,6822000,214578330,0.062,0.006
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,perimeter_defense,1.11,0.192,0.151,0.0,0.0,0.344,5602689,190672231,0.198,0.061
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Brook Lopez,LA Clippers,Elite role player,rim_protection,1.07,0.176,0.14,0.0,0.0,0.316,9187500,190672231,0.116,0.034
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.161,0.121,0.0,0.0,0.282,5791680,190672231,0.186,0.049
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,perimeter_defense,1.14,0.143,0.143,0.0,0.029,0.258,19550160,190672231,0.058,0.013
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,perimeter_defense,0.27,0.085,0.149,0.0,0.0,0.234,5416080,190672231,0.05,0.043
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Nolan Traore,Brooklyn Nets,Rotation / depth,perimeter_defense,0.25,0.083,0.142,0.0,0.0,0.225,4002000,190672231,0.062,0.056
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Dean Wade,Philadelphia 76ers,Rotation / depth,perimeter_defense,0.42,0.119,0.1,0.0,0.0,0.219,9000000,190672231,0.047,0.024
-Sacramento Kings,-7.0,No clear star in this data,perimeter_defense,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,perimeter_defense,0.09,0.073,0.14,0.0,0.0,0.212,6649560,190672231,0.014,0.032
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.016,0.074,0.0,0.0,0.091,9187500,196130556,0.116,0.01
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.018,0.059,0.0,0.008,0.07,19550160,196130556,0.058,0.004
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Paul Reed,Detroit Pistons,Elite role player,rim_protection,1.11,0.022,0.04,0.0,0.0,0.062,5602689,196130556,0.198,0.011
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.016,0.031,0.0,0.0,0.047,5791680,196130556,0.186,0.008
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,shooting,0.65,-0.016,0.057,0.0,0.004,0.037,2449421,196130556,0.265,0.015
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,-0.043,0.055,0.0,0.0,0.012,2150917,196130556,0.189,0.006
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Braden Smith,Indiana Pacers,Rotation / depth,shooting,0.79,-0.007,0.018,0.0,0.001,0.01,,196130556,,
-San Antonio Spurs,7.4,Victor Wembanyama,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,-0.061,0.068,0.0,0.0,0.007,4002000,196130556,0.062,0.002
-Toronto Raptors,-1.4,No clear star in this data,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.112,0.074,0.0,0.0,0.186,9187500,201188888,0.116,0.02
-Toronto Raptors,-1.4,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.093,0.082,0.0,0.017,0.157,19550160,201188888,0.058,0.008
-Toronto Raptors,-1.4,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.124,0.031,0.0,0.0,0.155,5602689,201188888,0.198,0.028
-Toronto Raptors,-1.4,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,rim_protection,1.08,0.103,0.028,0.0,0.0,0.131,5791680,201188888,0.186,0.023
-Toronto Raptors,-1.4,No clear star in this data,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.037,0.071,0.0,0.0,0.108,2150917,201188888,0.189,0.05
-Toronto Raptors,-1.4,No clear star in this data,shooting,Julian Champagnie,San Antonio Spurs,Rotation / depth,shooting,0.13,0.016,0.08,0.0,0.0,0.096,13888889,201188888,0.009,0.007
-Toronto Raptors,-1.4,No clear star in this data,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,0.01,0.084,0.0,0.0,0.094,13260317,201188888,0.006,0.007
-Toronto Raptors,-1.4,No clear star in this data,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,0.025,0.069,0.0,0.0,0.094,4002000,201188888,0.062,0.024
-Utah Jazz,-4.0,Mo Bamba,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.145,0.076,0.0,0.0,0.221,9187500,179414010,0.116,0.024
-Utah Jazz,-4.0,Mo Bamba,shooting,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.159,0.054,0.0,0.0,0.214,5602689,179414010,0.198,0.038
-Utah Jazz,-4.0,Mo Bamba,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,playmaking,1.14,0.119,0.096,0.0,0.021,0.193,19550160,179414010,0.058,0.01
-Utah Jazz,-4.0,Mo Bamba,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.133,0.038,0.0,0.0,0.172,5791680,179414010,0.186,0.03
-Utah Jazz,-4.0,Mo Bamba,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.065,0.095,0.0,0.0,0.16,2150917,179414010,0.189,0.074
-Utah Jazz,-4.0,Mo Bamba,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,playmaking,0.25,0.055,0.101,0.0,0.0,0.157,4002000,179414010,0.062,0.039
-Utah Jazz,-4.0,Mo Bamba,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.02,0.038,0.116,0.0,0.0,0.154,10714286,179414010,0.002,0.014
-Utah Jazz,-4.0,Mo Bamba,shooting,Quenton Jackson,Indiana Pacers,Elite role player,playmaking,0.61,0.086,0.061,0.0,0.0,0.147,,179414010,,
-Washington Wizards,-3.7,Anthony Davis,shooting,Brook Lopez,LA Clippers,Elite role player,shooting,1.07,0.126,0.094,0.0,0.0,0.221,9187500,191462525,0.116,0.024
-Washington Wizards,-3.7,Anthony Davis,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,shooting,1.14,0.105,0.119,0.0,0.022,0.202,19550160,191462525,0.058,0.01
-Washington Wizards,-3.7,Anthony Davis,shooting,Paul Reed,Detroit Pistons,Elite role player,playmaking,1.11,0.14,0.056,0.0,0.0,0.195,5602689,191462525,0.198,0.035
-Washington Wizards,-3.7,Anthony Davis,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,shooting,0.41,0.049,0.117,0.0,0.0,0.166,2150917,191462525,0.189,0.077
-Washington Wizards,-3.7,Anthony Davis,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,shooting,0.02,0.019,0.147,0.0,0.0,0.166,10714286,191462525,0.002,0.016
-Washington Wizards,-3.7,Anthony Davis,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,shooting,0.25,0.039,0.122,0.0,0.0,0.161,4002000,191462525,0.062,0.04
-Washington Wizards,-3.7,Anthony Davis,shooting,Klay Thompson,Miami Heat,Rotation / depth,shooting,0.08,0.025,0.128,0.0,0.0,0.153,13260317,191462525,0.006,0.012
-Washington Wizards,-3.7,Anthony Davis,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,playmaking,1.08,0.116,0.037,0.0,0.0,0.153,5791680,191462525,0.186,0.026
+team,team_net,star,top_need,target,target_team,target_tier,target_age,fills_need,target_rpr,quality_gain,fit_gain,usage_penalty,availability_discount,trade_score,target_salary,payroll_before,rpr_per_million,trade_score_per_million
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.12,0.056,0.0,0.023,0.209,19550160,198503800,0.075,0.011
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.128,0.035,0.0,0.0,0.197,5602689,198503800,0.213,0.035
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.1,0.039,0.0,0.0,0.178,5791680,198503800,0.186,0.031
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.113,0.032,0.0,0.0,0.177,19500000,198503800,0.057,0.009
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.01,0.067,0.0,0.0,0.143,13260317,198503800,0.008,0.011
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.05,0.043,0.0,0.014,0.123,2449421,198503800,0.329,0.05
+Atlanta Hawks,0.4,Dyson Daniels,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.009,0.054,0.0,0.0,0.117,5477000,198503800,0.018,0.021
+Atlanta Hawks,0.4,Dyson Daniels,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rim_protection,0.38,0.038,0.035,0.0,0.0,0.108,5477000,198503800,0.07,0.02
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.137,0.038,0.0,0.0,0.213,5602689,198722406,0.213,0.038
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.122,0.029,0.0,0.0,0.181,19500000,198722406,0.057,0.009
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,perimeter_defense,1.46,0.127,0.033,0.0,0.019,0.174,19550160,198722406,0.075,0.009
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.108,0.025,0.0,0.0,0.158,5791680,198722406,0.186,0.027
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,21,perimeter_defense,0.39,0.043,0.037,0.0,0.0,0.117,5416080,198722406,0.072,0.022
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,perimeter_defense,0.38,0.046,0.031,0.0,0.0,0.109,5477000,198722406,0.07,0.02
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Caleb Martin,Dallas Mavericks,Elite role player,31,perimeter_defense,0.84,0.084,0.018,0.0,0.012,0.107,10001493,198722406,0.084,0.011
+Boston Celtics,3.8,No clear star in this data,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,28,perimeter_defense,0.59,0.061,0.02,0.0,0.0,0.101,,198722406,,
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.147,0.039,0.0,0.0,0.224,5602689,160105139,0.213,0.04
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.135,0.045,0.0,0.022,0.201,19550160,160105139,0.075,0.01
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.131,0.029,0.0,0.0,0.189,19500000,160105139,0.057,0.01
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.117,0.029,0.0,0.0,0.175,5791680,160105139,0.186,0.03
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rim_protection,0.39,0.051,0.041,0.0,0.0,0.132,5416080,160105139,0.072,0.024
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.025,0.049,0.0,0.0,0.124,5477000,160105139,0.018,0.023
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.028,0.046,0.0,0.0,0.119,13260317,160105139,0.008,0.009
+Brooklyn Nets,-6.2,Day'Ron Sharpe,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rim_protection,0.38,0.055,0.03,0.0,0.0,0.116,5477000,160105139,0.07,0.021
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,Paul Reed,Detroit Pistons,Elite role player,27,playmaking,1.19,0.258,0.052,0.0,0.0,0.363,5602689,170575884,0.213,0.065
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,playmaking,1.46,0.22,0.086,0.0,0.039,0.353,19550160,170575884,0.075,0.018
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,playmaking,0.1,0.124,0.097,0.0,0.0,0.318,5477000,170575884,0.018,0.058
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,Collin Gillespie,Phoenix Suns,Rotation / depth,27,playmaking,0.15,0.14,0.088,0.0,0.0,0.316,10714286,170575884,0.014,0.03
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,De'Aaron Fox,San Antonio Spurs,Rotation / depth,28,playmaking,0.14,0.163,0.076,0.0,0.0,0.315,49800000,170575884,0.003,0.006
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.133,0.083,0.0,0.0,0.299,13260317,170575884,0.008,0.023
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,Jakob Poeltl,Toronto Raptors,Elite role player,31,playmaking,1.11,0.238,0.03,0.0,0.0,0.298,19500000,170575884,0.057,0.015
+Charlotte Hornets,-5.8,No clear star in this data,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,21,playmaking,1.08,0.214,0.039,0.0,0.0,0.292,5791680,170575884,0.186,0.05
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,perimeter_defense,1.46,0.117,0.058,0.0,0.023,0.209,19550160,164314296,0.075,0.011
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.124,0.04,0.0,0.0,0.205,5602689,164314296,0.213,0.037
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.11,0.036,0.0,0.0,0.182,19500000,164314296,0.057,0.009
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,28,perimeter_defense,0.59,0.05,0.044,0.0,0.0,0.138,,164314296,,
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Caleb Martin,Dallas Mavericks,Elite role player,31,perimeter_defense,0.84,0.073,0.039,0.0,0.015,0.136,10001493,164314296,0.084,0.014
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,21,playmaking,1.08,0.097,0.017,0.0,0.0,0.131,5791680,164314296,0.186,0.023
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Collin Gillespie,Phoenix Suns,Rotation / depth,27,playmaking,0.15,0.011,0.055,0.0,0.0,0.121,10714286,164314296,0.014,0.011
+Chicago Bulls,-3.6,Jalen Smith,playmaking,Derik Queen,New Orleans Pelicans,Rotation / depth,21,perimeter_defense,0.39,0.032,0.043,0.0,0.0,0.118,5416080,164314296,0.072,0.022
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.077,0.042,0.0,0.0,0.161,5602689,208969955,0.213,0.029
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.065,0.037,0.0,0.0,0.139,19500000,208969955,0.057,0.007
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,perimeter_defense,1.46,0.082,0.036,0.0,0.015,0.138,19550160,208969955,0.075,0.007
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,21,perimeter_defense,1.08,0.057,0.013,0.0,0.0,0.083,5791680,208969955,0.186,0.014
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Caleb Martin,Dallas Mavericks,Elite role player,31,perimeter_defense,0.84,0.033,0.026,0.0,0.009,0.078,10001493,208969955,0.084,0.008
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Mitchell Robinson,Boston Celtics,Rotation / depth,28,perimeter_defense,0.61,0.01,0.035,0.0,0.008,0.071,15044000,208969955,0.041,0.005
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,perimeter_defense,0.38,-0.009,0.04,0.0,0.0,0.07,5477000,208969955,0.07,0.013
+Cleveland Cavaliers,0.5,Evan Mobley,perimeter_defense,Quenton Jackson,Indiana Pacers,Elite role player,28,perimeter_defense,0.59,0.011,0.029,0.0,0.0,0.069,,208969955,,
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.074,0.049,0.0,0.017,0.155,19550160,196163906,0.075,0.008
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.067,0.017,0.0,0.0,0.101,5602689,196163906,0.213,0.018
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.015,0.047,0.0,0.011,0.097,2449421,196163906,0.329,0.04
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,-0.047,0.07,0.0,0.0,0.093,13260317,196163906,0.008,0.007
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.048,0.018,0.0,0.0,0.084,5791680,196163906,0.186,0.015
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.056,0.013,0.0,0.0,0.081,19500000,196163906,0.057,0.004
+Dallas Mavericks,2.0,Cooper Flagg,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.045,0.058,0.0,0.0,0.072,5477000,196163906,0.018,0.013
+Dallas Mavericks,2.0,Cooper Flagg,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,22,shooting,0.29,-0.023,0.046,0.0,0.007,0.062,2150917,196163906,0.135,0.029
+Denver Nuggets,1.4,Nikola Jokic,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.083,0.098,0.0,0.028,0.251,19550160,219140512,0.075,0.013
+Denver Nuggets,1.4,Nikola Jokic,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,-0.036,0.125,0.0,0.0,0.214,13260317,219140512,0.008,0.016
+Denver Nuggets,1.4,Nikola Jokic,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.034,0.116,0.0,0.0,0.198,5477000,219140512,0.018,0.036
+Denver Nuggets,1.4,Nikola Jokic,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.022,0.085,0.0,0.019,0.172,2449421,219140512,0.329,0.07
+Denver Nuggets,1.4,Nikola Jokic,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,-0.032,0.099,0.0,0.0,0.167,10714286,219140512,0.014,0.016
+Denver Nuggets,1.4,Nikola Jokic,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.079,0.036,0.0,0.0,0.15,5602689,219140512,0.213,0.027
+Denver Nuggets,1.4,Nikola Jokic,shooting,Buddy Hield,Chicago Bulls,Rotation / depth,33,shooting,0.04,-0.032,0.098,0.0,0.016,0.147,9658536,219140512,0.004,0.015
+Denver Nuggets,1.4,Nikola Jokic,shooting,Javon Small,Memphis Grizzlies,Rotation / depth,23,shooting,0.32,-0.012,0.087,0.0,0.016,0.145,,219140512,,
+Detroit Pistons,4.0,Ausar Thompson,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.084,0.059,0.0,0.02,0.183,19550160,193324469,0.075,0.009
+Detroit Pistons,4.0,Ausar Thompson,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,-0.034,0.085,0.0,0.0,0.137,13260317,193324469,0.008,0.01
+Detroit Pistons,4.0,Ausar Thompson,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.023,0.06,0.0,0.014,0.129,2449421,193324469,0.329,0.053
+Detroit Pistons,4.0,Ausar Thompson,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.033,0.078,0.0,0.0,0.123,5477000,193324469,0.018,0.022
+Detroit Pistons,4.0,Ausar Thompson,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,-0.03,0.07,0.0,0.0,0.109,10714286,193324469,0.014,0.01
+Detroit Pistons,4.0,Ausar Thompson,shooting,Javon Small,Memphis Grizzlies,Rotation / depth,23,shooting,0.32,-0.011,0.064,0.0,0.012,0.106,,193324469,,
+Detroit Pistons,4.0,Ausar Thompson,shooting,Buddy Hield,Chicago Bulls,Rotation / depth,33,shooting,0.04,-0.031,0.074,0.0,0.012,0.105,9658536,193324469,0.004,0.011
+Detroit Pistons,4.0,Ausar Thompson,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,22,shooting,0.29,-0.013,0.064,0.0,0.012,0.104,2150917,193324469,0.135,0.048
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Paul Reed,Detroit Pistons,Elite role player,27,bench_scoring,1.19,0.135,0.031,0.0,0.0,0.197,5602689,219763627,0.213,0.035
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,bench_scoring,1.46,0.125,0.026,0.0,0.018,0.16,19550160,219763627,0.075,0.008
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Aday Mara,Oklahoma City Thunder,Elite role player,21,bench_scoring,1.08,0.106,0.022,0.0,0.0,0.15,5791680,219763627,0.186,0.026
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Jakob Poeltl,Toronto Raptors,Elite role player,31,bench_scoring,1.11,0.12,0.009,0.0,0.0,0.137,19500000,219763627,0.057,0.007
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Derik Queen,New Orleans Pelicans,Rotation / depth,21,bench_scoring,0.39,0.041,0.033,0.0,0.0,0.108,5416080,219763627,0.072,0.02
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,bench_scoring,0.81,0.054,0.032,0.0,0.012,0.106,2449421,219763627,0.329,0.043
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Nolan Traore,Brooklyn Nets,Rotation / depth,20,bench_scoring,0.3,0.034,0.041,0.0,0.012,0.104,4002000,219763627,0.076,0.026
+Golden State Warriors,0.7,Stephen Curry,bench_scoring,Quenton Jackson,Indiana Pacers,Elite role player,28,bench_scoring,0.59,0.059,0.023,0.0,0.0,0.104,,219763627,,
+Houston Rockets,6.2,Alperen Sengun,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.074,0.051,0.0,0.018,0.158,19550160,200412291,0.075,0.008
+Houston Rockets,6.2,Alperen Sengun,shooting,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.067,0.031,0.0,0.0,0.129,5602689,200412291,0.213,0.023
+Houston Rockets,6.2,Alperen Sengun,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.056,0.026,0.0,0.0,0.107,19500000,200412291,0.057,0.005
+Houston Rockets,6.2,Alperen Sengun,shooting,Caleb Martin,Dallas Mavericks,Elite role player,31,shooting,0.84,0.025,0.032,0.0,0.009,0.08,10001493,200412291,0.084,0.008
+Houston Rockets,6.2,Alperen Sengun,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.044,0.06,0.0,0.0,0.076,5477000,200412291,0.018,0.014
+Houston Rockets,6.2,Alperen Sengun,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,-0.043,0.057,0.0,0.0,0.071,10714286,200412291,0.014,0.007
+Houston Rockets,6.2,Alperen Sengun,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.015,0.03,0.0,0.008,0.068,2449421,200412291,0.329,0.028
+Houston Rockets,6.2,Alperen Sengun,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,perimeter_defense,1.08,0.048,0.008,0.0,0.0,0.064,5791680,200412291,0.186,0.011
+Indiana Pacers,-4.0,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.153,0.12,0.0,0.039,0.354,19550160,203715395,0.075,0.018
+Indiana Pacers,-4.0,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.171,0.081,0.0,0.0,0.333,5602689,203715395,0.213,0.059
+Indiana Pacers,-4.0,No clear star in this data,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.154,0.074,0.0,0.0,0.303,19500000,203715395,0.057,0.016
+Indiana Pacers,-4.0,No clear star in this data,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.047,0.12,0.0,0.0,0.288,5477000,203715395,0.018,0.053
+Indiana Pacers,-4.0,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.138,0.071,0.0,0.0,0.28,5791680,203715395,0.186,0.048
+Indiana Pacers,-4.0,No clear star in this data,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.051,0.1,0.0,0.0,0.25,13260317,203715395,0.008,0.019
+Indiana Pacers,-4.0,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,0.056,0.093,0.0,0.0,0.243,10714286,203715395,0.014,0.023
+Indiana Pacers,-4.0,No clear star in this data,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rim_protection,0.39,0.072,0.082,0.0,0.0,0.235,5416080,203715395,0.072,0.043
+LA Clippers,-4.9,No clear star in this data,rim_protection,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.153,0.063,0.0,0.0,0.28,5602689,208331243,0.213,0.05
+LA Clippers,-4.9,No clear star in this data,rim_protection,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.138,0.053,0.0,0.0,0.244,19500000,208331243,0.057,0.013
+LA Clippers,-4.9,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.122,0.053,0.0,0.0,0.228,5791680,208331243,0.186,0.039
+LA Clippers,-4.9,No clear star in this data,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,rim_protection,1.46,0.14,0.05,0.0,0.024,0.216,19550160,208331243,0.075,0.011
+LA Clippers,-4.9,No clear star in this data,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rim_protection,0.39,0.057,0.061,0.0,0.0,0.18,5416080,208331243,0.072,0.033
+LA Clippers,-4.9,No clear star in this data,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rim_protection,0.38,0.062,0.055,0.0,0.0,0.172,5477000,208331243,0.07,0.031
+LA Clippers,-4.9,No clear star in this data,rim_protection,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,21,rim_protection,0.25,0.049,0.052,0.0,0.0,0.154,13826040,208331243,0.018,0.011
+LA Clippers,-4.9,No clear star in this data,rim_protection,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,21,rim_protection,0.17,0.04,0.055,0.0,0.0,0.149,6649560,208331243,0.026,0.022
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,playmaking,1.46,0.079,0.049,0.0,0.018,0.16,19550160,201332759,0.075,0.008
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Paul Reed,Detroit Pistons,Elite role player,27,playmaking,1.19,0.074,0.027,0.0,0.0,0.129,5602689,201332759,0.213,0.023
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,21,playmaking,1.08,0.054,0.027,0.0,0.0,0.107,5791680,201332759,0.186,0.019
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Jakob Poeltl,Toronto Raptors,Elite role player,31,rebounding,1.11,0.062,0.019,0.0,0.0,0.1,19500000,201332759,0.057,0.005
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Javon Small,Memphis Grizzlies,Rotation / depth,23,playmaking,0.32,-0.016,0.053,0.0,0.009,0.081,,201332759,,
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Caleb Martin,Dallas Mavericks,Elite role player,31,playmaking,0.84,0.03,0.03,0.0,0.009,0.081,10001493,201332759,0.084,0.008
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.019,0.035,0.0,0.009,0.079,2449421,201332759,0.329,0.032
+Los Angeles Lakers,3.6,Walker Kessler,playmaking,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,playmaking,0.1,-0.039,0.057,0.0,0.0,0.076,5477000,201332759,0.018,0.014
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.066,0.076,0.0,0.0,0.219,5602689,164530150,0.213,0.039
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.055,0.07,0.0,0.0,0.194,19500000,164530150,0.057,0.01
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,rim_protection,1.46,0.073,0.06,0.0,0.019,0.173,19550160,164530150,0.075,0.009
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.047,0.053,0.0,0.0,0.154,5791680,164530150,0.186,0.027
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rim_protection,0.38,-0.019,0.073,0.0,0.0,0.127,5477000,164530150,0.07,0.023
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rim_protection,0.39,-0.017,0.07,0.0,0.0,0.123,5416080,164530150,0.072,0.023
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Mitchell Robinson,Boston Celtics,Rotation / depth,28,rim_protection,0.61,0.003,0.066,0.0,0.014,0.122,15044000,164530150,0.041,0.008
+Memphis Grizzlies,5.8,Cam Spencer,rim_protection,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,21,rim_protection,0.25,-0.032,0.07,0.0,0.0,0.107,13826040,164530150,0.018,0.008
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.066,0.063,0.0,0.019,0.173,19550160,214596273,0.075,0.009
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rebounding,1.19,0.056,0.041,0.0,0.0,0.139,5602689,214596273,0.213,0.025
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.009,0.062,0.0,0.013,0.12,2449421,214596273,0.329,0.049
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.054,0.081,0.0,0.0,0.109,5477000,214596273,0.018,0.02
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rebounding,1.11,0.045,0.029,0.0,0.0,0.104,19500000,214596273,0.057,0.005
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rebounding,1.08,0.038,0.03,0.0,0.0,0.098,5791680,214596273,0.186,0.017
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Caleb Martin,Dallas Mavericks,Elite role player,31,shooting,0.84,0.016,0.039,0.0,0.009,0.084,10001493,214596273,0.084,0.008
+Miami Heat,1.0,Giannis Antetokounmpo,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,22,shooting,0.29,-0.032,0.059,0.0,0.009,0.077,2150917,214596273,0.135,0.036
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.168,0.034,0.0,0.0,0.237,5602689,204757666,0.213,0.042
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,rim_protection,1.46,0.151,0.052,0.0,0.025,0.229,19550160,204757666,0.075,0.012
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.152,0.031,0.0,0.0,0.213,19500000,204757666,0.057,0.011
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.135,0.023,0.0,0.0,0.182,5791680,204757666,0.186,0.031
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.044,0.051,0.0,0.0,0.147,5477000,204757666,0.018,0.027
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rim_protection,0.38,0.075,0.034,0.0,0.0,0.143,5477000,204757666,0.07,0.026
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Dean Wade,Philadelphia 76ers,Rotation / depth,29,rim_protection,0.35,0.08,0.027,0.0,0.0,0.135,9000000,204757666,0.039,0.015
+Milwaukee Bucks,-8.2,No clear star in this data,rim_protection,Caleb Martin,Dallas Mavericks,Elite role player,31,perimeter_defense,0.84,0.11,0.019,0.0,0.015,0.134,10001493,204757666,0.084,0.013
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.114,0.047,0.0,0.021,0.187,19550160,215327417,0.075,0.01
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.119,0.022,0.0,0.0,0.163,5602689,215327417,0.213,0.029
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.105,0.015,0.0,0.0,0.136,19500000,215327417,0.057,0.007
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.093,0.015,0.0,0.0,0.123,5791680,215327417,0.186,0.021
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.001,0.054,0.0,0.0,0.108,5477000,215327417,0.018,0.02
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Caleb Martin,Dallas Mavericks,Elite role player,31,shooting,0.84,0.069,0.025,0.0,0.012,0.107,10001493,215327417,0.084,0.011
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.002,0.051,0.0,0.0,0.105,13260317,215327417,0.008,0.008
+Minnesota Timberwolves,6.3,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,0.007,0.048,0.0,0.0,0.102,10714286,215327417,0.014,0.01
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.125,0.091,0.0,0.031,0.276,19550160,196558353,0.075,0.014
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.016,0.105,0.0,0.0,0.226,13260317,196558353,0.008,0.017
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.014,0.102,0.0,0.0,0.219,5477000,196558353,0.018,0.04
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rebounding,1.19,0.134,0.034,0.0,0.0,0.201,5602689,196558353,0.213,0.036
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,0.021,0.087,0.0,0.0,0.195,10714286,196558353,0.014,0.018
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.054,0.079,0.0,0.021,0.191,2449421,196558353,0.329,0.078
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rebounding,1.11,0.119,0.029,0.0,0.0,0.178,19500000,196558353,0.057,0.009
+New Orleans Pelicans,-4.2,Zion Williamson,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rebounding,1.08,0.106,0.035,0.0,0.0,0.176,5791680,196558353,0.186,0.03
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.123,0.099,0.0,0.0,0.322,5602689,220398177,0.213,0.058
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,perimeter_defense,1.46,0.117,0.09,0.0,0.03,0.267,19550160,220398177,0.075,0.014
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.109,0.067,0.0,0.0,0.242,19500000,220398177,0.057,0.012
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.097,0.069,0.0,0.0,0.234,5791680,220398177,0.186,0.04
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,21,perimeter_defense,0.39,0.032,0.095,0.0,0.0,0.222,5416080,220398177,0.072,0.041
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,perimeter_defense,0.38,0.034,0.083,0.0,0.0,0.2,5477000,220398177,0.07,0.037
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,perimeter_defense,0.1,0.005,0.097,0.0,0.0,0.198,5477000,220398177,0.018,0.036
+New York Knicks,3.6,Karl-Anthony Towns,perimeter_defense,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,21,perimeter_defense,0.17,0.013,0.09,0.0,0.0,0.193,6649560,220398177,0.026,0.029
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.091,0.037,0.0,0.0,0.165,5602689,218062392,0.213,0.029
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.078,0.03,0.0,0.0,0.138,19500000,218062392,0.057,0.007
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.024,0.075,0.0,0.0,0.127,5477000,218062392,0.018,0.023
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,-0.025,0.069,0.0,0.0,0.114,13260317,218062392,0.008,0.009
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.029,0.049,0.0,0.013,0.113,2449421,218062392,0.329,0.046
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,-0.02,0.063,0.0,0.0,0.107,10714286,218062392,0.014,0.01
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Caleb Martin,Dallas Mavericks,Elite role player,31,shooting,0.84,0.045,0.036,0.0,0.012,0.105,10001493,218062392,0.084,0.01
+Oklahoma City Thunder,2.3,Isaiah Hartenstein,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,20,shooting,0.3,-0.004,0.054,0.0,0.01,0.093,4002000,218062392,0.076,0.023
+Orlando Magic,-3.9,No clear star in this data,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.154,0.092,0.0,0.034,0.305,19550160,228574492,0.075,0.016
+Orlando Magic,-3.9,No clear star in this data,shooting,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.172,0.054,0.0,0.0,0.281,5602689,228574492,0.213,0.05
+Orlando Magic,-3.9,No clear star in this data,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.048,0.105,0.0,0.0,0.258,5477000,228574492,0.018,0.047
+Orlando Magic,-3.9,No clear star in this data,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,0.057,0.092,0.0,0.0,0.242,10714286,228574492,0.014,0.023
+Orlando Magic,-3.9,No clear star in this data,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.156,0.04,0.0,0.0,0.235,19500000,228574492,0.057,0.012
+Orlando Magic,-3.9,No clear star in this data,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.052,0.085,0.0,0.0,0.222,13260317,228574492,0.008,0.017
+Orlando Magic,-3.9,No clear star in this data,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,20,shooting,0.3,0.066,0.086,0.0,0.024,0.214,4002000,228574492,0.076,0.054
+Orlando Magic,-3.9,No clear star in this data,shooting,Caleb Martin,Dallas Mavericks,Elite role player,31,shooting,0.84,0.114,0.059,0.0,0.023,0.208,10001493,228574492,0.084,0.021
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Paul Reed,Detroit Pistons,Elite role player,27,rebounding,1.19,0.088,0.072,0.0,0.0,0.232,5602689,224388069,0.213,0.041
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.09,0.082,0.0,0.025,0.228,19550160,224388069,0.075,0.012
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rebounding,1.11,0.076,0.066,0.0,0.0,0.208,19500000,224388069,0.057,0.011
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rebounding,1.08,0.066,0.054,0.0,0.0,0.174,5791680,224388069,0.186,0.03
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rebounding,0.38,0.001,0.068,0.0,0.0,0.137,5477000,224388069,0.07,0.025
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.026,0.081,0.0,0.0,0.136,5477000,224388069,0.018,0.025
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rebounding,0.39,0.002,0.066,0.0,0.0,0.134,5416080,224388069,0.072,0.025
+Philadelphia 76ers,2.2,Tyrese Maxey,shooting,Mitchell Robinson,Boston Celtics,Rotation / depth,28,rebounding,0.61,0.018,0.062,0.0,0.014,0.128,15044000,224388069,0.041,0.008
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.131,0.1,0.0,0.0,0.332,5602689,220200885,0.213,0.059
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,perimeter_defense,1.46,0.123,0.101,0.0,0.032,0.292,19550160,220200885,0.075,0.015
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.117,0.086,0.0,0.0,0.288,19500000,220200885,0.057,0.015
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.103,0.072,0.0,0.0,0.248,5791680,220200885,0.186,0.043
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Derik Queen,New Orleans Pelicans,Rotation / depth,21,perimeter_defense,0.39,0.038,0.093,0.0,0.0,0.223,5416080,220200885,0.072,0.041
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,perimeter_defense,0.38,0.041,0.091,0.0,0.0,0.223,5477000,220200885,0.07,0.041
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,perimeter_defense,0.1,0.012,0.104,0.0,0.0,0.22,5477000,220200885,0.018,0.04
+Phoenix Suns,0.3,Miles Bridges,perimeter_defense,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,21,perimeter_defense,0.17,0.02,0.094,0.0,0.0,0.208,6649560,220200885,0.026,0.031
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Paul Reed,Detroit Pistons,Elite role player,27,playmaking,1.19,0.108,0.034,0.0,0.0,0.177,5602689,214578330,0.213,0.032
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,playmaking,1.46,0.105,0.045,0.0,0.019,0.175,19550160,214578330,0.075,0.009
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.095,0.031,0.0,0.0,0.157,19500000,214578330,0.057,0.008
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Aday Mara,Oklahoma City Thunder,Elite role player,21,playmaking,1.08,0.083,0.023,0.0,0.0,0.13,5791680,214578330,0.186,0.022
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Caleb Martin,Dallas Mavericks,Elite role player,31,playmaking,0.84,0.06,0.029,0.0,0.012,0.106,10001493,214578330,0.084,0.011
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Quenton Jackson,Indiana Pacers,Elite role player,28,playmaking,0.59,0.037,0.032,0.0,0.0,0.101,,214578330,,
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Derik Queen,New Orleans Pelicans,Rotation / depth,21,playmaking,0.39,0.019,0.039,0.0,0.0,0.097,5416080,214578330,0.072,0.018
+Portland Trail Blazers,5.9,Donovan Clingan,playmaking,Al Horford,Golden State Warriors,Rotation / depth,40,playmaking,0.55,0.026,0.039,0.0,0.01,0.093,6822000,214578330,0.081,0.014
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Paul Reed,Detroit Pistons,Elite role player,27,perimeter_defense,1.19,0.194,0.159,0.0,0.0,0.512,5602689,192643030,0.213,0.091
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,perimeter_defense,1.46,0.171,0.157,0.0,0.049,0.437,19550160,192643030,0.075,0.022
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Jakob Poeltl,Toronto Raptors,Elite role player,31,perimeter_defense,1.11,0.177,0.124,0.0,0.0,0.425,19500000,192643030,0.057,0.022
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.158,0.123,0.0,0.0,0.404,5791680,192643030,0.186,0.07
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rim_protection,0.39,0.091,0.152,0.0,0.0,0.396,5416080,192643030,0.072,0.073
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,perimeter_defense,0.1,0.067,0.162,0.0,0.0,0.391,5477000,192643030,0.018,0.071
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Collin Murray-Boyles,Toronto Raptors,Rotation / depth,21,perimeter_defense,0.17,0.078,0.15,0.0,0.0,0.378,6649560,192643030,0.026,0.057
+Sacramento Kings,-7.5,Domantas Sabonis,rim_protection,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,21,perimeter_defense,0.25,0.087,0.14,0.0,0.0,0.368,13826040,192643030,0.018,0.027
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.055,0.062,0.0,0.018,0.161,19550160,196130556,0.075,0.008
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Paul Reed,Detroit Pistons,Elite role player,27,bench_scoring,1.19,0.042,0.046,0.0,0.0,0.135,5602689,196130556,0.213,0.024
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Thomas Bryant,Cleveland Cavaliers,Rotation / depth,29,shooting,0.81,0.001,0.06,0.0,0.012,0.108,2449421,196130556,0.329,0.044
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,-0.07,0.086,0.0,0.0,0.103,13260317,196130556,0.008,0.008
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.026,0.035,0.0,0.0,0.096,5791680,196130556,0.186,0.017
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,-0.066,0.08,0.0,0.0,0.093,5477000,196130556,0.018,0.017
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Jakob Poeltl,Toronto Raptors,Elite role player,31,rim_protection,1.11,0.032,0.027,0.0,0.0,0.086,19500000,196130556,0.057,0.004
+San Antonio Spurs,7.1,Victor Wembanyama,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,20,shooting,0.3,-0.046,0.069,0.0,0.009,0.083,4002000,196130556,0.076,0.021
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Paul Reed,Detroit Pistons,Elite role player,27,rim_protection,1.19,0.119,0.084,0.0,0.0,0.287,5602689,201188888,0.213,0.051
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,rim_protection,1.46,0.114,0.083,0.0,0.028,0.251,19550160,201188888,0.075,0.013
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Aday Mara,Oklahoma City Thunder,Elite role player,21,rim_protection,1.08,0.093,0.074,0.0,0.0,0.241,5791680,201188888,0.186,0.042
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Precious Achiuwa,Sacramento Kings,Rotation / depth,27,rim_protection,0.38,0.03,0.08,0.0,0.0,0.19,5477000,201188888,0.07,0.035
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Derik Queen,New Orleans Pelicans,Rotation / depth,21,rim_protection,0.39,0.028,0.08,0.0,0.0,0.188,5416080,201188888,0.072,0.035
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Zaccharie Risacher,Dallas Mavericks,Rotation / depth,21,rim_protection,0.25,0.017,0.076,0.0,0.0,0.169,13826040,201188888,0.018,0.012
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Mitchell Robinson,Boston Celtics,Rotation / depth,28,rim_protection,0.61,0.039,0.074,0.0,0.019,0.167,15044000,201188888,0.041,0.011
+Toronto Raptors,-0.7,No clear star in this data,rim_protection,Al Horford,Golden State Warriors,Rotation / depth,40,rim_protection,0.55,0.033,0.072,0.0,0.018,0.16,6822000,201188888,0.081,0.023
+Utah Jazz,-4.3,Mo Bamba,playmaking,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,playmaking,1.46,0.148,0.097,0.0,0.034,0.308,19550160,179414010,0.075,0.016
+Utah Jazz,-4.3,Mo Bamba,playmaking,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.041,0.113,0.0,0.0,0.267,5477000,179414010,0.018,0.049
+Utah Jazz,-4.3,Mo Bamba,playmaking,Collin Gillespie,Phoenix Suns,Rotation / depth,27,playmaking,0.15,0.05,0.107,0.0,0.0,0.263,10714286,179414010,0.014,0.025
+Utah Jazz,-4.3,Mo Bamba,playmaking,Paul Reed,Detroit Pistons,Elite role player,27,playmaking,1.19,0.165,0.046,0.0,0.0,0.257,5602689,179414010,0.213,0.046
+Utah Jazz,-4.3,Mo Bamba,playmaking,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.045,0.101,0.0,0.0,0.247,13260317,179414010,0.008,0.019
+Utah Jazz,-4.3,Mo Bamba,playmaking,Javon Small,Memphis Grizzlies,Rotation / depth,23,playmaking,0.32,0.058,0.101,0.0,0.026,0.234,,179414010,,
+Utah Jazz,-4.3,Mo Bamba,playmaking,Nolan Traore,Brooklyn Nets,Rotation / depth,20,playmaking,0.3,0.06,0.096,0.0,0.025,0.226,4002000,179414010,0.076,0.056
+Utah Jazz,-4.3,Mo Bamba,playmaking,De'Aaron Fox,San Antonio Spurs,Rotation / depth,28,playmaking,0.14,0.057,0.079,0.0,0.0,0.215,49800000,179414010,0.003,0.004
+Washington Wizards,-4.0,Anthony Davis,shooting,Alex Caruso,Oklahoma City Thunder,Rotation / depth,32,shooting,1.46,0.13,0.125,0.0,0.038,0.341,19550160,191462525,0.075,0.017
+Washington Wizards,-4.0,Anthony Davis,shooting,De'Anthony Melton,Golden State Warriors,Rotation / depth,28,shooting,0.1,0.02,0.148,0.0,0.0,0.316,5477000,191462525,0.018,0.058
+Washington Wizards,-4.0,Anthony Davis,shooting,Collin Gillespie,Phoenix Suns,Rotation / depth,27,shooting,0.15,0.027,0.143,0.0,0.0,0.312,10714286,191462525,0.014,0.029
+Washington Wizards,-4.0,Anthony Davis,shooting,Klay Thompson,Miami Heat,Rotation / depth,36,shooting,0.1,0.022,0.141,0.0,0.0,0.305,13260317,191462525,0.008,0.023
+Washington Wizards,-4.0,Anthony Davis,shooting,Javon Small,Memphis Grizzlies,Rotation / depth,23,shooting,0.32,0.038,0.134,0.0,0.031,0.275,,191462525,,
+Washington Wizards,-4.0,Anthony Davis,shooting,Nolan Traore,Brooklyn Nets,Rotation / depth,20,shooting,0.3,0.038,0.122,0.0,0.028,0.254,4002000,191462525,0.076,0.063
+Washington Wizards,-4.0,Anthony Davis,shooting,Tyrese Proctor,Cleveland Cavaliers,Rotation / depth,22,shooting,0.29,0.034,0.119,0.0,0.027,0.244,2150917,191462525,0.135,0.114
+Washington Wizards,-4.0,Anthony Davis,shooting,Jordan Poole,New Orleans Pelicans,Rotation / depth,27,shooting,0.19,0.028,0.12,0.0,0.027,0.241,34044642,191462525,0.006,0.007

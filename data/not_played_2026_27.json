@@ -1,7 +1,7 @@
 {
   "season": "2026-27",
-  "games_included": 248,
-  "player_count": 57,
+  "games_included": 271,
+  "player_count": 52,
   "notes": "Roster players with no minutes in the games in the data. Status is the ESPN injury status when listed, else DNP when the player appeared in box scores only as didNotPlay, else not in a box score yet. Team points summed from player profiles match game scores exactly, so no played points are missing.",
   "players": [
     {
@@ -78,21 +78,6 @@
       "injury_date": null,
       "boxscore_appearances": 2,
       "dnp_appearances": 2
-    },
-    {
-      "athlete_id": "4702670",
-      "name": "Grant Nelson",
-      "team": "Brooklyn Nets",
-      "team_id": "17",
-      "position": "F",
-      "jersey": "16",
-      "age": 24,
-      "experience_years": 2,
-      "is_rookie": false,
-      "status": "Out",
-      "injury_date": "2026-11-19",
-      "boxscore_appearances": 0,
-      "dnp_appearances": 0
     },
     {
       "athlete_id": "5105626",
@@ -245,21 +230,6 @@
       "dnp_appearances": 0
     },
     {
-      "athlete_id": "4432181",
-      "name": "Julian Strawther",
-      "team": "Denver Nuggets",
-      "team_id": "7",
-      "position": "G",
-      "jersey": "1",
-      "age": 24,
-      "experience_years": 4,
-      "is_rookie": false,
-      "status": "Out",
-      "injury_date": "2026-10-17",
-      "boxscore_appearances": 1,
-      "dnp_appearances": 1
-    },
-    {
       "athlete_id": "5037878",
       "name": "Ugonna Onyenso",
       "team": "Detroit Pistons",
@@ -376,21 +346,6 @@
       "is_rookie": false,
       "status": "Out",
       "injury_date": "2026-10-15",
-      "boxscore_appearances": 0,
-      "dnp_appearances": 0
-    },
-    {
-      "athlete_id": "3913176",
-      "name": "Brandon Ingram",
-      "team": "LA Clippers",
-      "team_id": "12",
-      "position": "F",
-      "jersey": "7",
-      "age": 29,
-      "experience_years": 11,
-      "is_rookie": false,
-      "status": "Out",
-      "injury_date": "2026-11-18",
       "boxscore_appearances": 0,
       "dnp_appearances": 0
     },
@@ -526,23 +481,8 @@
       "is_rookie": false,
       "status": "DNP",
       "injury_date": null,
-      "boxscore_appearances": 1,
-      "dnp_appearances": 1
-    },
-    {
-      "athlete_id": "4838721",
-      "name": "Tyler Nickel",
-      "team": "New York Knicks",
-      "team_id": "18",
-      "position": "F",
-      "jersey": "55",
-      "age": 23,
-      "experience_years": 0,
-      "is_rookie": true,
-      "status": "Not in a box score yet",
-      "injury_date": null,
-      "boxscore_appearances": 0,
-      "dnp_appearances": 0
+      "boxscore_appearances": 3,
+      "dnp_appearances": 3
     },
     {
       "athlete_id": "5061603",
@@ -706,8 +646,8 @@
       "is_rookie": false,
       "status": "DNP",
       "injury_date": null,
-      "boxscore_appearances": 1,
-      "dnp_appearances": 1
+      "boxscore_appearances": 2,
+      "dnp_appearances": 2
     },
     {
       "athlete_id": "5101845",
@@ -798,21 +738,6 @@
       "injury_date": null,
       "boxscore_appearances": 2,
       "dnp_appearances": 2
-    },
-    {
-      "athlete_id": "3102530",
-      "name": "Jusuf Nurkic",
-      "team": "Utah Jazz",
-      "team_id": "26",
-      "position": "C",
-      "jersey": "30",
-      "age": 32,
-      "experience_years": 13,
-      "is_rookie": false,
-      "status": "Out",
-      "injury_date": "2026-11-20",
-      "boxscore_appearances": 0,
-      "dnp_appearances": 0
     },
     {
       "athlete_id": "4683736",
